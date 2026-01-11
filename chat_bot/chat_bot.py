@@ -2,9 +2,10 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 from flask import jsonify
-from .github import GitHubPortfolio
-from .linkedin import LinkedInPortfolio
-from .database import get_all_knowledge, log_conversation
+from chat_bot.github import GitHubPortfolio
+from chat_bot.linkedin import LinkedInPortfolio
+from chat_bot.database import get_all_knowledge, log_conversation
+from chat_bot.ai_model_manager import ModelManager
 load_dotenv()
 
 class PortfolioChatBot:

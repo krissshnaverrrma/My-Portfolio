@@ -88,7 +88,7 @@ def get_bot_response():
         ai_reply = bot.get_response(user_msg)
         return jsonify({"response": ai_reply})
     except Exception:
-        return jsonify({"response": "⚠️ Error: My brain is buffering. Try again later!"})
+        return jsonify({"error": "All models exhausted"}), 429
 
 
 if __name__ == '__main__':
