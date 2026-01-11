@@ -40,29 +40,32 @@ A high-performance personal portfolio featuring an intelligent Virtual Assistant
 ```bash
 # Clone the repository
 git clone [https://github.com/krissshnaverrrma/My-Portfolio.git](https://github.com/krissshnaverrrma/My-Portfolio.git)
-
+```
+```
 # Install dependencies
 pip install -r requirements.txt
+```
+```
 3. Environment Setup
 Create a .env file in the root directory and add your credentials:
-
 Code snippet
 # API Keys
 GEMINI_API_KEY=your_actual_key_here
-
 # Flask Configuration
 FLASK_APP=app.py
 FLASK_ENV=development
 SECRET_KEY=a_random_long_string_for_session_security
-
 # Optional: Portfolio Context Data
 GITHUB_USERNAME=your_github_username
 LINKEDIN_URL=your_linkedin_profile_url
+```
 
+```
 4. Run the App
 Bash
 
 python app.py
+```
 
 ⚙️ The Fallback Logic
 To ensure a 100% free yet reliable experience, the bot handles the 429 Quota Exceeded error gracefully:
@@ -74,14 +77,14 @@ Secondary: Gemini 2.0 Flash-Lite (Highest Speed/Limit)
 Tertiary: Gemini 1.5 Flash (Reliable Backup)
 
 The system catches the rate limit exception and switches the "AI Brain" instantly, ensuring the visitor never sees a broken interface.
-```
 
 🌐 Deployment
 Optimized for deployment on Render.
 ```
 Build Command: pip install -r requirements.txt
 ```
-
+```
 Start Command: gunicorn app:app
+```
 
 Developed with ❤️ by Krishna Verma - Lazy Coder 
