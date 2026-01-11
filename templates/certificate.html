@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate | Krishna Verma</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400&family=Pinyon+Script&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #000000;
+      --gold: #000000;
+      --bg: #e0e0e0;
+    }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-back {
+      background: #fff;
+      color: var(--primary);
+    }
+
+    .btn-pdf {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    @media print {
+      .controls {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+        padding: 0;
+        margin: 0;
+      }
+
+      .cert-container {
+        box-shadow: none;
+        margin: 0;
+        transform: scale(1);
+      }
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      padding-top: 60px;
+    }
+
+    .cert-container {
+      width: 850px;
+      height: 600px;
+      background: #fff;
+      padding: 25px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .border-outer {
+      border: 8px solid var(--primary);
+      height: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .border-inner {
+      border: 2px solid var(--primary);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .header {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: var(--primary);
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .name {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 58px;
+      color: var(--primary);
+      margin: 15px 0;
+    }
+
+    .details {
+      max-width: 80%;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    .sig {
+      border-top: 1px solid #ccc;
+      width: 200px;
+      padding-top: 10px;
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+
+    .seal {
+      position: absolute;
+      bottom: 30px;
+      width: 80px;
+      height: 80px;
+      border: 2px double var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="controls">
+    <a href="{{ url_for('home') }}" class="roundedpill btn btn-back">
+    <i class="fas fa-arrow-left"></i> Back to Portfolio
+  </a>
+    <button onclick="window.print()" class="btn btn-pdf">
+      <i class="fas fa-file-pdf"></i> Save as PDF
+    </button>
+  </div>
+
+  <div class="cert-container">
+    <div class="border-outer">
+      <div class="border-inner">
+        <div style="color: var(--gold); letter-spacing: 4px; font-weight: bold; margin-bottom: 10px;">
+          <i class="fas fa-award"></i> This is a DEMO CERTIFICATE for the Portfolio
+        </div>
+
+        <h1 class="header">Certificate of Excellence</h1>
+        <p>This is to certify that</p>
+
+        <div class="name">Krishna Verma</div>
+
+        <div class="details">
+          Has demonstrated exceptional skills in <b>Computer Science & Engineering</b>,
+          showcasing proficiency in Full-Stack development and innovative problem solving
+          through the "Lazy Developer Systems" framework.
+        </div>
+
+        <div class="footer">
+          <div class="sig">
+            <div style="font-family: 'Pinyon Script'; font-size: 20px; color: var(--primary);">Lazy Coding Institute</div>
+            ISSUED BY PORTFOLIO
+          </div>
+          <div class="sig">
+            <div style="font-family: 'Pinyon Script'; font-size: 20px; color: var(--primary);">AI Assistant</div>
+            VERIFIED CREDENTIAL
+          </div>
+        </div>
+
+        <div class="seal">
+          <div style="text-align: center;">AUTHENTIC<br>PORTFOLIO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

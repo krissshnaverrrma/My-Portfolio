@@ -76,6 +76,12 @@ def resume_page():
     return render_template('resume.html')
 
 
+@app.route('/certificate')
+def certificate():
+    name = request.args.get('name', 'Krishna Verma')
+    return render_template('certificate.html', name=name)
+
+
 @app.route('/blog')
 def blog():
     posts = get_all_posts()
