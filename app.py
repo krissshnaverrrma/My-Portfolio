@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify
 from chat_bot.database import get_all_posts, get_post_by_slug
 from flask import abort
 from dotenv import load_dotenv
+from flask import request
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "DEFAULT_SECRET_KEY")
