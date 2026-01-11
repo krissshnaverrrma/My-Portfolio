@@ -1,10 +1,47 @@
 let isFirstOpen = true;
 
+function setBotOnline() {
+  const input = document.getElementById('user-input');
+  const statusDot = document.getElementById('status-dot');
+  const statusLabel = id = "status-label";
+  const sendBtn = document.querySelector('.chat-input-area button');
+
+  if (input) {
+    input.placeholder = "Ask me anything...";
+    input.disabled = false;
+  }
+  if (sendBtn) sendBtn.disabled = false;
+
+  if (statusDot) statusDot.style.color = "#2ecc71";
+  if (document.getElementById('status-label')) {
+    document.getElementById('status-label').innerHTML = "Online";
+    document.getElementById('status-label').className = "text-success";
+  }
+}
+
+function setBotOffline() {
+  const input = document.getElementById('user-input');
+  const statusDot = document.getElementById('status-dot');
+  const sendBtn = document.querySelector('.chat-input-area button');
+
+  if (input) {
+    input.placeholder = "currently sleeping";
+    input.disabled = true;
+  }
+  if (sendBtn) sendBtn.disabled = true;
+
+  if (statusDot) statusDot.style.color = "#ff4d4d";
+  if (document.getElementById('status-label')) {
+    document.getElementById('status-label').innerHTML = "Offline";
+    document.getElementById('status-label').className = "text-danger";
+  }
+}
+
 function toggleChat() {
   const chatWindow = document.getElementById('chat-window');
   const chatIcon = document.querySelector('.chat-icon-btn');
-
   if (!chatWindow || !chatIcon) return;
+
   if (chatWindow.classList.contains('active')) {
     chatWindow.classList.remove('active');
     setTimeout(() => {
@@ -14,10 +51,7 @@ function toggleChat() {
   } else {
     chatIcon.classList.add('hidden');
     chatWindow.style.display = 'flex';
-    setTimeout(() => {
-      chatWindow.classList.add('active');
-    }, 50);
-
+    setTimeout(() => { chatWindow.classList.add('active'); }, 50);
     if (isFirstOpen) {
       handleInitialGreeting();
       isFirstOpen = false;
@@ -55,25 +89,29 @@ async function sendMessage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text })
     });
+
+    if (!res.ok) throw new Error('Offline');
+
     const data = await res.json();
     document.getElementById(tid).remove();
     appendMsg(data.response, 'bot-message');
+    setBotOnline();
   } catch (e) {
     if (document.getElementById(tid)) document.getElementById(tid).remove();
-    appendMsg("⚠️ Error: Couldn't reach the bot.", 'bot-message');
+
+    appendMsg("currently sleeping", 'bot-message');
+    setBotOffline();
   }
 }
 
 function appendMsg(text, cls, id = null) {
   const body = document.getElementById('chat-body');
-  const d = document.createElement('div');
-  d.className = cls;
-  if (id) d.id = id;
-  d.innerHTML = text;
-  body.appendChild(d);
+  const div = document.createElement('div');
+  div.className = cls;
+  if (id) div.id = id;
+  div.innerHTML = text;
+  body.appendChild(div);
   body.scrollTop = body.scrollHeight;
 }
 
-function handleEnter(event) {
-  if (event.key === 'Enter') sendMessage();
-}
+function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }

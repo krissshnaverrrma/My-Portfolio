@@ -132,6 +132,16 @@
   background: #eeeeee;
 }
 
+.chat-input-area input:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.chat-input-area button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .btn-close-x {
   background: none;
   border: none;
@@ -142,5 +152,5 @@
 }
 
 .btn-close-x:hover {
-  color: #000000;
+  color: #ffffff;
 }

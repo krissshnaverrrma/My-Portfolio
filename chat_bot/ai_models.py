@@ -46,4 +46,4 @@ def test_model_connection(model_name="gemini-2.5-flash-lite"):
 if __name__ == "__main__":
     list_available_models()
     test_model_connection(
-        os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash-lite"))
+        os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash"))

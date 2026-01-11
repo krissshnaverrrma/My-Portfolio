@@ -1,6 +1,7 @@
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
+from flask import jsonify
 from .github import GitHubPortfolio
 from .linkedin import LinkedInPortfolio
 from .database import get_all_knowledge, log_conversation
@@ -33,9 +34,9 @@ class PortfolioChatBot:
         - Do not make up facts.
         """
         self.model = genai.GenerativeModel(
-            model_name=os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite"),
+            model_name=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
             system_instruction=self.system_instruction
-        )
+        )   
         self.chat_session = self.model.start_chat(history=[])
 
     def _gather_context(self):
@@ -75,7 +76,7 @@ class PortfolioChatBot:
             return reply_text
         except Exception as e:
             print(f"\n[DEBUG ERROR]: {e}\n")
-            return "I'm having trouble connecting to my brain right now. Please try again later!"
+            return "Currently Sleeping. Please Contact Krishna Directly on Email."
 
 
 if __name__ == "__main__":

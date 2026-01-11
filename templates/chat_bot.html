@@ -7,17 +7,16 @@
         <img src="{{ url_for('static', filename='assets/chat_bot.png') }}" alt="Bot Avatar"
           style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         <div>
-          <span class="fw-bold text-white d-block" style="font-size: 1rem; line-height: 1.2;">Krishna's Virtual AI
+          <span class="fw-bold text-white d-block" style="font-size: 1rem; line-height: 1.2;">Krishna's Virtual  AI
             Assistant</span>
-          {% if is_ai_online %}
-          <small class="text-success" style="font-size: 0.75rem;">
-            <i class="fas fa-circle" style="font-size: 0.5rem;"></i> Online
+
+          <small style="font-size: 0.75rem;">
+            <i class="fas fa-circle" id="status-dot"
+              style="font-size: 0.5rem; color: {% if is_ai_online %}#2ecc71{% else %}#ff4d4d{% endif %};"></i>
+            <span id="status-label" class="{% if is_ai_online %}text-success{% else %}text-danger{% endif %}">
+              {% if is_ai_online %}Online{% else %}Offline{% endif %}
+            </span>
           </small>
-          {% else %}
-          <small class="text-danger" style="font-size: 0.75rem;">
-            <i class="fas fa-circle" style="font-size: 0.5rem;"></i> Offline
-          </small>
-          {% endif %}
         </div>
       </div>
       <button onclick="toggleChat()" class="btn-close-x">&times;</button>
@@ -29,16 +28,16 @@
           Typing....<div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
       </div>
-
       <div id="greeting-message" class="bot-message" style="display: none;">
-        Hello! I'm Krishna's Virtual Assistant.<br>
-        Ask me about his <b>Projects</b> or <b>Skills</b>!
+        Hello! I'm Krishna's Virtual AI Assistant.<br>
+        Ask Me about his <b>Projects</b> or <b>Skills</b> or <b>Hobbies</b>!
       </div>
     </div>
 
     <div class="chat-input-area">
-      <input type="text" id="user-input" placeholder="Ask me anything..." onkeypress="handleEnter(event)" {% if not
-        is_ai_online %}disabled{% endif %}>
+      <input type="text" id="user-input"
+        placeholder="{% if is_ai_online %}Ask me anything...{% else %}currently sleeping{% endif %}"
+        onkeypress="handleEnter(event)" {% if not is_ai_online %}disabled{% endif %}>
       <button onclick="sendMessage()" {% if not is_ai_online %}disabled{% endif %}>
         <i class="fas fa-paper-plane"></i>
       </button>
@@ -46,8 +45,8 @@
   </div>
 
   <div class="chat-icon-btn" onclick="toggleChat()">
-    <img src="{{ url_for('static', filename='assets/chat_bot.png') }}" alt="Chat"
-      style="width: 100%; height: 100%; border-radius: 50%;">
+    <img src="{{ url_for('static', filename='assets/chat_bot.png') }}" alt="Chat Icon"
+      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2);">
   </div>
 </div>
 

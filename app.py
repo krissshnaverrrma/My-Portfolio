@@ -81,7 +81,7 @@ def get_bot_response():
     if not bot:
         return jsonify({"response": "⚠️ System Offline: The AI brain is currently disconnected. Please email Krishna directly."})
     data = request.get_json()
-    user_msg = data.get('message')
+    user_msg = data.get('message')  
     if not user_msg:
         return jsonify({"response": "..."})
     try:
