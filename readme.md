@@ -74,6 +74,7 @@ Secondary: Gemini 2.0 Flash-Lite (Highest Speed/Limit)
 Tertiary: Gemini 1.5 Flash (Reliable Backup)
 
 The system catches the rate limit exception and switches the "AI Brain" instantly, ensuring the visitor never sees a broken interface.
+```
 
 🌐 Deployment
 Optimized for deployment on Render.
