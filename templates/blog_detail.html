@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .blog-content h3 {
+    color: #fff;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .blog-content p {
+    margin-bottom: 1.5rem;
+    color: #ccc;
+  }
+
+  .blog-content ul,
+  .blog-content ol {
+    color: #ccc;
+    margin-bottom: 1.5rem;
+    padding-left: 1.2rem;
+  }
+
+  .blog-content pre {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    color: #dcdcaa;
+  }
+
+  .blog-content blockquote {
+    border-left: 4px solid #fff;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: #888;
+  }
+
+  .hover-white:hover {
+    color: #fff !important;
+  }
+</style>
+
+<div class="d-flex flex-column align-items-center"
+  style="min-height: 100vh; width: 100vw; margin: 0; background-color: #050505;">
+
+  <div class="p-4 p-md-5 w-100" style="padding-top: 6rem !important;">
+
+    <div class="row justify-content-center w-100 m-0">
+      <div class="col-lg-9 col-xl-8">
+
+        <div class="mb-4">
+          <a href="{{ url_for('blog') }}"
+            class="text-decoration-none text-secondary d-inline-flex align-items-center hover-white"
+            style="transition: color 0.2s;">
+            ← Back to Blogs
+          </a>
+        </div>
+
+        {% if post.image_url %}
+        <div class="mb-5 rounded-4 overflow-hidden shadow-lg position-relative"
+          style="height: 400px; border: 1px solid #333; width: 100%;">
+          <img src="{{ post.image_url }}" alt="{{ post.title }}" class="w-100 h-100" style="object-fit: cover;">
+        </div>
+        {% endif %}
+
+        <header class="mb-5 border-bottom border-secondary pb-4">
+          <div class="d-flex align-items-center mb-3">
+            <span class="badge rounded-pill border border-secondary text-light px-3 py-2" style="background: #111;">
+              Software Engineering
+            </span>
+          </div>
+          <h1 class="display-4 fw-bold text-white mb-3">{{ post.title }}</h1>
+          <div class="d-flex align-items-center text-muted fs-6">
+            <span>Krishna Verma</span>
+            <span class="mx-2">•</span>
+            <span>{{ post.created_at.strftime('%B %d, %Y') }}</span>
+          </div>
+        </header>
+
+        <article class="blog-content text-light" style="font-size: 1.15rem; line-height: 1.8;">
+          {{ post.content | safe }}
+        </article>
+
+        <div class="mt-5 pt-5 border-top border-secondary text-center">
+          <p class="text-secondary mb-3">Enjoyed this read?</p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('projects') }}" class="btn btn-outline-light rounded-pill px-4">View Projects</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,5 +1,7 @@
 import os
 from flask import Flask, render_template, request, jsonify
+from chat_bot.database import get_all_posts, get_post_by_slug
+from flask import abort
 from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
@@ -7,7 +9,7 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "DEFAULT_SECRET_KEY")
 CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "krishnav24-cs@sanskar.org")
 bot, gh, li = None, None, None
 try:
-    print("⚙️  Loading Backend Systems...")
+    print("⚙️  Loading Backend and Frontend Systems...")
     from chat_bot.chat_bot import PortfolioChatBot
     from chat_bot.github import GitHubPortfolio
     from chat_bot.linkedin import LinkedInPortfolio
@@ -67,6 +69,19 @@ def skills():
     """Renders the Skills Page."""
     return render_template('skills.html')
 
+
+@app.route('/blog')
+def blog():
+    posts = get_all_posts()
+    return render_template('blog.html', posts=posts)
+
+
+@app.route('/blog/<slug>')
+def blog_detail(slug):
+    post = get_post_by_slug(slug)
+    if not post:
+        abort(404)
+    return render_template('blog_detail.html', post=post)
 
 @app.route('/contact')
 def contact():
