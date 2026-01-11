@@ -70,6 +70,11 @@ def skills():
     return render_template('skills.html')
 
 
+@app.route('/resume')
+def resume_page():
+    return render_template('resume.html')
+
+
 @app.route('/blog')
 def blog():
     posts = get_all_posts()

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume | Krishna Verma</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #000;
+      --secondary: #555;
+      --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+      font-family: var(--font-main);
+      color: #333;
+      margin: 0;
+      padding: 80px 0 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .resume-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    .nav-btn {
+      pointer-events: auto;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      background: #333;
+      color: #fff;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      border: 1px solid #ccc;
+    }
+
+    .back-btn:hover {
+      background: #fff;
+      color: #000;
+      border-color: #000;
+    }
+
+    .resume-container {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      padding: 40px 45px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      gap: 25px;
+      margin-bottom: 35px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 25px;
+    }
+
+    .profile-img-wrapper {
+      width: 85px;
+      height: 85px;
+      margin: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #333;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .header-details {
+      flex-grow: 1;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      color: var(--secondary);
+      font-size: 1.05rem;
+      margin-top: 6px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px 20px;
+      font-size: 0.9rem;
+      color: var(--secondary);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-item i {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .contact-item:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-bottom: 2px solid #000;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    p,
+    li {
+      line-height: 1.55;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 8px 0;
+    }
+
+    .skill-category {
+      font-weight: 700;
+      color: #000;
+      font-size: 0.95rem;
+    }
+
+    .skill-list {
+      color: #444;
+      font-size: 0.95rem;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .item-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .item-meta {
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .project-block,
+    .edu-block {
+      margin-bottom: 15px;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .resume-nav {
+        display: none !important;
+      }
+
+      .resume-container {
+        width: 100%;
+        box-shadow: none;
+        padding: 0 0 20px 0;
+        margin: 0;
+      }
+
+      header {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="resume-nav">
+    <a href="{{ url_for('home') }}" class="nav-btn back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+    <button onclick="window.print()" class="nav-btn">
+      Save as PDF <i class="fas fa-download"></i>
+    </button>
+  </div>
+
+  <div class="resume-container">
+    <header>
+      <div class="profile-img-wrapper">
+        <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Profile" class="profile-img">
+      </div>
+
+      <div class="header-details">
+        <h1>Krishna Verma</h1>
+        <div class="subtitle">Computer Science Student | Full Stack Developer (Lazy-Coder)</div>
+
+        <div class="contact-info">
+          <a href="mailto:krishnav24-cs@sanskar.org" class="contact-item">
+            <i class="fas fa-envelope"></i> krishnav24-cs@sanskar.org
+          </a>
+          <a href="https://my-portfolio-oozb.onrender.com" target="_blank" class="contact-item">
+            <i class="fas fa-globe"></i> Portfolio Link
+          </a>
+          <a href="https://github.com/krissshnaverrrma" target="_blank" class="contact-item">
+            <i class="fab fa-github"></i> github.com/krissshnaverrrma
+          </a>
+          <a href="https://linkedin.com/in/krishnav-cs" target="_blank" class="contact-item">
+            <i class="fab fa-linkedin"></i> linkedin.com/in/krishnav-cs
+          </a>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i> Hapur, India
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="section">
+      <div class="section-title">Professional Summary</div>
+      <p>
+        Passionate Computer Science undergraduate specialized in building scalable backend systems and interactive web
+        applications. Experienced in the full software development lifecycle (SDLC), from database architecture with
+        PostgreSQL to frontend integration with Flask and React. Adept at optimizing algorithms and automating workflows
+        ("Lazy Developer" philosophy). Seeking to leverage skills in Python, AI, and System Design.
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-category">Languages:</div>
+        <div class="skill-list">Python, C/C++, JavaScript (ES6+), Java, SQL, Bash</div>
+
+        <div class="skill-category">Backend:</div>
+        <div class="skill-list">Flask, Django, RESTful APIs, PostgreSQL, SQLAlchemy</div>
+
+        <div class="skill-category">Frontend:</div>
+        <div class="skill-list">HTML5, CSS3, Bootstrap 5, Responsive Design, Basic React</div>
+
+        <div class="skill-category">Tools & DevOps:</div>
+        <div class="skill-list">Git/GitHub, VS Code, Linux (Ubuntu), Render</div>
+
+        <div class="skill-category">Core Concepts:</div>
+        <div class="skill-list">Data Structures (DSA), OOP, System Design, GenAI Integration</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Key Projects</div>
+
+      <div class="project-block">
+        <div class="item-header">
+          <span class="item-title">AI-Powered Personal Portfolio</span>
+          <span class="item-meta">Python, Flask, PostgreSQL, Gemini API</span>
+        </div>
+        <ul>
+          <li>Developed a full-stack portfolio with a custom CMS for blogging and project showcasing.</li>
+          <li>Integrated Google Gemini AI to create a context-aware chatbot that answers recruiter queries
+            automatically.</li>
+          <li>Deployed on Render with a production-grade PostgreSQL database and dynamic content rendering.</li>
+        </ul>
+      </div>
+
+      <div class="project-block">
+        <div class="item-header">
+          <span class="item-title">Live Weather Dashboard</span>
+          <span class="item-meta">JavaScript, OpenWeatherMap API</span>
+        </div>
+        <ul>
+          <li>Engineered a real-time weather tracking application featuring geolocation and 5-day forecasting.</li>
+          <li>Optimized API calls to reduce latency and implemented dynamic UI themes based on weather data.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Education</div>
+
+      <div class="edu-block">
+        <div class="item-header">
+          <span class="item-title">B.Tech in Computer Science & Engineering</span>
+          <span class="item-meta">Expected 2027</span>
+        </div>
+        <div>Sanskar College of Engineering and Technology (SCET)</div>
+      </div>
+
+      <div class="edu-block">
+        <div class="item-header">
+          <span class="item-title">Higher Secondary (XII/X) - PCM</span>
+          <span class="item-meta">2022-2024</span>
+        </div>
+        <div>JMS World School / Saraswati Bal Mandir Sr. Sec. School</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
