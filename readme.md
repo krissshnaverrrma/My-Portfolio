@@ -78,8 +78,9 @@ The system catches the rate limit exception and switches the "AI Brain" instantl
 
 🌐 Deployment
 Optimized for deployment on Render.
-
+```
 Build Command: pip install -r requirements.txt
+```
 
 Start Command: gunicorn app:app
 
