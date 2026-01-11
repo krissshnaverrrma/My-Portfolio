@@ -140,10 +140,10 @@ EXTERNAL_URL = os.getenv("EXTERNAL_DATABASE_URL")
 
 if os.getenv("RENDER"):
     CURRENT_URL = INTERNAL_URL
-    print("🚀 Running on Render at (Internal DB)")
+    print(f"🚀 Running on Render at (DB: {INTERNAL_URL})")
 else:
     CURRENT_URL = EXTERNAL_URL or "sqlite:///portfolio.db"
-    print(f"💻 Running Locally at (DB: {CURRENT_URL})")
+    print(f"💻 Running Locally at (DB: {EXTERNAL_URL})")
 
 if CURRENT_URL and CURRENT_URL.startswith("postgres://"):
     CURRENT_URL = CURRENT_URL.replace("postgres://", "postgresql://", 1)
