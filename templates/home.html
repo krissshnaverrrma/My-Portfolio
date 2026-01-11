@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+</style>
+
+<div class="glass-panel p-0 overflow-hidden"
+     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border-radius: 0; border: none; z-index: 10;">
+
+     <div class="row g-0 h-100">
+
+          <div class="col-lg-6 h-100 position-relative p-0">
+               <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma"
+                    style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+               <div
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.15);">
+               </div>
+          </div>
+
+          <div class="col-lg-6 h-100 d-flex align-items-center justify-content-center p-0"
+               style="background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(30px);">
+
+               <div class="p-5" style="max-width: 650px;">
+                    <h6 class="text-uppercase mb-3"
+                         style="letter-spacing: 3px; color: var(--primary-color); opacity: 0.9;">
+                         My Portfolio
+                    </h6>
+
+                    <h1 class="display-3 fw-bold mb-2 text-white">
+                         Hello, I'm <br> Krishna Verma
+                    </h1>
+
+                    <h3 class="fw-light mb-4 text-light opacity-75">CS Student & Python Developer</h3>
+
+                    <p class="lead mb-5" style="color: #d0d0d0; font-size: 1.1rem; line-height: 1.8; font-weight: 300;">
+                         I am a Computer Science undergraduate passionate about building scalable backend systems and
+                         immersive digital experiences.
+                         Specializing in <strong>Python</strong> and <strong>Game Development</strong>, I bridge the gap
+                         between complex logic and clean design.
+                         My focus lies in solving algorithmic challenges, automating workflows, and creating efficient,
+                         user-centric applications that make a real-world impact.
+                    </p>
+
+                    <div class="d-flex gap-4">
+                         <a href="{{ url_for('projects') }}" class="btn-glass px-4 py-3">
+                              View Projects <i class="fas fa-arrow-right ms-2"></i>
+                         </a>
+                         <a href="{{ url_for('about') }}" class="btn-glass px-4 py-3"
+                              style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff;">
+                              About Me
+                         </a>
+                    </div>
+               </div>
+          </div>
+
+     </div>
+</div>
+{% endblock %}

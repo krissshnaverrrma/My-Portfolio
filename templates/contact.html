@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .contact-card {
+          transition: transform 0.3s ease, background 0.3s ease;
+          cursor: pointer;
+          text-decoration: none;
+          display: block;
+          height: 100%;
+          min-height: 250px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+     }
+
+     .contact-card:hover {
+          transform: translateY(-8px);
+          background: rgba(255, 255, 255, 0.08);
+          border-color: var(--primary-color);
+     }
+
+     .contact-icon-wrapper {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+          transition: all 0.3s ease;
+     }
+
+     .contact-card:hover .contact-icon-wrapper {
+          background: var(--primary-color);
+          border-color: var(--primary-color);
+          color: black !important;
+     }
+
+     .contact-card:hover .contact-icon-wrapper i {
+          color: black !important;
+     }
+</style>
+
+<div class="glass-panel d-flex align-items-center justify-content-center"
+     style="min-height: 100vh; width: 100vw; margin: 0; border: none; border-radius: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(20px);">
+
+     <div class="container p-4" style="max-width: 1000px; padding-top: 6rem !important;">
+
+          <div class="text-center mb-5">
+               <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 3px;">Get in Touch</h6>
+               <h1 class="display-3 fw-bold text-white mb-4">Let's <span
+                         style="color:var(--primary-color)">Connect</span></h1>
+               <p class="text-secondary lead mx-auto" style="max-width: 600px;">
+                    Available for freelance work, internships, or just a friendly chat.
+               </p>
+          </div>
+
+          <div class="row g-4 justify-content-center">
+
+               <div class="col-md-6">
+                    <a href="mailto:{{ email }}" class="glass-card p-4 text-center contact-card">
+                         <div class="contact-icon-wrapper">
+                              <i class="fas fa-envelope fa-2x text-white"></i>
+                         </div>
+                         <h4 class="fw-bold text-white mb-1">Email</h4>
+                         <p class="text-secondary small mb-2">Send me a direct mail</p>
+                         <p class="text-light small fw-bold mb-0">{{ email }}</p>
+                    </a>
+               </div>
+
+               <div class="col-md-6">
+                    <a href="mailto:{{ email }}?subject=Request%20Phone%20Number&body=Hi%20Krishna,%20I%20would%20like%20to%20request%20your%20contact%20number%20for..."
+                         class="glass-card p-4 text-center contact-card">
+                         <div class="contact-icon-wrapper">
+                              <i class="fas fa-phone-slash fa-2x text-white"></i>
+                         </div>
+                         <h4 class="fw-bold text-white mb-1">Phone</h4>
+                         <p class="text-secondary small mb-2">Private / On Request</p>
+               
+                         <p class="text-warning small fw-bold mb-0">
+                              <i class="fas fa-lock me-2"></i>Request Access
+                         </p>
+                    </a>
+               </div>
+
+               <div class="col-md-6">
+                    <a href="https://github.com/krissshnaverrrma" target="_blank" class="glass-card p-4 text-center contact-card">
+                         <div class="contact-icon-wrapper">
+                              <i class="fab fa-github fa-2x text-white"></i>
+                         </div>
+                         <h4 class="fw-bold text-white mb-1">GitHub</h4>
+                         <p class="text-secondary small mb-2">Have a look on My-Projects</p>
+                         <p class="text-primary small fw-bold mb-0">Follow Me <i class="fas fa-arrow-right ms-1"></i>
+                         </p>
+                    </a>
+               </div>
+
+
+               <div class="col-md-6">
+                    <a href="https://linkedin.com/in/krishnav-cs" target="_blank"
+                         class="glass-card p-4 text-center contact-card">
+                         <div class="contact-icon-wrapper">
+                              <i class="fab fa-linkedin-in fa-2x text-white"></i>
+                         </div>
+                         <h4 class="fw-bold text-white mb-1">LinkedIn</h4>
+                         <p class="text-secondary small mb-2">Professional Network</p>
+                         <p class="text-primary small fw-bold mb-0">Connect Now <i class="fas fa-arrow-right ms-1"></i>
+                         </p>
+                    </a>
+               </div>
+
+          </div>
+
+          <div class="text-center mt-5 pt-4 border-top border-secondary"
+               style="border-color: rgba(255,255,255,0.1) !important;">
+               <a href="https://www.google.com/maps/place/Hapur,+Uttar+Pradesh,+India" target="_blank"
+                    class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill text-decoration-none location-pill"
+                    style="background: rgba(255,255,255,0.05); transition: all 0.3s ease; border: 1px solid transparent;">
+                    <i class="fas fa-map-marker-alt text-primary map-icon"></i>
+                    <span class="text-secondary small">
+                         Based in <strong class="text-white">Hapur, Uttar Pradesh, India</strong>
+                    </span>
+                    <i class="fas fa-external-link-alt text-secondary ms-1"
+                         style="font-size: 0.7rem; opacity: 0.5;"></i>
+               </a>
+          </div>
+
+     </div>
+</div>
+{% endblock %}
