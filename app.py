@@ -15,6 +15,7 @@ try:
     gh = GitHubPortfolio()
     li = LinkedInPortfolio()
     print("✅ Backend Systems Online")
+    print("✅ Frontend Systems Online")
 except ImportError as e:
     print(f"⚠️  Module Import Error: {e}")
     print("   (Running in 'Safe Mode' - Chatbot and API data will be disabled)")
