@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}About Me | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+</style>
+
+<div class="glass-panel d-flex flex-column align-items-center"
+     style="min-height: auto; width: 100vw; margin: 0; border: none; border-radius: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(20px); padding-bottom: 2rem;">
+
+     <div class="p-4 p-md-5 w-100"
+          style="max-width: 1300px; padding-top: 6rem !important; padding-bottom: 0 !important;">
+
+          <div class="row align-items-center text-center mb-5">
+               <div class="col-lg-9 mx-auto">
+                    <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 3px;">Who I Am..?</h6>
+                    <h1 class="display-4 fw-bold text-white mb-4">About <span
+                              style="color:var(--primary-color)">Me</span></h1>
+
+                    <p class="text-light mx-auto lead" style="opacity: 0.9; line-height: 2; font-weight: 300;">
+                         I am <strong>Krishna Verma</strong>, a passionate Computer Science undergraduate specializing
+                         in <strong>Backend Development</strong> and <strong>System Architecture</strong>.
+                         My journey started with the logic of C++ and evolved into building scalable web applications
+                         with <strong>Python & Flask</strong>.
+                         Beyond code, I am deeply interested in <strong>Game Logic</strong> and optimizing algorithms
+                         for performance.
+                    </p>
+               </div>
+          </div>
+
+          <hr style="border-color: rgba(255,255,255,0.1); margin: 4rem 0;">
+
+          <div class="row g-5 mb-0">
+               <div class="col-md-6 d-flex flex-column">
+                    <h3 class="fw-bold mb-4 border-start border-4 border-primary ps-3 text-white">Academic Timeline</h3>
+
+                    <div class="glass-card p-4 mb-4 flex-grow-1">
+                         <div class="d-flex justify-content-between align-items-start mb-3">
+                              <div>
+                                   <h4 class="fw-bold text-white mb-1">B.Tech in Computer Science</h4>
+                                   <p class="text-secondary small mb-3">Sanskar College of Engineering and Technology
+                                        (SCET) Gaziabad • 2024 - Present</p>
+                              </div>
+                              <span class="badge bg-primary text-dark">Current</span>
+                         </div>
+                         <p class="text-secondary small mb-3">
+                              Pursuing Bachelor's degree with a focus on core computer science fundamentals.
+                         </p>
+                    </div>
+
+                    <div class="glass-card p-4">
+                         <div class="d-flex justify-content-between align-items-start mb-3">
+                              <div>
+                                   <h4 class="fw-bold text-white mb-1">Higher Secondary (XII & X)</h4>
+                                   <p class="text-secondary small mb-0">JMS World School & Saraswati Bal Mandir Sr. Sec.
+                                        School</p>
+                                   <p class="text-secondary small mb-0">Hapur (2022-2024)</p>
+                              </div>
+                              <span class="badge bg-secondary text-dark">Completed</span>
+                         </div>
+                         <p class="text-secondary small mb-0">
+                              Major Subjects: Physics, Chemistry, Mathematics (PCM)
+                         </p>
+                    </div>
+               </div>
+
+               <div class="col-md-6 d-flex flex-column">
+                    <h3 class="fw-bold mb-4 border-start border-4 border-primary ps-3 text-white">What do I Do?</h3>
+
+                    <div class="glass-card p-4 h-100">
+
+                         <div class="d-flex align-items-start mb-4">
+                              <div class="me-4 mt-1">
+                                   <i class="fas fa-laptop-code fa-2x text-primary"></i>
+                              </div>
+                              <div>
+                                   <h5 class="fw-bold text-white">Frontend Development</h5>
+                                   <p class="text-secondary mb-0">Building responsive UIs with <strong>HTML, CSS,
+                                             JS</strong>.</p>
+                              </div>
+                         </div>
+
+                         <div class="d-flex align-items-start mb-4">
+                              <div class="me-4 mt-1">
+                                   <i class="fas fa-server fa-2x text-primary"></i>
+                              </div>
+                              <div>
+                                   <h5 class="fw-bold text-white">Backend Development</h5>
+                                   <p class="text-secondary mb-0">Designing robust APIs using <strong>Flask</strong> and
+                                        <strong>Python</strong>.
+                                   </p>
+                              </div>
+                         </div>
+
+                         <div class="d-flex align-items-start mb-4">
+                              <div class="me-4 mt-1">
+                                   <i class="fas fa-gamepad fa-2x text-primary"></i>
+                              </div>
+                              <div>
+                                   <h5 class="fw-bold text-white">Game Logic</h5>
+                                   <p class="text-secondary mb-0">Creating interactive experiences using OOP principles.
+                                   </p>
+                              </div>
+                         </div>
+
+                         <div class="d-flex align-items-start">
+                              <div class="me-4 mt-1">
+                                   <i class="fas fa-code-branch fa-2x text-primary"></i>
+                              </div>
+                              <div>
+                                   <h5 class="fw-bold text-white">Algorithmic Solving</h5>
+                                   <p class="text-secondary mb-0">Solving complex DSA challenges on LeetCode.</p>
+                              </div>
+                              <div class="mt-auto pt-3 border-top"
+                                   style="border-color: rgba(255, 255, 255, 0.1) !important;">
+                                   <a href="{{ url_for('main.skills') }}"
+                                        class="text-primary text-decoration-none fw-bold small">
+                                        View Full Tech Stack <i class="fas fa-arrow-right ms-1"></i>
+                                   </a>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+
+     </div>
+</div>
+{% endblock %}

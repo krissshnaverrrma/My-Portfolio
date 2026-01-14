@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .blog-card:hover {
+    border-color: #777 !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  }
+
+  .blog-card:hover img {
+    opacity: 1 !important;
+    transform: scale(1.05);
+  }
+
+  .blog-card:hover .btn {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+</style>
+
+<div class="d-flex flex-column align-items-center"
+  style="min-height: 100vh; width: 100vw; margin: 0; background-color: #050505;">
+
+  <div class="p-4 p-md-5 w-100" style="padding-top: 6rem !important;">
+
+    <div class="text-center mb-5">
+      <h6 class="text-uppercase ls-2 text-secondary fw-bold" style="letter-spacing: 3px; font-size: 0.8rem;">
+        Thoughts & Automation
+      </h6>
+      <h1 class="display-3 fw-bold text-white mb-3">My Blogs</h1>
+      <p class="text-secondary fs-5" style="max-width: 600px; margin: 0 auto;">
+        "I write code so I don't have to talk much."
+      </p>
+    </div>
+
+    <div class="row g-4">
+      {% for post in posts %}
+      <div class="col-md-6 col-xl-4">
+
+        <div class="card h-100 position-relative blog-card"
+          style="background-color: #000 !important; border: 1px solid #333; border-radius: 16px; overflow: hidden;">
+
+          {% if post.image_url %}
+          <div class="card-img-top position-relative"
+            style="height: 240px; overflow: hidden; border-bottom: 1px solid #222;">
+            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="w-100 h-100"
+              style="object-fit: cover; opacity: 0.85; transition: all 0.5s ease;">
+          </div>
+          {% endif %}
+
+          <div class="card-body d-flex flex-column p-4">
+
+            <div class="mb-3">
+              <h3 class="card-title h4 fw-bold text-white d-inline-block pb-2 border-bottom border-secondary">
+                {{ post.title }}
+              </h3>
+            </div>
+
+            <div class="mb-3">
+              <span class="badge rounded-pill border border-secondary fw-normal px-3 py-2"
+                style="background-color: #111; color: #ccc; font-size: 0.8rem;">
+                <i class="fas fa-terminal me-2"></i>Tech
+              </span>
+              <small class="text-muted ms-2">{{ post.created_at.strftime('%b %d') }}</small>
+            </div>
+
+            <p class="card-text text-secondary flex-grow-1" style="font-size: 1rem; line-height: 1.6;">
+              {{ post.summary }}
+            </p>
+
+            <a href="{{ url_for('main.blog_detail', slug=post.slug) }}" class="stretched-link btn w-100 mt-4 rounded-pill fw-bold"
+              style="background-color: #111; border: 1px solid #444; color: #fff; transition: 0.3s;">
+              Read Article
+            </a>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

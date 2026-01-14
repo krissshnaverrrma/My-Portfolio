@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chat_bot.css') }}">
+<div class="chat-widget-container" id="chat-widget-container">
+    <div class="glass-chat-window" id="chat-window">
+        <div class="chat-header d-flex justify-content-between align-items-center px-3 py-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{ url_for('static', filename='assets/chat_bot.png') }}" alt="Bot Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <div>
+                    <span class="fw-bold text-white d-block" style="font-size: 1rem; line-height: 1.2;">
+                        Krishna's Virtual AI Assistant
+                    </span>
+                    <small style="font-size: 0.75rem;">
+                        <i class="fas fa-circle" id="status-dot"
+                            style="font-size: 0.5rem; color: {% if is_ai_online %}#2ecc71{% else %}#ff4d4d{% endif %};"></i>
+                        <span id="status-label"
+                            class="{% if is_ai_online %}text-success{% else %}text-danger{% endif %}">
+                            {% if is_ai_online %}Online{% else %}Offline{% endif %}
+                        </span>
+                    </small>
+                </div>
+            </div>
+            <button onclick="closeChatManual(event)" class="btn-close-x">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-body" id="chat-body">
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Ask Me about Krishna" onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="chat-icon-btn" id="chat-icon-btn">
+        <img src="{{ url_for('static', filename='assets/chat_bot.png') }}" alt="Chat Icon" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2);">
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/chat_bot.js') }}"></script>

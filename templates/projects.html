@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .glass-background-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 10%, rgba(20, 20, 20, 1), rgba(0, 0, 0, 1));
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 25px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+    will-change: transform, background-color;
+    letter-spacing: 0.5px;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: black;
+    font-weight: bold;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.4);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    transform: translateZ(0);
+    will-change: transform;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease;
+    contain: layout paint;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .featured-wrapper {
+    position: relative;
+    padding: 3px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, rgba(13, 110, 253, 0.1), rgba(255, 255, 255, 0.05), rgba(13, 110, 253, 0.1));
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .featured-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: var(--primary-color);
+    filter: blur(60px);
+    opacity: 0.15;
+  }
+
+  .project-img-wrapper {
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .project-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
+  }
+
+  .glass-card:hover .project-img-wrapper img {
+    transform: scale(1.08);
+  }
+
+  .tech-pill {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<div class="glass-background-fixed"></div>
+
+<div class="d-flex flex-column align-items-center" style="min-height: 100vh; width: 100vw; margin: 0;">
+
+  <div class="container p-4 p-md-5" style="max-width: 1200px; padding-top: 6rem !important;">
+
+    <div class="text-center mb-5">
+      <h6 class="text-uppercase text-primary fw-bold mb-3" style="letter-spacing: 3px; font-size: 0.8rem;">Innovation &
+        Code</h6>
+      <h1 class="display-4 fw-bold text-white mb-4">My <span style="color:var(--primary-color)">Projects</span></h1>
+
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-4" id="filter-container">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Dev</button>
+        <button class="filter-btn" data-filter="python">Python/AI</button>
+        <button class="filter-btn" data-filter="cpp">C/C++</button>
+        <button class="filter-btn" data-filter="game">Games</button>
+      </div>
+    </div>
+
+    <div class="row mb-5 project-item justify-content-center" data-category="web">
+      <div class="col-12">
+        <div class="featured-wrapper">
+          <div class="glass-card p-0 overflow-hidden border-0" style="background: rgba(20,20,20,0.8);">
+            <div class="row g-0 align-items-center">
+
+              <div class="col-lg-7">
+                <div class="project-img-wrapper rounded-0 h-100" style="min-height: 400px;">
+                  <img src="{{ url_for('static', filename='assets/projects/weather_app.jpg') }}"
+                    alt="Live Weather Dashboard" loading="lazy">
+                </div>
+              </div>
+
+              <div class="col-lg-5 p-4 p-xl-5 d-flex flex-column justify-content-center">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-primary text-black fw-bold px-3 py-2 rounded-pill"><i
+                        class="fas fa-bolt me-1"></i> Featured</span>
+                  </div>
+                  <span class="text-secondary small fw-bold">2024</span>
+                </div>
+
+                <h2 class="fw-bold text-white mb-3">Live Weather Dashboard</h2>
+                <p class="text-secondary mb-4 small" style="line-height: 1.8;">
+                  An advanced real-time weather tracking application. It features geolocation detection, detailed 5-day
+                  forecasting, and dynamic background themes that adapt to live conditions.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                  <span class="tech-pill"><i class="fab fa-js text-warning me-1"></i> JavaScript</span>
+                  <span class="tech-pill"><i class="fas fa-cloud text-info me-1"></i> OpenWeather</span>
+                  <span class="tech-pill"><i class="fab fa-css3-alt text-primary me-1"></i> CSS3</span>
+                </div>
+
+                <div class="d-flex gap-3 mt-2">
+                  <a href="https://github.com/krissshnaverrrma/Weather-APP" target="_blank"
+                    class="btn-glass px-4 py-2 flex-grow-1 text-center small fw-bold">
+                    <i class="fab fa-github me-2"></i> Source Code
+                  </a>
+                  <a href="https://weather-app-one-cyan-26.vercel.app/" target="_blank"
+                    class="btn-glass px-3 py-2 text-center" title="Live Demo">
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="mb-4 text-white fw-bold d-flex align-items-center">
+      <span class="border-start border-4 border-primary ps-3">Project Gallery</span>
+      <hr class="flex-grow-1 ms-4 border-secondary opacity-25">
+    </h4>
+
+    <div class="row g-4">
+
+      <div class="col-md-6 col-lg-4 project-item" data-category="web python">
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 200px;">
+            <img src="{{ url_for('static', filename='assets/projects/quoto_studio.jpg') }}" alt="Quote Studio AI"
+              loading="lazy">
+          </div>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="fw-bold text-white mb-0" style="font-size: 1.1rem;">Quote Studio AI</h5>
+            <i class="fas fa-robot text-primary"></i>
+          </div>
+          <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.85rem;">
+            A modern quote generator with mood-based categories and instant image export.
+          </p>
+          <div class="d-flex gap-2 mb-3">
+            <span class="tech-pill">AI</span>
+            <span class="tech-pill">Web</span>
+          </div>
+          <a href="https://github.com/krissshnaverrrma/Qoute-Studio-AI" target="_blank"
+            class="btn-glass btn-sm w-100 text-center small">
+            View Code <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 project-item" data-category="python">
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 200px;">
+            <img src="{{ url_for('static', filename='assets/projects/clock.jpeg') }}" alt="Clock App" loading="lazy">
+          </div>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="fw-bold text-white mb-0" style="font-size: 1.1rem;">Dual Clock</h5>
+            <i class="far fa-clock text-info"></i>
+          </div>
+          <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.85rem;">
+            Precise time-keeping displaying both digital and analog formats with synchronization.
+          </p>
+          <div class="d-flex gap-2 mb-3">
+            <span class="tech-pill">GUI</span>
+            <span class="tech-pill">Python</span>
+          </div>
+          <a href="https://github.com/krissshnaverrrma/Dual-Clock" target="_blank"
+            class="btn-glass btn-sm w-100 text-center small">
+            View Code <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 project-item" data-category="game">
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 200px;">
+            <img src="{{ url_for('static', filename='assets/projects/table_tennis.jpeg') }}" alt="Table Tennis"
+              loading="lazy">
+          </div>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="fw-bold text-white mb-0" style="font-size: 1.1rem;">2D Table Tennis</h5>
+            <i class="fas fa-table-tennis text-success"></i>
+          </div>
+          <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.85rem;">
+            A classic Ping Pong game featuring score tracking, collision physics, and smooth controls.
+          </p>
+          <div class="d-flex gap-2 mb-3">
+            <span class="tech-pill">Game Dev</span>
+            <span class="tech-pill">Logic</span>
+          </div>
+          <a href="https://github.com/krissshnaverrrma/Table-Tennis" target="_blank"
+            class="btn-glass btn-sm w-100 text-center small">
+            View Code <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 project-item" data-category="cpp">
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 250px;">
+            <img src="{{ url_for('static', filename='assets/projects/quize_game.jpg') }}" alt="Quiz Game"
+              loading="lazy">
+          </div>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="fw-bold text-white mb-0" style="font-size: 1.1rem;">Console Quiz System</h5>
+            <i class="fas fa-question-circle text-danger"></i>
+          </div>
+          <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.85rem;">
+            Modular quiz system running in C++ console. Features multiple-choice logic, score calculation, and
+            file-based question banks.
+          </p>
+          <div class="d-flex gap-2 mb-3">
+            <span class="tech-pill">C++</span>
+            <span class="tech-pill">OOP</span>
+            <span class="tech-pill">File I/O</span>
+          </div>
+          <a href="https://github.com/krissshnaverrrma/Quize-Game" target="_blank"
+            class="btn-glass btn-sm w-100 text-center small">
+            View Code <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 project-item" data-category="cpp">
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 250px;">
+            <img src="{{ url_for('static', filename='assets/projects/grading_system.jpg') }}" alt="Grading System"
+              loading="lazy">
+          </div>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="fw-bold text-white mb-0" style="font-size: 1.1rem;">Student Grading System</h5>
+            <i class="fas fa-graduation-cap text-primary"></i>
+          </div>
+          <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.85rem;">
+            Management system to Add, Search, and Save student records. Demonstrates strong grasp of file handling and
+            pointers in C.
+          </p>
+          <div class="d-flex gap-2 mb-3">
+            <span class="tech-pill">C Language</span>
+            <span class="tech-pill">Structures</span>
+            <span class="tech-pill">DB Logic</span>
+          </div>
+          <a href="https://github.com/krissshnaverrrma/Student-Grading--System" target="_blank"
+            class="btn-glass btn-sm w-100 text-center small">
+            View Code <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-item');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.getAttribute('data-filter');
+
+        requestAnimationFrame(() => {
+          projects.forEach(project => {
+            const categories = project.getAttribute('data-category');
+            if (filter === 'all' || (categories && categories.includes(filter))) {
+              project.classList.remove('d-none');
+              project.classList.add('fade-in');
+            } else {
+              project.classList.add('d-none');
+              project.classList.remove('fade-in');
+            }
+          });
+        });
+      });
+    });
+  });
+</script>
+
+{% endblock %}

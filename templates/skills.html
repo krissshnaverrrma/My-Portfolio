@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Skills Dashboard | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .skill-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+  }
+
+  .skill-badge:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .skill-badge i {
+    font-size: 1.1em;
+  }
+
+  .section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 40px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+  }
+
+  .timeline-step {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 20px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+  }
+
+  .timeline-step.future {
+    border-left-style: dashed;
+  }
+
+  .timeline-step.future::before {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    box-shadow: none;
+  }
+</style>
+
+<div class="glass-panel d-flex flex-column align-items-center"
+  style="min-height: 100vh; width: 100vw; margin: 0; border: none; border-radius: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(20px);">
+
+  <div class="container p-4 p-md-5" style="max-width: 1400px; padding-top: 6rem !important;">
+
+    <div class="text-center mb-5">
+      <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 3px;">Lazy Developer (Coder)</h6>
+      <h1 class="display-3 fw-bold text-white mb-3">My <span style="color:var(--primary-color)">Skills</span>
+      </h1>
+      <p class="text-secondary lead mx-auto" style="max-width: 800px;">
+        "I don't just write code; I engineer solutions." <br>
+        Here is a breakdown of my tools, metrics, and future roadmap.
+      </p>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0 4rem 0;">
+
+    <div class="row g-4">
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">Languages</h4>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="skill-badge"><i class="fab fa-python text-warning"></i> Python</span>
+            <span class="skill-badge"><i class="fas fa-code text-primary"></i> C/C++</span>
+            <span class="skill-badge"><i class="fab fa-js text-warning"></i> JavaScript</span>
+            <span class="skill-badge"><i class="fab fa-java text-danger"></i> Java</span>
+            <span class="skill-badge"><i class="fas fa-terminal text-light"></i> Bash/Shell</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">Backend & Data Base</h4>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="skill-badge"><i class="fas fa-flask text-white"></i> Flask</span>
+            <span class="skill-badge"><i class="fab fa-python text-warning"></i> Django</span>
+            <span class="skill-badge"><i class="fas fa-server text-success"></i> REST APIs</span>
+            <span class="skill-badge"><i class="fas fa-database text-info"></i> PostgreSQL</span>
+            <span class="skill-badge"><i class="fas fa-layer-group text-light"></i> SQLAlchemy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">Frontend & UI/UX</h4>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="skill-badge"><i class="fab fa-html5 text-danger"></i> HTML</span>
+            <span class="skill-badge"><i class="fab fa-css3-alt text-primary"></i> CSS</span>
+            <span class="skill-badge"><i class="fab fa-bootstrap text-purple"></i> Bootstrap </span>
+            <span class="skill-badge"><i class="fas fa-mobile-alt text-light"></i> Responsive Design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">DevOps & Tools</h4>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="skill-badge"><i class="fab fa-git-alt text-danger"></i> Git</span>
+            <span class="skill-badge"><i class="fab fa-github text-white"></i> GitHub</span>
+            <span class="skill-badge"><i class="fas fa-terminal text-info"></i> ViSual Studio Code</span>
+            <span class="skill-badge"><i class="fab fa-linux text-warning"></i> Linux</span>
+            <span class="skill-badge"><i class="fas fa-cloud-upload-alt text-primary"></i> Render/Vercel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">Methodologies</h4>
+          <p class="text-secondary small mb-3">Understanding the process is as important as the code.</p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="skill-badge"><i class="fas fa-code-branch text-warning"></i> Git Flow</span>
+            <span class="skill-badge"><i class="fas fa-bug text-danger"></i> Debugging</span>
+            <span class="skill-badge"><i class="fas fa-check-circle text-success"></i> Unit Testing</span>
+            <span class="skill-badge"><i class="fas fa-project-diagram text-info"></i> OOP Design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100">
+          <h4 class="section-title text-white">My Journey</h4>
+          <div class="mt-3">
+            <div class="timeline-step">
+              <h6 class="text-white mb-0">2024: The Foundation</h6>
+              <small class="text-secondary">Mastered C++, OOP, and Data Structures.</small>
+            </div>
+            <div class="timeline-step">
+              <h6 class="text-primary mb-0 fw-bold">2025: Full Stack & Python</h6>
+              <small class="text-light">Building APIs with Flask, Web Apps, and Games.</small>
+            </div>
+            <div class="timeline-step future">
+              <h6 class="text-white mb-0" style="opacity: 0.7;">2026: The Next Frontier</h6>
+              <small class="text-secondary">Goal: Machine Learning & Cloud Architecture (AWS).</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
