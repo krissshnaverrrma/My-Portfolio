@@ -66,7 +66,7 @@ function updateBotUI(status) {
         input.disabled = false;
         input.placeholder = "Terminal Mode: Asking Database...";
         input.style.opacity = "1";
-        label.innerText = "Terminal Mode";
+        label.innerText = "Data-Base Mode";
         label.className = "text-warning";
         dot.style.color = "#f39c12";
         if (sendBtn) sendBtn.disabled = false;
