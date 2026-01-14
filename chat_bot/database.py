@@ -90,14 +90,19 @@ def seed_initial_data():
             {"category": "hello", "info": "Hi there! The AI is resting, but I'm still here. Ask me about my Projects!"},
             {"category": "hi", "info": "Hey! I'm operating on local database power. What would you like to know?"},
             {"category": "about_me", "info": "Krishna Verma: CS student at SCET with a Lazy Coding mindset—automating tasks for efficiency."},
-            {"category": "greeting",
-                "info": "Hello! I'm in Database Mode right now (Saving AI quota), but I can still tell you about my Skills, Projects, and Contact info."},
+            {"category": "greeting", "info": "Hello! I'm in Database Mode right now. Ask me about Skills, Projects, Certifications, or Contact info."},
             {"category": "hobbies",
                 "info": "Playing Chess, Listening to Music, and Late Night Coding with Lazy Coding Mindset."},
             {"category": "tech_stack", "info": "HTML, CSS, JavaScript, Python, C, C++, Java, SQL, Flask, Django, React, Node.js, Express.js, PostgreSQL, GitHub"},
+            {"category": "certifications",
+                "info": "He have certifications in Python (Coursera), Full Stack Web Development, and Cloud Computing Basics."},
+            {"category": "experience", "info": "He have experience building Full Stack Applications, Working with Flask/Django, and developing AI-integrated chatbots."},
+            {"category": "contact",
+                "info": f"You can reach him via email at {getattr(Config, 'CONTACT_EMAIL', 'krishnav24-cs@sanskar.org')} or on LinkedIn."},
             {"category": "linkedin",
                 "info": f"https://www.linkedin.com/in/{Config.LINKEDIN_USER}"}
         ]
+
         for entry in profile_data:
             existing = db.query(Knowledge).filter_by(
                 category=entry['category']).first()

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (typingElem) typingElem.remove();
 
                 appendMsg(
-                    "Hello! I'm Krishna's Virtual AI Assistant.Ask Me about his <b>Projects</b>, <b>Skills</b>, <b>Hobbies</b> or <b>Blog Posts</b>!",
+                    "<b>Hello! I'm Krishna's Virtual AI Assistant.</b><br>Ask Me about his <b>Projects</b>, <b>Skills</b>, <b>Blog-Posts</b>, <b>Certifications</b> or <b>Contact Info</b>!",
                     "bot-message"
                 );
             }, 1500);
