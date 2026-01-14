@@ -2,497 +2,480 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Krishna Verma | Resume</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-print-color-adjust: exact;
-    }
-
-    body {
-      background-color: #000000;
-      font-family: 'Times New Roman', Times, serif;
-      display: flex;
-      justify-content: center;
-      padding: 30px 0;
-    }
-
-    .resume-container {
-      width: 210mm;
-      background-color: #fff;
-      display: flex;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-      position: relative;
-      min-height: 297mm;
-      margin-bottom: 50px;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    h1 {
-      font-family: 'Arial', sans-serif;
-      font-weight: 700;
-      font-size: 20pt;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #000000;
-      margin-bottom: 2px;
-    }
-
-    h2 {
-      font-family: 'Arial', sans-serif;
-      font-weight: 700;
-      font-size: 10.5pt;
-      color: #000000;
-      text-transform: uppercase;
-      border-bottom: 2px solid #000000;
-      padding-bottom: 2px;
-      margin-top: 18px;
-      margin-bottom: 8px;
-    }
-
-    p,
-    li,
-    span,
-    div {
-      font-size: 9pt;
-      line-height: 1.35;
-      color: #000000;
-    }
-
-    .left-col {
-      width: 30%;
-      background-color: #f4f4f4;
-      padding: 20px 12px;
-      border-right: 1px solid #dcdcdc;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .profile-img {
-      width: 100%;
-      height: auto;
-      border-radius: 50%;
-      border-radius: 0px;
-      object-fit: cover;
-      border: 3px solid #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: block;
-      margin: 0 auto 15px auto;
-    }
-
-    .edu-block,
-    .skill-block {
-      margin-bottom: 12px;
-    }
-
-    .edu-degree {
-      font-weight: bold;
-      display: block;
-      font-family: 'Arial', sans-serif;
-      font-size: 9pt;
-    }
-
-    .edu-school {
-      display: block;
-      margin-bottom: 1px;
-      font-size: 8.5pt;
-    }
-
-    .edu-meta {
-      font-style: italic;
-      color: #666;
-      font-size: 8.5pt;
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    .coursework {
-      font-size: 8pt;
-      color: #555;
-      line-height: 1.2;
-      margin-top: 2px;
-    }
-
-    .skill-category {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-      font-family: 'Arial', sans-serif;
-      font-size: 8.5pt;
-      text-transform: uppercase;
-    }
-
-    ul.skills-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul.skills-list li {
-      margin-bottom: 2px;
-      font-size: 9pt;
-    }
-
-    ul.skills-list li::before {
-      content: "• ";
-      color: #000000;
-      font-weight: bold;
-    }
-
-    .right-col {
-      width: 70%;
-      padding: 20px 20px;
-    }
-
-    .header-section {
-      margin-bottom: 15px;
-    }
-
-    .contact-info {
-      font-family: 'Arial', sans-serif;
-      font-size: 8.5pt;
-      color: #666;
-      margin-top: 5px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .contact-info span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .project-block {
-      margin-bottom: 15px;
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 2px;
-    }
-
-    .project-link {
-      font-size: 8pt;
-      color: #000000;
-      text-decoration: none;
-      border-bottom: 1px dotted #000000;
-    }
-
-    .project-link:hover {
-      color: #4a4a4a;
-    }
-
-    ul.bullet-list {
-      padding-left: 15px;
-      margin-top: 3px;
-    }
-
-    ul.bullet-list li {
-      margin-bottom: 4px;
-    }
-
-    .pdf-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #000000;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      border-radius: 4px;
-      font-family: 'Arial', sans-serif;
-      z-index: 100;
-      transition: background 0.3s;
-    }
-
-    .pdf-btn:hover {
-      background: #ffffff;
-    }
-
-    .pdf-btn-secondary {
-      top: 60px;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media print {
-      @page {
-        margin: 0;
-        size: A4;
-      }
-
-      html,
-      body {
-        height: 297mm;
-        width: 210mm;
-        background: white;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-
-      .resume-container {
-        width: 100%;
-        height: 100%;
-        box-shadow: none;
-        margin: 0;
-        display: flex;
-      }
-
-      .left-col {
-        height: 100%;
-        background-color: #f4f4f4 !important;
-        -webkit-print-color-adjust: exact;
-      }
-
-      .pdf-btn {
-        display: none !important;
-      }
-
-      .fade-in {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
-
-      .cert-link {
-        display: none !important;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Verma | Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+        }
+        
+        body {
+            background-color: #000000;
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+        }
+        
+        .resume-container {
+            width: 210mm;
+            background-color: #fff;
+            display: flex;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            min-height: 297mm;
+            margin-bottom: 50px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 20pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+        
+        h2 {
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 10.5pt;
+            color: #000000;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 2px;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+        
+        p,
+        li,
+        span,
+        div {
+            font-size: 9pt;
+            line-height: 1.35;
+            color: #000000;
+        }
+        
+        .left-col {
+            width: 30%;
+            background-color: #f4f4f4;
+            padding: 20px 12px;
+            border-right: 1px solid #dcdcdc;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            border-radius: 0px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto 15px auto;
+        }
+        
+        .edu-block,
+        .skill-block {
+            margin-bottom: 12px;
+        }
+        
+        .edu-degree {
+            font-weight: bold;
+            display: block;
+            font-family: 'Arial', sans-serif;
+            font-size: 9pt;
+        }
+        
+        .edu-school {
+            display: block;
+            margin-bottom: 1px;
+            font-size: 8.5pt;
+        }
+        
+        .edu-meta {
+            font-style: italic;
+            color: #666;
+            font-size: 8.5pt;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .coursework {
+            font-size: 8pt;
+            color: #555;
+            line-height: 1.2;
+            margin-top: 2px;
+        }
+        
+        .skill-category {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 8.5pt;
+            text-transform: uppercase;
+        }
+        
+        ul.skills-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul.skills-list li {
+            margin-bottom: 2px;
+            font-size: 9pt;
+        }
+        
+        ul.skills-list li::before {
+            content: "• ";
+            color: #000000;
+            font-weight: bold;
+        }
+        
+        .right-col {
+            width: 70%;
+            padding: 20px 20px;
+        }
+        
+        .header-section {
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            font-family: 'Arial', sans-serif;
+            font-size: 8.5pt;
+            color: #666;
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .project-block {
+            margin-bottom: 15px;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+        
+        .project-link {
+            font-size: 8pt;
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px dotted #000000;
+        }
+        
+        .project-link:hover {
+            color: #4a4a4a;
+        }
+        
+        ul.bullet-list {
+            padding-left: 15px;
+            margin-top: 3px;
+        }
+        
+        ul.bullet-list li {
+            margin-bottom: 4px;
+        }
+        
+        .pdf-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #000000;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Arial', sans-serif;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+        
+        .pdf-btn:hover {
+            background: #ffffff;
+        }
+        
+        .pdf-btn-secondary {
+            top: 60px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+            html,
+            body {
+                height: 297mm;
+                width: 210mm;
+                background: white;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            .resume-container {
+                width: 100%;
+                height: 100%;
+                box-shadow: none;
+                margin: 0;
+                display: flex;
+            }
+            .left-col {
+                height: 100%;
+                background-color: #f4f4f4 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .pdf-btn {
+                display: none !important;
+            }
+            .fade-in {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .cert-link {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="resume-container">
-    <a href="{{ url_for('main.home') }}" class="pdf-btn">
-      <i class="fas fa-arrow-left"></i> Back to Portfolio
-    </a>
+    <div class="resume-container">
+        <a href="{{ url_for('main.home') }}" class="pdf-btn">
+            <i class="fas fa-arrow-left"></i> Back to Portfolio
+        </a>
 
-    <button onclick="window.print()" class="pdf-btn pdf-btn-secondary">
+        <button onclick="window.print()" class="pdf-btn pdf-btn-secondary">
       <i class="fas fa-download"></i> Save as PDF
     </button>
 
-    <div class="left-col">
-      <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma" class="profile-img fade-in">
-      <div class="fade-in">
-        <h2>Education</h2>
-        <div class="edu-block">
-          <span class="edu-degree">B.Tech Computer Science</span>
-          <span class="edu-school">Sanskar College of Engineering and Technology (SCET)</span>
-          <span class="edu-meta">Exp. 2027 | Hapur, India</span>
-          <div class="coursework">
-            <strong>Key Coursework:</strong> DSA, OOPs, Database Management, Operating Systems, Computer Networks.
-          </div>
+        <div class="left-col">
+            <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma" class="profile-img fade-in">
+            <div class="fade-in">
+                <h2>Education</h2>
+                <div class="edu-block">
+                    <span class="edu-degree">B.Tech Computer Science</span>
+                    <span class="edu-school">Sanskar College of Engineering and Technology (SCET)</span>
+                    <span class="edu-meta">Exp. 2027 | Hapur, India</span>
+                    <div class="coursework">
+                        <strong>Key Coursework:</strong> DSA, OOPs, Database Management, Operating Systems, Computer Networks.
+                    </div>
+                </div>
+
+                <div class="edu-block">
+                    <span class="edu-degree">Higher Secondary (PCM)</span>
+                    <span class="edu-school">Saraswati B.M Mandir Sr Sec School</span>
+                    <span>Hapur</span>
+                    <span class="edu-meta">2022 - 2024</span>
+                    <div class="coursework">
+                        First Division | Tech Club Member
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in">
+                <h2>Skills</h2>
+                <span class="skill-category">Languages</span>
+                <ul class="skills-list">
+                    <li>Python (Advanced)</li>
+                    <li>C / C++ (Intermediate)</li>
+                    <li>Java (Core)</li>
+                    <li>SQL / PL/SQL</li>
+                    <li>JavaScript (ES6+)</li>
+                </ul>
+
+                <span class="skill-category">Web Development</span>
+                <ul class="skills-list">
+                    <li>Flask & Django</li>
+                    <li>RESTful APIs</li>
+                    <li>HTML5 / CSS3</li>
+                    <li>React (Basic)</li>
+                </ul>
+
+                <span class="skill-category">Tools & Platforms</span>
+                <ul class="skills-list">
+                    <li>PostgreSQL / MySQL</li>
+                    <li>Git / GitHub</li>
+                    <li>Linux / Terminal</li>
+                    <li>Render / Cloud Deploy</li>
+                </ul>
+            </div>
+
+            <div class="fade-in">
+                <h2>Certifications</h2>
+                <ul class="skills-list">
+                    <li>Python (Basic) - HackerRank</li>
+                    <li>Problem Solving - HackerRank</li>
+                    <li>Intro to Git & GitHub - Coursera</li>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="edu-block">
-          <span class="edu-degree">Higher Secondary (PCM)</span>
-          <span class="edu-school">Saraswati B.M Mandir Sr Sec School</span>
-          <span>Hapur</span>
-          <span class="edu-meta">2022 - 2024</span>
-          <div class="coursework">
-            First Division | Tech Club Member
-          </div>
-        </div>
-      </div>
-
-      <div class="fade-in">
-        <h2>Skills</h2>
-        <span class="skill-category">Languages</span>
-        <ul class="skills-list">
-          <li>Python (Advanced)</li>
-          <li>C / C++ (Intermediate)</li>
-          <li>Java (Core)</li>
-          <li>SQL / PL/SQL</li>
-          <li>JavaScript (ES6+)</li>
-        </ul>
-
-        <span class="skill-category">Web Development</span>
-        <ul class="skills-list">
-          <li>Flask & Django</li>
-          <li>RESTful APIs</li>
-          <li>HTML5 / CSS3</li>
-          <li>React (Basic)</li>
-        </ul>
-
-        <span class="skill-category">Tools & Platforms</span>
-        <ul class="skills-list">
-          <li>PostgreSQL / MySQL</li>
-          <li>Git / GitHub</li>
-          <li>Linux / Terminal</li>
-          <li>Render / Cloud Deploy</li>
-        </ul>
-      </div>
-
-      <div class="fade-in">
-        <h2>Certifications</h2>
-        <ul class="skills-list">
-          <li>Python (Basic) - HackerRank</li>
-          <li>Problem Solving - HackerRank</li>
-          <li>Intro to Git & GitHub - Coursera</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="right-col">
-      <div class="header-section fade-in">
-        <h1>Krishna Verma</h1>
-        <div class="contact-info">
-          <span>
+        <div class="right-col">
+            <div class="header-section fade-in">
+                <h1>Krishna Verma</h1>
+                <div class="contact-info">
+                    <span>
             <i class="fas fa-phone-alt"></i>
             <a href="tel:+919258846075" style="text-decoration: none; color: inherit;">+91 9258846075</a>
           </span>
 
-          <span>
+                    <span>
             <i class="fas fa-envelope"></i>
             <a href="mailto:krishnav24-cs@sanskar.org"
               style="text-decoration: none; color: inherit;">krishnav24-cs@sanskar.org</a>
           </span>
 
-          <div style="width: 100%;"></div>
+                    <div style="width: 100%;"></div>
 
-          <span>
+                    <span>
             <i class="fab fa-linkedin"></i>
             <a href="https://www.linkedin.com/in/krishnav-cs" target="_blank">linkedin.com/in/krishnav-cs</a>
           </span>
 
-          <span>
+                    <span>
             <i class="fab fa-github"></i>
             <a href="https://github.com/krissshnaverrrma" target="_blank">github.com/krissshnaverrrma</a>
           </span>
-        </div>
-      </div>
-      <div class="fade-in">
-        <h2>Professional Summary</h2>
-        <p>
-          Passionate Computer Science undergraduate with a strong foundation in backend systems and interactive web
-          applications.
-          Experienced in the full Software Development Life Cycle (SDLC), from designing scalable database architectures
-          with PostgreSQL
-          to implementing responsive frontends using Flask. Adept at optimizing algorithms for performance and
-          automating workflows.
-          Currently seeking internship opportunities to apply skills in real-world software engineering environments.
-        </p>
-      </div>
-
-      <div class="fade-in">
-        <h2>Key Projects</h2>
-
-        <div class="project-block">
-          <div class="project-header">
-            <h3>AI-Powered Personal Portfolio</h3>
-            <div>
-              <a href="#" class="project-link">View Code</a>
-              <span class="cert-link" style="color: #ccc; margin: 0 5px;">|</span>
-              <a href="certificate.html" class="project-link cert-link" target="_blank">View Certificate Demo</a>
+                </div>
             </div>
-          </div>
-          <div style="font-size: 8pt; color: #666; margin-bottom: 3px; font-style: italic;">
-            Tech Stack: Python, Flask, PostgreSQL, Gemini API, HTML/CSS
-          </div>
-          <ul class="bullet-list">
-            <li>Developed a comprehensive full-stack portfolio featuring a custom Content Management System (CMS) for
-              blogging.</li>
-            <li>Integrated the Gemini AI API to create a context-aware chatbot capable of answering recruiter queries in
-              real-time.</li>
-            <li><strong>Implemented a dynamic certificate generation system</strong> that awards users a downloadable
-              "Certificate of Excellence" upon portfolio exploration.</li>
-          </ul>
-        </div>
+            <div class="fade-in">
+                <h2>Professional Summary</h2>
+                <p>
+                    Passionate Computer Science undergraduate with a strong foundation in backend systems and interactive web applications. Experienced in the full Software Development Life Cycle (SDLC), from designing scalable database architectures with PostgreSQL to implementing
+                    responsive frontends using Flask. Adept at optimizing algorithms for performance and automating workflows. Currently seeking internship opportunities to apply skills in real-world software engineering environments.
+                </p>
+            </div>
 
-        <div class="project-block">
-          <div class="project-header">
-            <h3>Live Weather Dashboard</h3>
-            <span>
+            <div class="fade-in">
+                <h2>Key Projects</h2>
+
+                <div class="project-block">
+                    <div class="project-header">
+                        <h3>AI-Powered Personal Portfolio</h3>
+                        <div>
+                            <a href="https://github.com/krissshnaverrrma/My-Portfolio" class="project-link">View Code</a>
+                            <span class="cert-link" style="color: #ccc; margin: 0 5px;">|</span>
+                            <a href="certificate.html" class="project-link cert-link" target="_blank">View Certificate Demo</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 8pt; color: #666; margin-bottom: 3px; font-style: italic;">
+                        Tech Stack: Python, Flask, PostgreSQL, Gemini API, HTML/CSS
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Developed a comprehensive full-stack portfolio featuring a custom Content Management System (CMS) for blogging.
+                        </li>
+                        <li>Integrated the Gemini AI API to create a context-aware chatbot capable of answering recruiter queries in real-time.
+                        </li>
+                        <li><strong>Implemented a dynamic certificate generation system</strong> that awards users a downloadable "Certificate of Excellence" upon portfolio exploration.</li>
+                    </ul>
+                </div>
+
+                <div class="project-block">
+                    <div class="project-header">
+                        <h3>Live Weather Dashboard</h3>
+                        <span>
               <i class="fab fa-github"></i>
               <a href="https://github.com/krissshnaverrrma/Weather-APP" class="project-link">View Code</a>
             </span>
-          </div>
-          <div style="font-size: 8pt; color: #666; margin-bottom: 3px; font-style: italic;">
-            Tech Stack: JavaScript, HTML5/CSS3, OpenWeatherMap API
-          </div>
-          <ul class="bullet-list">
-            <li>Engineered a dynamic weather tracking application providing real-time data and 5-day forecasting for any
-              global location.</li>
-            <li>Optimized asynchronous API calls to reduce data fetch latency by 30% and implemented error handling for
-              bad network states.</li>
-          </ul>
-        </div>
-      </div>
+                    </div>
+                    <div style="font-size: 8pt; color: #666; margin-bottom: 3px; font-style: italic;">
+                        Tech Stack: JavaScript, HTML5/CSS3, OpenWeatherMap API
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Engineered a dynamic weather tracking application providing real-time data and 5-day forecasting for any global location.</li>
+                        <li>Optimized asynchronous API calls to reduce data fetch latency by 30% and implemented error handling for bad network states.</li>
+                    </ul>
+                </div>
+            </div>
 
-      <div class="fade-in">
-        <h2>Technical Proficiency</h2>
-        <div class="project-block">
-          <ul class="bullet-list">
-            <li><strong>Data Structures & Algorithms (DSA):</strong> Proficient in solving complex algorithmic problems;
-              strong grasp of Arrays, Linked Lists, Trees, and Dynamic Programming.</li>
-            <li><strong>System Design:</strong> Solid understanding of MVC architecture, Database Normalization, and
-              RESTful API design patterns for scalable applications.</li>
-            <li><strong>Object-Oriented Programming (OOP):</strong> Demonstrated ability to apply Polymorphism,
-              Inheritance, and Encapsulation in Java and Python projects.</li>
-            <li><strong>Generative AI Integration:</strong> Hands-on experience integrating Large Language Models (LLMs)
-              into web applications to enhance user interaction.</li>
-          </ul>
-        </div>
-      </div>
+            <div class="fade-in">
+                <h2>Technical Proficiency</h2>
+                <div class="project-block">
+                    <ul class="bullet-list">
+                        <li><strong>Data Structures & Algorithms (DSA):</strong> Proficient in solving complex algorithmic problems; strong grasp of Arrays, Linked Lists, Trees, and Dynamic Programming.</li>
+                        <li><strong>System Design:</strong> Solid understanding of MVC architecture, Database Normalization, and RESTful API design patterns for scalable applications.</li>
+                        <li><strong>Object-Oriented Programming (OOP):</strong> Demonstrated ability to apply Polymorphism, Inheritance, and Encapsulation in Java and Python projects.</li>
+                        <li><strong>Generative AI Integration:</strong> Hands-on experience integrating Large Language Models (LLMs) into web applications to enhance user interaction.</li>
+                    </ul>
+                </div>
+            </div>
 
-      <div class="fade-in">
-        <h2>Interests & Activities</h2>
-        <div class="project-block" style="margin-bottom: 0;">
-          <ul class="bullet-list">
-            <li><strong>Open Source:</strong> Actively exploring and contributing to Python-based tools on GitHub.</li>
-            <li><strong>Tech Blogging:</strong> Authoring "Lazy Coder" guides to simplify complex CS concepts for
-              beginners.</li>
-            <li><strong>Strategy Gaming:</strong> Competitive chess player and strategy game enthusiast (Focus on
-              logical planning).</li>
-          </ul>
-        </div>
-      </div>
+            <div class="fade-in">
+                <h2>Interests & Activities</h2>
+                <div class="project-block" style="margin-bottom: 0;">
+                    <ul class="bullet-list">
+                        <li><strong>Open Source:</strong> Actively exploring and contributing to Python-based tools on GitHub.</li>
+                        <li><strong>Tech Blogging:</strong> Authoring "Lazy Coder" guides to simplify complex CS concepts for beginners.
+                        </li>
+                        <li><strong>Strategy Gaming:</strong> Competitive chess player and strategy game enthusiast (Focus on logical planning).</li>
+                    </ul>
+                </div>
+            </div>
 
+        </div>
     </div>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
         });
-      }, { threshold: 0.1 });
-
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    });
-  </script>
+    </script>
 
 </body>
 
