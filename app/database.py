@@ -1,0 +1,90 @@
+import os
+from datetime import datetime
+from sqlalchemy import Column, DateTime, Integer, String, Text, Boolean, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+from .config import Config
+
+engine = create_engine(
+    Config.DATABASE_URL,
+    connect_args={
+        "check_same_thread": False} if "sqlite" in Config.DATABASE_URL else {}
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+
+class APICache(Base):
+    __tablename__ = 'api_cache'
+    key = Column(String, primary_key=True, index=True)
+    data = Column(Text)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+
+class Knowledge(Base):
+    __tablename__ = 'knowledge'
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String, index=True)
+    info = Column(Text)
+
+
+class BlogPost(Base):
+    __tablename__ = 'blog_posts'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    slug = Column(String, unique=True, index=True)
+    category = Column(String)
+    summary = Column(Text)
+    content = Column(Text)
+    image_url = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Project(Base):
+    __tablename__ = 'projects'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    category = Column(String)
+    image_url = Column(String)
+    description = Column(Text)
+    tech_stack = Column(String)
+    github_url = Column(String)
+    demo_url = Column(String, nullable=True)
+    is_featured = Column(Boolean, default=False)
+    year = Column(String, nullable=True)
+
+
+class Skill(Base):
+    __tablename__ = 'skills'
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String)
+    name = Column(String)
+    icon_class = Column(String)
+
+
+class TimelineEvent(Base):
+    __tablename__ = 'timeline_events'
+    id = Column(Integer, primary_key=True, index=True)
+    type = Column(String)
+    year = Column(String)
+    title = Column(String)
+    subtitle = Column(String)
+    description = Column(Text)
+    status_badge = Column(String, nullable=True)
+    is_future = Column(Boolean, default=False)
+
+
+class Service(Base):
+    __tablename__ = 'services'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(Text)
+    icon_class = Column(String)
+
+
+class ChatLog(Base):
+    __tablename__ = 'chat_logs'
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String, index=True)
+    user_query = Column(Text)
+    bot_response = Column(Text)
+    timestamp = Column(DateTime, default=datetime.utcnow)

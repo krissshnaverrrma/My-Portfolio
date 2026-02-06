@@ -1,0 +1,402 @@
+{
+    "user_profile": {
+        "name": "Krishna Verma",
+        "github_username": "krissshnaverrrma",
+        "linkedin_username": "krishnav-cs",
+        "contact_email": "krishnav24-cs@sanskar.org",
+        "linkedin_url": "https://linkedin.com/in/krishnav-cs",
+        "location": "Hapur, Uttar Pradesh, India",
+        "about_text": "I am Krishna Verma, a passionate Computer Science undergraduate specializing in Backend Development and System Architecture. My journey started with the logic of C++ and evolved into building scalable web applications with Python & Flask. Beyond code, I am deeply interested in Game Logic and optimizing algorithms for performance."
+    },
+    "ai_config": {
+        "fallback_models": [
+            "gemini-2.5-flash",
+            "gemini-2.0-flash-lite",
+            "gemini-1.5-flash",
+            "gemini-1.5-pro"
+        ],
+        "system_instruction": [
+            "You are the Virtual AI Assistant for Krishna Verma.",
+            "CORE ROLE:",
+            "You are NOT Krishna. You are his intelligent assistant.",
+            "Your job is to introduce him, showcase his work, and answer questions about him.",
+            "ALWAYS refer to Krishna as 'He', 'Him', 'The Developer', or 'Krishna'.",
+            "NEVER say 'I' when referring to his skills or projects.",
+            "",
+            "KRISHNA'S 'LAZY CODER' PHILOSOPHY:",
+            "Krishna embodies the 'Lazy Coder' mentality.",
+            "- His Belief: 'If a task needs to be done twice, it should be automated.'",
+            "- His Focus: He writes clean, modular code that works harder so he doesn't have to.",
+            "- His Goal: Cutting redundancy, optimizing algorithms, and building self-sustaining backend systems.",
+            "",
+            "ABOUT KRISHNA:",
+            "- Education: Computer Science Undergraduate at SCET, Ghaziabad.",
+            "- Tech Stack: Passionate about scalable backends (PostgreSQL) and interactive frontends (Flask).",
+            "- Interests: Chess (Strategic planning), Open Source, and writing guides.",
+            "",
+            "DYNAMIC CONTEXT (Use this to answer specific questions):",
+            "{context_data}",
+            "",
+            "GUIDELINES:",
+            "- Tone: Professional, polite, yet frank and efficient.",
+            "- If asked 'Who are you?', say: 'I am Krishna's AI Assistant.'",
+            "- If asked 'Who is Krishna?', describe him using the details above."
+        ]
+    },
+    "linkedin_profile": {
+        "name": "Krishna Verma",
+        "headline": "CS Student | Frontend & Backend Developer",
+        "location": "Hapur, Uttar Pradesh, India",
+        "about": "Computer Science undergraduate passionate about building scalable backend systems using Python.",
+        "experience": [
+            {
+                "role": "Computer Science Student",
+                "company": "SCET",
+                "duration": "2024 - Present",
+                "description": "Focusing on Data Structures and Web Technologies."
+            }
+        ]
+    },
+    "skills": [
+        {
+            "category": "Languages",
+            "name": "Python",
+            "icon": "fab fa-python text-warning"
+        },
+        {
+            "category": "Languages",
+            "name": "C/C++",
+            "icon": "fas fa-code text-primary"
+        },
+        {
+            "category": "Languages",
+            "name": "JavaScript",
+            "icon": "fab fa-js text-warning"
+        },
+        {
+            "category": "Languages",
+            "name": "Java",
+            "icon": "fab fa-java text-danger"
+        },
+        {
+            "category": "Languages",
+            "name": "Bash/Shell",
+            "icon": "fas fa-terminal text-light"
+        },
+        {
+            "category": "Backend & Data Base",
+            "name": "Flask",
+            "icon": "fas fa-flask text-white"
+        },
+        {
+            "category": "Backend & Data Base",
+            "name": "Django",
+            "icon": "fab fa-python text-warning"
+        },
+        {
+            "category": "Backend & Data Base",
+            "name": "REST APIs",
+            "icon": "fas fa-server text-success"
+        },
+        {
+            "category": "Backend & Data Base",
+            "name": "PostgreSQL",
+            "icon": "fas fa-database text-info"
+        },
+        {
+            "category": "Backend & Data Base",
+            "name": "SQLAlchemy",
+            "icon": "fas fa-layer-group text-light"
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "HTML",
+            "icon": "fab fa-html5 text-danger"
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "CSS",
+            "icon": "fab fa-css3-alt text-primary"
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Bootstrap",
+            "icon": "fab fa-bootstrap text-purple"
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Responsive Design",
+            "icon": "fas fa-mobile-alt text-light"
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Git",
+            "icon": "fab fa-git-alt text-danger"
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "GitHub",
+            "icon": "fab fa-github text-white"
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "VS Code",
+            "icon": "fas fa-terminal text-info"
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Linux",
+            "icon": "fab fa-linux text-warning"
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Render/Vercel",
+            "icon": "fas fa-cloud-upload-alt text-primary"
+        },
+        {
+            "category": "Methodologies",
+            "name": "Git Flow",
+            "icon": "fas fa-code-branch text-warning"
+        },
+        {
+            "category": "Methodologies",
+            "name": "Debugging",
+            "icon": "fas fa-bug text-danger"
+        },
+        {
+            "category": "Methodologies",
+            "name": "Unit Testing",
+            "icon": "fas fa-check-circle text-success"
+        },
+        {
+            "category": "Methodologies",
+            "name": "OOP Design",
+            "icon": "fas fa-project-diagram text-info"
+        }
+    ],
+    "services": [
+        {
+            "title": "Frontend Development",
+            "description": "Building responsive UIs with HTML, CSS, JS.",
+            "icon": "fas fa-laptop-code"
+        },
+        {
+            "title": "Backend Development",
+            "description": "Designing robust APIs using Flask and Python.",
+            "icon": "fas fa-server"
+        },
+        {
+            "title": "Game Logic",
+            "description": "Creating interactive experiences using OOP principles.",
+            "icon": "fas fa-gamepad"
+        },
+        {
+            "title": "Algorithmic Solving",
+            "description": "Solving complex DSA challenges on LeetCode.",
+            "icon": "fas fa-code-branch"
+        }
+    ],
+    "academic_timeline": [
+        {
+            "title": "B.Tech in Computer Science",
+            "institution": "Sanskar College of Engineering and Technology (SCET) Gaziabad",
+            "year": "2024 - Present",
+            "status": "Current",
+            "description": "Pursuing Bachelor's degree with a focus on core computer science fundamentals."
+        },
+        {
+            "title": "Higher Secondary (XII & X)",
+            "institution": "JMS World School & Saraswati Bal Mandir Sr. Sec. School",
+            "year": "2022-2024",
+            "status": "Completed",
+            "description": "Major Subjects: Physics, Chemistry, Mathematics (PCM)"
+        }
+    ],
+    "dev_journey": [
+        {
+            "year": "2024",
+            "title": "The Foundation",
+            "description": "Mastered C++, OOP, and Data Structures.",
+            "is_future": false
+        },
+        {
+            "year": "2025",
+            "title": "Full Stack & Python",
+            "description": "Building APIs with Flask, Web Apps, and Games.",
+            "is_future": false
+        },
+        {
+            "year": "2026",
+            "title": "The Next Frontier",
+            "description": "Goal: Machine Learning & Cloud Architecture (AWS).",
+            "is_future": true
+        }
+    ],
+    "projects": [
+        {
+            "title": "Live Weather Dashboard",
+            "category": "web",
+            "image_url": "/static/assets/projects/weather_app.jpg",
+            "description": "An advanced real-time weather tracking application. It features geolocation detection, detailed 5-day forecasting, and dynamic background themes that adapt to live conditions.",
+            "tech_stack": [
+                "JavaScript",
+                "OpenWeather",
+                "CSS3"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Weather-APP",
+            "demo_url": "https://weather-app-one-cyan-26.vercel.app/",
+            "is_featured": true,
+            "year": "2024"
+        },
+        {
+            "title": "Quote Studio AI",
+            "category": "web python",
+            "image_url": "/static/assets/projects/quoto_studio.jpg",
+            "description": "A modern quote generator with mood-based categories and instant image export.",
+            "tech_stack": [
+                "AI",
+                "Web"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Qoute-Studio-AI",
+            "is_featured": false
+        },
+        {
+            "title": "Dual Clock",
+            "category": "python",
+            "image_url": "/static/assets/projects/clock.jpeg",
+            "description": "Precise time-keeping displaying both digital and analog formats with synchronization.",
+            "tech_stack": [
+                "GUI",
+                "Python"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Dual-Clock",
+            "is_featured": false
+        },
+        {
+            "title": "2D Table Tennis",
+            "category": "game",
+            "image_url": "/static/assets/projects/table_tennis.jpeg",
+            "description": "A classic Ping Pong game featuring score tracking, collision physics, and smooth controls.",
+            "tech_stack": [
+                "Game Dev",
+                "Logic"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Table-Tennis",
+            "is_featured": false
+        },
+        {
+            "title": "Console Quiz System",
+            "category": "cpp",
+            "image_url": "/static/assets/projects/quize_game.jpg",
+            "description": "Modular quiz system running in C++ console. Features multiple-choice logic, score calculation, and file-based question banks.",
+            "tech_stack": [
+                "C++",
+                "OOP",
+                "File I/O"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Quize-Game",
+            "is_featured": false
+        },
+        {
+            "title": "Student Grading System",
+            "category": "cpp",
+            "image_url": "/static/assets/projects/grading_system.jpg",
+            "description": "Management system to Add, Search, and Save student records. Demonstrates strong grasp of file handling and pointers in C.",
+            "tech_stack": [
+                "C Language",
+                "Structures",
+                "DB Logic"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Student-Grading--System",
+            "is_featured": false
+        }
+    ],
+    "blog_posts": [
+        {
+            "title": "Automating Academics: The Grading System",
+            "slug": "grading-system-c",
+            "category": "C / System",
+            "image_url": "/static/assets/blogs/grading_system.jpg",
+            "summary": "My first foray into data persistence. A C-based tool to automate GPA calculations and student record management using low-level file handling.",
+            "content": "<p class='lead text-light'>Why calculate grades manually when a loop can do it for you? This project was born out of a refusal to do repetitive math.</p><h3 class='text-white mt-4'>The Architecture</h3><p>Built entirely in C, this system uses <code>structs</code> to define student data and effectively manages memory to store records. The biggest challenge wasn't the math—it was the <strong>file handling</strong>. Implementing <code>fwrite</code> and <code>fread</code> operations allowed me to create a persistent database without actually using SQL.</p><h3 class='text-white mt-4'>Key Takeaway</h3><p>It taught me that data is just bytes. Whether it's a text file or a complex database, the principle remains the same: structure your data correctly, and retrieval becomes instant.</p>"
+        },
+        {
+            "title": "Console UX: Modular Quiz Engine",
+            "slug": "modular-quiz-game",
+            "category": "C++ / Logic",
+            "image_url": "/static/assets/blogs/quize_game.jpg",
+            "summary": "A C++ console application that separates game logic from data. It demonstrates control flow, input validation, and the illusion of choice.",
+            "content": "<p class='lead text-light'>A console window doesn't have to be boring. This project focuses on the user experience within a text-based environment.</p><h3 class='text-white mt-4'>Modular Design</h3><p>Spaghetti code is the enemy. I designed this quiz engine to be modular. The 'Question Bank' is separated from the 'Scoring Logic'. This means adding a new question doesn't require rewriting the main loop.</p><h3 class='text-white mt-4'>The Logic</h3><p>Using complex <code>switch-case</code> structures and input validation loops, the system ensures the game never crashes, even if the user tries to break it. It's a lesson in defensive programming.</p>"
+        },
+        {
+            "title": "Physics in a Loop: 2D Table Tennis",
+            "slug": "table-tennis-2d",
+            "category": "Game Dev",
+            "image_url": "/static/assets/blogs/table_tennis.jpeg",
+            "summary": "Moving from static code to event-driven simulations. This project implements basic vector physics and collision detection in a real-time loop.",
+            "content": "<p class='lead text-light'>Static code waits for input. Game code never sleeps. This Table Tennis simulation was my introduction to the <strong>Game Loop</strong>.</p><h3 class='text-white mt-4'>Collision Detection</h3><p>The core of this project is geometry. Calculating the intersection of the ball (a circle) and the paddle (a rectangle) requires constant checking. If <code>ball.x > width</code>, we reverse the velocity vector. Simple math, creating complex behavior.</p><h3 class='text-white mt-4'>Event Management</h3><p>Handling user input (paddle movement) while simultaneously rendering frame-by-frame physics taught me the importance of optimization. You only have 16ms to render a frame; efficient code is mandatory.</p>"
+        },
+        {
+            "title": "Mastering Time: Digital Clock App",
+            "slug": "digital-clock-app",
+            "category": "Utility / GUI",
+            "image_url": "/static/assets/blogs/clock.jpeg",
+            "summary": "A study in asynchronous UI updates. Creating a digital clock requires precise management of the main thread to ensure zero-latency visuals.",
+            "content": "<p class='lead text-light'>Time is the one variable you can't control, only measure. This application visualizes system time with custom aesthetics.</p><h3 class='text-white mt-4'>The Main Thread Problem</h3><p>If you put a <code>sleep()</code> command in your UI thread, the whole app freezes. This project required separating the time-fetching logic from the UI-rendering logic. It ensures the window remains responsive (movable, closable) while the digits update every second.</p>"
+        },
+        {
+            "title": "Fetching the Sky: Weather Dashboard",
+            "slug": "weather-dashboard-api",
+            "category": "Web / API",
+            "image_url": "/static/assets/blogs/weather_app.jpg",
+            "summary": "Connecting the local machine to the global grid. This dashboard consumes REST APIs to visualize real-time meteorological data.",
+            "content": "<p class='lead text-light'>My local computer knows nothing about the sky outside. This project bridges that gap using APIs.</p><h3 class='text-white mt-4'>JSON Parsing</h3><p>The challenge here isn't displaying text; it's parsing the massive JSON response from the weather provider. Extracting specific data points (Temperature, Humidity, Wind Speed) and mapping them to dynamic DOM elements is the cornerstone of modern web development.</p><h3 class='text-white mt-4'>Dynamic Visualization</h3><p>Instead of just showing numbers, I used the data to render curves and graphs, making the data human-readable at a glance.</p>"
+        },
+        {
+            "title": "Quote Studio: AI Meets Minimalism",
+            "slug": "quote-studio-ai",
+            "category": "Full Stack / AI",
+            "image_url": "/static/assets/blogs/quoto_studio.jpg",
+            "summary": "The culmination of the journey. A full-stack web application combining AI-generated content with a polished, dark-mode aesthetic.",
+            "content": "<p class='lead text-light'>The ultimate Lazy Coder project: I built an app that writes its own content.</p><h3 class='text-white mt-4'>The Stack</h3><p>This project integrates a robust backend (to handle API requests to AI models) with a sleek, minimalist frontend. The design philosophy is 'Content First'.</p><h3 class='text-white mt-4'>AI Integration</h3><p>By hooking into Generative AI APIs, the app generates unique quotes based on 'Mood' parameters. It proves that backend complexity can be hidden behind a simple, beautiful button.</p>"
+        }
+    ],
+    "knowledge_base": [
+        {
+            "category": "hello",
+            "info": "Hi there! I am Krishna's Virtual Assistant. How can I help you explore his Portfolio?"
+        },
+        {
+            "category": "hi",
+            "info": "Hello! I can tell you about Krishna's Projects, Skills, and Experience. What would you like to know?"
+        },
+        {
+            "category": "about_me",
+            "info": "Krishna Verma: CS student at SCET with a Lazy Coding mindset—automating tasks for efficiency."
+        },
+        {
+            "category": "greeting",
+            "info": "Welcome! I am ready to answer your questions about Krishna's work."
+        },
+        {
+            "category": "hobbies",
+            "info": "Playing Chess, Listening to Music, and Late Night Coding with Lazy Coding Mindset."
+        },
+        {
+            "category": "tech_stack",
+            "info": "HTML, CSS, JavaScript, Python, C, C++, Java, SQL, Flask, Django, React, Node.js, Express.js, PostgreSQL, GitHub"
+        },
+        {
+            "category": "certifications",
+            "info": "He has certifications in Python (Coursera), Full Stack Web Development, and Cloud Computing Basics."
+        },
+        {
+            "category": "experience",
+            "info": "He has experience building Full Stack Applications, Working with Flask/Django, and developing AI-integrated chatbots."
+        },
+        {
+            "category": "contact",
+            "info": "You can reach Krishna via email at krishnav24-cs@sanskar.org. His GitHub username is 'krissshnaverrrma' and his LinkedIn profile is 'krishnav-cs' (https://linkedin.com/in/krishnav-cs)."
+        }
+    ]
+}
