@@ -74,7 +74,7 @@
     <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1000px;">
 
         <div class="mb-5">
-            <a href="{{ url_for('main.blog') }}" class="btn-glass px-4 py-2 small">
+            <a href="{{ url_for('blog.blog_list') }}" class="btn-glass px-4 py-2 small">
                 <i class="fas fa-arrow-left me-2"></i> Back to Archive
             </a>
         </div>
@@ -105,7 +105,7 @@
         {% endif %}
 
         <article class="blog-content mb-5">
-            {{ post.content | safe }}
+            {{ post.content | markdown }}
         </article>
 
         <div class="author-card d-flex flex-column flex-md-row align-items-center gap-4 mt-5">
@@ -124,8 +124,8 @@
         </div>
 
         <div class="mt-5 pt-5 border-top border-secondary text-center">
-            <h4 class="text-white fw-bold mb-4">Want to See the Code in Action?</h4>
-            <a href="{{ url_for('main.projects') }}" class="btn-glass px-5 py-3">
+            <h4 class="text-white fw-bold mb-4">Want to See the Repositories in Action?</h4>
+            <a href="{{ url_for('projects.projects') }}" class="btn-glass px-5 py-3">
                 Explore My Projects <i class="fas fa-rocket ms-2"></i>
             </a>
         </div>

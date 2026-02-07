@@ -64,7 +64,7 @@
 
      .map-container {
           width: 100%;
-          height: 250px;
+          height: 200px;
           border-radius: 16px;
           overflow: hidden;
           border: 1px solid rgba(255, 255, 255, 0.1);
@@ -75,6 +75,28 @@
      .map-container:hover {
           filter: grayscale(0.5) invert(0.8) contrast(1.1);
      }
+
+     .form-control-glass {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: white;
+          padding: 10px 15px;
+          border-radius: 10px;
+          transition: 0.3s;
+          font-size: 0.9rem;
+     }
+
+     .form-control-glass:focus {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: var(--primary-color);
+          color: white;
+          outline: none;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+     }
+
+     .form-control-glass::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+     }
 </style>
 
 <div id="copy-toast" class="copy-success">Email Copied!</div>
@@ -82,7 +104,7 @@
 <div class="glass-panel d-flex flex-column align-items-center"
      style="min-height: 100vh; width: 100vw; margin: 0; border: none; border-radius: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%); backdrop-filter: blur(20px);">
 
-     <div class="container p-4" style="max-width: 1200px; padding-top: 7rem !important;">
+     <div class="container p-4" style="max-width: 1600px; padding-top: 7rem !important;">
 
           <div class="text-center mb-5 reveal-element">
                <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 4px; font-size: 0.75rem;">
@@ -124,14 +146,6 @@
                     </a>
                </div>
                <div class="col-6 col-md-4 col-lg-2 reveal-element">
-                    <a href="{{ profile.linkedin_url }}" target="_blank"
-                         class="glass-card contact-card text-decoration-none">
-                         <i class="fab fa-linkedin-in fa-2x text-primary mb-3"></i>
-                         <h6 class="text-white fw-bold small">LinkedIn</h6>
-                         <p class="text-secondary smaller mb-0">Network</p>
-                    </a>
-               </div>
-               <div class="col-6 col-md-4 col-lg-2 reveal-element">
                     <a href="https://github.com/{{ profile.github_username }}" target="_blank"
                          class="glass-card contact-card text-decoration-none">
                          <i class="fab fa-github fa-2x text-primary mb-3"></i>
@@ -139,63 +153,43 @@
                          <p class="text-secondary smaller mb-0">Repositories</p>
                     </a>
                </div>
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="{{ profile.linkedin_url }}" target="_blank"
+                         class="glass-card contact-card text-decoration-none">
+                         <i class="fab fa-linkedin-in fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">LinkedIn</h6>
+                         <p class="text-secondary smaller mb-0">Network</p>
+                    </a>
+               </div>
           </div>
 
-          <div class="row g-5 align-items-stretch mt-4">
-               <div class="col-lg-7 reveal-element">
-                    <div class="glass-card p-5 h-100 border border-secondary position-relative overflow-hidden">
+          <div class="row g-4 align-items-stretch reveal-element">
 
-                         <h3 class="text-white fw-bold mb-4">Direct Communication</h3>
-                         <p class="text-secondary mb-4">I prioritize efficient, logic-driven communication. To maintain
-                              a focused development workflow, my phone number is private, but I am highly responsive via
-                              email for:</p>
+               <div class="col-lg-4">
+                    <div
+                         class="glass-card p-4 h-100 border border-secondary position-relative overflow-hidden d-flex flex-column">
+                         <h3 class="text-white fw-bold mb-4">Direct Channels</h3>
+                         <p class="text-secondary mb-4 small">I prioritize efficient, logic-driven communication. Highly
+                              responsive for:</p>
 
-                         <div class="row g-4 mb-5">
-                              <div class="col-md-6">
-                                   <h6 class="text-primary fw-bold mb-3 text-uppercase small"
-                                        style="letter-spacing: 1px;">Technical Projects</h6>
-                                   <ul class="list-unstyled text-secondary small" style="line-height: 2;">
-                                        <li><i class="fas fa-terminal me-2 text-primary"></i> Scalable Backend
-                                             (Python/Flask)</li>
-                                        <li><i class="fas fa-robot me-2 text-primary"></i> AI & LLM Integration (Gemini)
-                                        </li>
-                                        <li><i class="fas fa-cogs me-2 text-primary"></i> Workflow Automation Tools</li>
+                         <div class="row g-3 mb-4">
+                              <div class="col-12 col-xl-6">
+                                   <h6 class="text-primary fw-bold mb-2 text-uppercase small"
+                                        style="letter-spacing: 1px;">Projects</h6>
+                                   <ul class="list-unstyled text-secondary small mb-0" style="line-height: 1.8;">
+                                        <li><i class="fas fa-terminal me-2 text-primary"></i> Backend Dev</li>
+                                        <li><i class="fas fa-robot me-2 text-primary"></i> AI Integration</li>
+                                        <li><i class="fas fa-cogs me-2 text-primary"></i> Automation</li>
                                    </ul>
                               </div>
-                              <div class="col-md-6">
-                                   <h6 class="text-primary fw-bold mb-3 text-uppercase small"
-                                        style="letter-spacing: 1px;">Networking</h6>
-                                   <ul class="list-unstyled text-secondary small" style="line-height: 2;">
-                                        <li><i class="fas fa-code-branch me-2 text-primary"></i> Open Source
-                                             Collaboration</li>
-                                        <li><i class="fas fa-graduation-cap me-2 text-primary"></i> Internship
-                                             Opportunities</li>
-                                        <li><i class="fas fa-chess me-2 text-primary"></i> Strategic Chess Challenges
-                                        </li>
+                              <div class="col-12 col-xl-6">
+                                   <h6 class="text-primary fw-bold mb-2 text-uppercase small"
+                                        style="letter-spacing: 1px;">Connect</h6>
+                                   <ul class="list-unstyled text-secondary small mb-0" style="line-height: 1.8;">
+                                        <li><i class="fas fa-code-branch me-2 text-primary"></i> Open Source</li>
+                                        <li><i class="fas fa-graduation-cap me-2 text-primary"></i> Internships</li>
+                                        <li><i class="fas fa-chess me-2 text-primary"></i> Chess</li>
                                    </ul>
-                              </div>
-                         </div>
-
-                         <div class="mb-5">
-                              <h6 class="text-white fw-bold mb-3 small"><i class="fas fa-bolt text-warning me-2"></i>
-                                   Efficiency Shortcuts (One-Click Mail)</h6>
-                              <div class="d-flex flex-wrap gap-2">
-                                   <a href="mailto:{{ profile.contact_email }}?subject=Project%20Collaboration%20Inquiry"
-                                        class="btn-glass btn-sm small py-2 px-3 text-decoration-none">
-                                        <i class="fas fa-briefcase me-2"></i> Project Collaboration
-                                   </a>
-                                   <a href="mailto:{{ profile.contact_email }}?subject=Internship%20Opportunity"
-                                        class="btn-glass btn-sm small py-2 px-3 text-decoration-none">
-                                        <i class="fas fa-user-plus me-2"></i> Hiring / Internship
-                                   </a>
-                                   <a href="mailto:{{ profile.contact_email }}?subject=Chess%20Challenge"
-                                        class="btn-glass btn-sm small py-2 px-3 text-decoration-none">
-                                        <i class="fas fa-chess-knight me-2"></i> Play Chess
-                                   </a>
-                                   <a href="mailto:{{ profile.contact_email }}?subject=Just%20Saying%20Hi"
-                                        class="btn-glass btn-sm small py-2 px-3 text-decoration-none">
-                                        <i class="fas fa-hand-sparkles me-2"></i> Just Saying Hi
-                                   </a>
                               </div>
                          </div>
 
@@ -209,31 +203,17 @@
                               </div>
                               <div class="text-light small opacity-75">
                                    <span class="text-success">➜</span> <span class="text-primary">~</span> <span
-                                        class="text-warning">echo</span> "Let's build something scalable."<br>
-                                   <span class="text-secondary">> "Let's Build Something Scalable."</span><br>
-                                   <span class="text-success">➜</span> <span class="text-primary">~</span> <span
+                                        class="text-warning">echo</span> "Let's build."<br>
+                                   <span class="text-secondary">> "Let's Build."</span><span
                                         class="blink-cursor">_</span>
                               </div>
                          </div>
-
-                         <style>
-                              .blink-cursor {
-                                   animation: blink 1s step-end infinite;
-                              }
-
-                              @keyframes blink {
-                                   50% {
-                                        opacity: 0;
-                                   }
-                              }
-                         </style>
-
                     </div>
                </div>
 
-               <div class="col-lg-5 reveal-element">
+               <div class="col-lg-4">
                     <div class="glass-card p-4 h-100 border border-secondary d-flex flex-column text-center">
-                         <h4 class="text-white fw-bold mb-3">Location & Status</h4>
+                         <h4 class="text-white fw-bold mb-3">Location & Base</h4>
                          <div class="map-container mb-3 flex-grow-1">
                               <iframe
                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55986.30204786725!2d77.74609875!3d28.71136805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf863a9d9492f%3A0xe487214731215881!2sHapur%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -244,13 +224,54 @@
                               style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1);">
                               <p class="text-primary small fw-bold mb-1"><i class="fas fa-map-marker-alt me-2"></i>
                                    Current Base</p>
-                              <p class="text-light mb-0">{{ profile.location }}</p>
+                              <p class="text-light mb-0 small">{{ profile.location }}</p>
                          </div>
                     </div>
                </div>
+
+               <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100 border border-secondary d-flex flex-column">
+                         <h3 class="text-white fw-bold mb-4 text-center">Send <span class="text-primary">Message</span>
+                         </h3>
+
+                         {% if success %}
+                         <div class="alert alert-success border-0 bg-success bg-opacity-25 text-white mb-3 p-2 small text-center"
+                              role="alert">
+                              <i class="fas fa-check-circle me-1"></i> Sent Successfully!
+                         </div>
+                         {% endif %}
+
+                         <form action="{{ url_for('contact.contact') }}" method="POST"
+                              class="d-flex flex-column flex-grow-1">
+                              <div class="row g-2 mb-3">
+                                   <div class="col-6">
+                                        <input type="text" name="name" class="form-control-glass w-100" required
+                                             placeholder="Name">
+                                   </div>
+                                   <div class="col-6">
+                                        <input type="email" name="email" class="form-control-glass w-100" required
+                                             placeholder="Email">
+                                   </div>
+                              </div>
+                              <div class="mb-3">
+                                   <input type="text" name="subject" class="form-control-glass w-100"
+                                        placeholder="Subject">
+                              </div>
+                              <div class="mb-3 flex-grow-1">
+                                   <textarea name="message" class="form-control-glass w-100 h-100"
+                                        style="min-height: 120px;" required
+                                        placeholder="Write your message..."></textarea>
+                              </div>
+                              <button type="submit"
+                                   class="btn btn-primary w-100 py-3 rounded-3 fw-bold text-black mt-auto">
+                                   SEND MESSAGE <i class="fas fa-paper-plane ms-2"></i>
+                              </button>
+                         </form>
+                    </div>
+               </div>
+
           </div>
      </div>
-</div>
 </div>
 
 <script>
@@ -280,5 +301,17 @@
           document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
      });
 </script>
+
+<style>
+     .blink-cursor {
+          animation: blink 1s step-end infinite;
+     }
+
+     @keyframes blink {
+          50% {
+               opacity: 0;
+          }
+     }
+</style>
 
 {% endblock %}

@@ -1,32 +1,80 @@
-# 🚀 Krishna Verma's Portfolio & Virtual AI Assistant
+# 🚀 Krishna's Portfolio
 
-A high-performance personal portfolio featuring an intelligent Virtual Assistant powered by a custom multi-model fallback architecture and a modern glassmorphic "Push" layout.
+![Portfolio-Review](/app/static/assets/my_portfolio_preview.png)
+
+A High-Performance Portfolio. Multi-Model AI Assistant. Modern Design.".
 
 ---
-## My-Portfolio-Review
 
-![My-Portfolio](/app/static/assets/my_portfolio_preview.png)
+## 👤 About the Developer
+Krishna Verma is a passionate Computer Science undergraduate specializing in Backend Development and System Architecture. His journey started with the logic of C++ and evolved into building scalable web applications with Python & Flask.
+
+* **Location**: Hapur, Uttar Pradesh, India.
+* **Philosophy**: "If a task needs to be done twice, it should be automated.".
+* **Focus**: Writing clean, modular code, cutting redundancy, and building self-sustaining backend systems.
+* **Education**: Computer Science Undergraduate at Sanskar College of Engineering and Technology (SCET), Ghaziabad.
+
+---
 
 ## ✨ Key Features
 
 ### 🧠 Smart AI Assistant (Gemini Multi-Model Stack)
-- **Zero-Downtime Architecture**: The assistant is built with a sophisticated fallback system. It prioritizes the high-reasoning **Gemini 2.5 Flash**, but automatically rotates to **2.0 Flash-Lite** or **1.5 Flash** if API quotas are reached.
-- **Contextual Intelligence**: Fully integrated with personal data sources including GitHub repositories, LinkedIn history, and a custom knowledge base for accurate, real-time answers.
-- **Auto-Status Detection**: Features a live status indicator (Online/Sleeping) that reacts instantly to API availability and rate limits.
+* **Zero-Downtime Architecture**: Built with a sophisticated fallback system prioritizing Gemini 2.5 Flash, rotating to 2.0 Flash-Lite or 1.5 Flash as needed.
+* **Contextual Intelligence**: Integrated with personal data sources including GitHub, LinkedIn, and a custom knowledge base for real-time answers.
+* **Auto-Status Detection**: Live status indicator (Online/Sleeping) reacting to API availability.
 
 ### 🎨 Premium UI/UX Design
-- **Dynamic Push Layout**: Unlike traditional overlays, the chat window uses a Flexbox "Push" mechanism. When toggled, the main portfolio content smoothly compresses to the left, allowing users to browse projects and chat simultaneously.
-- **Glassmorphic Aesthetic**: Deep blurs, semi-transparent panels, and high-fidelity CSS transitions for a premium, futuristic feel.
-- **Responsive Fluidity**: Seamlessly transitions from a desktop side-panel to a mobile-optimized overlay.
+* **Dynamic Push Layout**: Chat window uses a Flexbox mechanism where main content compresses to the left, allowing simultaneous browsing and chatting.
+* **Glassmorphic Aesthetic**: Deep blurs, semi-transparent panels, and high-fidelity CSS transitions.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML, CSS , JavaScript , Bootstrap.
-- **Backend**: Python (Flask).
-- **AI Integration**: Google Generative AI (Gemini API), Custom Fallback Logic.
-- **Database/Storage**: Integrated Knowledge Base for Portfolio-Specific Context with Render INTERNAL and EXTERNAL URL .
+* **Languages**: Python, C/C++, JavaScript, Java, Bash/Shell.
+* **Backend & Database**: Flask, Django, REST APIs, PostgreSQL, SQLAlchemy.
+* **Frontend & UI/UX**: HTML5, CSS3, Bootstrap, Responsive Design.
+* **DevOps & Tools**: Git, GitHub, VS Code, Linux, Render/Vercel.
+* **Methodologies**: OOP Design, Unit Testing, Debugging, Git Flow.
 
+---
 
-Developed with ❤️ by Krishna Verma - Lazy Coder 
+## 📂 Featured Projects
+
+* **Live Weather Dashboard**: Real-time tracking with geolocation, 5-day forecasting, and dynamic background themes.
+* **Quote Studio AI**: Modern generator with mood-based categories and instant image export.
+* **Dual Clock**: Precise digital and analog synchronization using Python GUI.
+* **2D Table Tennis**: Classic game featuring collision physics and smooth controls.
+* **Console Quiz System**: Modular C++ system with file-based question banks.
+
+---
+
+## 📜 Certifications
+
+* **Python for Data Science** – Coursera (2024).
+* **Full Stack Web Developer** – Udemy (In Progress).
+* **Machine Learning A-Z** – Kaggle (Planned).
+
+---
+
+## 🎓 Academic Timeline
+
+* **B.Tech in Computer Science**: Sanskar College of Engineering and Technology (2024 - Present).
+* **Higher Secondary (XII & X)**: JMS World School & Saraswati Bal Mandir (2022-2024).
+
+---
+
+## ✍️ Latest Blog Posts
+
+* **Automating Academics**: A C-based tool for GPA calculations and student record management using file handling.
+* **Console UX**: Building a modular quiz engine with defensive programming in C++.
+* **Physics in a Loop**: Implementing vector physics and collision detection for a 2D Table Tennis game.
+* **Fetching the Sky**: Visualizing real-time meteorological data by consuming REST APIs.
+
+---
+
+## 📞 Contact Information
+
+* **Email**: [krishnav24-cs@sanskar.org](mailto:krishnav24-cs@sanskar.org)
+* **GitHub**: [krissshnaverrrma](https://github.com/krissshnaverrrma)
+* **LinkedIn**: [krishnav-cs](https://linkedin.com/in/krishnav-cs)

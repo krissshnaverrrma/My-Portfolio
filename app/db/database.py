@@ -1,8 +1,9 @@
 import os
+from contextlib import contextmanager
 from datetime import datetime
 from sqlalchemy import Column, DateTime, Integer, String, Text, Boolean, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from .config import Config
+from ..config.config import Config
 
 engine = create_engine(
     Config.DATABASE_URL,
@@ -11,6 +12,16 @@ engine = create_engine(
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+
+@contextmanager
+def get_db():
+    """Context manager for database sessions."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 class APICache(Base):
@@ -79,6 +90,28 @@ class Service(Base):
     title = Column(String)
     description = Column(Text)
     icon_class = Column(String)
+
+
+class Certification(Base):
+    __tablename__ = 'certifications'
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    issuer = Column(String)
+    date = Column(String)
+    description = Column(Text)
+    icon_class = Column(String)
+    link = Column(String, nullable=True)
+    status = Column(String, default="Completed")
+
+
+class ContactMessage(Base):
+    __tablename__ = 'contact_messages'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String)
+    subject = Column(String)
+    message = Column(Text)
+    timestamp = Column(DateTime, default=datetime.utcnow)
 
 
 class ChatLog(Base):

@@ -32,236 +32,105 @@
   }
 
   .featured-cert-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto 5rem;
     padding: 0 2rem;
   }
 
-  .cert-frame {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.02);
-    padding: 5rem 3rem;
-    position: relative;
-    text-align: center;
-    transition: all 0.4s ease;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  }
-
-  .cert-frame:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-  }
-
-  .cert-frame::before,
-  .cert-frame::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-color: var(--primary-color);
-    border-style: solid;
-    transition: all 0.3s;
-  }
-
-  .cert-frame::before {
-    top: 20px;
-    left: 20px;
-    border-width: 2px 0 0 2px;
-  }
-
-  .cert-frame::after {
-    bottom: 20px;
-    right: 20px;
-    border-width: 0 2px 2px 0;
-  }
-
-  .cert-recipient {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    color: #fff;
-    margin: 1.5rem 0;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-    font-weight: 700;
-  }
-
   .mini-cert-card {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1.5rem;
     height: 100%;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
   }
 
   .mini-cert-card:hover {
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
     border-color: var(--primary-color);
-    transform: translateY(-8px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   .platform-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.2rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     color: var(--primary-color);
-    opacity: 0.9;
   }
 
   .reveal-element {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
   }
 
   .reveal-visible {
     opacity: 1;
     transform: translateY(0);
   }
-
-  @media print {
-
-    .navbar,
-    .footer,
-    .btn-glass,
-    .external-certs-grid,
-    .cert-header-area h6,
-    .cert-header-area h1 {
-      display: none !important;
-    }
-
-    body,
-    .cert-page-bg {
-      background: #fff !important;
-      color: #000 !important;
-    }
-
-    .featured-cert-container {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .cert-frame {
-      border: 5px double #000 !important;
-      background: #fff !important;
-      color: #000 !important;
-      box-shadow: none !important;
-      padding: 2rem !important;
-    }
-
-    .cert-recipient {
-      color: #000 !important;
-      text-shadow: none !important;
-    }
-
-    .text-white,
-    .text-gray,
-    .text-secondary {
-      color: #000 !important;
-    }
-
-    .cert-frame::before,
-    .cert-frame::after {
-      border-color: #000 !important;
-    }
-
-    i {
-      color: #000 !important;
-    }
-  }
 </style>
 
-<div class="cert-page-bg">
+<div class="cert-page-bg d-flex flex-column align-items-center">
+
   <div class="cert-header-area reveal-element">
-    <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 3px;">Validation & Credentials</h6>
-    <h1 class="display-3 fw-bold text-white mb-3">My <span style="color:var(--primary-color)">Certifications</span></h1>
+    <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 4px; font-size: 0.75rem;">Achievements &
+      Validation</h6>
+    <h1 class="display-3 fw-bold text-white mb-4">Professional <span
+        style="color:var(--primary-color)">Credentials</span></h1>
+    <p class="text-secondary mx-auto" style="max-width: 600px;">
+      A Collection of Technical Milestones and Badges Earned through Continuous Learning and Problem-Solving.
+    </p>
   </div>
 
-  <div class="featured-cert-container reveal-element">
-    <div class="cert-frame">
-      <div class="mb-4 opacity-75">
-        <i class="fas fa-certificate fa-3x text-primary"></i>
-      </div>
-      <p class="text-uppercase tracking-widest text-secondary small fw-bold">Certificate of Excellence</p>
-
-      <p class="text-secondary mt-4 mb-0 small">This is to certify that</p>
-      <h1 class="cert-recipient">Krishna Verma</h1>
-
-      <p class="text-light lead mx-auto mb-5 opacity-75" style="max-width: 700px; font-weight: 300; line-height: 1.8;">
-        Has successfully demonstrated mastery in <b>Full Stack Architecture</b> and <b>Automated Systems</b>.
-        Recognized for implementing the "Lazy Coder" methodology—optimizing logic to maximize efficiency and minimize
-        redundancy.
-      </p>
-
-      <div class="d-flex justify-content-around flex-wrap gap-5 mt-5 pt-4">
-        <div class="text-center px-4" style="border-top: 1px solid rgba(255,255,255,0.3);">
-          <div class="mt-2" style="font-family: serif; font-style: italic; font-size: 1.2rem;">Krishna Verma</div>
-          <div class="small text-secondary text-uppercase" style="letter-spacing: 1px; font-size: 0.7rem;">Developer
-            Signature</div>
-        </div>
-        <div class="text-center px-4" style="border-top: 1px solid rgba(255,255,255,0.3);">
-          <div class="mt-2" style="font-family: serif; font-style: italic; font-size: 1.2rem;">AI Assistant</div>
-          <div class="small text-secondary text-uppercase" style="letter-spacing: 1px; font-size: 0.7rem;">Verified By
-            Krishna`s Virtual AI Assistant</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center mt-4">
-      <button onclick="window.print()" class="btn-glass px-4 py-2">
-        <i class="fas fa-file-pdf me-2"></i> Download / Print Certificate
-      </button>
-    </div>
-  </div>
-
-  <div class="container pb-5 external-certs-grid">
-    <div class="row g-4 justify-content-center">
-      <div class="col-12 text-center mb-4 reveal-element">
-        <h4 class="text-white fw-bold">Professional Credentials</h4>
-        <div class="mx-auto mt-2" style="width: 50px; height: 3px; background: var(--primary-color);"></div>
-      </div>
-
+  <div class="featured-cert-container">
+    <div class="row g-4">
+      {% for cert in certifications %}
       <div class="col-md-6 col-lg-4 reveal-element">
         <div class="mini-cert-card">
-          <div class="platform-icon"><i class="fab fa-python"></i></div>
-          <h5 class="text-white fw-bold">Python Bootcamp</h5>
-          <p class="text-primary small mb-2">Udemy</p>
-          <p class="text-secondary small opacity-75">Comprehensive mastery of Python 3, covering OOP, Decorators, and
-            Scripting.</p>
-          <span
-            class="badge bg-success bg-opacity-10 text-success mt-auto border border-success border-opacity-25">Completed</span>
-        </div>
-      </div>
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="platform-icon"><i class="{{ cert.icon_class }}"></i></div>
+            {% if cert.status == 'Completed' %}
+            <span
+              class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Verified</span>
+            {% else %}
+            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">{{
+              cert.status }}</span>
+            {% endif %}
+          </div>
+          <h5 class="text-white fw-bold">{{ cert.title }}</h5>
+          <p class="text-primary small mb-2">{{ cert.issuer }}</p>
+          <p class="text-secondary small opacity-75 mb-4 flex-grow-1">{{ cert.description }}</p>
 
-      <div class="col-md-6 col-lg-4 reveal-element">
-        <div class="mini-cert-card">
-          <div class="platform-icon"><i class="fas fa-database"></i></div>
-          <h5 class="text-white fw-bold">Data Structures</h5>
-          <p class="text-primary small mb-2">Coursera</p>
-          <p class="text-secondary small opacity-75">In-depth study of Arrays, Linked Lists, Trees, and Graph
-            algorithms.</p>
-          <span class="badge bg-warning bg-opacity-10 text-warning mt-auto border border-warning border-opacity-25">In
-            Progress</span>
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center border-top border-secondary border-opacity-25 pt-3">
+            <span class="text-secondary small" style="font-size: 0.7rem;">{{ cert.date }}</span>
+            {% if cert.link %}
+            <a href="{{ cert.link }}" target="_blank" class="text-white small text-decoration-none"><i
+                class="fas fa-external-link-alt me-1"></i> Verify</a>
+            {% endif %}
+          </div>
         </div>
       </div>
-
-      <div class="col-md-6 col-lg-4 reveal-element">
-        <div class="mini-cert-card">
-          <div class="platform-icon"><i class="fas fa-cloud"></i></div>
-          <h5 class="text-white fw-bold">Cloud Computing</h5>
-          <p class="text-primary small mb-2">AWS Fundamentals</p>
-          <p class="text-secondary small opacity-75">Basics of EC2, S3 bucket management, and serverless deployment.</p>
-          <span
-            class="badge bg-secondary bg-opacity-10 text-light mt-auto border border-white border-opacity-25">Planned</span>
-        </div>
+      {% else %}
+      <div class="col-12 text-center text-secondary">
+        <p>No Certifications Added yet. Update data.json to see them here.</p>
       </div>
+      {% endfor %}
     </div>
   </div>
+
 </div>
 
 <script>

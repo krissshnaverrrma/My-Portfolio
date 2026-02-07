@@ -10,10 +10,12 @@
     },
     "ai_config": {
         "fallback_models": [
+            "gemini-3-flash-preview",
             "gemini-2.5-flash",
+            "gemini-2.5-flash-lite",
+            "gemini-2.0-flash",
             "gemini-2.0-flash-lite",
-            "gemini-1.5-flash",
-            "gemini-1.5-pro"
+            "gemini-flash-latest"
         ],
         "system_instruction": [
             "You are the Virtual AI Assistant for Krishna Verma.",
@@ -57,6 +59,35 @@
             }
         ]
     },
+    "certifications": [
+        {
+            "title": "Python for Data Science",
+            "issuer": "Coursera",
+            "date": "2024",
+            "description": "Mastered Python basics, data structures, and data analysis libraries like Pandas.",
+            "icon": "fab fa-python",
+            "status": "Completed",
+            "link": "#"
+        },
+        {
+            "title": "Full Stack Web Developer",
+            "issuer": "Udemy",
+            "date": "In Progress",
+            "description": "Building comprehensive web applications using Flask, HTML, CSS, and JavaScript.",
+            "icon": "fas fa-laptop-code",
+            "status": "In Progress",
+            "link": "#"
+        },
+        {
+            "title": "Machine Learning A-Z",
+            "issuer": "Kaggle",
+            "date": "Planned",
+            "description": "Future certification focusing on supervised and unsupervised learning models.",
+            "icon": "fas fa-brain",
+            "status": "Planned",
+            "link": "#"
+        }
+    ],
     "skills": [
         {
             "category": "Languages",

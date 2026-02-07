@@ -54,15 +54,15 @@ function updateBotUI(status) {
     const label = document.getElementById("status-label");
     const sendBtn = document.querySelector(".chat-input-area button");
     if (!input || !dot || !label) return;
-    if (status === "online") {
+    if (status.includes("online")) {
         input.disabled = false;
-        input.placeholder = "Ask Me about Krishna...";
+        input.placeholder = "Ask Me about Krishna";
         input.style.opacity = "1";
         label.innerText = "Online";
         label.className = "text-success";
         dot.style.color = "#2ecc71";
         if (sendBtn) sendBtn.disabled = false;
-    } else if (status === "database_mode") {
+    } else if (status === "database_mode" || status === "database") {
         input.disabled = false;
         input.placeholder = "Terminal Mode: Asking Database...";
         input.style.opacity = "1";
