@@ -4,6 +4,14 @@ chat_bp = Blueprint('chat', __name__)
 logger = logging.getLogger(__name__)
 
 
+@chat_bp.route('/get_status', methods=['GET'])
+def get_status():
+    """Returns the current operational status of the AI Assistant."""
+    if current_app.bot and current_app.bot.is_online:
+        return jsonify({"status": "online"})
+    return jsonify({"status": "offline"})
+
+
 @chat_bp.route('/get_response', methods=['POST'])
 def get_response():
     user_input = request.json.get('message')

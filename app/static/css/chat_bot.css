@@ -34,9 +34,11 @@
     0% {
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
     }
+
     70% {
         box-shadow: 0 0 0 15px rgba(29, 185, 84, 0);
     }
+
     100% {
         box-shadow: 0 0 0 0 rgba(29, 185, 84, 0);
     }
@@ -214,6 +216,16 @@
     color: #ff4d4d !important;
 }
 
+.text-info-cache {
+    color: #00d2ff !important;
+    font-weight: bold;
+}
+
+#status-dot.cache-active {
+    color: #00d2ff;
+    text-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
+}
+
 .typing-dots span {
     width: 4px;
     height: 4px;
@@ -233,11 +245,13 @@
 }
 
 @keyframes bounce {
+
     0%,
     80%,
     100% {
         transform: scale(0);
     }
+
     40% {
         transform: scale(1.0);
     }

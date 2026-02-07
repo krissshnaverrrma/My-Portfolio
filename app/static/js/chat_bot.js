@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatIcon = document.getElementById("chat-icon-btn");
     const closeBtn = document.querySelector(".btn-close-x");
     if (!chatContainer || !chatWindow || !chatIcon) return;
+    checkBotStatus();
     chatContainer.addEventListener("mouseenter", () => openChat());
     chatIcon.addEventListener("click", () => openChat());
     if (closeBtn) {
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
             closeChat();
         });
     }
-
     function openChat() {
         if (chatWindow.classList.contains("active")) return;
         chatWindow.classList.add("active");
@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const typingElem = document.getElementById(typingId);
                 if (typingElem) typingElem.remove();
-
                 appendMsg(
                     "<b>Hello! I'm Krishna's Virtual AI Assistant.</b><br>Ask Me about his <b>Projects</b>, <b>Skills</b>, <b>Blog-Posts</b>, <b>Certifications</b> or <b>Contact Info</b>!",
                     "bot-message"
@@ -37,24 +36,41 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1500);
         }
     }
-
     function closeChat() {
         chatWindow.classList.remove("active");
         chatIcon.classList.remove("active-hidden");
     }
-    window.closeChatManual = function(e) {
+    window.closeChatManual = function (e) {
         if (e) e.stopPropagation();
         closeChat();
     };
 });
-
+async function checkBotStatus() {
+    try {
+        const res = await fetch("/get_status");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        updateBotUI(data.status);
+    } catch (e) {
+        updateBotUI("offline");
+    }
+}
 function updateBotUI(status) {
     const input = document.getElementById("user-input");
     const dot = document.getElementById("status-dot");
     const label = document.getElementById("status-label");
     const sendBtn = document.querySelector(".chat-input-area button");
     if (!input || !dot || !label) return;
-    if (status.includes("online")) {
+    if (status === "cached_mode") {
+        input.disabled = false;
+        input.placeholder = "Cache Mode: Limited Responses";
+        input.style.opacity = "1";
+        label.innerText = "Cached Mode";
+        label.className = "text-info-cache";
+        dot.style.color = "#00d2ff";
+        if (sendBtn) sendBtn.disabled = false;
+    }
+    else if (status.includes("online")) {
         input.disabled = false;
         input.placeholder = "Ask Me about Krishna";
         input.style.opacity = "1";
@@ -62,15 +78,17 @@ function updateBotUI(status) {
         label.className = "text-success";
         dot.style.color = "#2ecc71";
         if (sendBtn) sendBtn.disabled = false;
-    } else if (status === "database_mode" || status === "database") {
+    }
+    else if (status === "database_mode" || status === "database") {
         input.disabled = false;
-        input.placeholder = "Terminal Mode: Asking Database...";
+        input.placeholder = "Terminal Mode: Database Access";
         input.style.opacity = "1";
         label.innerText = "Data-Base Mode";
         label.className = "text-warning";
         dot.style.color = "#f39c12";
         if (sendBtn) sendBtn.disabled = false;
-    } else {
+    }
+    else {
         input.disabled = true;
         input.placeholder = "⚠️ System Offline. Try Again Later.";
         input.style.opacity = "0.6";
@@ -104,7 +122,7 @@ async function sendMessage() {
         const typingElem = document.getElementById(tid);
         if (typingElem) typingElem.remove();
         appendMsg(data.response, "bot-message");
-        updateBotUI(data.status || "online");
+        updateBotUI(data.status);
     } catch (e) {
         const typingElem = document.getElementById(tid);
         if (typingElem) typingElem.remove();
@@ -112,7 +130,6 @@ async function sendMessage() {
         updateBotUI("offline");
     }
 }
-
 function appendMsg(text, className, id = null) {
     const body = document.getElementById("chat-body");
     if (!body) return;
@@ -124,7 +141,6 @@ function appendMsg(text, className, id = null) {
     body.appendChild(div);
     body.scrollTop = body.scrollHeight;
 }
-
 function handleEnter(e) {
     if (e.key === "Enter") sendMessage();
 }
