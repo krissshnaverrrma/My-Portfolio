@@ -31,18 +31,23 @@ def get_shared_client():
 
 
 def get_valid_models():
+    """
+    Fetches available models from Google and sorts them based on 
+    the priority defined in data.json (fallback_models).
+    """
     global _CACHED_MODELS, _LAST_CHECK_TIME
     if _CACHED_MODELS and _LAST_CHECK_TIME and (datetime.now() - _LAST_CHECK_TIME < _CACHE_EXPIRY):
         return _CACHED_MODELS
     client = get_shared_client()
     if not client:
         return []
-    env_preferred = os.getenv("GEMINI_MODEL")
     ai_config = get_ai_config()
     json_fallbacks = ai_config.get("fallback_models", [])
+    env_preferred = os.getenv("GEMINI_MODEL")
     try:
         api_response = client.models.list()
-        available_names = [m.name.replace("models/", "") for m in api_response]
+        available_names = set(m.name.replace("models/", "")
+                              for m in api_response)
         valid_stack = []
         if env_preferred and env_preferred in available_names:
             valid_stack.append(env_preferred)
@@ -50,11 +55,13 @@ def get_valid_models():
             if model in available_names and model not in valid_stack:
                 valid_stack.append(model)
         if not valid_stack:
-            valid_stack = [m for m in available_names if "flash" in m][:3]
+            valid_stack = [m for m in available_names if "flash" in m][:2]
         _CACHED_MODELS = valid_stack
         _LAST_CHECK_TIME = datetime.now()
+        logger.info(f"✅ Loaded {len(valid_stack)} Valid AI Models.")
         return valid_stack
-    except Exception:
+    except Exception as e:
+        logger.error(f"⚠️ Failed to Fetch Models from API: {e}")
         return [env_preferred] + json_fallbacks if env_preferred else json_fallbacks
 
 
@@ -90,24 +97,31 @@ class AssistantService:
                     model=model_name,
                     history=history,
                     config=types.GenerateContentConfig(
-                        system_instruction=instructions)
+                        system_instruction=instructions,
+                        temperature=0.7
+                    )
                 )
                 response = chat.send_message(user_input)
                 reply = response.text.strip()
+                if not reply:
+                    raise ValueError("Empty Response")
                 set_cached_ai_response(cache_key, reply)
                 log_conversation(session_id, user_input, reply)
                 logger.info(f"🤖 AI Response Generated Via: {model_name}")
                 return reply, "online"
-            except Exception:
+            except Exception as e:
                 next_idx = idx + 1
-                if next_idx < len(self.model_stack):
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
                     logger.warning(
-                        f"🔄 {model_name} Quota Exceeded. Switching to {self.model_stack[next_idx]}...")
+                        f"🔄 {model_name} Busy (Rate Limit) Exceed. Switching to Next Active Model")
                 else:
-                    logger.warning(
-                        f"⚠️ All AI Models Exhausted. Falling Back to Local Database.")
+                    logger.warning(f"⚠️ {model_name} Failed: {str(e)[:50]}")
+                if next_idx >= len(self.model_stack):
+                    logger.error(
+                        "❌ All AI Models Exhausted. Switching to Database Mode")
+                    break
                 idx = next_idx
-                time.sleep(0.5)
+                time.sleep(0.3)
         return self._fallback_search(user_input)
 
     def _get_context(self):
@@ -145,15 +159,16 @@ class AssistantService:
 
     def _format_history(self, session_id):
         raw = get_chat_history(session_id)
-        return [msg for entry in raw for msg in [
-            types.Content(role="user", parts=[
-                          types.Part(text=entry.user_query)]),
-            types.Content(role="model", parts=[
-                          types.Part(text=entry.bot_response)])
-        ]]
+        history = []
+        for entry in raw:
+            history.append(types.Content(role="user", parts=[
+                           types.Part(text=entry.user_query)]))
+            history.append(types.Content(role="model", parts=[
+                           types.Part(text=entry.bot_response)]))
+        return history
 
     def _fallback_search(self, query):
         matches = search_knowledge(query)
         if matches:
             return "\n".join([f"• {m.info}" for m in matches]), "database_mode"
-        return "The System is Currently Offline and Unavailable.", "offline"
+        return "I am Currently Offline.", "offline"
