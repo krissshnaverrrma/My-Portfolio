@@ -1,7 +1,6 @@
 import os
 import logging
 import traceback
-import markdown
 from flask import Flask
 from .config.config import Config
 from .db.data import init_db, get_user_profile
@@ -36,26 +35,33 @@ def create_app():
                     print("🚀 Initializing the Systems and Modules")
                     logger.info(
                         "🔹 Services: Fetching and Initializing All Components")
+
                 init_db()
                 app.assistant = init_assistant()
                 app.gh = init_github()
                 app.li = init_linkedin()
+
                 if app.assistant:
                     runtime = PortfolioRuntime(app.assistant)
                     runtime.verify_identity()
                     diag = DiagnosticEngine(app)
                     diag.run_route_audit()
+
                 if app.debug:
                     print("All Systems and Modules Initialized Successfully! 🚀")
+
                 print(
                     f"Running in {'Production' if not app.debug else 'Development'} Mode 🚀")
+
             except Exception as e:
-                logger.warning(f"❌ Service Initialization Warning: {e}")
                 if app.debug:
+                    logger.warning(f"❌ Service Initialization Warning: {e}")
                     traceback.print_exc()
+
                 app.assistant, app.gh, app.li = None, None, None
 
     @app.context_processor
     def inject_global_context():
         return {"profile": get_user_profile()}
+
     return app

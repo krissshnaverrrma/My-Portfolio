@@ -21,9 +21,9 @@ def init_assistant():
             logger.info(f"✅ AI Connected to GEMINI API Key: {masked_key}")
             logger.info(f"✅ AI Initialized on Tier: {tier}")
             logger.info(
-                f"✅ Integrating {model_count} Valid GEMINI AI Models into Stack.")
+                f"✅ Integrating {model_count} Valid AIModels in Stack")
             logger.info(
-                f"🚀 AI Initialized : {model_count} Models Integrated in Stack")
+                f"✅ Success : {model_count} AI Models Integrated in Stack")
         else:
             logger.warning("⚠️ AI Assistant initialized in OFFLINE mode.")
         return assistant
