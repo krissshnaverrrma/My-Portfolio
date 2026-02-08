@@ -9,7 +9,7 @@ def init_assistant():
     """
     Initializes the AI Assistant service and logs status updates.
     """
-    print("📡 Contacting Gemini AI Studio to Initialize API Key")
+    logger.info("📡 Contacting Gemini AI Studio to Initialize API Key")
     try:
         assistant = AssistantService()
         if assistant and assistant.is_online:
