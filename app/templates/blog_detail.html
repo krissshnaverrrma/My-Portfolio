@@ -105,7 +105,7 @@
         {% endif %}
 
         <article class="blog-content mb-5">
-            {{ post.content | markdown }}
+            {{ post.content | markdown | safe }}
         </article>
 
         <div class="author-card d-flex flex-column flex-md-row align-items-center gap-4 mt-5">

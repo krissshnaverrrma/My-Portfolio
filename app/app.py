@@ -1,6 +1,7 @@
 import os
 import logging
 import traceback
+import markdown
 from flask import Flask
 from .config.config import Config
 from .db.data import init_db, get_user_profile
@@ -10,6 +11,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from .runtime.runtime import PortfolioRuntime
 from .diagnostics import DiagnosticEngine
+from .utils.filters import markdown_filter
 logger = logging.getLogger(__name__)
 limiter = Limiter(key_func=get_remote_address, default_limits=[
                   "2000 per day", "500 per hour"], storage_uri="memory://")
@@ -21,6 +23,7 @@ def create_app():
     limiter.init_app(app)
     register_routes(app)
     app.register_blueprint(errors_bp)
+    app.jinja_env.filters['markdown'] = markdown_filter
     with app.app_context():
         from .services.socials import init_github, init_linkedin
         from .assistant.assistant import init_assistant

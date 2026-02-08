@@ -33,8 +33,8 @@
                 <div class="quick-link" onclick="insertPrompt('What are his Top Technical Skills?')">
                     <i class="fas fa-code"></i> Top Skills
                 </div>
-                <div class="quick-link" onclick="insertPrompt('Tell Me about the Portfolio Project.')">
-                    <i class="fas fa-globe"></i> Portfolio Project
+                <div class="quick-link" onclick="insertPrompt('Tell me about his Projects.')">
+                    <i class="fas fa-globe"></i> Projects
                 </div>
                 <div class="quick-link" onclick="insertPrompt('Show Me his Blog Posts.')">
                     <i class="fas fa-blog"></i> Blog Posts
@@ -107,7 +107,7 @@
     function closeChat() { window.location.href = "/"; }
     function clearChat() {
         document.getElementById('chat-body').innerHTML = '';
-        setTimeout(() => addMessage("Chat History Cleared.", "bot"), 300);
+        setTimeout(() => addMessage("Chat History Cleared. Try Asking from Quick Actions??", "bot"), 300);
     }
 </script>
 <script src="{{ url_for('static', filename='js/assistant.js') }}"></script>
