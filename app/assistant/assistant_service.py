@@ -58,10 +58,9 @@ def get_valid_models():
             valid_stack = [m for m in available_names if "flash" in m][:2]
         _CACHED_MODELS = valid_stack
         _LAST_CHECK_TIME = datetime.now()
-        logger.info(f"✅ Loaded {len(valid_stack)} Valid AI Models.")
         return valid_stack
     except Exception as e:
-        logger.error(f"⚠️ Failed to Fetch Models from API: {e}")
+        logger.error(f"⚠️ Failed to Fetch Models from GEMINI API: {e}")
         return [env_preferred] + json_fallbacks if env_preferred else json_fallbacks
 
 
