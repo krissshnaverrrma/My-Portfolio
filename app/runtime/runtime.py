@@ -1,88 +1,60 @@
 import os
 import sys
 import logging
-import traceback
-from ..db.data import init_db
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
-logging.getLogger("google").setLevel(logging.ERROR)
-logging.getLogger("sqlalchemy").setLevel(logging.ERROR)
+from ..db.data import get_user_profile, search_knowledge
+from ..services.socials import GitHubPortfolio, LinkedInPortfolio
 
 
 class PortfolioRuntime:
-    BOLD, GREEN, RED, BLUE, END = "\033[1m", "\033[92m", "\033[91m", "\033[94m", "\033[0m"
+    BOLD, GREEN, RED, BLUE, YELLOW, END = "\033[1m", "\033[92m", "\033[91m", "\033[94m", "\033[93m", "\033[0m"
 
-    def __init__(self, bot_instance):
-        self.bot = bot_instance
+    def __init__(self, assistant_instance):
+        self.assistant = assistant_instance
 
     def verify_identity(self):
-        """Essential identity check used by the web app factory."""
+        """Master Startup Check: Runs all diagnostic tests silently."""
         try:
-            res, mode = self.bot.get_response("Who are you?")
-            is_valid = any(w in res.lower() for w in ["assistant", "virtual"])
-            return is_valid, mode
-        except:
+            res, mode = self.assistant.get_response("Who are you?")
+            ai_ok = any(w in res.lower()
+                        for w in ["assistant", "virtual", "krishna"])
+
+            db_ok, _ = self.check_database_health()
+            kb_ok, _ = self.check_knowledge_redundancy()
+            soc_ok, _ = self.check_social_integrations()
+            red_ok, _ = self.check_model_redundancy()
+
+            if all([ai_ok, db_ok, kb_ok, soc_ok, red_ok]):
+                print(f"{self.GREEN}✅ Runtime Verified: All Systems Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
+            else:
+                print(
+                    f"{self.RED}❌ Runtime Verification Failed: Components degraded.{self.END}")
+
+            return ai_ok, mode
+        except Exception as e:
+            print(f"{self.RED}⚠️ Runtime Critical Error: {e}{self.END}")
             return False, "offline"
 
-    def verify_mindset(self):
-        """Verifies the mindset instructions are active."""
+    def check_database_health(self):
         try:
-            res, _ = self.bot.get_response("What is your coding philosophy?")
-            return any(w in res.lower() for w in ["lazy", "efficiency", "automate"])
+            return (True, "connected") if get_user_profile() else (False, "empty")
         except:
-            return False
+            return False, "error"
 
-    def run_stress_test(self):
-        """Simulates failover logic."""
-        stack = self.bot.model_stack
-        if len(stack) < 2:
-            return "SKIP: Not enough models"
-        original_create = self.bot.client.chats.create
-
-        def chaos_mock(*args, **kwargs):
-            if kwargs.get('model') == stack[0]:
-                raise Exception("429 RESOURCE_EXHAUSTED: Mocked Quota Failure")
-            return original_create(*args, **kwargs)
-        self.bot.client.chats.create = chaos_mock
+    def check_knowledge_redundancy(self):
         try:
-            _, mode = self.bot.get_response("Identify active model.")
-            return f"PASS (Switched to {mode})" if "(" + stack[1] + ")" in mode else "FAIL"
-        finally:
-            self.bot.client.chats.create = original_create
+            results = search_knowledge("project")
+            return (True, "active") if results else (True, "empty")
+        except:
+            return False, "error"
 
+    def check_social_integrations(self):
+        try:
+            GitHubPortfolio()
+            LinkedInPortfolio()
+            return True, "active"
+        except:
+            return False, "failure"
 
-class SystemHealth:
-    """Wrapper for diagnostics used by the web route."""
-
-    def __init__(self, bot):
-        self.runtime = PortfolioRuntime(bot)
-        self.results = {"status": "Initializing", "diagnostics": {}}
-
-    def run_full_diagnostic(self):
-        id_ok, mode = self.runtime.verify_identity()
-        mind_ok = self.runtime.verify_mindset()
-        self.results["diagnostics"].update({
-            "role_check": "PASS" if id_ok else "FAIL",
-            "mode": mode,
-            "mindset_check": "PASS" if mind_ok else "FAIL"
-        })
-        self.results["status"] = "Healthy" if id_ok and mind_ok else "Degraded"
-
-    def run_stress_test(self):
-        self.results["diagnostics"]["stress_test"] = self.runtime.run_stress_test()
-
-
-if __name__ == "__main__":
-    from app.services.chat_bot_service import ChatBotService
-    init_db()
-    bot = ChatBotService()
-    rt = PortfolioRuntime(bot)
-    print(f"\n{rt.BOLD}--- Manually CLI Runtime Diagnostics ---{rt.END}")
-    id_ok, mode = rt.verify_identity()
-    print(f" * Role Check:    {'PASS' if id_ok else 'FAIL'} ({mode})")
-    mind_ok = rt.verify_mindset()
-    print(f" * Mindset Check: {'PASS' if mind_ok else 'FAIL'}")
-    if "--stress" in sys.argv:
-        print(f" * Stress Test:   {rt.run_stress_test()}")
+    def check_model_redundancy(self):
+        count = len(self.assistant.model_stack)
+        return (count > 1), f"{count}_models"

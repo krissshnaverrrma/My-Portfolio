@@ -67,6 +67,14 @@
                                    href="{{ url_for('certificate.certificate') }}">Certification</a></li>
                          <li class="nav-item"><a class="nav-link" href="{{ url_for('contact.contact') }}">Contact</a>
                          </li>
+                         <li class="nav-item">
+                              <a class="nav-link p-1 ms-2" href="{{ url_for('assistant.assistant_page') }}"
+                                   title="AI Assistant">
+                                   <img src="{{ url_for('static', filename='assets/assistant/assistant.png') }}"
+                                        alt="AI"
+                                        style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
+                              </a>
+                         </li>
                     </ul>
                </div>
           </div>
@@ -76,41 +84,43 @@
      <div style="height: 80px;"></div>
      {% endif %}
 
-     <div class="container-fluid p-0">
+     <div class="container-fluid p-0 main-content">
           {% block content %}{% endblock %}
      </div>
 
      {% if request.endpoint != 'home.home' %}
-     <footer class="footer mt-auto py-5 glass-panel border-top border-white-10">
+     <footer class="footer mt-auto py-3 glass-panel border-top border-white-10">
           <div class="container">
-               <div class="row align-items-center g-4">
+               <div class="row align-items-center g-2">
                     <div class="col-md-6 d-flex align-items-center gap-3">
-                         <div class="footer-profile-wrapper">
+                         <div class="footer-profile-wrapper compact">
                               <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma"
                                    class="footer-profile-img">
                               <div class="status-indicator {{ bot_status }}"></div>
                          </div>
-                         <div>
-                              <h5 class="m-0 fw-bold">Krishna Verma</h5>
-                              <p class="m-0 text-gray small">&copy; {{ current_year }} - Virtual AI Assistant Portfolio
-                              </p>
+                         <div class="lh-1">
+                              <p class="m-0 fw-bold text-white" style="font-size: 0.95rem;">Krishna Verma</p>
+                              <p class="m-0 text-gray" style="font-size: 0.75rem;">&copy; <span id="year"></span>
+                                   Virtual AI
+                                   Assistant Portfolio</p>
                          </div>
                     </div>
 
                     <div class="col-md-6 d-flex justify-content-md-end align-items-center">
-                         <div class="footer-social-links d-flex gap-3">
+                         <div class="footer-social-links d-flex gap-2">
                               <a href="mailto:{{ profile.contact_email }}?subject=Request%20Phone%20Number"
-                                   class="footer-icon-link" title="Phone Request">
+                                   class="footer-icon-link compact" title="Phone Request">
                                    <i class="fas fa-phone"></i>
                               </a>
-                              <a href="mailto:{{ profile.contact_email }}" class="footer-icon-link" title="Email Me">
+                              <a href="mailto:{{ profile.contact_email }}" class="footer-icon-link compact"
+                                   title="Email Me">
                                    <i class="fas fa-envelope"></i>
                               </a>
                               <a href="https://github.com/{{ profile.github_username }}" target="_blank"
-                                   class="footer-icon-link" title="GitHub Profile">
+                                   class="footer-icon-link compact" title="GitHub Profile">
                                    <i class="fab fa-github"></i>
                               </a>
-                              <a href="{{ profile.linkedin_url }}" target="_blank" class="footer-icon-link"
+                              <a href="{{ profile.linkedin_url }}" target="_blank" class="footer-icon-link compact"
                                    title="LinkedIn Profile">
                                    <i class="fab fa-linkedin"></i>
                               </a>
@@ -120,7 +130,9 @@
           </div>
      </footer>
      {% endif %}
-
+     <script>
+          document.getElementById("year").textContent = new Date().getFullYear();
+     </script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
      <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>

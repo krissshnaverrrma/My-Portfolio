@@ -26,7 +26,8 @@ body {
   overflow-x: hidden;
 }
 
-main {
+main,
+.main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -167,8 +168,12 @@ main {
 }
 
 .footer {
-  margin-top: 2rem !important;
-  box-shadow: 0 -0px 0px rgba(0, 0, 0, 0.3);
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  border-radius: 20px 20px 0 0 !important;
+  padding-bottom: 1rem !important;
+  padding-top: 1rem !important;
+  border-bottom: none !important;
 }
 
 .footer-profile-wrapper {
@@ -177,23 +182,26 @@ main {
   height: 60px;
 }
 
+.footer-profile-wrapper.compact {
+  width: 42px;
+  height: 42px;
+}
+
 .footer-profile-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 3px;
+  padding: 2px;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   transition: transform 0.3s ease;
 }
 
-
 .status-indicator {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
+  bottom: 0;
+  right: 0;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -207,11 +215,11 @@ main {
 }
 
 .status-indicator.database {
-  background: #f1c40f;
-  box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+  background: #e67e22;
+  box-shadow: 0 0 8px rgba(230, 126, 34, 0.6);
 }
 
-status-indicator.offline {
+.status-indicator.offline {
   background: #e74c3c;
   box-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
 }
@@ -222,23 +230,30 @@ status-indicator.offline {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   color: var(--text-gray);
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.footer-icon-link.compact {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
 .footer-icon-link:hover {
   background: var(--primary-color);
   color: #000 !important;
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
 }
 
 .footer-icon-link i {
   font-size: 1.2rem;
+}
+
+.footer-icon-link.compact i {
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

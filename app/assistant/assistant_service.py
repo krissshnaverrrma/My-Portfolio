@@ -9,7 +9,8 @@ from ..config.config import Config
 from ..db.data import (
     log_conversation, search_knowledge, get_ai_config,
     get_chat_history, get_all_knowledge, get_user_profile,
-    get_cached_ai_response, set_cached_ai_response
+    get_cached_ai_response, set_cached_ai_response,
+    get_all_posts, get_all_certifications
 )
 from ..services.socials import GitHubPortfolio, LinkedInPortfolio
 
@@ -56,7 +57,7 @@ def get_valid_models():
         return [env_preferred] + json_fallbacks if env_preferred else json_fallbacks
 
 
-class ChatBotService:
+class AssistantService:
     def __init__(self):
         self.client = get_shared_client()
         self.ai_config = get_ai_config()
@@ -114,13 +115,28 @@ class ChatBotService:
             gh, li = GitHubPortfolio(), LinkedInPortfolio()
             knowledge = get_all_knowledge()
             user = get_user_profile()
+            posts = get_all_posts()
+            certs = get_all_certifications()
             repo_text = "\n".join(
                 [f"- {r['name']}: {r['description']}" for r in gh.get_projects(limit=5)])
             db_text = "\n".join(
                 [f"[{k.category}]: {k.info}" for k in knowledge])
-            return f"GITHUB:\n{repo_text}\n\nDB KNOWLEDGE:\n{db_text}\n\nCONTACT: {user.get('email', 'N/A')}"
-        except Exception:
-            return "Professional Backend Developer context."
+            blog_text = "\n".join(
+                [f"- {p.title}: {p.summary}" for p in posts]
+            ) if posts else "No Blog Posts Available."
+            cert_text = "\n".join(
+                [f"- {c.title} by {c.issuer} ({c.status})" for c in certs]
+            ) if certs else "No Certifications Listed."
+            return (
+                f"GITHUB PROJECTS:\n{repo_text}\n\n"
+                f"CERTIFICATIONS:\n{cert_text}\n\n"
+                f"BLOG POSTS:\n{blog_text}\n\n"
+                f"KNOWLEDGE BASE:\n{db_text}\n\n"
+                f"CONTACT: {user.get('email', 'N/A')}"
+            )
+        except Exception as e:
+            logger.error(f"Context Build Error: {e}")
+            return "Professional Backend Developer Context."
 
     def _build_instructions(self):
         base = self.ai_config.get("system_instruction", [
