@@ -3,6 +3,7 @@ import sys
 import logging
 from ..db.data import get_user_profile, search_knowledge
 from ..services.socials import GitHubPortfolio, LinkedInPortfolio
+from ..assistant.assistant import verify_assistant_health
 
 
 class PortfolioRuntime:
@@ -17,9 +18,7 @@ class PortfolioRuntime:
             f"{self.BOLD}🔍 CONFIGURATION AUDITING : Checking All the Runtime Configuration{self.END}")
         print(f"{self.BLUE}🔹 Audit: Verifying Full Runtime Configuring...{self.END}")
         try:
-            res, mode = self.assistant.get_response("Who are you?")
-            ai_ok = any(w in res.lower()
-                        for w in ["assistant", "virtual", "krishna"])
+            ai_ok, mode = verify_assistant_health(self.assistant)
             db_ok, _ = self.check_database_health()
             kb_ok, _ = self.check_knowledge_redundancy()
             soc_ok, _ = self.check_social_integrations()

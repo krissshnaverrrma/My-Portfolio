@@ -1,6 +1,7 @@
 import logging
 from .assistant_service import AssistantService
 from ..config.config import Config
+
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -30,3 +31,18 @@ def init_assistant():
         logger.error(f"❌ Initialization Error: {str(e)}")
         logger.error(f"❌ Failed to Initialize Virtual AI Assistant: {e}")
         return None
+
+
+def verify_assistant_health(assistant):
+    """
+    Performs a self-diagnostic check on the assistant.
+    This logic triggers the 'Smart Cache' log by invoking a test response.
+    """
+    try:
+        res, mode = assistant.get_response("Who are you?")
+        is_healthy = any(w in res.lower()
+                         for w in ["assistant", "virtual", "krishna"])
+        return is_healthy, mode
+    except Exception as e:
+        logger.error(f"❌ Assistant Diagnostic Failed: {e}")
+        return False, "offline"
