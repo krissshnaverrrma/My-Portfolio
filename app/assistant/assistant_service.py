@@ -13,7 +13,8 @@ from ..db.data import (
     get_all_posts, get_all_certifications
 )
 from ..services.socials import GitHubPortfolio, LinkedInPortfolio
-
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("google.genai").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 _CACHED_MODELS, _LAST_CHECK_TIME, _SHARED_CLIENT = [], None, None
 _CACHE_EXPIRY = timedelta(hours=6)
@@ -65,7 +66,6 @@ class AssistantService:
         self.is_online = bool(self.client and self.model_stack)
 
     def get_masked_key(self):
-        """Returns a masked version of the API key for secure logging/display."""
         key = getattr(Config, 'GEMINI_API_KEY', None)
         if key and len(key) > 8:
             return f"{key[:8]}..."
@@ -153,7 +153,6 @@ class AssistantService:
         ]]
 
     def _fallback_search(self, query):
-        """Local database search for offline/error states."""
         matches = search_knowledge(query)
         if matches:
             return "\n".join([f"• {m.info}" for m in matches]), "database_mode"
