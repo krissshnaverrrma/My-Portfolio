@@ -14,7 +14,7 @@ class PortfolioRuntime:
     def verify_identity(self):
         """Master Startup Check: Runs all diagnostic tests silently."""
         print(
-            f"{self.BOLD}🔍 CONFIGURATION AUDITING : Checking All the Configuration{self.END}")
+            f"{self.BOLD}🔍 CONFIGURATION AUDITING : Checking All the Runtime Configuration{self.END}")
         print(f"{self.BLUE}🔹 Audit: Verifying Full Runtime Configuring...{self.END}")
         try:
             res, mode = self.assistant.get_response("Who are you?")
