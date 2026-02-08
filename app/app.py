@@ -12,6 +12,7 @@ from flask_limiter.util import get_remote_address
 from .runtime.runtime import PortfolioRuntime
 from .diagnostics import DiagnosticEngine
 from .utils.filters import markdown_filter
+
 logger = logging.getLogger(__name__)
 limiter = Limiter(key_func=get_remote_address, default_limits=[
                   "2000 per day", "500 per hour"], storage_uri="memory://")
@@ -24,14 +25,17 @@ def create_app():
     register_routes(app)
     app.register_blueprint(errors_bp)
     app.jinja_env.filters['markdown'] = markdown_filter
+
     with app.app_context():
         from .services.socials import init_github, init_linkedin
         from .assistant.assistant import init_assistant
+
         if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not app.debug:
             try:
-                print("🚀 Initializing the Systems and Modules")
-                logger.info(
-                    "🔹 Services: Fetching and Initializing All Components")
+                if app.debug:
+                    print("🚀 Initializing the Systems and Modules")
+                    logger.info(
+                        "🔹 Services: Fetching and Initializing All Components")
                 init_db()
                 app.assistant = init_assistant()
                 app.gh = init_github()
@@ -41,12 +45,14 @@ def create_app():
                     runtime.verify_identity()
                     diag = DiagnosticEngine(app)
                     diag.run_route_audit()
-                print("All Systems and Modules Initialized Successfully! 🚀")
+                if app.debug:
+                    print("All Systems and Modules Initialized Successfully! 🚀")
                 print(
-                    "Running in Production Mode🚀" if not app.debug else "Running in Development Mode🚀")
+                    f"Running in {'Production' if not app.debug else 'Development'} Mode 🚀")
             except Exception as e:
                 logger.warning(f"❌ Service Initialization Warning: {e}")
-                traceback.print_exc()
+                if app.debug:
+                    traceback.print_exc()
                 app.assistant, app.gh, app.li = None, None, None
 
     @app.context_processor
