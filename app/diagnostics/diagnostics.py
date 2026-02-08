@@ -12,7 +12,7 @@ class DiagnosticEngine:
 
     def run_route_audit(self):
         """Dynamically audits every registered route in the application."""
-        print(f"{self.BOLD}🔍 ROUTE AUDITING : Checking All the Routes{self.END}")
+        print(f"{self.BOLD}🔍 Di AUDITING : Checking All the Routes{self.END}")
         print(f"{self.BLUE}🔹 Audit: Verifying Full Route Integrity...{self.END}")
 
         all_endpoints = [

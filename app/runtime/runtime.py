@@ -13,22 +13,22 @@ class PortfolioRuntime:
 
     def verify_identity(self):
         """Master Startup Check: Runs all diagnostic tests silently."""
+        print(
+            f"{self.BOLD}🔍 CONFIGURATION AUDITING : Checking All the Configuration{self.END}")
+        print(f"{self.BLUE}🔹 Audit: Verifying Full Runtime Configuring...{self.END}")
         try:
             res, mode = self.assistant.get_response("Who are you?")
             ai_ok = any(w in res.lower()
                         for w in ["assistant", "virtual", "krishna"])
-
             db_ok, _ = self.check_database_health()
             kb_ok, _ = self.check_knowledge_redundancy()
             soc_ok, _ = self.check_social_integrations()
             red_ok, _ = self.check_model_redundancy()
-
             if all([ai_ok, db_ok, kb_ok, soc_ok, red_ok]):
-                print(f"{self.GREEN}✅ Runtime Verified: All Systems Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
+                print(f"{self.GREEN}✅ Runtime Verified: All CONFIGURATION Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
             else:
                 print(
                     f"{self.RED}❌ Runtime Verification Failed: Components degraded.{self.END}")
-
             return ai_ok, mode
         except Exception as e:
             print(f"{self.RED}⚠️ Runtime Critical Error: {e}{self.END}")
