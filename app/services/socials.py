@@ -17,10 +17,10 @@ def init_github():
                 f"✅ GitHub Service Initialized for User: {gh.username}")
             if Config.GITHUB_TOKEN:
                 logger.info(
-                    "🔹 GitHub API: Authenticated Mode (High Rate Limit)")
+                    "🔹 GitHub API Initialized for Authenticated Mode")
             else:
                 logger.warning(
-                    "🔹 GitHub API: Unauthenticated Mode (Rate Limited)")
+                    "🔹 GitHub API Initialized for Unauthenticated Mode")
             return gh
         return None
     except Exception as e:
