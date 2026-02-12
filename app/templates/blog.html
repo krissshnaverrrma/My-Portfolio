@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}Blog | Krishna Verma {% endblock %}
+{% block content %}
+
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .search-wrapper {
+        max-width: 600px;
+        margin: 0 auto 2.5rem auto;
+        position: relative;
+    }
+
+    .blog-search {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 14px 25px 14px 55px;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .blog-search:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 22px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    .filter-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        transition: 0.3s;
+    }
+
+    .filter-btn.active {
+        background: var(--primary-color);
+        color: black;
+        font-weight: bold;
+        border-color: white;
+    }
+
+    .blog-card {
+        background: rgba(10, 10, 10, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .blog-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary-color) !important;
+    }
+
+    .reveal-element {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-out;
+    }
+
+    .reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<div class="d-flex flex-column align-items-center"
+    style="min-height: 100vh; width: 100vw; margin: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+    <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1400px;">
+
+        <div class="text-center mb-5 reveal-element">
+            <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 4px; font-size: 0.75rem;">
+                Thoughts & Documentation</h6>
+            <h1 class="display-3 fw-bold text-white mb-4">Blog <span style="color:var(--primary-color)">Archive</span>
+            </h1>
+
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="blog-search" class="blog-search"
+                    placeholder="Search Articles, Tech, or Logic...">
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center gap-2" id="filter-container">
+                <button class="filter-btn active" data-filter="all">All Posts</button>
+                <button class="filter-btn" data-filter="Python">Python</button>
+                <button class="filter-btn" data-filter="C++">C/C++</button>
+                <button class="filter-btn" data-filter="Game">Game Dev</button>
+                <button class="filter-btn" data-filter="Web">Web Tech</button>
+            </div>
+        </div>
+
+        <div class="row g-4" id="blog-grid">
+            {% for post in posts %}
+            <div class="col-md-6 col-xl-4 blog-item reveal-element" data-category="{{ post.category }}"
+                data-title="{{ post.title | lower }}" data-summary="{{ post.summary | lower }}">
+
+                <div class="card h-100 blog-card rounded-4 overflow-hidden">
+                    {% if post.image_url %}
+                    <div class="position-relative" style="height: 220px; overflow: hidden;">
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="w-100 h-100"
+                            style="object-fit: cover; opacity: 0.8;">
+                        <span class="position-absolute bottom-0 start-0 m-3 badge bg-primary text-black">{{
+                            post.category }}</span>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <small class="text-secondary"><i class="far fa-calendar-alt me-2"></i>{{
+                                post.created_at.strftime('%b %d, %Y') }}</small>
+                            <small class="text-secondary"><i class="far fa-clock me-2"></i>4 min read</small>
+                        </div>
+
+                        <h4 class="card-title fw-bold text-white mb-3">{{ post.title }}</h4>
+                        <p class="card-text text-secondary small flex-grow-1" style="line-height: 1.6;">{{ post.summary
+                            }}</p>
+
+                        <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}"
+                            class="stretched-link btn-glass mt-4 w-100">
+                            Read Article <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('blog-search');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const blogItems = document.querySelectorAll('.blog-item');
+        const revealElements = document.querySelectorAll('.reveal-element');
+
+        const filterBlog = () => {
+            const query = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
+
+            blogItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const summary = item.getAttribute('data-summary');
+                const category = item.getAttribute('data-category').toLowerCase();
+
+                const matchesSearch = title.includes(query) || summary.includes(query);
+                const matchesFilter = activeFilter === 'all' || category.includes(activeFilter);
+
+                item.classList.toggle('d-none', !(matchesSearch && matchesFilter));
+            });
+        };
+
+        searchInput.addEventListener('input', filterBlog);
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterBlog();
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => observer.observe(el));
+    });
+</script>
+{% endblock %}

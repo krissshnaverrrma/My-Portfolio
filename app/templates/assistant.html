@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant | Krishna Verma{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assistant.css') }}">
+
+<div class="res-wrapper-full fade-in">
+    <div class="res-content">
+        <div class="page-header-simple">
+            <h1>
+                <img src="{{ url_for('static', filename='assets/assistant/assistant.png') }}" class="header-bot-icon"
+                    alt="Assistant">
+                Virtual AI Assistant
+            </h1>
+        </div>
+        <div class="res-grid">
+            <aside class="res-sidebar">
+                <div class="sidebar-label"><i class="fas fa-info-circle"></i> System Context</div>
+                <p style="font-size: 0.85rem; color: #888; line-height: 1.5; margin-bottom: 1.0rem;">
+                    Status Indicated by Icon Border:<br>
+                    <span style="color:#2ecc71">● Online Mode (Green)</span><br>
+                    <span style="color:#f1c40f">● Cache Mode (Yellow)</span><br>
+                    <span style="color:#e67e22">● Data Base Mode (Orange)</span><br>
+                    <span style="color:#ff4d4d">● Offline Mode (Red)</span>
+                </p>
+
+                <div class="sidebar-label"><i class="fas fa-bolt"></i> Quick Actions</div>
+                <div class="quick-link" onclick="insertPrompt('Tell me about Krishna.')">
+                    <img src="{{ url_for('static', filename='assets/profile.jpg') }}" class="sidebar-profile-tiny"
+                        alt="Profile">
+                    About Krishna
+                </div>
+                <div class="quick-link" onclick="insertPrompt('What are his Top Technical Skills?')">
+                    <i class="fas fa-code"></i> Top Skills
+                </div>
+                <div class="quick-link" onclick="insertPrompt('Tell me about his Projects.')">
+                    <i class="fas fa-globe"></i> Projects
+                </div>
+                <div class="quick-link" onclick="insertPrompt('Show Me his Blog Posts.')">
+                    <i class="fas fa-blog"></i> Blog Posts
+                </div>
+                <div class="quick-link" onclick="insertPrompt('What Certifications has he earned?')">
+                    <i class="fas fa-certificate"></i> Certifications
+                </div>
+                <div class="quick-link" onclick="insertPrompt('Does he have experience with Python?')">
+                    <i class="fab fa-python"></i> Python Experience
+                </div>
+                <div class="quick-link" onclick="insertPrompt('How can I Contact him?')">
+                    <i class="fas fa-envelope"></i> Contact Info
+                </div>
+            </aside>
+            <main class="res-main">
+                <div class="chat-interface-wrapper">
+                    <div class="steady-panel" id="chat-window">
+                        <div class="steady-header">
+                            <div class="steady-header-left">
+                                <div class="bot-icon-wrapper">
+                                    <img src="{{ url_for('static', filename='assets/assistant/assistant.png') }}"
+                                        alt="Assistant">
+                                </div>
+                                <div>
+                                    <span class="steady-title">Krishna`s Virtual AI Assistant</span>
+                                    <div class="steady-status">
+                                        <i class="fas fa-circle" id="status-dot"></i>
+                                        <span id="status-label">Initializing...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="steady-header-controls">
+                                <button class="header-btn" onclick="clearChat()" title="Clear Chat">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="header-btn" onclick="refreshChat()" title="Restart Session">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button class="header-btn btn-close-red" onclick="closeChat()" title="Exit to Home">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chat-body" id="chat-body"></div>
+                        <div class="chat-input-area">
+                            <div class="input-capsule">
+                                <input type="text" id="user-input" placeholder="Initializing..." disabled
+                                    autocomplete="off">
+                                <div class="input-actions">
+                                    <button id="mic-btn" onclick="toggleVoice()" disabled><i
+                                            class="fas fa-microphone"></i></button>
+                                    <button id="send-btn" onclick="handleSend()" disabled><i
+                                            class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+</div>
+<script>
+    function insertPrompt(text) {
+        document.getElementById('user-input').value = text;
+        handleSend();
+    }
+    function refreshChat() { location.reload(); }
+    function closeChat() { window.location.href = "/"; }
+    function clearChat() {
+        document.getElementById('chat-body').innerHTML = '';
+        setTimeout(() => addMessage("Chat History Cleared. Try Asking from <b>Quick Actions</b>??", "bot"), 300);
+    }
+</script>
+<script src="{{ url_for('static', filename='js/assistant.js') }}"></script>
+{% endblock %}

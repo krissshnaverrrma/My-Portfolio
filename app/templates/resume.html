@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% block title %}Resume | Krishna Verma{% endblock %}
+{% block content %}
+
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .res-wrapper-full {
+        min-height: 100vh;
+        width: 100vw;
+        background: #000;
+        color: #fff;
+    }
+
+    .res-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+    }
+
+    .res-header-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 3.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 3rem;
+        text-align: left;
+    }
+
+    .res-header-img {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+        box-shadow: 0 0 20px rgba(13, 110, 253, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .res-header-img:hover {
+        transform: scale(1.05);
+    }
+
+    .res-header-info h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+        letter-spacing: -0.5px;
+        line-height: 1;
+    }
+
+    .res-header-info .lead {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.2rem;
+    }
+
+    .res-header-info .small-tag {
+        font-size: 0.85rem;
+        opacity: 0.7;
+    }
+
+    .res-grid {
+        display: flex;
+        gap: 4rem;
+    }
+
+    .res-sidebar {
+        width: 30%;
+        flex-shrink: 0;
+    }
+
+    .res-main {
+        width: 70%;
+    }
+
+    .res-section-title {
+        color: var(--primary-color);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .res-section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .res-contact-link {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        transition: 0.3s;
+    }
+
+    .res-contact-link:hover {
+        color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    .res-contact-link i {
+        width: 20px;
+        text-align: center;
+    }
+
+    .res-item {
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+
+    .res-item-title {
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: #fff;
+        margin-bottom: 0.2rem;
+    }
+
+    .res-item-subtitle {
+        color: var(--primary-color);
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .res-item-date {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+        margin-bottom: 0.8rem;
+    }
+
+    .res-list {
+        padding-left: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .res-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-tag {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        margin: 0 5px 8px 0;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    @media (max-width: 992px) {
+        .res-header-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .res-grid {
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .res-sidebar,
+        .res-main {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="res-wrapper-full fade-in">
+    <div class="res-content">
+
+        <div class="res-header-container">
+            <div class="res-header-img-wrapper">
+                <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma"
+                    class="res-header-img rounded-circle">
+            </div>
+
+            <div class="res-header-info">
+                <h6 class="text-uppercase text-primary fw-bold mb-1 small-tag" style="letter-spacing: 3px;">Curriculum
+                    Vitae</h6>
+                <h1 class="text-white">Krishna <span style="color:var(--primary-color)">Verma</span></h1>
+                <p class="lead">Computer Science Undergraduate | Full Stack Developer & AI Enthusiast</p>
+                <p class="text-secondary small-tag">Specializing in Scalable Systems and "Lazy Coder" Automation</p>
+            </div>
+        </div>
+
+        <div class="res-grid">
+
+            <aside class="res-sidebar">
+                <div class="res-section-title"><i class="fas fa-address-card"></i> Contact</div>
+                <div class="mb-5">
+                    <a href="tel:+919258846075" class="res-contact-link">
+                        <i class="fas fa-phone text-primary"></i> +91 9258846075
+                    </a>
+                    <a href="mailto:krishnav24-cs@sanskar.org" class="res-contact-link">
+                        <i class="fas fa-envelope text-primary"></i> krishnav24-cs@sanskar.org
+                    </a>
+                    <a href="https://linkedin.com/in/krishnav-cs" target="_blank" class="res-contact-link">
+                        <i class="fab fa-linkedin text-primary"></i> linkedin.com/in/krishnav-cs
+                    </a>
+                    <a href="https://github.com/krissshnaverrrma" target="_blank" class="res-contact-link">
+                        <i class="fab fa-github text-primary"></i> github.com/krissshnaverrrma
+                    </a>
+                </div>
+
+                <div class="res-section-title"><i class="fas fa-code"></i> Skills</div>
+                <div class="mb-4">
+                    <div class="small fw-bold text-white mb-2">Languages</div>
+                    <div>
+                        <span class="skill-tag">Python (Advanced)</span>
+                        <span class="skill-tag">C | C++ (Intermediate)</span>
+                        <span class="skill-tag">Java (Core)</span>
+                        <span class="skill-tag">SQL (Lite)</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="small fw-bold text-white mb-2">Frameworks</div>
+                    <div>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Bootstrap</span>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="small fw-bold text-white mb-2">Tools</div>
+                    <div>
+                        <span class="skill-tag">Git/GitHub</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Visual Studio Code</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="res-section-title"><i class="fas fa-user-check"></i> Soft Skills</div>
+                <div class="mb-5">
+                    <span class="skill-tag">Strategic Planning</span>
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Efficient Workflow</span>
+                    <span class="skill-tag">Documentation</span>
+                </div>
+
+                <div class="res-section-title"><i class="fas fa-language"></i> Languages</div>
+                <div>
+                    <span class="skill-tag">English (Professional)</span>
+                    <span class="skill-tag">Hindi (Native)</span>
+                </div>
+            </aside>
+
+            <main class="res-main">
+
+                <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
+                <p class="text-secondary mb-5" style="line-height: 1.8; font-size: 1rem;">
+                    Passionate Computer Science undergraduate with a strong foundation in backend systems and
+                    interactive web applications.
+                    Adept at designing scalable database architectures and implementing responsive frontends using Flask
+                    and Generative AI.
+                </p>
+
+                <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                <div class="res-item">
+                    <div class="res-item-title">B.Tech in Computer Science</div>
+                    <div class="res-item-subtitle">Sanskar College of Engineering and Technology (SCET)</div>
+                    <div class="res-item-date">2024 - 2028 (Expected)</div>
+                    <ul class="res-list">
+                        <li>Focus on Data Structures, Algorithms, and Object-Oriented Programming.</li>
+                        <li>Active member of the Coding Club and Technical Society.</li>
+                    </ul>
+                </div>
+                <div class="res-item">
+                    <div class="res-item-title">Higher Secondary (PCM)</div>
+                    <div class="res-item-subtitle">Saraswati Bal Mandir Sr. Sec. School</div>
+                    <div class="res-item-date">Completed 2024</div>
+                </div>
+
+                <div class="res-section-title"><i class="fas fa-laptop-code"></i> Key Projects</div>
+
+                <div class="res-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="res-item-title">AI-Integrated Personal Portfolio</div>
+                        <a href="https://github.com/krissshnaverrrma/My-Portfolio"
+                            class="small text-primary text-decoration-none"><i
+                                class="fab fa-github text-primary"></i>View Repository</a>
+                    </div>
+                    <div class="res-item-subtitle">Python, Flask, Gemini API, HTML/CSS</div>
+                    <ul class="res-list">
+                        <li>Designed a dynamic CMS-style portfolio with a custom blog engine.</li>
+                        <li>Integrated Google Gemini API to create a context-aware chatbot (Virtual Assistant).</li>
+                        <li>Implemented "Lazy Coder" automation for certificate generation and data rendering.</li>
+                    </ul>
+                </div>
+
+                <div class="res-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="res-item-title">Live Weather Dashboard</div>
+                        <a href="https://github.com/krissshnaverrrma/Weather-APP"
+                            class="small text-primary text-decoration-none"><i
+                                class="fab fa-github text-primary"></i>View Repository</a>
+                    </div>
+                    <div class="res-item-subtitle">JavaScript, OpenWeatherMap API</div>
+                    <ul class="res-list">
+                        <li>Built a real-time weather tracking app with 5-day forecasting capabilities.</li>
+                        <li>Optimized API calls using asynchronous JS, reducing load times by 30%.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-5 text-end d-print-none">
+                    <a href="{{ url_for('resume.resume_detail') }}" target="_blank"
+                        class="btn-glass px-4 py-3 text-decoration-none">
+                        <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
+                    </a>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block title %}Contact | Krishna Verma{% endblock %}
+{% block content %}
+
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .contact-card {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 2.5rem 1rem;
+          text-align: center;
+     }
+
+     .contact-card:hover {
+          transform: translateY(-10px);
+          background: rgba(255, 255, 255, 0.08);
+          border-color: var(--primary-color);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s ease-out;
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+
+     .copy-success {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: var(--primary-color);
+          color: black;
+          padding: 10px 20px;
+          border-radius: 50px;
+          font-weight: bold;
+          transform: translateY(-100px);
+          transition: 0.4s;
+          z-index: 9999;
+     }
+
+     .copy-success.show {
+          transform: translateY(0);
+     }
+
+     .map-container {
+          width: 100%;
+          height: 200px;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          filter: grayscale(1) invert(0.9) contrast(1.2);
+          transition: filter 0.3s ease;
+     }
+
+     .map-container:hover {
+          filter: grayscale(0.5) invert(0.8) contrast(1.1);
+     }
+
+     .form-control-glass {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: white;
+          padding: 10px 15px;
+          border-radius: 10px;
+          transition: 0.3s;
+          font-size: 0.9rem;
+     }
+
+     .form-control-glass:focus {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: var(--primary-color);
+          color: white;
+          outline: none;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+     }
+
+     .form-control-glass::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+     }
+</style>
+
+<div id="copy-toast" class="copy-success">Email Copied!</div>
+
+<div class="glass-panel d-flex flex-column align-items-center"
+     style="min-height: 100vh; width: 100vw; margin: 0; border: none; border-radius: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%); backdrop-filter: blur(20px);">
+
+     <div class="container p-4" style="max-width: 1600px; padding-top: 7rem !important;">
+
+          <div class="text-center mb-5 reveal-element">
+               <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 4px; font-size: 0.75rem;">
+                    Availability & Networking</h6>
+               <h1 class="display-3 fw-bold text-white mb-4">Let's <span
+                         style="color:var(--primary-color)">Connect</span></h1>
+
+               <div
+                    class="d-inline-flex align-items-center gap-3 bg-dark px-4 py-2 rounded-pill border border-secondary">
+                    <span class="text-secondary small">Time based on Current Location:</span>
+                    <span id="local-time" class="text-white fw-bold">00:00:00 AM</span>
+                    <span class="badge rounded-circle p-1" style="background: #28a745; box-shadow: 0 0 10px #28a745;">
+                    </span>
+               </div>
+          </div>
+
+          <div class="row g-3 mb-5 justify-content-center">
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="mailto:{{ profile.contact_email }}?subject=Phone%20Access%20Request"
+                         class="glass-card contact-card text-decoration-none">
+                         <i class="fas fa-phone-slash fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">Phone</h6>
+                         <p class="text-warning smaller mb-0">Request Access</p>
+                    </a>
+               </div>
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="mailto:{{ profile.contact_email }}" class="glass-card contact-card text-decoration-none">
+                         <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">Email</h6>
+                         <p class="text-secondary smaller mb-0">Direct Mail</p>
+                    </a>
+               </div>
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="#" id="copy-email-btn" class="glass-card contact-card text-decoration-none"
+                         data-email="{{ profile.contact_email }}">
+                         <i class="fas fa-copy fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">Copy Email</h6>
+                         <p class="text-secondary smaller mb-0">Copy</p>
+                    </a>
+               </div>
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="https://github.com/{{ profile.github_username }}" target="_blank"
+                         class="glass-card contact-card text-decoration-none">
+                         <i class="fab fa-github fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">GitHub</h6>
+                         <p class="text-secondary smaller mb-0">Repositories</p>
+                    </a>
+               </div>
+               <div class="col-6 col-md-4 col-lg-2 reveal-element">
+                    <a href="{{ profile.linkedin_url }}" target="_blank"
+                         class="glass-card contact-card text-decoration-none">
+                         <i class="fab fa-linkedin-in fa-2x text-primary mb-3"></i>
+                         <h6 class="text-white fw-bold small">LinkedIn</h6>
+                         <p class="text-secondary smaller mb-0">Network</p>
+                    </a>
+               </div>
+          </div>
+
+          <div class="row g-4 align-items-stretch reveal-element">
+
+               <div class="col-lg-4">
+                    <div
+                         class="glass-card p-4 h-100 border border-secondary position-relative overflow-hidden d-flex flex-column">
+                         <h3 class="text-white fw-bold mb-4">Direct Channels</h3>
+                         <p class="text-secondary mb-4 small">I prioritize efficient, logic-driven communication. Highly
+                              responsive for:</p>
+
+                         <div class="row g-3 mb-4">
+                              <div class="col-12 col-xl-6">
+                                   <h6 class="text-primary fw-bold mb-2 text-uppercase small"
+                                        style="letter-spacing: 1px;">Projects</h6>
+                                   <ul class="list-unstyled text-secondary small mb-0" style="line-height: 1.8;">
+                                        <li><i class="fas fa-terminal me-2 text-primary"></i> Backend Dev</li>
+                                        <li><i class="fas fa-robot me-2 text-primary"></i> AI Integration</li>
+                                        <li><i class="fas fa-cogs me-2 text-primary"></i> Automation</li>
+                                   </ul>
+                              </div>
+                              <div class="col-12 col-xl-6">
+                                   <h6 class="text-primary fw-bold mb-2 text-uppercase small"
+                                        style="letter-spacing: 1px;">Connect</h6>
+                                   <ul class="list-unstyled text-secondary small mb-0" style="line-height: 1.8;">
+                                        <li><i class="fas fa-code-branch me-2 text-primary"></i> Open Source</li>
+                                        <li><i class="fas fa-graduation-cap me-2 text-primary"></i> Internships</li>
+                                        <li><i class="fas fa-chess me-2 text-primary"></i> Chess</li>
+                                   </ul>
+                              </div>
+                         </div>
+
+                         <div class="mt-auto p-3 rounded-3 font-monospace"
+                              style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);">
+                              <div class="d-flex align-items-center mb-1">
+                                   <div class="rounded-circle bg-danger me-2" style="width: 10px; height: 10px;"></div>
+                                   <div class="rounded-circle bg-warning me-2" style="width: 10px; height: 10px;"></div>
+                                   <div class="rounded-circle bg-success me-2" style="width: 10px; height: 10px;"></div>
+                                   <span class="text-secondary small ms-auto">Terminal</span>
+                              </div>
+                              <div class="text-light small opacity-75">
+                                   <span class="text-success">➜</span> <span class="text-primary">~</span> <span
+                                        class="text-warning">echo</span> "Let's build."<br>
+                                   <span class="text-secondary">> "Let's Build."</span><span
+                                        class="blink-cursor">_</span>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100 border border-secondary d-flex flex-column text-center">
+                         <h4 class="text-white fw-bold mb-3">Location & Base</h4>
+                         <div class="map-container mb-3 flex-grow-1">
+                              <iframe
+                                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55986.30204786725!2d77.74609875!3d28.71136805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf863a9d9492f%3A0xe487214731215881!2sHapur%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                                   width="100%" height="100%" style="border:0;" allowfullscreen=""
+                                   loading="lazy"></iframe>
+                         </div>
+                         <div class="p-3 rounded-4"
+                              style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1);">
+                              <p class="text-primary small fw-bold mb-1"><i class="fas fa-map-marker-alt me-2"></i>
+                                   Current Base</p>
+                              <p class="text-light mb-0 small">{{ profile.location }}</p>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100 border border-secondary d-flex flex-column">
+                         <h3 class="text-white fw-bold mb-4 text-center">Send <span class="text-primary">Message</span>
+                         </h3>
+
+                         {% if success %}
+                         <div class="alert alert-success border-0 bg-success bg-opacity-25 text-white mb-3 p-2 small text-center"
+                              role="alert">
+                              <i class="fas fa-check-circle me-1"></i> Sent Successfully!
+                         </div>
+                         {% endif %}
+
+                         <form action="{{ url_for('contact.contact') }}" method="POST"
+                              class="d-flex flex-column flex-grow-1">
+                              <div class="row g-2 mb-3">
+                                   <div class="col-6">
+                                        <input type="text" name="name" class="form-control-glass w-100" required
+                                             placeholder="Name">
+                                   </div>
+                                   <div class="col-6">
+                                        <input type="email" name="email" class="form-control-glass w-100" required
+                                             placeholder="Email">
+                                   </div>
+                              </div>
+                              <div class="mb-3">
+                                   <input type="text" name="subject" class="form-control-glass w-100"
+                                        placeholder="Subject">
+                              </div>
+                              <div class="mb-3 flex-grow-1">
+                                   <textarea name="message" class="form-control-glass w-100 h-100"
+                                        style="min-height: 120px;" required
+                                        placeholder="Write your message..."></textarea>
+                              </div>
+                              <button type="submit"
+                                   class="btn btn-primary w-100 py-3 rounded-3 fw-bold text-black mt-auto">
+                                   SEND MESSAGE <i class="fas fa-paper-plane ms-2"></i>
+                              </button>
+                         </form>
+                    </div>
+               </div>
+
+          </div>
+     </div>
+</div>
+
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          const updateTime = () => {
+               const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+               document.getElementById('local-time').innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
+          };
+          setInterval(updateTime, 1000);
+          updateTime();
+
+          const copyBtn = document.getElementById('copy-email-btn');
+          const toast = document.getElementById('copy-toast');
+          copyBtn.addEventListener('click', (e) => {
+               e.preventDefault();
+               navigator.clipboard.writeText(copyBtn.getAttribute('data-email')).then(() => {
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+               });
+          });
+
+          const observer = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+               });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+     });
+</script>
+
+<style>
+     .blink-cursor {
+          animation: blink 1s step-end infinite;
+     }
+
+     @keyframes blink {
+          50% {
+               opacity: 0;
+          }
+     }
+</style>
+
+{% endblock %}

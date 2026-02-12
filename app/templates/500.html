@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Server Error - Krishna's Portfolio{% endblock %}
+
+{% block content %}
+<div class="container text-center my-5 py-5">
+    <div class="error-template">
+        <h1 class="display-1 fw-bold text-danger">500</h1>
+        <h2 class="mb-4">Internal Server Error</h2>
+        <p class="lead mb-5">
+            Something went wrong on our end. Don't worry, our AI assistant is probably already trying to automate a fix!
+        </p>
+        <div class="error-actions">
+            <a href="{{ url_for('home.home') }}" class="btn btn-danger btn-lg shadow-sm">
+                <i class="fas fa-redo me-2"></i>Try Refreshing
+            </a>
+            <a href="{{ url_for('home.home') }}" class="btn btn-outline-secondary btn-lg ms-3 shadow-sm">
+                <i class="fas fa-home me-2"></i>Go Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-template {
+        padding: 40px 15px;
+    }
+
+    .display-1 {
+        font-size: 8rem;
+    }
+</style>
+{% endblock %}

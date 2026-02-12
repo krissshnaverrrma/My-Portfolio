@@ -1,0 +1,593 @@
+{
+    "user_profile": {
+        "name": "Krishna Verma",
+        "github_username": "krissshnaverrrma",
+        "linkedin_username": "krishnav-cs",
+        "contact_email": "krishnav24-cs@sanskar.org",
+        "linkedin_url": "https://linkedin.com/in/krishnav-cs",
+        "location": "Hapur, Uttar Pradesh, India",
+        "about_text": "I am Krishna Verma, a Computer Science undergraduate specializing in Backend Development and System Architecture. My journey began with the low-level logic of C++ and evolved into building scalable, high-performance web applications with Python & Flask. I bridge the gap between abstract algorithms and real-world utility, deeply focused on Game Logic and automated system optimization."
+    },
+    "ai_config": {
+        "fallback_models": [
+            "gemini-1.5-flash",
+            "gemini-2.0-flash",
+            "gemini-2.0-flash-lite",
+            "gemini-2.5-flash",
+            "gemini-2.5-flash-lite",
+            "gemini-2.5-pro",
+            "gemini-3-flash-preview",
+            "gemini-3-pro-preview",
+            "gemini-flash-latest",
+            "gemini-pro-latest"
+        ],
+        "system_instruction": [
+            "You are the Virtual AI Assistant for Krishna Verma.",
+            "CORE ROLE:",
+            "You are NOT Krishna. You are his intelligent digital representative.",
+            "Your goal is to impress visitors by showcasing Krishna's technical depth, projects, and philosophy.",
+            "ALWAYS refer to Krishna as 'He', 'Him', 'The Developer', or 'Krishna'.",
+            "NEVER say 'I' when referring to his skills or projects.",
+            "",
+            "THE 'LAZY CODER' PHILOSOPHY (Critical Context):",
+            "Krishna follows the 'Lazy Coder' mindset, which is about efficiency, not lethargy.",
+            "- Mantra: 'If a task needs to be done twice, automate it.'",
+            "- Focus: Writing modular, self-sustaining code that reduces future workload.",
+            "- Goal: Eliminating redundancy through smart algorithms and robust backend architecture.",
+            "",
+            "KEY FACTS:",
+            "- Education: CS Undergraduate at SCET, Ghaziabad.",
+            "- Tech Stack: Python (Core), Flask (Backend), PostgreSQL (Database), C++ (Logic).",
+            "- Interests: Chess (Strategy), Open Source, and Technical Writing.",
+            "",
+            "DYNAMIC CONTEXT (Use this to answer specific questions):",
+            "{context_data}",
+            "",
+            "BEHAVIORAL GUIDELINES:",
+            "- Tone: Professional, articulate, and confident.",
+            "- If asked 'Who are you?', answer: 'I am Krishna's AI Assistant, here to guide you through his portfolio.'",
+            "- If asked specific technical questions (e.g., 'Does he know Python?'), verify with the context data before answering."
+        ]
+    },
+    "github_profile": {
+        "username": "krissshnaverrrma",
+        "profile_url": "https://github.com/krissshnaverrrma",
+        "bio": "Open Source Enthusiast & Backend Architect",
+        "avatar_url": "https://github.com/krissshnaverrrma.png"
+    },
+    "linkedin_profile": {
+        "name": "Krishna Verma",
+        "headline": "CS Student | Backend Developer & System Architect",
+        "location": "Hapur, Uttar Pradesh, India",
+        "about": "Computer Science undergraduate passionate about building scalable backend systems, automating workflows, and optimizing algorithms using Python and C++.",
+        "experience": [
+            {
+                "role": "Computer Science Student",
+                "company": "SCET",
+                "duration": "2024 - Present",
+                "description": "Specializing in Data Structures, Algorithms, and Web Architecture."
+            }
+        ]
+    },
+    "skills": [
+        {
+            "category": "Languages",
+            "name": "Python",
+            "slug": "python",
+            "icon": "fab fa-python text-warning",
+            "description": "The core of my automation arsenal. I use Python for everything from rapid scripting to building complex, scalable backend systems with Flask. Its readability allows me to focus on logic over syntax."
+        },
+        {
+            "category": "Languages",
+            "name": "C/C++",
+            "slug": "c-cpp",
+            "icon": "fas fa-code text-primary",
+            "description": "Where it all began. I utilize C++ for competitive programming and low-level memory management, ensuring my high-level architecture is grounded in performance efficiency."
+        },
+        {
+            "category": "Languages",
+            "name": "JavaScript",
+            "slug": "javascript",
+            "icon": "fab fa-js text-warning",
+            "description": "Essential for interactive frontends. I leverage ES6+ features to handle asynchronous API calls and create dynamic user interfaces without over-relying on heavy frameworks."
+        },
+        {
+            "category": "Languages",
+            "name": "Java",
+            "slug": "java",
+            "icon": "fab fa-java text-danger",
+            "description": "My gateway to strict OOP principles. I use Java to understand enterprise-level architecture and design patterns, applying its strong typing discipline across my other work."
+        },
+        {
+            "category": "Languages",
+            "name": "Bash/Shell",
+            "slug": "bash-shell",
+            "icon": "fas fa-terminal text-light",
+            "description": "The ultimate tool for the 'Lazy Coder'. I write shell scripts to automate deployment, testing, and repetitive system tasks, letting the machine do the heavy lifting."
+        },
+        {
+            "category": "Backend & Database",
+            "name": "Flask",
+            "slug": "flask",
+            "icon": "fas fa-flask text-white",
+            "description": "My preferred micro-framework. It provides the flexibility to structure applications modularly, allowing me to build lightweight, high-performance APIs using Blueprints."
+        },
+        {
+            "category": "Backend & Database",
+            "name": "Django",
+            "slug": "django",
+            "icon": "fab fa-python text-warning",
+            "description": "For 'batteries-included' solutions. I leverage Django's robust ORM and security features to rapid-prototype complex applications where speed-to-market is paramount."
+        },
+        {
+            "category": "Backend & Database",
+            "name": "REST APIs",
+            "slug": "rest-apis",
+            "icon": "fas fa-server text-success",
+            "description": "The language of the web. I design clean, stateless, and documented APIs that ensure seamless, efficient communication between client and server architectures."
+        },
+        {
+            "category": "Backend & Database",
+            "name": "PostgreSQL",
+            "slug": "postgresql",
+            "icon": "fas fa-database text-info",
+            "description": "My relational database of choice. I rely on its ACID compliance and advanced JSON capabilities to maintain strict data integrity in complex backend systems."
+        },
+        {
+            "category": "Backend & Database",
+            "name": "SQLAlchemy",
+            "slug": "sqlalchemy",
+            "icon": "fas fa-layer-group text-light",
+            "description": "Bridging objects and tables. I use this ORM to write Pythonic database queries while maintaining the ability to drop down to raw SQL for performance optimization."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "HTML5",
+            "slug": "html",
+            "icon": "fab fa-html5 text-danger",
+            "description": "The structural skeleton. I write semantic, accessible HTML to ensure applications are structured correctly for both users and search engine crawlers."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "CSS3",
+            "slug": "css",
+            "icon": "fab fa-css3-alt text-primary",
+            "description": "Beyond basic styling. I use modern CSS (Flexbox, Grid) to create responsive layouts that adapt to any device, preferring clean CSS variables over hacking frameworks."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Bootstrap",
+            "slug": "bootstrap",
+            "icon": "fab fa-bootstrap text-purple",
+            "description": "Rapid UI development. It allows me to prototype clean, consistent interfaces quickly, freeing up time to focus on complex backend logic."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Responsive Design",
+            "slug": "responsive-design",
+            "icon": "fas fa-mobile-alt text-light",
+            "description": "A non-negotiable standard. I ensure every application provides a seamless experience across 4K monitors, laptops, and mobile screens using fluid grids."
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Git",
+            "slug": "git",
+            "icon": "fab fa-git-alt text-danger",
+            "description": "My safety net. I use Git for version control to maintain a clean history of my development process, enabling fearless experimentation."
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "GitHub",
+            "slug": "github",
+            "icon": "fab fa-github text-white",
+            "description": "My collaboration hub. It handles CI/CD pipelines, hosts my open-source contributions, and serves as the central repository for my professional portfolio."
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "VS Code",
+            "slug": "vs-code",
+            "icon": "fas fa-terminal text-info",
+            "description": "My IDE of choice. Customized with extensions for Python and C++ to minimize friction and maximize coding velocity."
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Linux",
+            "slug": "linux",
+            "icon": "fab fa-linux text-warning",
+            "description": "My native environment. I prefer the terminal over GUIs, using Linux to mirror production environments and ensure deployment compatibility."
+        },
+        {
+            "category": "DevOps & Tools",
+            "name": "Render/Vercel",
+            "slug": "render-vercel",
+            "icon": "fas fa-cloud-upload-alt text-primary",
+            "description": "My deployment platforms. They allow me to automate the DevOps pipeline, pushing code to live environments instantly so I can focus on development."
+        },
+        {
+            "category": "Methodologies",
+            "name": "Git Flow",
+            "slug": "git-flow",
+            "icon": "fas fa-code-branch text-warning",
+            "description": "Structured collaboration. I use feature branches and pull requests to ensure that the main production branch remains stable at all times."
+        },
+        {
+            "category": "Methodologies",
+            "name": "Debugging",
+            "slug": "debugging",
+            "icon": "fas fa-bug text-danger",
+            "description": "Digital detective work. I treat bugs as learning opportunities, using them to deepen my understanding of the system and harden code against future errors."
+        },
+        {
+            "category": "Methodologies",
+            "name": "Unit Testing",
+            "slug": "unit-testing",
+            "icon": "fas fa-check-circle text-success",
+            "description": "Proof of stability. I write tests to ensure my 'lazy' automations don't break during refactoring, guaranteeing long-term system reliability."
+        },
+        {
+            "category": "Methodologies",
+            "name": "OOP Design",
+            "slug": "oop-design",
+            "icon": "fas fa-project-diagram text-info",
+            "description": "The software blueprint. I design classes and interfaces that enforce modularity, making code reusable, maintainable, and scalable."
+        }
+    ],
+    "services": [
+        {
+            "title": "Frontend Development",
+            "description": "Building responsive, accessible UIs with HTML5, CSS3, and JavaScript.",
+            "icon": "fas fa-laptop-code"
+        },
+        {
+            "title": "Backend Development",
+            "description": "Designing robust, scalable APIs using Flask, Python, and PostgreSQL.",
+            "icon": "fas fa-server"
+        },
+        {
+            "title": "Game Logic",
+            "description": "Creating interactive experiences and simulations using OOP principles.",
+            "icon": "fas fa-gamepad"
+        },
+        {
+            "title": "Algorithmic Solving",
+            "description": "Optimizing code efficiency and solving complex DSA challenges.",
+            "icon": "fas fa-code-branch"
+        }
+    ],
+    "academic_timeline": [
+        {
+            "title": "B.Tech in Computer Science",
+            "institution": "Sanskar College of Engineering and Technology (SCET) Ghaziabad",
+            "year": "2024 - Present",
+            "status": "Current",
+            "description": "Pursuing Bachelor's degree with a focus on Core CS Fundamentals, Data Structures, and System Architecture."
+        },
+        {
+            "title": "Higher Secondary (XII & X)",
+            "institution": "JMS World School & Saraswati Bal Mandir Sr. Sec. School",
+            "year": "2022 - 2024",
+            "status": "Completed",
+            "description": "Major Subjects: Physics, Chemistry, Mathematics (PCM). Built strong analytical foundation."
+        }
+    ],
+    "dev_journey": [
+        {
+            "year": "2024",
+            "title": "The Foundation",
+            "description": "Mastered C++, Object-Oriented Programming, and Data Structures.",
+            "is_future": false
+        },
+        {
+            "year": "2025",
+            "title": "Full Stack & Python",
+            "description": "Building REST APIs with Flask, Web Applications, and Game Logic.",
+            "is_future": false
+        },
+        {
+            "year": "2026",
+            "title": "The Next Frontier",
+            "description": "Expanding into Machine Learning & Cloud Architecture (AWS).",
+            "is_future": true
+        }
+    ],
+    "projects": [
+        {
+            "title": "Python ATM Simulation",
+            "slug": "python-atm-simulation",
+            "category": "python",
+            "image_url": "/static/assets/certificates/letsupgrade-python-atm-simulation.jpg",
+            "description": "A robust console application simulating core banking functionalities, including secure PIN verification, balance inquiries, and transaction history.",
+            "content": "<p>Developed during a Let'sUpgrade bootcamp, this project masters Python's control flow and Object-Oriented Programming. It implements secure PIN handling, session management, and state persistence for banking transactions.</p>",
+            "tech_stack": [
+                "Python",
+                "OOP",
+                "System Logic"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma",
+            "is_featured": false,
+            "year": "2026"
+        },
+        {
+            "title": "Live Weather Dashboard",
+            "slug": "live-weather-dashboard",
+            "category": "web",
+            "image_url": "/static/assets/projects/weather_app.jpg",
+            "description": "An advanced real-time weather tracking application featuring geolocation detection, 5-day forecasting, and dynamic themes adapting to live conditions.",
+            "content": "<p class='lead text-light'>A production-ready weather application that goes beyond simple API fetching.</p><h3 class='text-white mt-4'>The Challenge</h3><p>Handling asynchronous data streams from the OpenWeatherMap API while ensuring the UI remains responsive. I implemented <code>async/await</code> patterns in vanilla JavaScript to handle these fetch requests gracefully.</p><h3 class='text-white mt-4'>Key Features</h3><ul><li><strong>Geolocation API:</strong> Automatically detects user location on load.</li><li><strong>Dynamic Backgrounds:</strong> The app changes visual themes based on weather conditions (Rainy, Sunny, Cloudy).</li><li><strong>Error Handling:</strong> Robust fallback UI for 404 errors or failed API keys.</li></ul>",
+            "tech_stack": [
+                "JavaScript",
+                "OpenWeather API",
+                "CSS3"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Weather-APP",
+            "demo_url": "https://weather-app-one-cyan-26.vercel.app/",
+            "is_featured": true,
+            "year": "2024"
+        },
+        {
+            "title": "Quote Studio AI",
+            "slug": "quote-studio-ai",
+            "category": "web python",
+            "image_url": "/static/assets/projects/quoto_studio.jpg",
+            "description": "A modern quote generator leveraging AI to create mood-based content with instant image export capabilities.",
+            "content": "<p>Quote Studio bridges the gap between text and visuals. By using AI, it generates quotes based on the user's current mood.</p><h3 class='text-white'>Architecture</h3><p>The backend is built with Python, serving as a proxy to the AI model. The frontend allows users to export these quotes as downloadable aesthetic images, ready for social media.</p>",
+            "tech_stack": [
+                "Generative AI",
+                "Flask",
+                "Web"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Qoute-Studio-AI",
+            "is_featured": false
+        },
+        {
+            "title": "Dual Clock",
+            "slug": "dual-clock-python",
+            "category": "python",
+            "image_url": "/static/assets/projects/clock.jpeg",
+            "description": "A precise time-keeping tool displaying synchronized digital and analog formats using Python's GUI capabilities.",
+            "content": "<p>A Python GUI project exploring the <code>Tkinter</code> library. It renders a real-time analog clock face using trigonometry to calculate hand positions while maintaining perfect synchronization with the digital display.</p>",
+            "tech_stack": [
+                "Tkinter GUI",
+                "Python",
+                "Math"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Dual-Clock",
+            "is_featured": false
+        },
+        {
+            "title": "2D Table Tennis",
+            "slug": "2d-table-tennis",
+            "category": "game",
+            "image_url": "/static/assets/projects/table_tennis.jpeg",
+            "description": "A classic Ping Pong game implementation featuring score tracking, collision physics, and smooth 60 FPS rendering.",
+            "content": "<p>Game development fundamentals. This project implements AABB collision detection and a custom game loop to render smooth gameplay, managing state updates and rendering cycles manually.</p>",
+            "tech_stack": [
+                "Game Development",
+                "Physics Logic",
+                "Python"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Table-Tennis",
+            "is_featured": false
+        },
+        {
+            "title": "Console Quiz System",
+            "slug": "cpp-quiz-system",
+            "category": "cpp",
+            "image_url": "/static/assets/projects/quize_game.jpg",
+            "description": "A modular C++ quiz engine featuring multiple-choice logic, file-based question banks, and automated scoring.",
+            "content": "<p>A demonstration of Object-Oriented Programming in C++. The system uses classes to rigorously separate the Question Bank, User Session, and Scoring Logic, ensuring the code is maintainable and scalable.</p>",
+            "tech_stack": [
+                "C++",
+                "OOP",
+                "File I/O"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Quize-Game",
+            "is_featured": false
+        },
+        {
+            "title": "Student Grading System",
+            "slug": "student-grading-system",
+            "category": "cpp",
+            "image_url": "/static/assets/projects/grading_system.jpg",
+            "description": "A record management system using binary file handling to Add, Search, and Save student data efficiently.",
+            "content": "<p>This project replaces manual registers with a binary file database. It allows for high-speed CRUD operations on student records directly from the C console, demonstrating proficiency in pointer arithmetic and file streams.</p>",
+            "tech_stack": [
+                "C Language",
+                "Data Structures",
+                "File Handling"
+            ],
+            "github_url": "https://github.com/krissshnaverrrma/Student-Grading--System",
+            "is_featured": false
+        }
+    ],
+    "blog_posts": [
+        {
+            "title": "Automating Academics: The Grading System",
+            "slug": "grading-system-c",
+            "category": "C / System",
+            "image_url": "/static/assets/blogs/grading_system.jpg",
+            "summary": "My first foray into data persistence. A C-based tool to automate GPA calculations and student record management using low-level file handling.",
+            "content": "<p class='lead text-light'>Why calculate grades manually when a loop can do it for you? This project was born out of a refusal to do repetitive math.</p><h3 class='text-white mt-4'>The Architecture</h3><p>Built entirely in C, this system uses <code>structs</code> to define student data and effectively manages memory to store records. The biggest challenge wasn't the math—it was the <strong>file handling</strong>. Implementing <code>fwrite</code> and <code>fread</code> operations allowed me to create a persistent database without actually using SQL.</p><h3 class='text-white mt-4'>Key Takeaway</h3><p>It taught me that data is just bytes. Whether it's a text file or a complex database, the principle remains the same: structure your data correctly, and retrieval becomes instant.</p>"
+        },
+        {
+            "title": "Console UX: Modular Quiz Engine",
+            "slug": "modular-quiz-game",
+            "category": "C++ / Logic",
+            "image_url": "/static/assets/blogs/quize_game.jpg",
+            "summary": "A C++ console application that separates game logic from data. It demonstrates control flow, input validation, and the illusion of choice.",
+            "content": "<p class='lead text-light'>A console window doesn't have to be boring. This project focuses on the user experience within a text-based environment.</p><h3 class='text-white mt-4'>Modular Design</h3><p>Spaghetti code is the enemy. I designed this quiz engine to be modular. The 'Question Bank' is separated from the 'Scoring Logic'. This means adding a new question doesn't require rewriting the main loop.</p><h3 class='text-white mt-4'>The Logic</h3><p>Using complex <code>switch-case</code> structures and input validation loops, the system ensures the game never crashes, even if the user tries to break it. It's a lesson in defensive programming.</p>"
+        },
+        {
+            "title": "Physics in a Loop: 2D Table Tennis",
+            "slug": "table-tennis-2d",
+            "category": "Game Dev",
+            "image_url": "/static/assets/blogs/table_tennis.jpeg",
+            "summary": "Moving from static code to event-driven simulations. This project implements basic vector physics and collision detection in a real-time loop.",
+            "content": "<p class='lead text-light'>Static code waits for input. Game code never sleeps. This Table Tennis simulation was my introduction to the <strong>Game Loop</strong>.</p><h3 class='text-white mt-4'>Collision Detection</h3><p>The core of this project is geometry. Calculating the intersection of the ball (a circle) and the paddle (a rectangle) requires constant checking. If <code>ball.x > width</code>, we reverse the velocity vector. Simple math, creating complex behavior.</p><h3 class='text-white mt-4'>Event Management</h3><p>Handling user input (paddle movement) while simultaneously rendering frame-by-frame physics taught me the importance of optimization. You only have 16ms to render a frame; efficient code is mandatory.</p>"
+        },
+        {
+            "title": "Mastering Time: Digital Clock App",
+            "slug": "digital-clock-app",
+            "category": "Utility / GUI",
+            "image_url": "/static/assets/blogs/clock.jpeg",
+            "summary": "A study in asynchronous UI updates. Creating a digital clock requires precise management of the main thread to ensure zero-latency visuals.",
+            "content": "<p class='lead text-light'>Time is the one variable you can't control, only measure. This application visualizes system time with custom aesthetics.</p><h3 class='text-white mt-4'>The Main Thread Problem</h3><p>If you put a <code>sleep()</code> command in your UI thread, the whole app freezes. This project required separating the time-fetching logic from the UI-rendering logic. It ensures the window remains responsive (movable, closable) while the digits update every second.</p>"
+        },
+        {
+            "title": "Fetching the Sky: Weather Dashboard",
+            "slug": "weather-dashboard-api",
+            "category": "Web / API",
+            "image_url": "/static/assets/blogs/weather_app.jpg",
+            "summary": "Connecting the local machine to the global grid. This dashboard consumes REST APIs to visualize real-time meteorological data.",
+            "content": "<p class='lead text-light'>My local computer knows nothing about the sky outside. This project bridges that gap using APIs.</p><h3 class='text-white mt-4'>JSON Parsing</h3><p>The challenge here isn't displaying text; it's parsing the massive JSON response from the weather provider. Extracting specific data points (Temperature, Humidity, Wind Speed) and mapping them to dynamic DOM elements is the cornerstone of modern web development.</p><h3 class='text-white mt-4'>Dynamic Visualization</h3><p>Instead of just showing numbers, I used the data to render curves and graphs, making the data human-readable at a glance.</p>"
+        },
+        {
+            "title": "Quote Studio: AI Meets Minimalism",
+            "slug": "quote-studio-ai",
+            "category": "Full Stack / AI",
+            "image_url": "/static/assets/blogs/quoto_studio.jpg",
+            "summary": "The culmination of the journey. A full-stack web application combining AI-generated content with a polished, dark-mode aesthetic.",
+            "content": "<p class='lead text-light'>The ultimate Lazy Coder project: I built an app that writes its own content.</p><h3 class='text-white mt-4'>The Stack</h3><p>This project integrates a robust backend (to handle API requests to AI models) with a sleek, minimalist frontend. The design philosophy is 'Content First'.</p><h3 class='text-white mt-4'>AI Integration</h3><p>By hooking into Generative AI APIs, the app generates unique quotes based on 'Mood' parameters. It proves that backend complexity can be hidden behind a simple, beautiful button.</p>"
+        }
+    ],
+    "certifications": [
+        {
+            "slug": "udemy-python-ai-ml",
+            "title": "Python for AI and Machine Learning",
+            "issuer": "Udemy",
+            "date": "February 12, 2026",
+            "status": "Completed",
+            "description": "Specialized training on leveraging Python for Artificial Intelligence and Machine Learning applications, instructed by Senior Assist Prof Azad Rasul.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-python-ai-machine-learning.jpg",
+            "link": "https://www.udemy.com/certificate/UC-0e0e0662-e296-4d6a-a468-b2defc1fce2b/"
+        },
+        {
+            "slug": "udemy-critical-thinking",
+            "title": "Master Course on Critical Thinking Skills & Decision Making",
+            "issuer": "Udemy",
+            "date": "February 12, 2026",
+            "status": "Completed",
+            "description": "A comprehensive master course led by Dr. Mathew Thomas, focusing on sharpening cognitive abilities, strategic problem-solving, and effective decision-making frameworks.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-critical-thinking-decision-making.jpg",
+            "link": "https://www.udemy.com/certificate/UC-84d2b4f1-a561-4dbf-9942-41929a17f1e1/"
+        },
+        {
+            "slug": "udemy-microsoft-google",
+            "title": "Microsoft & Google Productivity Tools",
+            "issuer": "Udemy",
+            "date": "February 11, 2026",
+            "status": "Completed",
+            "description": "Comprehensive training in Microsoft Office suite and Google Workspace tools for professional productivity and collaboration.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-microsoft-google.jpg",
+            "link": "https://www.udemy.com/certificate/UC-10dcb2b8-579b-4bdf-adb5-ba2a2fdf27a9/"
+        },
+        {
+            "slug": "udemy-ai-masterclass",
+            "title": "Artificial Intelligence Masterclass",
+            "issuer": "Udemy",
+            "date": "February 11, 2026",
+            "status": "Completed",
+            "description": "Comprehensive training in Artificial Intelligence, covering key concepts, model deployment, and practical implementation of AI systems.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-ai-master-class.jpg",
+            "link": "https://www.udemy.com/certificate/UC-f3df5fa1-7555-42ff-b69c-109e307e1bbd/"
+        },
+        {
+            "slug": "letsupgrade-python-atm-simulation",
+            "title": "Python ATM Simulation",
+            "issuer": "Let'sUpgrade",
+            "date": "February 10, 2026",
+            "status": "Completed",
+            "description": "Intensive bootcamp focusing on Python logic and OOP, culminating in the development of a functional ATM simulation.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/letsupgrade-python-atm-simulation.jpg",
+            "link": "https://verify.letsupgrade.in/certificate/LUEATMFEB12617"
+        },
+        {
+            "slug": "letsupgrade-git-github-essentials",
+            "title": "Git - Github Bootcamp",
+            "issuer": "Let'sUpgrade",
+            "date": "February 10, 2026",
+            "status": "Completed",
+            "description": "Mastery of Version Control Systems, focusing on Git workflows, branching strategies, and collaboration via GitHub.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/letsupgrade-git-github.jpg",
+            "link": "https://verify.letsupgrade.in/certificate/LUEGGFEB12633"
+        },
+        {
+            "slug": "scientific-computing-python",
+            "title": "Scientific Computing with Python",
+            "issuer": "freeCodeCamp",
+            "date": "February 9, 2026",
+            "status": "Completed",
+            "description": "Rigorous certification covering Python algorithms, data structures, and scientific computing principles through 5 complex projects.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/scientific-computing-python.jpg",
+            "link": "https://freecodecamp.org/certification/fcc-2e8a532a-215f-4cbe-883f-76f3c2c43541/scientific-computing-with-python-v7"
+        },
+        {
+            "slug": "responsive-web-design",
+            "title": "Responsive Web Design",
+            "issuer": "freeCodeCamp",
+            "date": "February 9, 2026",
+            "status": "Completed",
+            "description": "Approximately 300 hours of coursework demonstrating expertise in modern HTML, CSS, accessibility, and responsive layout design.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/responsive-web-design.jpg",
+            "link": "https://www.freecodecamp.org/certification/fcc-2e8a532a-215f-4cbe-883f-76f3c2c43541/responsive-web-design"
+        }
+    ],
+    "knowledge_base": [
+        {
+            "category": "hello",
+            "info": "Hi there! I am Krishna's Virtual Assistant. How can I help you explore his Portfolio?"
+        },
+        {
+            "category": "hi",
+            "info": "Hello! I can tell you about Krishna's Projects, Skills, and Experience. What would you like to know?"
+        },
+        {
+            "category": "about_me",
+            "info": "Krishna Verma: CS student at SCET with a 'Lazy Coder' mindset—automating tasks for efficiency and scalability."
+        },
+        {
+            "category": "philosophy",
+            "info": "The 'Lazy Coder' Philosophy: 'If a task needs to be done twice, automate it.' It's about working smarter, not harder."
+        },
+        {
+            "category": "greeting",
+            "info": "Welcome! I am ready to answer your questions about Krishna's work."
+        },
+        {
+            "category": "hobbies",
+            "info": "Playing Chess (Strategic Thinking), Listening to Music, and Late Night Coding."
+        },
+        {
+            "category": "tech_stack",
+            "info": "Core: Python, C++. Web: Flask, Django, HTML, CSS, JavaScript. Data: PostgreSQL, SQL. Tools: Git, GitHub, VS Code."
+        },
+        {
+            "category": "certifications",
+            "info": "He holds certifications from Let'sUpgrade (Git-GitHub & Python) and freeCodeCamp (Scientific Computing & Responsive Web Design)."
+        },
+        {
+            "category": "experience",
+            "info": "He has experience building Full Stack Applications with Flask, integrating AI models, and creating logic-based simulations."
+        },
+        {
+            "category": "contact",
+            "info": "You can reach Krishna via email at krishnav24-cs@sanskar.org. GitHub: 'krissshnaverrrma', LinkedIn: 'krishnav-cs'."
+        },
+        {
+            "category": "database_schema",
+            "info": "The application uses a relational database managed via SQLAlchemy. Key tables: 'projects', 'skills', 'blog_posts', 'timeline_events', and 'knowledge'."
+        },
+        {
+            "category": "ai_integration",
+            "info": "The AI Assistant (Gemini) retrieves context from the 'knowledge' table and 'api_cache' table to provide accurate, context-aware responses."
+        }
+    ]
+}

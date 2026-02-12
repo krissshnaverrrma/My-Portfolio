@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# Environment variables and secrets
+.env
+.venv
+venv/
+ENV/
+env/
+# Databases (SQLite)
+*.db
+*.sqlite3
+#Ignore the Github Push Script
+git.py
+#Ignore the Message Response
+message_response.json
+# Ignore the chat logs database
+chat_logs.json
+#Ignore the Py Cache Cleaning Script
+clean_cache.py
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+# Logs
+*.log
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+ehthumbs.db
+Thumbs.db

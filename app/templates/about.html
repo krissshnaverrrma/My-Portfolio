@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block title %}About | Krishna Verma {% endblock %}
+{% block content %}
+
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .philosophy-card {
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+          border-left: 4px solid var(--primary-color);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s ease;
+     }
+
+     .philosophy-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+     }
+
+     .philosophy-card::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+          pointer-events: none;
+     }
+
+     .stats-grid {
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 2rem 0;
+          margin: 3rem 0;
+     }
+
+     .stat-item {
+          text-align: center;
+          padding: 1rem;
+          border-right: 1px solid rgba(255, 255, 255, 0.1);
+     }
+
+     .stat-item:last-child {
+          border-right: none;
+     }
+
+     .stat-value {
+          font-size: 2rem;
+          font-weight: 800;
+          color: var(--primary-color);
+          display: block;
+     }
+
+     .stat-label {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: rgba(255, 255, 255, 0.5);
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.15, 0.45, 0.35, 1);
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+
+     .interest-badge {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 8px 16px;
+          border-radius: 50px;
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.8);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+     }
+</style>
+
+<div class="glass-panel d-flex flex-column align-items-center"
+     style="min-height: auto; width: 100vw; margin: 0; border: none; border-radius: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%); backdrop-filter: blur(20px); padding-bottom: 5rem;">
+
+     <div class="p-4 p-md-5 w-100" style="max-width: 1300px; padding-top: 7rem !important;">
+
+          <div class="row align-items-center text-center mb-5 reveal-element">
+               <div class="col-lg-9 mx-auto">
+                    <h6 class="text-uppercase text-primary fw-bold mb-2"
+                         style="letter-spacing: 4px; font-size: 0.75rem;">Identity & Vision</h6>
+                    <h6 class="text-uppercase text-primary fw-bold mb-2"
+                         style="letter-spacing: 4px; font-size: 0.75rem;">WHO AM I?</h6>
+                    <h1 class="display-3 fw-bold text-white mb-4">About <span
+                              style="color:var(--primary-color)">Me</span></h1>
+                    <p class="text-secondary mx-auto lead" style="line-height: 1.8; max-width: 800px;">{{
+                         profile.about_text }}</p>
+               </div>
+          </div>
+
+          <div class="row mb-5 reveal-element">
+               <div class="col-12">
+                    <div class="philosophy-card p-4 p-md-5 rounded-4">
+                         <div class="row align-items-center">
+                              <div class="col-lg-1 d-none d-lg-block text-center">
+                                   <img src="{{ url_for('static', filename='assets/assistant/assistant.png') }}"
+                                        alt="Lazy Coder Bot" class="img-fluid rounded-circle opacity-75"
+                                        style="max-width: 70px; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));">
+                              </div>
+                              <div class="col-lg-11">
+                                   <h4 class="text-primary fw-bold mb-3">The 'Lazy Coder' Philosophy</h4>
+                                   <p class="text-light mb-0 fs-5" style="font-style: italic; opacity: 0.9;">
+                                        "If a task needs to be done twice, it should be automated."
+                                   </p>
+                                   <p class="text-secondary mt-2 mb-0 small">
+                                        I focus on writing clean, modular code that works harder so I don't have to.
+                                        My goal is cutting redundancy and building self-sustaining backend systems.
+                                   </p>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+
+          <div class="row stats-grid reveal-element">
+               <div class="col-6 col-md-3 stat-item">
+                    <span class="stat-value">12+</span>
+                    <span class="stat-label">Projects Built</span>
+               </div>
+               <div class="col-6 col-md-3 stat-item">
+                    <span class="stat-value">4+</span>
+                    <span class="stat-label">Languages</span>
+               </div>
+               <div class="col-6 col-md-3 stat-item">
+                    <span class="stat-value">∞</span>
+                    <span class="stat-label">Automation Focus</span>
+               </div>
+               <div class="col-6 col-md-3 stat-item">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Lazy Logic</span>
+               </div>
+          </div>
+
+          <div class="row g-5">
+               <div class="col-md-6 d-flex flex-column reveal-element">
+                    <h3 class="fw-bold mb-4 border-start border-4 border-primary ps-3 text-white">Academic Path</h3>
+                    {% for item in academic %}
+                    <div class="glass-card p-4 mb-3 border border-secondary"
+                         style="background: rgba(255,255,255,0.02);">
+                         <div class="d-flex justify-content-between align-items-start mb-2">
+                              <div>
+                                   <h5 class="text-primary fw-bold mb-1">{{ item.title }}</h5>
+                                   <h6 class="text-white-50 small mb-2">{{ item.institution }}</h6>
+                              </div>
+                              <span class="badge bg-primary text-black fw-bold px-3 py-2 rounded-pill"
+                                   style="font-size: 0.65rem;">{{ item.status }}</span>
+                         </div>
+                         <p class="text-secondary small mb-0"><i class="far fa-calendar-alt me-2"></i>{{ item.year }}
+                         </p>
+                         <p class="text-light opacity-75 small mt-2 mb-0">{{ item.description }}</p>
+                    </div>
+                    {% endfor %}
+               </div>
+
+               <div class="col-md-6 d-flex flex-column reveal-element">
+                    <h3 class="fw-bold mb-4 border-start border-4 border-primary ps-3 text-white">Current Focus</h3>
+                    <div class="glass-card p-4 h-100 border border-secondary"
+                         style="background: rgba(255,255,255,0.02);">
+                         {% for service in services %}
+                         <div class="d-flex align-items-start mb-4">
+                              <div class="me-4">
+                                   <div class="icon-box p-3 rounded-3" style="background: rgba(255,255,255,0.05);">
+                                        <i class="{{ service.icon_class }} fa-lg text-primary"></i>
+                                   </div>
+                              </div>
+                              <div>
+                                   <h5 class="fw-bold text-white mb-1">{{ service.title }}</h5>
+                                   <p class="text-secondary small mb-0">{{ service.description }}</p>
+                              </div>
+                         </div>
+                         {% endfor %}
+
+                         <hr class="border-secondary opacity-25 my-4">
+
+                         <h6 class="text-white fw-bold mb-3">Beyond the Code</h6>
+                         <div class="d-flex flex-wrap gap-2">
+                              <span class="interest-badge"><i class="fas fa-chess text-primary"></i> Strategic
+                                   Chess</span>
+                              <span class="interest-badge"><i class="fas fa-tv text-primary"></i> Anime</span>
+                              <span class="interest-badge"><i class="fas fa-moon text-primary"></i> Night Coding</span>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          const revealElements = document.querySelectorAll('.reveal-element');
+
+          const observer = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                         entry.target.classList.add('reveal-visible');
+                    }
+               });
+          }, { threshold: 0.15 });
+
+          revealElements.forEach(el => observer.observe(el));
+     });
+</script>
+
+{% endblock %}

@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects | Krishna Verma{% endblock %}
+
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .glass-background-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 10%, rgba(20, 20, 20, 1), rgba(0, 0, 0, 1));
+  }
+
+  .search-container {
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+
+  .search-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 12px 25px 12px 50px;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filter-btn .count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+  }
+
+  .filter-btn.active {
+    background: var(--primary-color);
+    color: black;
+    font-weight: bold;
+  }
+
+  .project-card-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+
+  .project-card-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #no-results {
+    display: none;
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hover-scale {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+</style>
+
+<div class="glass-background-fixed"></div>
+
+<div class="d-flex flex-column align-items-center" style="min-height: 100vh; width: 100vw; margin: 0;">
+  <div class="container p-4 p-md-5" style="max-width: 1200px; padding-top: 6rem !important;">
+
+    <div class="text-center mb-5">
+      <h6 class="text-uppercase text-primary fw-bold mb-3" style="letter-spacing: 3px; font-size: 0.8rem;">Innovation &
+        Code</h6>
+      <h1 class="display-4 fw-bold text-white mb-4">Projects <span style="color:var(--primary-color)">Archive</span>
+      </h1>
+
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="project-search" class="search-input" placeholder="Search by Tech or Title...">
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-4" id="filter-container">
+        <button class="filter-btn active" data-filter="all">All <span class="count" id="count-all">0</span></button>
+        <button class="filter-btn" data-filter="web">Web Dev <span class="count" id="count-web">0</span></button>
+        <button class="filter-btn" data-filter="python">Python/AI <span class="count"
+            id="count-python">0</span></button>
+        <button class="filter-btn" data-filter="cpp">C/C++ <span class="count" id="count-cpp">0</span></button>
+        <button class="filter-btn" data-filter="game">Games <span class="count" id="count-game">0</span></button>
+      </div>
+    </div>
+
+    <div id="no-results">
+      <i class="fas fa-search mb-3" style="font-size: 2rem;"></i>
+      <p>No projects found matching your criteria.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center mb-5" id="project-grid">
+      {% for project in projects %}
+      <div
+        class="project-item project-card-hidden {% if project.is_featured %}col-12 mb-4{% else %}col-md-6 col-lg-4{% endif %}"
+        data-category="{{ project.category }}" data-title="{{ project.title | lower }}"
+        data-tech="{{ project.tech_stack | join(' ') | lower }}">
+
+        {% if project.is_featured %}
+        <div class="featured-wrapper">
+          <div class="glass-card p-0 overflow-hidden border-0" style="background: rgba(20,20,20,0.8);">
+            <div class="row g-0 align-items-center">
+              <div class="col-lg-7">
+                <div class="project-img-wrapper rounded-0 h-100" style="min-height: 400px;">
+                  <a href="{{ url_for('projects.project_detail', slug=project.slug) }}" class="d-block h-100">
+                    <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy" class="hover-scale">
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-5 p-4 p-xl-5">
+                <div class="d-flex justify-content-between mb-3">
+                  <span class="badge bg-primary text-black fw-bold px-3 py-2 rounded-pill"><i
+                      class="fas fa-bolt me-1"></i> Featured</span>
+                  {% if project.year %}<span class="text-secondary small fw-bold">{{ project.year }}</span>{% endif %}
+                </div>
+                <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+                  class="text-decoration-none text-white">
+                  <h2 class="fw-bold mb-3">{{ project.title }}</h2>
+                </a>
+                <p class="text-secondary mb-4 small" style="line-height: 1.8;">{{ project.description }}</p>
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                  {% for tech in project.tech_stack %}
+                  <span class="tech-pill">{{ tech }}</span>
+                  {% endfor %}
+                </div>
+                <div class="d-flex gap-3">
+                  <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+                    class="btn-glass btn-sm w-100 text-center">
+                    <i class="fas fa-book-open me-2"></i> Case Study
+                  </a>
+                  {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank"
+                    class="btn-glass px-3 py-2"><i class="fab fa-github"></i></a>{% endif %}
+                  {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank"
+                    class="btn-glass px-3 py-2"><i class="fas fa-external-link-alt"></i></a>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="glass-card h-100 p-3 d-flex flex-column">
+          <div class="project-img-wrapper mb-3" style="height: 200px;">
+            <a href="{{ url_for('projects.project_detail', slug=project.slug) }}">
+              <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy" class="hover-scale">
+            </a>
+          </div>
+          <a href="{{ url_for('projects.project_detail', slug=project.slug) }}" class="text-decoration-none text-white">
+            <h5 class="fw-bold mb-2">{{ project.title }}</h5>
+          </a>
+          <p class="text-secondary small mb-3 flex-grow-1">{{ project.description }}</p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            {% for tech in project.tech_stack %}
+            <span class="tech-pill">{{ tech }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="d-flex gap-2">
+            <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+              class="btn-glass btn-sm w-100 text-center">
+              View Details
+            </a>
+            {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" class="btn-glass btn-sm px-3" title="View Code">
+              <i class="fab fa-github"></i>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('project-search');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-item');
+    const noResults = document.getElementById('no-results');
+
+    const updateCounters = () => {
+      const counts = { all: 0, web: 0, python: 0, cpp: 0, game: 0 };
+      projects.forEach(p => {
+        const cat = p.getAttribute('data-category');
+        counts.all++;
+        if (cat.includes('web')) counts.web++;
+        if (cat.includes('python')) counts.python++;
+        if (cat.includes('cpp')) counts.cpp++;
+        if (cat.includes('game')) counts.game++;
+      });
+      Object.keys(counts).forEach(key => {
+        const el = document.getElementById(`count-${key}`);
+        if (el) el.innerText = counts[key];
+      });
+    };
+
+    const filterGallery = () => {
+      const query = searchInput.value.toLowerCase();
+      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+      let visibleCount = 0;
+
+      projects.forEach(project => {
+        const category = project.getAttribute('data-category');
+        const title = project.getAttribute('data-title');
+        const tech = project.getAttribute('data-tech');
+
+        const matchesFilter = (activeFilter === 'all' || category.includes(activeFilter));
+        const matchesSearch = (title.includes(query) || tech.includes(query));
+
+        if (matchesFilter && matchesSearch) {
+          project.classList.remove('d-none');
+          visibleCount++;
+        } else {
+          project.classList.add('d-none');
+        }
+      });
+
+      noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('project-card-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    projects.forEach(p => observer.observe(p));
+
+    searchInput.addEventListener('input', filterGallery);
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterGallery();
+      });
+    });
+
+    updateCounters();
+  });
+</script>
+
+{% endblock %}

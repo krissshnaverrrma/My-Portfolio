@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% block title %}Certifications | Krishna Verma{% endblock %}
+{% block content %}
+
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .cert-page-bg {
+    min-height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);
+    padding-bottom: 5rem;
+  }
+
+  .cert-header-area {
+    padding: 7rem 2rem 3rem;
+    text-align: center;
+  }
+
+  .search-wrapper {
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .cert-search {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 14px 25px 14px 55px;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .cert-search:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 1.2rem;
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 8px 20px;
+    border-radius: 50px;
+    transition: 0.3s;
+  }
+
+  .filter-btn.active {
+    background: var(--primary-color);
+    color: black;
+    font-weight: bold;
+    border-color: white;
+  }
+
+  .mini-cert-card {
+    background: rgba(10, 10, 10, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+  }
+
+  .mini-cert-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-color) !important;
+  }
+
+  .cert-btn-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-align: center;
+    transition: 0.3s;
+    display: block;
+    width: 100%;
+    text-decoration: none;
+  }
+
+  .mini-cert-card:hover .cert-btn-glass {
+    background: var(--primary-color);
+    color: black;
+    font-weight: 600;
+  }
+
+  .reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="cert-page-bg">
+  <div class="cert-header-area reveal-element">
+    <h6 class="text-uppercase text-primary fw-bold mb-2" style="letter-spacing: 4px; font-size: 0.75rem;">
+      Skills & Recognition</h6>
+    <h1 class="display-3 fw-bold text-white mb-4">Certificates <span style="color:var(--primary-color)">Archive</span>
+    </h1>
+
+    <div class="search-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="certSearch" class="cert-search" placeholder="Search by Title, Issuer, or Tech...">
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Python">Python</button>
+      <button class="filter-btn" data-filter="Data Science">Data Science</button>
+      <button class="filter-btn" data-filter="Web">Web Development</button>
+      <button class="filter-btn" data-filter="Database">Database</button>
+    </div>
+  </div>
+
+  <div class="container" style="max-width: 1400px !important; padding: 0 2rem !important; margin: 0 auto !important;">
+    <div class="row g-4" id="certContainer">
+      {% for cert in certifications %}
+      <div class="col-md-6 col-lg-4 cert-item reveal-element" data-title="{{ cert.title|lower }}"
+        data-description="{{ cert.description|lower }}" data-issuer="{{ cert.issuer|lower }}">
+
+        <div class="mini-cert-card h-100 d-flex flex-column">
+          <div class="mb-3 rounded overflow-hidden" style="height: 180px; border: 1px solid rgba(255,255,255,0.1);">
+            <img src="{{ cert.image_url }}" alt="{{ cert.title }}" class="w-100 h-100"
+              style="object-fit: cover; opacity: 0.8;">
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-primary small fw-bold">{{ cert.issuer }}</span>
+            <small class="text-secondary"><i class="far fa-calendar-alt me-1"></i>{{ cert.date }}</small>
+          </div>
+
+          <h5 class="text-white fw-bold mb-3">{{ cert.title }}</h5>
+          <p class="text-secondary small flex-grow-1" style="line-height: 1.6;">{{ cert.description[:100] }}...</p>
+
+          <div class="mt-4">
+            <a href="{{ url_for('certificate.certificate_detail', slug=cert.slug) }}"
+              class="stretched-link btn-glass mt-4 w-100">
+              View Certificate <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('certSearch');
+    const certItems = document.querySelectorAll('.cert-item');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    const filterCerts = () => {
+      const query = searchInput.value.toLowerCase();
+      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
+
+      certItems.forEach(item => {
+        const title = item.getAttribute('data-title');
+        const issuer = item.getAttribute('data-issuer');
+        const description = item.getAttribute('data-description');
+
+        const matchesSearch = title.includes(query) || issuer.includes(query) || description.includes(query);
+        const matchesFilter = activeFilter === 'all' || title.includes(activeFilter) || issuer.includes(activeFilter);
+
+        item.style.display = (matchesSearch && matchesFilter) ? 'block' : 'none';
+      });
+    };
+
+    searchInput.addEventListener('input', filterCerts);
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterCerts();
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}
