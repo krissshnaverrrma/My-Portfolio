@@ -17,8 +17,6 @@ git.py
 message_response.json
 # Ignore the chat logs database
 chat_logs.json
-#Ignore the Py Cache Cleaning Script
-clean_cache.py
 # Distribution / packaging
 build/
 dist/
