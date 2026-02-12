@@ -452,6 +452,17 @@
     ],
     "certifications": [
         {
+            "slug": "udemy-js-html-css-30-projects",
+            "title": "Master JavaScript, HTML, and CSS with 30 Projects in 30 Days",
+            "issuer": "Udemy",
+            "date": "February 12, 2026",
+            "status": "Completed",
+            "description": "A comprehensive project-based course building 30 real-world web projects using HTML, CSS, and JavaScript, covering concepts from basic layout to advanced DOM manipulation.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-html-css-js-master-class.jpg",
+            "link": "https://www.udemy.com/certificate/UC-b541bb97-0c15-4005-8b09-c0451bd81377/"
+        },
+        {
             "slug": "udemy-python-ai-ml",
             "title": "Python for AI and Machine Learning",
             "issuer": "Udemy",
