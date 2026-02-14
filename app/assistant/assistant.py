@@ -51,7 +51,6 @@ def init_assistant():
     Initializes the AI Assistant service and logs status updates.
     """
     apply_dragnet_filter()
-
     try:
         assistant = AssistantService()
         if assistant and assistant.is_online:
@@ -59,9 +58,9 @@ def init_assistant():
             model_count = len(assistant.model_stack)
             tier = getattr(Config, 'GEMINI_MODEL', 'Auto')
             logger.info(
-                f"✅ AI Initialized: {tier} Tier | Key: {masked_key} | Models Count: {model_count}")
+                f"✅ AI Initialized on {tier} Tier via Key {masked_key} and Available Models Counted as {model_count}")
         else:
-            logger.warning("⚠️ AI Assistant initialized in OFFLINE mode.")
+            logger.warning("⚠️ AI Assistant Initialized in OFFLINE Mode.")
         return assistant
     except Exception as e:
         logger.error(f"❌ Initialization Error: {str(e)}")

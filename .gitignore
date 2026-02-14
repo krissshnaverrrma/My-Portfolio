@@ -11,8 +11,6 @@ env/
 # Databases (SQLite)
 *.db
 *.sqlite3
-#Ignore the Github Push Script
-git.py
 #Ignore the Message Response
 message_response.json
 # Ignore the chat logs database
