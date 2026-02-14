@@ -3,6 +3,7 @@ import sys
 import logging
 from ..db.data import get_user_profile, search_knowledge
 from ..social.socials import GitHubPortfolio, LinkedInPortfolio
+from ..config.config import Config
 
 
 class PortfolioRuntime:
@@ -20,13 +21,17 @@ class PortfolioRuntime:
             soc_ok, _ = self.check_social_integrations()
             red_ok, _ = self.check_model_redundancy()
             if all([ai_ok, db_ok, kb_ok, soc_ok, red_ok]):
-                print(f"{self.GREEN}✅ Runtime Verified: All CONFIGURATION Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
+                if not Config.IS_RENDER:
+                    print(
+                        f"{self.GREEN}✅ Runtime Verified: All CONFIGURATION Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
             else:
-                print(
-                    f"{self.RED}❌ Runtime Verification Failed: Components degraded.{self.END}")
+                if not Config.IS_RENDER:
+                    print(
+                        f"{self.RED}❌ Runtime Verification Failed: Components degraded.{self.END}")
             return ai_ok, mode
         except Exception as e:
-            print(f"{self.RED}⚠️ Runtime Critical Error: {e}{self.END}")
+            if not Config.IS_RENDER:
+                print(f"{self.RED}⚠️ Runtime Critical Error: {e}{self.END}")
             return False, "offline"
 
     def check_database_health(self):

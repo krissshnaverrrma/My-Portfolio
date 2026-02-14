@@ -33,12 +33,17 @@ class CLICommandHandler:
 
     def verify_commands_at_startup(self):
         """Silently verifies CLI extensions."""
+        is_render = self.app.config.get(
+            "IS_RENDER", False) if self.app else False
         commands = [c.name for c in self.app.cli.commands.values()]
         if all(cmd in commands for cmd in ["test", "hub"]):
-            print(
-                f"{GREEN}✅ Command Verified: All CLI Extensions are Registered and Operational{END}")
+            if not is_render:
+                print(
+                    f"{GREEN}✅ Command Verified: All CLI Extensions are Registered and Operational{END}")
         else:
-            print(f"{RED}❌ Command Verified : Critical CLI Extensions Missing.{END}")
+            if not is_render:
+                print(
+                    f"{RED}❌ Command Verified : Critical CLI Extensions Missing.{END}")
 
     def run_interactive_session(self):
         """Main loop for the interactive management terminal."""

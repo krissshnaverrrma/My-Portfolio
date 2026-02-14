@@ -11,8 +11,9 @@ class AFCRewriter(logging.Filter):
                 count = msg.split(":")[-1].strip().replace(".", "")
             except:
                 count = "N/A"
-            print(
-                f"INFO: ✅ AI Function Calling Enabled (Max Parallel Calls: {count})")
+            if not Config.IS_RENDER:
+                print(
+                    f"INFO: ✅ AI Function Calling Enabled (Max Parallel Calls: {count})")
             return False
         return True
 

@@ -1,5 +1,6 @@
 import logging
 from flask import url_for
+from ..config.config import Config
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,8 @@ class DiagnosticEngine:
                     continue
 
         if passed == len(all_endpoints):
-            print(
-                f"{self.GREEN}✅ DIAGNOSTICS Verified : All {passed} Registered Routes are Initialized Correctly.{self.END}")
+            if not Config.IS_RENDER:
+                print(
+                    f"{self.GREEN}✅ DIAGNOSTICS Verified : All {passed} Registered Routes are Initialized Correctly.{self.END}")
             return True
         return False

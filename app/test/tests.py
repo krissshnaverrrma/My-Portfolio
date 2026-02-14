@@ -4,6 +4,7 @@ import os
 import subprocess
 import click
 from flask import current_app
+from app.config.config import Config
 
 BOLD, GREEN, RED, BLUE, YELLOW, END = "\033[1m", "\033[92m", "\033[91m", "\033[94m", "\033[93m", "\033[0m"
 
@@ -67,10 +68,13 @@ class SystemValidator:
         Lightweight check to ensure Test CLI is registered.
         Replaces the heavy logic check with a simple registration verification.
         """
+        if Config.IS_RENDER:
+            return
+
         commands = [c.name for c in self.app.cli.commands.values()]
         if "test" in commands:
             print(
-                f"{GREEN}✅ Test Verified: All the Test is Registered and Operational{END}")
+                f"{GREEN}✅ Test Verified: All the Test are Registered and Operational{END}")
         else:
             print(f"{RED}❌ Test Verify: Critical Test Extension Missing.{END}")
 
@@ -87,12 +91,15 @@ class SystemValidator:
         try:
             result = subprocess.run(cmd, capture_output=True, text=True)
             if result.returncode == 0:
-                print(
-                    f"{GREEN}✅ CLI Logic Checked: All Internal Test Suites Passed.{END}")
+                if not Config.IS_RENDER:
+                    print(
+                        f"{GREEN}✅ CLI Logic Checked: All Internal Test Suites Passed.{END}")
             else:
-                print(f"{RED}❌ CLI Logic Checked: Diagnostics Failed.{END}")
-                print(result.stderr)
+                if not Config.IS_RENDER:
+                    print(f"{RED}❌ CLI Logic Checked: Diagnostics Failed.{END}")
+                    print(result.stderr)
             sys.exit(result.returncode)
         except Exception as e:
-            print(f"{RED}Error Running pytest: {e}{END}")
+            if not Config.IS_RENDER:
+                print(f"{RED}Error Running pytest: {e}{END}")
             sys.exit(1)

@@ -13,12 +13,13 @@ def init_github():
     try:
         gh = GitHubPortfolio()
         if gh.username:
-            if Config.GITHUB_TOKEN:
-                logger.info(
-                    f"✅ GitHub Service Initialized on Authenticated Mode for User: {gh.username}")
-            else:
-                logger.warning(
-                    f"⚠️ GitHub Service Initialized in Unauthenticated Mode for User: {gh.username}")
+            if not Config.IS_RENDER:
+                if Config.GITHUB_TOKEN:
+                    logger.info(
+                        f"✅ GitHub Service Initialized on Authenticated Mode for User: {gh.username}")
+                else:
+                    logger.warning(
+                        f"⚠️ GitHub Service Initialized in Unauthenticated Mode for User: {gh.username}")
             return gh
         return None
     except Exception as e:
@@ -31,8 +32,9 @@ def init_linkedin():
     try:
         li = LinkedInPortfolio()
         if li.username:
-            logger.info(
-                f"✅ LinkedIn Service Initialized for User: {li.username}")
+            if not Config.IS_RENDER:
+                logger.info(
+                    f"✅ LinkedIn Service Initialized for User: {li.username}")
             return li
         return None
     except Exception as e:

@@ -336,7 +336,9 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 ))
 
         db.commit()
-        logger.info(f"✅ Database Initialized Successfully via {provider_name}")
+        if not Config.IS_RENDER:
+            logger.info(
+                f"✅ Database Initialized Successfully via {provider_name}")
     except Exception as e:
         logger.error(f"Database Seeding Error: {e}")
         db.rollback()

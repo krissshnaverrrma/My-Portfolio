@@ -20,9 +20,14 @@ logger = logging.getLogger(__name__)
 def create_app():
     quiet_commands = ["test", "hub"]
     is_quiet_mode = any(cmd in sys.argv for cmd in quiet_commands)
-    if is_quiet_mode:
+    if is_quiet_mode or Config.IS_RENDER:
         os.environ["FLASK_TESTING"] = "true"
-        logging.disable(logging.CRITICAL)
+        logging.disable(
+            logging.WARNING if Config.IS_RENDER else logging.CRITICAL)
+        os.environ["WERKZEUG_RUN_MAIN"] = "true"
+        logging.getLogger("werkzeug").setLevel(logging.ERROR)
+        logging.getLogger("flask").setLevel(logging.ERROR)
+
     app = Flask(__name__)
     app.config.from_object(Config)
     limiter.init_app(app)
@@ -37,7 +42,10 @@ def create_app():
         from .social.socials import init_github, init_linkedin
         from .assistant.assistant import init_assistant
         is_testing = os.environ.get("FLASK_TESTING") == "true"
-        if (os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not app.debug):
+        should_init = os.environ.get(
+            'WERKZEUG_RUN_MAIN') == 'true' or not app.debug or Config.IS_RENDER
+
+        if should_init:
             try:
                 if app.debug:
                     init_db()
@@ -54,7 +62,7 @@ def create_app():
                     cmd_handler = CLICommandHandler(app)
                     cmd_handler.verify_commands_at_startup()
             except Exception as e:
-                if app.debug and not is_quiet_mode:
+                if app.debug and not is_quiet_mode and not Config.IS_RENDER:
                     logger.warning(f"Initialization Warning: {e}")
                 app.assistant, app.gh, app.li = None, None, None
 
