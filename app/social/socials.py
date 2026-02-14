@@ -13,14 +13,12 @@ def init_github():
     try:
         gh = GitHubPortfolio()
         if gh.username:
-            logger.info(
-                f"✅ GitHub Service Initialized for User: {gh.username}")
             if Config.GITHUB_TOKEN:
                 logger.info(
-                    "GitHub API Initialized for Authenticated Mode")
+                    f"✅ GitHub Service Initialized on Authenticated Mode for User: {gh.username}")
             else:
                 logger.warning(
-                    "✅ GitHub API Initialized for Unauthenticated Mode")
+                    f"⚠️ GitHub Service Initialized in Unauthenticated Mode for User: {gh.username}")
             return gh
         return None
     except Exception as e:

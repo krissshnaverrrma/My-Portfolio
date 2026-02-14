@@ -29,6 +29,6 @@ class DiagnosticEngine:
 
         if passed == len(all_endpoints):
             print(
-                f"{self.GREEN}✅ DIAGNOSTICS Audit: All {passed} Registered Routes are Initialized Correctly.{self.END}")
+                f"{self.GREEN}✅ DIAGNOSTICS Verified : All {passed} Registered Routes are Initialized Correctly.{self.END}")
             return True
         return False

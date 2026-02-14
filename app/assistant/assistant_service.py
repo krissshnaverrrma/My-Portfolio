@@ -93,12 +93,9 @@ class AssistantService:
         return "None/Missing"
 
     def check_health(self):
-        """
-        Performs a self-diagnostic check.
-        Triggers 'Smart Cache' or 'Quick Response' by invoking the HEALTH_CHECK_QUERY.
-        """
+        """Self-diagnostic check that now silences internal logs."""
         try:
-            res, mode = self.get_response(HEALTH_CHECK_QUERY)
+            res, mode = self.get_response(HEALTH_CHECK_QUERY, silent=True)
             is_healthy = any(w in res.lower()
                              for w in ["assistant", "virtual", "krishna"])
             return is_healthy, mode
@@ -106,11 +103,13 @@ class AssistantService:
             logger.error(f"❌ Assistant Diagnostic Failed: {e}")
             return False, "offline"
 
-    def get_response(self, user_input, session_id="default"):
+    def get_response(self, user_input, session_id="default", silent=False):
+        """Modified to support a silent mode for background checks."""
         clean_input = user_input.strip().lower().replace("?", "").replace(".", "")
         if clean_input in self.quick_responses:
             reply = self.quick_responses[clean_input]
-            logger.info(f"🚀 Serving via Quick Response")
+            if not silent:
+                logger.info(f"🚀 Serving via Quick Response")
             log_conversation(session_id, user_input, reply)
             return reply, "cached_mode"
         instructions = self._build_instructions()

@@ -8,7 +8,7 @@ class Config:
     USE_SQLITE_LOCALLY = False
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY", "dev_key")
     CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
-    IS_RENDER = os.getenv("RENDER", "False") == "True"
+    IS_RENDER = os.getenv("RENDER", "False").lower() == "true"
     if IS_RENDER:
         DATABASE_URL = os.getenv("INTERNAL_DATABASE_URL")
     elif not USE_SQLITE_LOCALLY:

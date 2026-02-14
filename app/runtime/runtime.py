@@ -12,7 +12,7 @@ class PortfolioRuntime:
         self.assistant = assistant_instance
 
     def verify_identity(self):
-        """Master Startup Check: Runs all diagnostic tests silently."""
+        """Startup Check that now relies on silenced service logic."""
         try:
             ai_ok, mode = self.assistant.check_health()
             db_ok, _ = self.check_database_health()
