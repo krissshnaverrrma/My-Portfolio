@@ -40,7 +40,7 @@ def create_app():
                 for lib in ['app.assistant.assistant', 'app.social.socials', 'app.db.data']:
                     logging.getLogger(lib).setLevel(logging.WARNING)
             try:
-                logger.info("✅ Initializing Systems and Modules")
+                logger.info("✅ Initializing All the Systems and Modules")
                 if app.debug and not Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
@@ -52,7 +52,7 @@ def create_app():
                     SystemValidator(app).verify_logic_at_startup()
                     CLICommandHandler(app).verify_commands_at_startup()
                     logger.info(
-                        "✅ All Systems and Modules Initialized Successfully")
+                        "✅ All the Systems and Modules Initialized Successfully")
             except Exception as e:
                 if not is_quiet_mode:
                     logger.warning(f"⚠️ Initialization Warning: {e}")

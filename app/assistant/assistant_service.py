@@ -112,11 +112,10 @@ class AssistantService:
                 [f"[{k.category}]: {k.info}" for k in knowledge])
             blog_text = "\n".join(
                 [f"- {p.title}: {p.summary}" for p in posts]
-            ) if posts else
-            "No Blog Posts Available."
+            ) if posts else "No Blog Posts Available."
             project_text = "\n".join(
                 [f"- {p.title}: {p.description} (Tech: {p.tech_stack})" for p in projects]
-            ) if projects else "No Portfolio Projects Available."
+            ) if projects else "No Projects Available."
             cert_text = "\n".join(
                 [f"- {c.title} by {c.issuer} ({c.status})" for c in certs]
             ) if certs else "No Certifications Listed."
