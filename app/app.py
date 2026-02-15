@@ -30,7 +30,6 @@ def create_app():
     app.jinja_env.filters['format_date'] = format_date
     SystemValidator.register_commands(app)
     CLICommandHandler.register_commands(app)
-
     with app.app_context():
         from .social.socials import init_github, init_linkedin
         from .assistant.assistant import init_assistant
@@ -38,38 +37,28 @@ def create_app():
         should_init = is_cli_mode or Config.IS_RENDER or is_reloader_process or not app.debug
         if should_init:
             if os.environ.get("FLASK_RUN_FROM_CLI") == "true":
-                logging.getLogger('app.assistant.assistant').setLevel(
-                    logging.WARNING)
-                logging.getLogger('app.social.socials').setLevel(
-                    logging.WARNING)
-                logging.getLogger('app.db.data').setLevel(logging.WARNING)
+                for lib in ['app.assistant.assistant', 'app.social.socials', 'app.db.data']:
+                    logging.getLogger(lib).setLevel(logging.WARNING)
             try:
-                logger.info("✅Initializing All the Systems and Modules")
+                logger.info("✅ Initializing Systems and Modules")
                 if app.debug and not Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
                 app.gh = init_github()
                 app.li = init_linkedin()
                 if app.assistant and not is_quiet_mode:
-                    runtime = PortfolioRuntime(app.assistant)
-                    runtime.verify_identity()
-                    diag = DiagnosticEngine(app)
-                    diag.run_route_audit()
-                    validator = SystemValidator(app)
-                    validator.verify_logic_at_startup()
-                    cmd_handler = CLICommandHandler(app)
-                    cmd_handler.verify_commands_at_startup()
+                    PortfolioRuntime(app.assistant).verify_identity()
+                    DiagnosticEngine(app).run_route_audit()
+                    SystemValidator(app).verify_logic_at_startup()
+                    CLICommandHandler(app).verify_commands_at_startup()
                     logger.info(
-                        "✅All the Systems and Modules Initialized Successfully")
+                        "✅ All Systems and Modules Initialized Successfully")
             except Exception as e:
                 if not is_quiet_mode:
-                    logger.warning(f"Initialization Warning: {e}")
-                if not hasattr(app, 'assistant'):
-                    app.assistant = None
-                if not hasattr(app, 'gh'):
-                    app.gh = None
-                if not hasattr(app, 'li'):
-                    app.li = None
+                    logger.warning(f"⚠️ Initialization Warning: {e}")
+                app.assistant = getattr(app, 'assistant', None)
+                app.gh = getattr(app, 'gh', None)
+                app.li = getattr(app, 'li', None)
         else:
             app.assistant = None
             app.gh = None
