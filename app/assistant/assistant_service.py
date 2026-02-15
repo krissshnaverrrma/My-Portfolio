@@ -1,10 +1,6 @@
-import os
-import json
 import logging
 import time
 import hashlib
-from datetime import datetime, timedelta
-from google import genai
 from google.genai import types
 from ..config.config import Config
 from ..db.data import (
@@ -14,68 +10,12 @@ from ..db.data import (
     get_all_posts, get_all_certifications
 )
 from ..social.socials import GitHubPortfolio, LinkedInPortfolio
+from .assistant_logic import (
+    get_shared_client, get_valid_models, load_quick_responses,
+    HEALTH_CHECK_QUERY
+)
 
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("google.genai").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
-
-_CACHED_MODELS, _LAST_CHECK_TIME, _SHARED_CLIENT = [], None, None
-_CACHE_EXPIRY = timedelta(hours=6)
-QUICK_RESPONSE_FILE = 'assistant.json'
-HEALTH_CHECK_QUERY = "Who are you?"
-
-
-def load_quick_responses():
-    """Loads the JSON file containing instant answers."""
-    try:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        json_path = os.path.join(base_dir, QUICK_RESPONSE_FILE)
-        if os.path.exists(json_path):
-            with open(json_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-    except Exception as e:
-        logger.error(f"⚠️ Failed to Load Quick Responses: {e}")
-    return {}
-
-
-def get_shared_client():
-    global _SHARED_CLIENT
-    if _SHARED_CLIENT is None and Config.GEMINI_API_KEY:
-        try:
-            _SHARED_CLIENT = genai.Client(api_key=Config.GEMINI_API_KEY)
-        except Exception as e:
-            logger.error(f"❌ GenAI Client Error: {e}")
-    return _SHARED_CLIENT
-
-
-def get_valid_models():
-    global _CACHED_MODELS, _LAST_CHECK_TIME
-    if _CACHED_MODELS and _LAST_CHECK_TIME and (datetime.now() - _LAST_CHECK_TIME < _CACHE_EXPIRY):
-        return _CACHED_MODELS
-    client = get_shared_client()
-    if not client:
-        return []
-    ai_config = get_ai_config()
-    json_fallbacks = ai_config.get("fallback_models", [])
-    env_preferred = os.getenv("GEMINI_MODEL")
-    try:
-        api_response = client.models.list()
-        available_names = set(m.name.replace("models/", "")
-                              for m in api_response)
-        valid_stack = []
-        if env_preferred and env_preferred in available_names:
-            valid_stack.append(env_preferred)
-        for model in json_fallbacks:
-            if model in available_names and model not in valid_stack:
-                valid_stack.append(model)
-        if not valid_stack:
-            valid_stack = [m for m in available_names if "flash" in m][:2]
-        _CACHED_MODELS = valid_stack
-        _LAST_CHECK_TIME = datetime.now()
-        return valid_stack
-    except Exception as e:
-        logger.error(f"⚠️ Failed to Fetch Models from GEMINI API: {e}")
-        return [env_preferred] + json_fallbacks if env_preferred else json_fallbacks
 
 
 class AssistantService:

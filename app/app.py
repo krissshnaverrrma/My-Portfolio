@@ -3,7 +3,8 @@ import logging
 import sys
 from flask import Flask
 from .config.config import Config
-from .db.data import init_db, get_user_profile
+from .db.data import get_user_profile
+from .db.data_seed import init_db
 from .routes import register_routes
 from .errors import errors_bp
 from .runtime.runtime import PortfolioRuntime

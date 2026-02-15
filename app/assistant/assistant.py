@@ -56,7 +56,7 @@ def init_assistant():
         assistant = AssistantService()
         if assistant and assistant.is_online:
             tier = getattr(Config, 'GEMINI_MODEL', 'Auto')
-            logger.info(f"✅ AI Initialized via {tier}")
+            logger.info(f"✅ AI Assistant Initialized via {tier}")
         else:
             logger.warning("⚠️ AI Assistant Initialized in OFFLINE Mode.")
         return assistant

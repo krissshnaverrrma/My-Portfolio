@@ -5,11 +5,10 @@ from types import SimpleNamespace
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict, Any
 from .database import (
-    SessionLocal, Base, engine, APICache, Knowledge, BlogPost,
+    SessionLocal, APICache, Knowledge, BlogPost,
     Project, Skill, TimelineEvent, Service, Certification, ContactMessage,
     ChatLog
 )
-from ..config.config import Config
 
 logger = logging.getLogger(__name__)
 _JSON_CACHE: Optional[Dict[str, Any]] = None
@@ -169,10 +168,8 @@ def get_cached_ai_response(cache_key: str, expiry_hours: int = 24) -> Optional[s
         if cache_entry and cache_entry.timestamp:
             current_time = datetime.now(timezone.utc)
             entry_time = cache_entry.timestamp
-
             if entry_time.tzinfo is None:
                 entry_time = entry_time.replace(tzinfo=timezone.utc)
-
             if current_time - entry_time < timedelta(hours=expiry_hours):
                 return cache_entry.data
         return None
@@ -234,132 +231,3 @@ def save_contact_message(name, email, subject, message):
         return False
     finally:
         db.close()
-
-
-def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
-    db = SessionLocal()
-    data = get_data_json()
-    try:
-        knowledge_list = data.get("knowledge_base", [])
-        for entry in knowledge_list:
-            existing = db.query(Knowledge).filter_by(
-                category=entry['category']).first()
-            if existing:
-                existing.info = entry['info']
-            else:
-                db.add(
-                    Knowledge(category=entry['category'], info=entry['info']))
-
-        if 'projects' in data:
-            db.query(Project).delete()
-            for proj in data['projects']:
-                slug_val = proj.get(
-                    'slug', proj['title'].lower().replace(' ', '-'))
-                db.add(Project(
-                    title=proj['title'],
-                    slug=slug_val,
-                    category=proj.get('category', 'misc'),
-                    image_url=proj.get('image_url'),
-                    description=proj.get('description'),
-                    content=proj.get('content', ''),
-                    tech_stack=", ".join(proj.get('tech_stack', [])),
-                    github_url=proj.get('github_url'),
-                    demo_url=proj.get('demo_url'),
-                    is_featured=proj.get('is_featured', False),
-                    year=proj.get('year', '')
-                ))
-
-        if 'certifications' in data:
-            db.query(Certification).delete()
-            for cert in data['certifications']:
-                db.add(Certification(
-                    title=cert['title'],
-                    slug=cert.get('slug'),
-                    issuer=cert['issuer'],
-                    date=cert.get('date', ''),
-                    description=cert.get('description', ''),
-                    icon_class=cert.get('icon_class', 'fas fa-certificate'),
-                    image_url=cert.get('image_url'),
-                    link=cert.get('link'),
-                    status=cert.get('status', 'Completed')
-                ))
-
-        if 'blog_posts' in data:
-            db.query(BlogPost).delete()
-            for post in data['blog_posts']:
-                db.add(BlogPost(
-                    title=post['title'],
-                    slug=post['slug'],
-                    category=post.get('category', 'Tech'),
-                    summary=post['summary'],
-                    content=post['content'],
-                    image_url=post.get('image_url'),
-                    created_at=datetime.now(timezone.utc)
-                ))
-
-        if 'skills' in data:
-            db.query(Skill).delete()
-            for skill in data['skills']:
-                slug_val = skill.get('slug', skill['name'].lower().replace(
-                    ' ', '-').replace('.', '-').replace('/', '').replace('#', 'sharp'))
-                desc_val = skill.get(
-                    'description', f"{skill['name']} is a key technology in my {skill['category']} stack.")
-                db.add(Skill(
-                    category=skill['category'],
-                    name=skill['name'],
-                    slug=slug_val,
-                    description=desc_val,
-                    icon_class=skill.get('icon', skill.get('icon_class'))
-                ))
-                k_category = f"skill_{slug_val}"
-                k_info = f"Skill: {skill['name']} ({skill['category']}). Details: {desc_val}"
-                existing_k = db.query(Knowledge).filter_by(
-                    category=k_category).first()
-                if existing_k:
-                    existing_k.info = k_info
-                else:
-                    db.add(Knowledge(category=k_category, info=k_info))
-
-        if 'services' in data:
-            db.query(Service).delete()
-            for svc in data['services']:
-                db.add(Service(
-                    title=svc['title'], description=svc['description'], icon_class=svc['icon']))
-        db.query(TimelineEvent).delete()
-
-        if 'academic_timeline' in data:
-            for item in data['academic_timeline']:
-                db.add(TimelineEvent(
-                    type='academic', year=item['year'], title=item['title'],
-                    subtitle=item['institution'], description=item['description'],
-                    status_badge=item['status'], is_future=False
-                ))
-
-        if 'dev_journey' in data:
-            for item in data['dev_journey']:
-                db.add(TimelineEvent(
-                    type='journey', year=item['year'], title=item['title'],
-                    subtitle="", description=item['description'],
-                    is_future=item.get('is_future', False)
-                ))
-
-        db.commit()
-        if not Config.IS_RENDER:
-            logger.info(
-                f"✅ Database Initialized via {provider_name}")
-    except Exception as e:
-        logger.error(f"Database Seeding Error: {e}")
-        db.rollback()
-    finally:
-        db.close()
-
-
-def init_db() -> None:
-    if Config.IS_RENDER:
-        provider = "Internal Database Engine"
-    elif not Config.USE_SQLITE_LOCALLY:
-        provider = "External Database Engine"
-    else:
-        provider = "SQL Database Engine"
-    Base.metadata.create_all(bind=engine)
-    seed_initial_data(provider)

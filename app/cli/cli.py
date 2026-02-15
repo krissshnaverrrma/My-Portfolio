@@ -7,7 +7,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, "../../"))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
-    from app.db.data import init_db
+    from app.db.data_seed import init_db
     from sqlalchemy import text
 if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     try:
