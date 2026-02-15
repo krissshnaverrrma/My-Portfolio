@@ -2,7 +2,7 @@ import os
 import json
 import logging
 from types import SimpleNamespace
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict, Any
 from .database import (
     SessionLocal, Base, engine, APICache, Knowledge, BlogPost,
@@ -106,7 +106,7 @@ def _get_chat_log_path():
 
 
 def log_conversation(session_id: str, u: str, b: str) -> None:
-    timestamp = datetime.utcnow()
+    timestamp = datetime.now(timezone.utc)
     log_path = _get_chat_log_path()
     entry = {
         "session_id": session_id,
@@ -127,6 +127,7 @@ def log_conversation(session_id: str, u: str, b: str) -> None:
             json.dump(data, f, indent=4)
     except Exception as e:
         logger.error(f"❌ Error logging chat to JSON: {e}")
+
     with SessionLocal() as db:
         try:
             new_log = ChatLog(
@@ -154,7 +155,7 @@ def get_chat_history(session_id: str, limit: int = 10) -> List[SimpleNamespace]:
                     session_id=log.session_id,
                     user_query=log.user_query,
                     bot_response=log.bot_response,
-                    timestamp=log.timestamp.isoformat()
+                    timestamp=log.timestamp.isoformat() if log.timestamp else ""
                 ))
             return history_objects[::-1]
         except Exception as e:
@@ -165,8 +166,14 @@ def get_chat_history(session_id: str, limit: int = 10) -> List[SimpleNamespace]:
 def get_cached_ai_response(cache_key: str, expiry_hours: int = 24) -> Optional[str]:
     with SessionLocal() as db:
         cache_entry = db.query(APICache).filter_by(key=cache_key).first()
-        if cache_entry:
-            if datetime.utcnow() - cache_entry.timestamp < timedelta(hours=expiry_hours):
+        if cache_entry and cache_entry.timestamp:
+            current_time = datetime.now(timezone.utc)
+            entry_time = cache_entry.timestamp
+
+            if entry_time.tzinfo is None:
+                entry_time = entry_time.replace(tzinfo=timezone.utc)
+
+            if current_time - entry_time < timedelta(hours=expiry_hours):
                 return cache_entry.data
         return None
 
@@ -175,11 +182,12 @@ def set_cached_ai_response(cache_key: str, response_text: str) -> None:
     with SessionLocal() as db:
         try:
             cache_entry = db.query(APICache).filter_by(key=cache_key).first()
+            now_utc = datetime.now(timezone.utc)
             if cache_entry:
                 cache_entry.data = response_text
-                cache_entry.timestamp = datetime.utcnow()
+                cache_entry.timestamp = now_utc
             else:
-                db.add(APICache(key=cache_key, data=response_text))
+                db.add(APICache(key=cache_key, data=response_text, timestamp=now_utc))
             db.commit()
         except Exception as e:
             logger.error(f"❌ Error Saving to AI Cache: {e}")
@@ -195,7 +203,7 @@ def save_contact_message(name, email, subject, message):
     try:
         log_path = _get_contact_log_path()
         entry = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "name": name,
             "email": email,
             "subject": subject,
@@ -286,7 +294,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                     summary=post['summary'],
                     content=post['content'],
                     image_url=post.get('image_url'),
-                    created_at=datetime.utcnow()
+                    created_at=datetime.now(timezone.utc)
                 ))
 
         if 'skills' in data:

@@ -18,6 +18,10 @@ logger = logging.getLogger(__name__)
 
 
 def create_app():
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+    is_cli_mode = os.environ.get(
+        "FLASK_CLI_MODE") == "true" or "cli.py" in sys.argv[0]
     quiet_commands = ["test", "hub"]
     is_quiet_mode = any(cmd in sys.argv for cmd in quiet_commands)
     if is_quiet_mode or Config.IS_RENDER:
@@ -41,18 +45,17 @@ def create_app():
     with app.app_context():
         from .social.socials import init_github, init_linkedin
         from .assistant.assistant import init_assistant
-        is_testing = os.environ.get("FLASK_TESTING") == "true"
-        should_init = os.environ.get(
-            'WERKZEUG_RUN_MAIN') == 'true' or not app.debug or Config.IS_RENDER
+        is_reloader_process = os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
+        should_init = is_cli_mode or Config.IS_RENDER or is_reloader_process or not app.debug
 
         if should_init:
             try:
-                if app.debug:
+                if app.debug and not Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
                 app.gh = init_github()
                 app.li = init_linkedin()
-                if app.assistant and not is_testing:
+                if app.assistant and not is_quiet_mode:
                     runtime = PortfolioRuntime(app.assistant)
                     runtime.verify_identity()
                     diag = DiagnosticEngine(app)
@@ -62,9 +65,18 @@ def create_app():
                     cmd_handler = CLICommandHandler(app)
                     cmd_handler.verify_commands_at_startup()
             except Exception as e:
-                if app.debug and not is_quiet_mode and not Config.IS_RENDER:
+                if not is_quiet_mode:
                     logger.warning(f"Initialization Warning: {e}")
-                app.assistant, app.gh, app.li = None, None, None
+                if not hasattr(app, 'assistant'):
+                    app.assistant = None
+                if not hasattr(app, 'gh'):
+                    app.gh = None
+                if not hasattr(app, 'li'):
+                    app.li = None
+        else:
+            app.assistant = None
+            app.gh = None
+            app.li = None
 
     @app.context_processor
     def inject_global_context():
