@@ -7,7 +7,7 @@ from ..db.data import (
     log_conversation, search_knowledge, get_ai_config,
     get_chat_history, get_all_knowledge, get_user_profile,
     get_cached_ai_response, set_cached_ai_response,
-    get_all_posts, get_all_certifications
+    get_all_posts, get_all_projects, get_all_certifications
 )
 from ..social.socials import GitHubPortfolio, LinkedInPortfolio
 from .assistant_logic import (
@@ -104,6 +104,7 @@ class AssistantService:
             knowledge = get_all_knowledge()
             user = get_user_profile()
             posts = get_all_posts()
+            projects = get_all_projects()
             certs = get_all_certifications()
             repo_text = "\n".join(
                 [f"- {r['name']}: {r['description']}" for r in gh.get_projects(limit=5)])
@@ -111,12 +112,17 @@ class AssistantService:
                 [f"[{k.category}]: {k.info}" for k in knowledge])
             blog_text = "\n".join(
                 [f"- {p.title}: {p.summary}" for p in posts]
-            ) if posts else "No Blog Posts Available."
+            ) if posts else
+            "No Blog Posts Available."
+            project_text = "\n".join(
+                [f"- {p.title}: {p.description} (Tech: {p.tech_stack})" for p in projects]
+            ) if projects else "No Portfolio Projects Available."
             cert_text = "\n".join(
                 [f"- {c.title} by {c.issuer} ({c.status})" for c in certs]
             ) if certs else "No Certifications Listed."
             return (
                 f"GITHUB PROJECTS:\n{repo_text}\n\n"
+                f"PORTFOLIO PROJECTS:\n{project_text}\n\n"
                 f"CERTIFICATIONS:\n{cert_text}\n\n"
                 f"BLOG POSTS:\n{blog_text}\n\n"
                 f"KNOWLEDGE BASE:\n{db_text}\n\n"
