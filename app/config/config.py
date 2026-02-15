@@ -5,7 +5,8 @@ load_dotenv()
 
 
 class Config:
-    USE_SQLITE_LOCALLY = False
+    USE_SQLITE_LOCALLY = os.getenv(
+        "USE_SQLITE_LOCALLY", "False").lower() == "true"
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY", "dev_key")
     CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
     IS_RENDER = os.getenv("RENDER", "False").lower() == "true"

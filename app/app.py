@@ -11,6 +11,7 @@ from .diagnostics import DiagnosticEngine
 from .extensions import limiter
 from .utils.filters import markdown_filter
 from .utils.helpers import format_date
+from .utils.logger import configure_logging
 from .test.tests import SystemValidator
 from .cmd.command import CLICommandHandler
 
@@ -18,20 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def create_app():
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)
-    is_cli_mode = os.environ.get(
-        "FLASK_CLI_MODE") == "true" or "cli.py" in sys.argv[0]
-    quiet_commands = ["test", "hub"]
-    is_quiet_mode = any(cmd in sys.argv for cmd in quiet_commands)
-    if is_quiet_mode or Config.IS_RENDER:
-        os.environ["FLASK_TESTING"] = "true"
-        logging.disable(
-            logging.WARNING if Config.IS_RENDER else logging.CRITICAL)
-        os.environ["WERKZEUG_RUN_MAIN"] = "true"
-        logging.getLogger("werkzeug").setLevel(logging.ERROR)
-        logging.getLogger("flask").setLevel(logging.ERROR)
-
+    is_cli_mode, is_quiet_mode = configure_logging()
     app = Flask(__name__)
     app.config.from_object(Config)
     limiter.init_app(app)
