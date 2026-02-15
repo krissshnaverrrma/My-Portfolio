@@ -42,8 +42,8 @@
           <div class="container">
                {% if request.endpoint != 'home.home' %}
                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home.home') }}">
-                    <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="KV" width="30" height="30"
-                         class="rounded-circle">
+                    <img src="{{ url_for('static', filename='assets/profile/profile.jpg') }}" alt="KV" width="30"
+                         height="30" class="rounded-circle">
                     <span>Krishna Verma</span>
                </a>
                {% endif %}
@@ -94,8 +94,8 @@
                <div class="row align-items-center g-2">
                     <div class="col-md-6 d-flex align-items-center gap-3">
                          <div class="footer-profile-wrapper compact">
-                              <img src="{{ url_for('static', filename='assets/profile.jpg') }}" alt="Krishna Verma"
-                                   class="footer-profile-img">
+                              <img src="{{ url_for('static', filename='assets/profile/profile.jpg') }}"
+                                   alt="Krishna Verma" class="footer-profile-img">
                               <div class="status-indicator {{ bot_status }}"></div>
                          </div>
                          <div class="lh-1">

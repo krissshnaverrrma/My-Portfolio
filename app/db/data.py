@@ -126,7 +126,7 @@ def log_conversation(session_id: str, u: str, b: str) -> None:
         with open(log_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4)
     except Exception as e:
-        logger.error(f"❌ Error logging chat to JSON: {e}")
+        logger.error(f"❌ Error logging Chat to JSON: {e}")
 
     with SessionLocal() as db:
         try:
@@ -139,7 +139,7 @@ def log_conversation(session_id: str, u: str, b: str) -> None:
             db.add(new_log)
             db.commit()
         except Exception as e:
-            logger.error(f"❌ Error logging chat to Database: {e}")
+            logger.error(f"❌ Error logging Chat to Database: {e}")
             db.rollback()
 
 
@@ -346,7 +346,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
         db.commit()
         if not Config.IS_RENDER:
             logger.info(
-                f"✅ Database Initialized Successfully via {provider_name}")
+                f"✅ Database Initialized via {provider_name}")
     except Exception as e:
         logger.error(f"Database Seeding Error: {e}")
         db.rollback()

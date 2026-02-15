@@ -31,6 +31,6 @@ class DiagnosticEngine:
         if passed == len(all_endpoints):
             if not Config.IS_RENDER:
                 print(
-                    f"{self.GREEN}✅ DIAGNOSTICS Verified : All {passed} Registered Routes are Initialized Correctly.{self.END}")
+                    f"{self.GREEN}✅ DIAGNOSTICS Verified: All {passed} Registered Routes are Initialized Correctly{self.END}")
             return True
         return False

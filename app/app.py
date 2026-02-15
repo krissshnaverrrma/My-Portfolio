@@ -47,8 +47,13 @@ def create_app():
         from .assistant.assistant import init_assistant
         is_reloader_process = os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
         should_init = is_cli_mode or Config.IS_RENDER or is_reloader_process or not app.debug
-
         if should_init:
+            if os.environ.get("FLASK_RUN_FROM_CLI") == "true":
+                logging.getLogger('app.assistant.assistant').setLevel(
+                    logging.WARNING)
+                logging.getLogger('app.social.socials').setLevel(
+                    logging.WARNING)
+                logging.getLogger('app.db.data').setLevel(logging.WARNING)
             try:
                 if app.debug and not Config.IS_RENDER:
                     init_db()

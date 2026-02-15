@@ -141,7 +141,7 @@ class AssistantService:
                     raise ValueError("Empty Response")
                 set_cached_ai_response(cache_key, reply)
                 log_conversation(session_id, user_input, reply)
-                logger.info(f"🤖 AI Response Generated Via: {model_name}")
+                logger.info(f"🤖 AI Response Generated via : {model_name}")
                 return reply, "online"
             except Exception as e:
                 next_idx = idx + 1

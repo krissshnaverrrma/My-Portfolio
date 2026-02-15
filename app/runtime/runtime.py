@@ -23,11 +23,11 @@ class PortfolioRuntime:
             if all([ai_ok, db_ok, kb_ok, soc_ok, red_ok]):
                 if not Config.IS_RENDER:
                     print(
-                        f"{self.GREEN}✅ Runtime Verified: All CONFIGURATION Initialized and Operational (AI: {mode}, Database, Socials, Redundancy){self.END}")
+                        f"{self.GREEN}✅ Runtime Verified: All CONFIGURATION Initialized and Operational{self.END}")
             else:
                 if not Config.IS_RENDER:
                     print(
-                        f"{self.RED}❌ Runtime Verification Failed: Components degraded.{self.END}")
+                        f"{self.RED}❌ Runtime Verification Failed: Components Degraded.{self.END}")
             return ai_ok, mode
         except Exception as e:
             if not Config.IS_RENDER:

@@ -1,6 +1,6 @@
 # 🚀 Krishna's Portfolio
 
-![Portfolio-Review](/app/static/assets/my_portfolio_preview.png)
+![Portfolio-Review](/app/static/assets/preview/portfolio-preview.png)
 
 A High-Performance Portfolio. Multi-Model AI Assistant. Modern Design.
 

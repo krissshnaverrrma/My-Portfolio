@@ -55,11 +55,8 @@ def init_assistant():
     try:
         assistant = AssistantService()
         if assistant and assistant.is_online:
-            masked_key = assistant.get_masked_key()
-            model_count = len(assistant.model_stack)
             tier = getattr(Config, 'GEMINI_MODEL', 'Auto')
-            logger.info(
-                f"✅ AI Initialized on {tier} Tier via Key {masked_key} and Available Models Counted as {model_count}")
+            logger.info(f"✅ AI Initialized via {tier}")
         else:
             logger.warning("⚠️ AI Assistant Initialized in OFFLINE Mode.")
         return assistant
