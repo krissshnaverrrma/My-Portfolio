@@ -510,8 +510,8 @@
             "is_featured": false
         },
         {
-            "title": "Type Master AI : Sound and Typing Experience",
-            "slug": "type-master-django-audio",
+            "title": "Type Master: AI Meet Minimalism",
+            "slug": "type-master-ai",
             "category": "Full Stack / AI",
             "image_url": "/static/assets/blogs/type_master.jpg",
             "summary": "Exploring the intersection of AI text generation and low-level browser audio APIs to create a zero-latency typing experience.",
