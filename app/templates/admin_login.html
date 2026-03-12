@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+{% block content %}
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .auth-wrapper-full {
+        min-height: 100vh;
+        width: 100%;
+        background: #000;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+
+    .auth-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+        width: 100%;
+    }
+
+    .auth-grid {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+    }
+
+    .auth-visual {
+        width: 45%;
+        flex-shrink: 0;
+        text-align: center;
+    }
+
+    .auth-form-section {
+        width: 55%;
+    }
+
+    .sleek-auth-panel {
+        background: #050505;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 3rem;
+        width: 100%;
+        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .sleek-input {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 1rem 1.2rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .sleek-input:focus {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: #ffffff;
+        outline: none;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-auth {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        border-radius: 50px;
+        padding: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .btn-auth:hover {
+        background: #e0e0e0;
+        color: #000000;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-auth {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-outline-auth:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: #ffffff;
+        transform: translateY(-2px);
+        color: #ffffff;
+    }
+
+    @media (max-width: 992px) {
+        .auth-grid {
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .auth-visual,
+        .auth-form-section {
+            width: 100%;
+        }
+
+        .auth-visual {
+            display: none;
+        }
+    }
+</style>
+<div class="auth-wrapper-full">
+    <div class="auth-content">
+        <div class="auth-grid">
+            <aside class="auth-visual d-none d-lg-block">
+                <i class="fas fa-fingerprint mb-4" style="font-size: 5rem; color: rgba(255,255,255,0.15);"></i>
+                <h2 class="fw-bold text-white mb-2" style="letter-spacing: 4px; text-transform: uppercase;">Restricted
+                    Area</h2>
+                <p class="text-secondary small font-monospace" style="letter-spacing: 1px;">AUTHORIZED PERSONNEL ONLY
+                </p>
+            </aside>
+            <main class="auth-form-section">
+                <div class="sleek-auth-panel">
+                    <div class="mb-4 text-center">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <i class="fas fa-lock text-white fs-4"></i>
+                        </div>
+                        <h3 class="fw-bold text-white mb-2" style="letter-spacing: -0.5px;">System Access</h3>
+                        <p class="text-secondary small" style="line-height: 1.6;">Identify Yourself to Continue to the
+                            Control Panel.</p>
+                    </div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-dismissible fade show text-start small mb-4" role="alert"
+                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; border-radius: 12px; padding: 10px 15px;">
+                        <i class="fas fa-exclamation-circle me-2 opacity-75"></i>{{ message }}
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                            aria-label="Close" style="font-size: 0.7rem; padding: 12px;"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <form method="POST" action="{{ url_for('admin.login') }}">
+                        <input type="hidden" name="action" value="login">
+                        <div class="mb-4 text-start">
+                            <label class="form-label text-white small fw-bold opacity-75 ms-1">Username</label>
+                            <input type="text" name="username" class="sleek-input"
+                                placeholder="Enter Admin Registered Username" required>
+                        </div>
+                        <div class="mb-5 text-start">
+                            <label class="form-label text-white small fw-bold opacity-75 ms-1">Password</label>
+                            <input type="password" name="password" class="sleek-input"
+                                placeholder="Enter Admin Secured Password" required>
+                        </div>
+                        <div class="d-flex flex-column gap-3">
+                            <button type="submit" class="btn-auth">
+                                <i class="fas fa-sign-in-alt"></i> Secure Login
+                            </button>
+                            <a href="{{ url_for('home.home') }}" class="btn-outline-auth">
+                                <i class="fas fa-home"></i> Return to Portfolio
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}

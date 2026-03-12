@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: "Calibri", "Segoe UI", sans-serif;
+            line-height: 1.4;
+            color: #000;
+            margin: 0 auto;
+            padding: 40px 50px;
+            max-width: 900px;
+            font-size: 10.5pt;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24pt;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        h2 {
+            font-size: 11.5pt;
+            text-transform: uppercase;
+            border-bottom: 1.5px solid #000;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .entry-subheader {
+            display: flex;
+            justify-content: space-between;
+            font-style: italic;
+            margin-bottom: 3px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 20px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        ul {
+            margin: 3px 0 8px 18px;
+            padding: 0;
+            list-style-type: disc;
+        }
+
+        li {
+            margin-bottom: 2px;
+        }
+
+        .interactive-link {
+            text-decoration: none;
+            color: #000;
+            font-size: 8.5pt;
+            border: 1px solid #000;
+            padding: 0px 5px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .interactive-link:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>KRISHNA VERMA</h1>
+        <div class="contact-info">
+            <a href="tel:+919258846075"><i class="fas fa-phone"></i> +91 9258846075</a>
+            <a href="mailto:krishnav24-cs@sanskar.org"><i class="fas fa-envelope"></i> krishnav24-cs@sanskar.org</a>
+            <a href="https://github.com/krissshnaverrrma" target="_blank"><i class="fab fa-github"></i> Github</a>
+            <a href="https://linkedin.com/in/krishnav-cs" target="_blank"><i class="fab fa-linkedin"></i> Linkedin</a>
+        </div>
+    </div>
+    <section>
+        <h2>EDUCATION</h2>
+        <div class="entry-header">
+            <span>Sanskar College of Engineering and Technology (SCET)</span>
+            <span>2024 – PRESENT</span>
+        </div>
+        <div class="entry-subheader">
+            <span>Bachelor of Technology in Computer Science</span>
+            <span>Ghaziabad, India</span>
+        </div>
+        <div class="entry-header" style="margin-top: 8px;">
+            <span>Saraswati Bal Mandir Sr. Sec. School , Hapur</span>
+            <span>COMPLETED 2024</span>
+        </div>
+        <div class="entry-subheader">
+            <span>Higher Secondary (PCM) | Score: 88%</span>
+            <span>Hapur, India</span>
+        </div>
+    </section>
+    <section>
+        <h2>TECHNICAL EXPERTISE</h2>
+        <div class="skills-grid">
+            <div><span class="bold">Languages:</span> Python, C/C++, Java, JavaScript, SQL, Bash</div>
+            <div><span class="bold">Backend:</span> Flask, Django, SQLAlchemy, RESTful APIs</div>
+            <div><span class="bold">Frontend:</span> HTML5, CSS3, Bootstrap, Responsive UI</div>
+            <div><span class="bold">Tools:</span> Git, GitHub, VS Code, PostgreSQL, MySQL</div>
+            <div><span class="bold">Concepts:</span> Data Structures (DSA), OOP, Unit Testing</div>
+            <div><span class="bold">Methodologies:</span> Git Flow, Debugging, System Design</div>
+        </div>
+    </section>
+    <section>
+        <h2>Featured Projects</h2>
+        <div class="entry-header">
+            <span>AI-Assistant-Integrated-Portfolio</span>
+            <a href="https://github.com/krissshnaverrrma/My-Portfolio" class="interactive-link" target="_blank"><i
+                    class="fab fa-github"></i> Source Code</a>
+        </div>
+        <div class="entry-subheader"><span>Python, Flask, PostgreSQL, Gemini AI</span></div>
+        <ul>
+            <li>Architected a Modular CMS using Flask Blueprints for Scalable Feature Expansion.</li>
+            <li>Integrated Google Gemini API to power a context-aware "Virtual AI Assistant" for real-time user queries.
+            </li>
+            <li>Implemented automated script rendering to reduce manual HTML maintenance by 50%.</li>
+        </ul>
+        <div class="entry-header">
+            <span>Live Weather Dashboard</span>
+            <div style="display: flex; gap: 5px;">
+                <a href="https://weather-app-one-cyan-26.vercel.app/" class="interactive-link" target="_blank"><i
+                        class="fas fa-link"></i> Live</a>
+                <a href="https://github.com/krissshnaverrrma/Weather-APP" class="interactive-link" target="_blank"><i
+                        class="fab fa-github"></i> Source Code</a>
+            </div>
+        </div>
+        <div class="entry-subheader"><span>JavaScript, REST APIs, CSS3, Geolocation API</span></div>
+        <ul>
+            <li>Developed a production-ready weather application featuring real-time geolocation and 5-day forecasting.
+            </li>
+            <li>Optimized API response handling using Async/Await patterns to ensure zero UI blocking during data fetch.
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Featured Certificates</h2>
+        <div class="entry-header">
+            <span>PYTHON FOR AI AND MACHINE LEARNING</span>
+            <a href="https://www.udemy.com/certificate/UC-0e0e0662-e296-4d6a-a468-b2defc1fce2b/"
+                class="interactive-link" target="_blank"><i class="fas fa-certificate"></i> Source</a>
+        </div>
+        <div class="entry-subheader"><span>Udemy | February 2026</span></div>
+        <div class="entry-header" style="margin-top: 5px;">
+            <span>SCIENTIFIC COMPUTING WITH PYTHON</span>
+            <a href="https://freecodecamp.org/certification/fcc-2e8a532a-215f-4cbe-883f-76f3c2c43541/scientific-computing-with-python-v7"
+                class="interactive-link" target="_blank"><i class="fas fa-certificate"></i> Source</a>
+        </div>
+        <div class="entry-subheader"><span>freeCodeCamp | February 2026</span></div>
+        <div class="entry-header" style="margin-top: 5px;">
+            <span>GIT & GITHUB BOOTCAMP</span>
+            <a href="https://verify.letsupgrade.in/certificate/LUEGGFEB12633" class="interactive-link"
+                target="_blank"><i class="fas fa-certificate"></i> Source</a>
+        </div>
+        <div class="entry-subheader"><span>Let'sUpgrade | February 2026</span></div>
+        <div class="entry-header" style="margin-top: 5px;">
+            <span>RESPONSIVE WEB DESIGN</span>
+            <a href="https://www.freecodecamp.org/certification/fcc-2e8a532a-215f-4cbe-883f-76f3c2c43541/responsive-web-design"
+                class="interactive-link" target="_blank"><i class="fas fa-certificate"></i> Source</a>
+        </div>
+        <div class="entry-subheader"><span>freeCodeCamp | February 2026</span></div>
+    </section>
+    <section>
+        <h2>ACHIEVEMENTS & PHILOSOPHY</h2>
+        <ul>
+            <li><span class="bold">"Lazy Coder" Philosophy:</span> Focused on writing modular, self-sustaining code to
+                automate repetitive tasks.</li>
+            <li>Member of SCET Technical Society; active contributor to student developer communities.</li>
+            <li><span class="bold">Interests:</span> Strategy Chess, Open Source Contribution, Technical Writing.</li>
+        </ul>
+    </section>
+</body>
+
+</html>

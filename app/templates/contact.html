@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .sleek-panel {
+          background: rgba(15, 15, 15, 0.6);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.04);
+          border-radius: 24px;
+          padding: 3rem;
+          height: 100%;
+          transition: border-color 0.4s ease;
+     }
+
+     .sleek-panel:hover {
+          border-color: rgba(255, 255, 255, 0.1);
+     }
+
+     .contact-link-item {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          padding: 1.25rem;
+          border-radius: 16px;
+          background: transparent;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+          border: 1px solid transparent;
+     }
+
+     .contact-link-item:hover {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.05);
+          transform: translateX(5px);
+     }
+
+     .icon-box {
+          width: 50px;
+          height: 50px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.03);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          transition: all 0.3s ease;
+     }
+
+     .contact-link-item:hover .icon-box {
+          background: white;
+          color: black;
+          border-color: white;
+     }
+
+     .sleek-input {
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 12px;
+          width: 100%;
+          transition: all 0.3s ease;
+          font-size: 0.95rem;
+     }
+
+     .sleek-input:focus {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.3);
+          outline: none;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+     }
+
+     .sleek-input::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+     }
+
+     .btn-premium {
+          background: white;
+          color: black;
+          border: none;
+          border-radius: 50px;
+          padding: 1rem 2rem;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          transition: all 0.3s ease;
+          width: 100%;
+     }
+
+     .btn-premium:hover {
+          background: #d0d0d0;
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s ease-out;
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+</style>
+<div class="d-flex flex-column align-items-center"
+     style="min-height: 100vh; width: 100vw; margin: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+     <div class="container p-4" style="max-width: 1100px; padding-top: 7rem !important;">
+          <div class="text-center mb-5 reveal-element">
+               <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-4 rounded-pill border border-secondary"
+                    style="background: rgba(255,255,255,0.03);">
+                    <span class="text-secondary small" style="font-size: 0.75rem;">Time based on Current
+                         Location:</span>
+                    <span id="local-time" class="text-white small fw-bold font-monospace"
+                         style="font-size: 0.75rem;">00:00 AM</span>
+                    <span class="badge rounded-circle p-1 ms-1"
+                         style="background: #28a745; box-shadow: 0 0 8px #28a745; width: 6px; height: 6px;"></span>
+               </div>
+               <h1 class="display-4 fw-bold text-white mb-2">Let's <span>Connect</span></h1>
+          </div>
+          <div class="row g-4 align-items-stretch reveal-element mb-5">
+               <div class="col-lg-5">
+                    <div class="sleek-panel">
+                         <h4 class="text-white fw-bold mb-4">Direct Channels</h4>
+                         <div class="d-flex flex-column gap-2">
+                              <a href="mailto:{{ profile.contact_email }}?subject=Phone%20Access%20Request"
+                                   class="contact-link-item">
+                                   <div class="icon-box"><i class="fas fa-phone-slash"></i></div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-1 small">Phone</h6>
+                                        <p class="text-warning mb-0" style="font-size: 0.8rem;">Request Access</p>
+                                   </div>
+                              </a>
+                              <a href="mailto:{{ profile.contact_email }}" class="contact-link-item">
+                                   <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-1 small">Email</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Get Access to Email
+                                        </p>
+                                   </div>
+                              </a>
+                              <a href="https://github.com/{{ profile.github_username }}" target="_blank"
+                                   class="contact-link-item">
+                                   <div class="icon-box"><i class="fab fa-github"></i></div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-1 small">GitHub</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore Repositories
+                                        </p>
+                                   </div>
+                              </a>
+                              <a href="{{ profile.linkedin_url }}" target="_blank" class="contact-link-item">
+                                   <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-1 small">LinkedIn</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional Network
+                                        </p>
+                                   </div>
+                              </a>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-lg-7">
+                    <div class="sleek-panel d-flex flex-column">
+                         <h4 class="text-white fw-bold mt-1 mb-4">Send a Message</h4>
+                         {% if success %}
+                         <div class="alert border-0 text-black mb-4 p-3 small rounded-3 d-flex align-items-center"
+                              style="background: white;" role="alert">
+                              <i class="fas fa-check-circle fa-lg me-3"></i>
+                              Your Message has been Successfully Transmitted.
+                         </div>
+                         {% endif %}
+                         <form action="{{ url_for('contact.contact') }}" method="POST"
+                              class="d-flex flex-column flex-grow-1 gap-3">
+                              <div class="row g-3">
+                                   <div class="col-md-6">
+                                        <input type="text" name="name" class="sleek-input" required
+                                             placeholder="Your Name">
+                                   </div>
+                                   <div class="col-md-6">
+                                        <input type="email" name="email" class="sleek-input" required
+                                             placeholder="Your Email">
+                                   </div>
+                              </div>
+                              <div>
+                                   <input type="text" name="subject" class="sleek-input" placeholder="Subject">
+                              </div>
+                              <div class="flex-grow-1">
+                                   <textarea name="message" class="sleek-input h-100"
+                                        style="min-height: 140px; resize: none;" required
+                                        placeholder="Write your message..."></textarea>
+                              </div>
+                              <button type="submit" class="btn-premium mt-2">
+                                   Send Message <i class="fas fa-arrow-right ms-2"></i>
+                              </button>
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          const updateTime = () => {
+               const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+               document.getElementById('local-time').innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
+          };
+          setInterval(updateTime, 1000);
+          updateTime();
+          const observer = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+               });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+     });
+</script>
+{% endblock %}

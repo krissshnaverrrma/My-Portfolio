@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .about-wrapper {
+          min-height: 100vh;
+          width: 100vw;
+          margin: 0;
+          background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);
+          padding-bottom: 5rem;
+     }
+
+     .sleek-panel {
+          background: rgba(15, 15, 15, 0.6);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.04);
+          border-radius: 24px;
+          padding: 2rem;
+          height: 100%;
+          transition: border-color 0.4s ease;
+     }
+
+     .sleek-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.04);
+          border-radius: 16px;
+          padding: 1.25rem;
+          transition: all 0.4s ease;
+     }
+
+     .timeline-item {
+          position: relative;
+          padding-bottom: 2.5rem;
+          border-left: 1px solid rgba(255, 255, 255, 0.05);
+          padding-left: 2rem;
+     }
+
+     .timeline-dot {
+          position: absolute;
+          left: -5px;
+          top: 0;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: white;
+          box-shadow: 0 0 10px white;
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s ease-out;
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+</style>
+<div class="about-wrapper d-flex flex-column align-items-center">
+     <div class="p-4 p-md-5 w-100" style="max-width: 1100px; padding-top: 7rem !important;">
+          <div class="text-center mb-5 reveal-element">
+               <h6 class="text-uppercase text-secondary fw-bold mb-3"
+                    style="letter-spacing: 4px; font-size: 0.75rem; opacity: 0.6;">Identity & Vision</h6>
+               <h1 class="display-4 fw-bold text-white mb-4">About Me</h1>
+               <p class="text-secondary mx-auto" style="font-size: 1.05rem; line-height: 1.8; max-width: 850px;">
+                    {{ user_profile.about_text }}
+               </p>
+          </div>
+          <div class="row g-3 mt-2">
+               <div class="col-lg-6 d-flex flex-column reveal-element">
+                    <div class="sleek-panel">
+                         <h5 class="fw-bold mb-4 text-white">Academic Path</h5>
+                         <div class="timeline-container">
+                              {% for item in academic_timeline %}
+                              <div class="timeline-item">
+                                   <div class="timeline-dot"></div>
+                                   <span class="text-secondary small font-monospace">{{ item.year }}</span>
+                                   <div class="sleek-card mt-2">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                             <h6 class="text-white fw-bold mb-0">{{ item.title }}</h6>
+                                             <span class="badge border border-secondary text-secondary"
+                                                  style="font-size: 0.6rem;">{{ item.status }}</span>
+                                        </div>
+                                        <p class="text-secondary small mb-1 opacity-75">{{ item.institution }}</p>
+                                        <p class="text-secondary smaller mb-0">{{ item.description }}</p>
+                                   </div>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+               <div class="col-lg-6 d-flex flex-column reveal-element">
+                    <div class="sleek-panel">
+                         <h5 class="fw-bold mb-4 text-white">Current Focus</h5>
+                         <div class="services-list">
+                              {% for service in services %}
+                              <div class="d-flex align-items-start mb-4">
+                                   <div class="me-3 mt-1">
+                                        <i class="{{ service.icon }} text-white opacity-50"></i>
+                                   </div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-1">{{ service.title }}</h6>
+                                        <p class="text-secondary small mb-0">{{ service.description }}</p>
+                                   </div>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          const observer = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+               });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+     });
+</script>
+{% endblock %}
