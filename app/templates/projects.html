@@ -120,23 +120,20 @@
       </div>
     </div>
     <div class="row g-3" id="project-grid">
-      {% for project in projects %}
-      <div class="col-lg-{% if project.is_featured %}12{% else %}4{% endif %} col-md-6 project-item reveal-element"
-        data-category="{{ project.category }}" data-title="{{ project.title | lower }}">
+      {% for project in projects if project.is_featured %}
+      <div class="col-lg-12 col-md-12 project-item reveal-element" data-category="{{ project.category }}"
+        data-title="{{ project.title | lower }}">
         <div class="sleek-panel">
-          <div class="row {% if project.is_featured %}align-items-center{% endif %}">
-            <div class="{% if project.is_featured %}col-lg-7{% else %}col-12{% endif %}">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
               <div class="img-container">
                 <img src="{{ project.image_url }}" alt="{{ project.title }}">
               </div>
             </div>
-            <div class="{% if project.is_featured %}col-lg-5 ps-lg-4 mt-4 mt-lg-0{% else %}col-12 mt-4{% endif %}">
+            <div class="col-lg-5 ps-lg-4 mt-4 mt-lg-0">
               <div class="d-flex justify-content-between align-items-start mb-2">
-                <h4 class="text-white fw-bold mb-0 {% if project.is_featured %}display-6{% endif %}">{{ project.title }}
-                </h4>
-                {% if project.is_featured %}
+                <h4 class="text-white fw-bold mb-0 display-6">{{ project.title }}</h4>
                 <span class="badge bg-white text-black rounded-pill px-3" style="font-size: 0.6rem;">FEATURED</span>
-                {% endif %}
               </div>
               <p class="text-secondary small mb-4 lh-lg">{{ project.description | safe }}</p>
               <div class="d-flex flex-wrap gap-2 mb-4">
@@ -146,7 +143,38 @@
               </div>
               <div class="d-flex flex-column gap-2">
                 <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
-                  class="btn btn-sm {% if project.is_featured %}btn-light{% else %}btn-outline-light{% endif %} rounded-pill fw-bold w-100 py-2">
+                  class="btn btn-sm btn-light rounded-pill fw-bold w-100 py-2">
+                  View Details <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% for project in projects if not project.is_featured %}
+      <div class="col-lg-4 col-md-6 project-item reveal-element" data-category="{{ project.category }}"
+        data-title="{{ project.title | lower }}">
+        <div class="sleek-panel">
+          <div class="row">
+            <div class="col-12">
+              <div class="img-container">
+                <img src="{{ project.image_url }}" alt="{{ project.title }}">
+              </div>
+            </div>
+            <div class="col-12 mt-4">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h4 class="text-white fw-bold mb-0 h5">{{ project.title }}</h4>
+              </div>
+              <p class="text-secondary small mb-4 lh-lg">{{ project.description | safe }}</p>
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                {% for tech in project.tech_stack.split(', ') %}
+                <span class="tech-pill">{{ tech }}</span>
+                {% endfor %}
+              </div>
+              <div class="d-flex flex-column gap-2">
+                <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+                  class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2">
                   View Details <i class="fas fa-arrow-right ms-2"></i>
                 </a>
               </div>

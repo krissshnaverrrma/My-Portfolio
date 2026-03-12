@@ -111,12 +111,12 @@
             </div>
         </div>
         <div class="row g-3" id="blog-grid">
-            {% for post in posts %}
-            <div class="col-lg-{% if post.is_featured %}12{% else %}4{% endif %} col-md-6 blog-item reveal-element"
-                data-category="{{ post.category }}" data-title="{{ post.title | lower }}">
+            {% for post in posts if post.is_featured %}
+            <div class="col-lg-12 col-md-12 blog-item reveal-element" data-category="{{ post.category }}"
+                data-title="{{ post.title | lower }}">
                 <div class="sleek-panel d-flex flex-column h-100">
-                    <div class="row flex-grow-1 {% if post.is_featured %}align-items-center{% endif %}">
-                        <div class="{% if post.is_featured %}col-lg-7{% else %}col-12{% endif %}">
+                    <div class="row flex-grow-1 align-items-center">
+                        <div class="col-lg-7">
                             {% if post.image_url %}
                             <div class="img-container">
                                 <img src="{{ post.image_url }}" alt="{{ post.title }}">
@@ -126,8 +126,7 @@
                             </div>
                             {% endif %}
                         </div>
-                        <div
-                            class="{% if post.is_featured %}col-lg-5 ps-lg-4 mt-4 mt-lg-0{% else %}col-12 mt-4 d-flex flex-column flex-grow-1{% endif %}">
+                        <div class="col-lg-5 ps-lg-4 mt-4 mt-lg-0 d-flex flex-column flex-grow-1">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="text-secondary" style="font-size: 0.7rem;"><i
                                         class="far fa-calendar-alt me-2"></i>{{ post.created_at.strftime('%b %d, %Y')
@@ -136,19 +135,51 @@
                                         class="far fa-clock me-2"></i>4 min read</small>
                             </div>
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h4
-                                    class="text-white fw-bold mb-0 {% if post.is_featured %}display-6{% else %}h5{% endif %}">
-                                    {{ post.title }}</h4>
-                                {% if post.is_featured %}
+                                <h4 class="text-white fw-bold mb-0 display-6">{{ post.title }}</h4>
                                 <span class="badge bg-white text-black rounded-pill px-3 ms-2 mt-2"
                                     style="font-size: 0.6rem;">FEATURED</span>
-                                {% endif %}
                             </div>
                             <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ post.summary |
-                                safe
-                                }}</p>
+                                safe }}</p>
                             <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}"
-                                class="btn btn-sm {% if post.is_featured %}btn-light{% else %}btn-outline-light{% endif %} rounded-pill fw-bold w-100 py-2 mt-auto">
+                                class="btn btn-sm btn-light rounded-pill fw-bold w-100 py-2 mt-auto">
+                                Read Article <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for post in posts if not post.is_featured %}
+            <div class="col-lg-4 col-md-6 blog-item reveal-element" data-category="{{ post.category }}"
+                data-title="{{ post.title | lower }}">
+                <div class="sleek-panel d-flex flex-column h-100">
+                    <div class="row flex-grow-1">
+                        <div class="col-12">
+                            {% if post.image_url %}
+                            <div class="img-container">
+                                <img src="{{ post.image_url }}" alt="{{ post.title }}">
+                                <span
+                                    class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3"
+                                    style="font-size: 0.6rem;">{{ post.category }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-12 mt-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-secondary" style="font-size: 0.7rem;"><i
+                                        class="far fa-calendar-alt me-2"></i>{{ post.created_at.strftime('%b %d, %Y')
+                                    }}</small>
+                                <small class="text-secondary" style="font-size: 0.7rem;"><i
+                                        class="far fa-clock me-2"></i>4 min read</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h4 class="text-white fw-bold mb-0 h5">{{ post.title }}</h4>
+                            </div>
+                            <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ post.summary |
+                                safe }}</p>
+                            <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}"
+                                class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2 mt-auto">
                                 Read Article <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
