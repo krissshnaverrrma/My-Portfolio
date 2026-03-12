@@ -13,18 +13,28 @@
           display: none;
      }
 
+     .contact-wrapper {
+          min-height: 100vh;
+          width: 100vw;
+          margin: 0;
+          background: radial-gradient(circle at 80% 0%, rgba(30, 30, 30, 0.8) 0%, #030303 70%);
+          position: relative;
+          padding-bottom: 4rem;
+     }
+
      .sleek-panel {
-          background: rgba(15, 15, 15, 0.6);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.04);
+          background: rgba(15, 15, 15, 0.4);
+          backdrop-filter: blur(25px);
+          border: 1px solid rgba(255, 255, 255, 0.05);
           border-radius: 24px;
           padding: 3rem;
           height: 100%;
-          transition: border-color 0.4s ease;
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+          transition: border-color 0.4s ease, transform 0.4s ease;
      }
 
      .sleek-panel:hover {
-          border-color: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.12);
      }
 
      .contact-link-item {
@@ -33,141 +43,204 @@
           gap: 1.5rem;
           padding: 1.25rem;
           border-radius: 16px;
-          background: transparent;
+          background: rgba(255, 255, 255, 0.02);
           text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-          border: 1px solid transparent;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border: 1px solid rgba(255, 255, 255, 0.03);
      }
 
      .contact-link-item:hover {
-          background: rgba(255, 255, 255, 0.03);
-          border-color: rgba(255, 255, 255, 0.05);
-          transform: translateX(5px);
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateX(8px);
+          box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
      }
 
      .icon-box {
           width: 50px;
           height: 50px;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.03);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.05);
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.2rem;
           color: white;
           border: 1px solid rgba(255, 255, 255, 0.05);
-          transition: all 0.3s ease;
+          transition: all 0.4s ease;
      }
 
      .contact-link-item:hover .icon-box {
           background: white;
           color: black;
-          border-color: white;
+     }
+
+     .form-floating-custom {
+          position: relative;
+          margin-bottom: 0;
+          height: 100%;
      }
 
      .sleek-input {
-          background: rgba(0, 0, 0, 0.2);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           color: white;
-          padding: 1rem 1.5rem;
-          border-radius: 12px;
+          padding: 1.5rem 1.25rem 0.75rem;
+          border-radius: 16px;
           width: 100%;
           transition: all 0.3s ease;
           font-size: 0.95rem;
      }
 
-     .sleek-input:focus {
-          background: rgba(255, 255, 255, 0.03);
-          border-color: rgba(255, 255, 255, 0.3);
-          outline: none;
-          box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+     .form-floating-custom label {
+          position: absolute;
+          top: 50%;
+          left: 1.25rem;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 0.95rem;
      }
 
-     .sleek-input::placeholder {
-          color: rgba(255, 255, 255, 0.3);
+     .form-floating-custom textarea+label {
+          top: 1.5rem;
+          transform: translateY(-50%);
+     }
+
+     .sleek-input:focus,
+     .sleek-input:not(:placeholder-shown) {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.4);
+          outline: none;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+     }
+
+     .sleek-input:focus+label,
+     .sleek-input:not(:placeholder-shown)+label {
+          top: 0.8rem;
+          font-size: 0.7rem;
+          color: white;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
      }
 
      .btn-premium {
           background: white;
           color: black;
           border: none;
-          border-radius: 50px;
-          padding: 1rem 2rem;
+          border-radius: 16px;
+          padding: 1.2rem 2rem;
           font-weight: 700;
           letter-spacing: 1.5px;
           text-transform: uppercase;
           font-size: 0.85rem;
           transition: all 0.3s ease;
           width: 100%;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+     }
+
+     .btn-premium::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+          transition: left 0.5s ease;
+          z-index: -1;
      }
 
      .btn-premium:hover {
-          background: #d0d0d0;
-          transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+          background: #e0e0e0;
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+     }
+
+     .btn-premium:hover::before {
+          left: 100%;
      }
 
      .reveal-element {
           opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s ease-out;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
      }
 
      .reveal-visible {
           opacity: 1;
           transform: translateY(0);
      }
+
+     .custom-alert {
+          background: rgba(40, 167, 69, 0.1);
+          border: 1px solid rgba(40, 167, 69, 0.3);
+          color: #28a745;
+          backdrop-filter: blur(10px);
+     }
 </style>
-<div class="d-flex flex-column align-items-center"
-     style="min-height: 100vh; width: 100vw; margin: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
-     <div class="container p-4" style="max-width: 1100px; padding-top: 7rem !important;">
+<div class="contact-wrapper d-flex flex-column align-items-center">
+     <div class="container p-4" style="max-width: 1200px; padding-top: 8rem !important;">
           <div class="text-center mb-5 reveal-element">
-               <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-4 rounded-pill border border-secondary"
-                    style="background: rgba(255,255,255,0.03);">
-                    <span class="text-secondary small" style="font-size: 0.75rem;">Time based on Current
-                         Location:</span>
-                    <span id="local-time" class="text-white small fw-bold font-monospace"
-                         style="font-size: 0.75rem;">00:00 AM</span>
-                    <span class="badge rounded-circle p-1 ms-1"
-                         style="background: #28a745; box-shadow: 0 0 8px #28a745; width: 6px; height: 6px;"></span>
+               <div class="d-inline-flex align-items-center gap-2 px-4 py-2 mb-4 rounded-pill"
+                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                    <i class="far fa-clock text-secondary small"></i>
+                    <span class="text-secondary small" style="font-size: 0.8rem; letter-spacing: 0.5px;">Local
+                         Time:</span>
+                    <span id="local-time" class="text-white fw-bold font-monospace"
+                         style="font-size: 0.85rem; letter-spacing: 1px;">00:00 AM</span>
+                    <span class="badge rounded-circle p-1 ms-2"
+                         style="background: #28a745; box-shadow: 0 0 10px #28a745; width: 8px; height: 8px;"></span>
                </div>
-               <h1 class="display-4 fw-bold text-white mb-2">Let's <span>Connect</span></h1>
+               <h1 class="display-3 fw-bolder text-white mb-2" style="letter-spacing: -1px;">Let's <span
+                         style="color: rgba(255,255,255,0.4);">Connect.</span></h1>
+               <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">Reach out to
+                    Collaborate, Ask a Question, or Simply say Hello. I'm always Open to discussing ideas.</p>
           </div>
-          <div class="row g-4 align-items-stretch reveal-element mb-5">
+          <div class="row g-5 align-items-stretch reveal-element mb-5">
                <div class="col-lg-5">
-                    <div class="sleek-panel">
-                         <h4 class="text-white fw-bold mb-4">Direct Channels</h4>
-                         <div class="d-flex flex-column gap-2">
+                    <div class="sleek-panel d-flex flex-column h-100">
+                         <div class="d-flex align-items-center mb-4 gap-3">
+                              <div style="width: 30px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Channels
+                              </h5>
+                         </div>
+                         <div class="d-flex flex-column gap-3 mt-2 flex-grow-1 justify-content-center">
                               <a href="mailto:{{ profile.contact_email }}?subject=Phone%20Access%20Request"
                                    class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-phone-slash"></i></div>
+                                   <div class="icon-box"><i class="fas fa-phone-alt"></i></div>
                                    <div>
-                                        <h6 class="text-white fw-bold mb-1 small">Phone</h6>
-                                        <p class="text-warning mb-0" style="font-size: 0.8rem;">Request Access</p>
+                                        <h6 class="text-white fw-bold mb-1">Phone</h6>
+                                        <p class="text-warning mb-0" style="font-size: 0.8rem; opacity: 0.8;">Request
+                                             Access via Email</p>
                                    </div>
                               </a>
                               <a href="mailto:{{ profile.contact_email }}" class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                   <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
                                    <div>
-                                        <h6 class="text-white fw-bold mb-1 small">Email</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Get Access to Email
-                                        </p>
+                                        <h6 class="text-white fw-bold mb-1">Email</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Drop me a line
+                                             directly</p>
                                    </div>
                               </a>
                               <a href="https://github.com/{{ profile.github_username }}" target="_blank"
                                    class="contact-link-item">
-                                   <div class="icon-box"><i class="fab fa-github"></i></div>
+                                   <div class="icon-box"><i class="fab fa-github-alt"></i></div>
                                    <div>
-                                        <h6 class="text-white fw-bold mb-1 small">GitHub</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore Repositories
+                                        <h6 class="text-white fw-bold mb-1">GitHub</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore source codes
                                         </p>
                                    </div>
                               </a>
                               <a href="{{ profile.linkedin_url }}" target="_blank" class="contact-link-item">
                                    <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
                                    <div>
-                                        <h6 class="text-white fw-bold mb-1 small">LinkedIn</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional Network
+                                        <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional network
                                         </p>
                                    </div>
                               </a>
@@ -176,36 +249,58 @@
                </div>
                <div class="col-lg-7">
                     <div class="sleek-panel d-flex flex-column">
-                         <h4 class="text-white fw-bold mt-1 mb-4">Send a Message</h4>
+                         <div class="d-flex align-items-center mb-4 gap-3">
+                              <div style="width: 30px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Send a
+                                   Message</h5>
+                         </div>
                          {% if success %}
-                         <div class="alert border-0 text-black mb-4 p-3 small rounded-3 d-flex align-items-center"
-                              style="background: white;" role="alert">
+                         <div class="alert custom-alert p-3 mb-4 rounded-3 d-flex align-items-center" role="alert">
                               <i class="fas fa-check-circle fa-lg me-3"></i>
-                              Your Message has been Successfully Transmitted.
+                              <div>
+                                   <strong class="d-block mb-1">Message Transmitted!</strong>
+                                   <span class="small opacity-75">I have Received your Message and will get back to you
+                                        Shortly.</span>
+                              </div>
                          </div>
                          {% endif %}
                          <form action="{{ url_for('contact.contact') }}" method="POST"
-                              class="d-flex flex-column flex-grow-1 gap-3">
-                              <div class="row g-3">
+                              class="d-flex flex-column flex-grow-1 gap-4">
+                              <div class="row g-4">
                                    <div class="col-md-6">
-                                        <input type="text" name="name" class="sleek-input" required
-                                             placeholder="Your Name">
+                                        <div class="form-floating-custom">
+                                             <input type="text" name="name" id="name" class="sleek-input"
+                                                  placeholder=" " required>
+                                             <label for="name">Your Name</label>
+                                        </div>
                                    </div>
                                    <div class="col-md-6">
-                                        <input type="email" name="email" class="sleek-input" required
-                                             placeholder="Your Email">
+                                        <div class="form-floating-custom">
+                                             <input type="email" name="email" id="email" class="sleek-input"
+                                                  placeholder=" " required>
+                                             <label for="email">Your Email</label>
+                                        </div>
                                    </div>
                               </div>
                               <div>
-                                   <input type="text" name="subject" class="sleek-input" placeholder="Subject">
+                                   <div class="form-floating-custom">
+                                        <input type="text" name="subject" id="subject" class="sleek-input"
+                                             placeholder=" ">
+                                        <label for="subject">Subject Matter</label>
+                                   </div>
                               </div>
                               <div class="flex-grow-1">
-                                   <textarea name="message" class="sleek-input h-100"
-                                        style="min-height: 140px; resize: none;" required
-                                        placeholder="Write your message..."></textarea>
+                                   <div class="form-floating-custom h-100">
+                                        <textarea name="message" id="message" class="sleek-input h-100"
+                                             style="min-height: 160px; resize: none;" placeholder=" "
+                                             required></textarea>
+                                        <label for="message">Your Message...</label>
+                                   </div>
                               </div>
-                              <button type="submit" class="btn-premium mt-2">
-                                   Send Message <i class="fas fa-arrow-right ms-2"></i>
+                              <button type="submit"
+                                   class="btn-premium mt-3 d-flex align-items-center justify-content-center gap-2">
+                                   <span>Initialize Transmission</span>
+                                   <i class="fas fa-paper-plane"></i>
                               </button>
                          </form>
                     </div>
@@ -216,17 +311,22 @@
 <script>
      document.addEventListener('DOMContentLoaded', () => {
           const updateTime = () => {
-               const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+               const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
                document.getElementById('local-time').innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
           };
           setInterval(updateTime, 1000);
           updateTime();
           const observer = new IntersectionObserver((entries) => {
                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+                    if (entry.isIntersecting) {
+                         entry.target.classList.add('reveal-visible');
+                    }
                });
           }, { threshold: 0.1 });
-          document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+          document.querySelectorAll('.reveal-element').forEach((el, i) => {
+               el.style.transitionDelay = `${i * 0.1}s`;
+               observer.observe(el);
+          });
      });
 </script>
 {% endblock %}

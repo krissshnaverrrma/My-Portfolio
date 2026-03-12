@@ -76,6 +76,90 @@
             }
         ]
     },
+    "interests": [
+        {
+            "name": "Python",
+            "description": "App & AI Logic",
+            "icon_class": "fa-brands fa-python"
+        },
+        {
+            "name": "Web Dev",
+            "description": "MERN Stack",
+            "icon_class": "fa-solid fa-laptop-code"
+        },
+        {
+            "name": "Game Dev",
+            "description": "Interactive Logic",
+            "icon_class": "fa-solid fa-gamepad"
+        },
+        {
+            "name": "Java & C++",
+            "description": "Core Programming",
+            "icon_class": "fa-brands fa-java"
+        },
+        {
+            "name": "Ethical Hacking",
+            "description": "Cybersecurity Focus",
+            "icon_class": "fa-solid fa-user-secret"
+        },
+        {
+            "name": "Linux",
+            "description": "Kali, Arch, Ubuntu",
+            "icon_class": "fa-brands fa-linux"
+        },
+        {
+            "name": "Open Source",
+            "description": "Community Code",
+            "icon_class": "fa-brands fa-github"
+        },
+        {
+            "name": "System Architecture",
+            "description": "Scalable Backend",
+            "icon_class": "fa-solid fa-server"
+        },
+        {
+            "name": "Aesthetic Music",
+            "description": "Soft Bollywood",
+            "icon_class": "fa-solid fa-headphones"
+        },
+        {
+            "name": "Anime",
+            "description": "Action & Nostalgia",
+            "icon_class": "fa-solid fa-film"
+        },
+        {
+            "name": "Automation",
+            "description": "Lazy Coder Mindset",
+            "icon_class": "fa-solid fa-robot"
+        },
+        {
+            "name": "Chess",
+            "description": "Strategic Thinking",
+            "icon_class": "fa-solid fa-chess-knight"
+        }
+    ],
+    "core_principles": [
+        {
+            "title": "Modular Architecture",
+            "description": "Applying strict OOP principles and design patterns to build maintainable, decoupled systems that scale effortlessly.",
+            "icon_class": "fa-solid fa-cubes"
+        },
+        {
+            "title": "Algorithmic Efficiency",
+            "description": "Focusing on optimal Data Structures and system management to ensure maximum performance and low-latency execution.",
+            "icon_class": "fa-solid fa-bolt"
+        },
+        {
+            "title": "Robust Reliability",
+            "description": "Treating edge cases as primary design constraints. Implementing rigorous unit testing and defensive programming.",
+            "icon_class": "fas fa-shield-alt"
+        },
+        {
+            "title": "The 'Lazy Coder' Philosophy",
+            "description": "If a task needs to be done twice, automate it. Writing self-sustaining scripts and pipelines that drastically reduce future workload.",
+            "icon_class": "fas fa-robot"
+        }
+    ],
     "skills": [
         {
             "category": "Languages",

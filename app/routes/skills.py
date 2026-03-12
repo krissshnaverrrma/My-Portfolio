@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort
-from ..db.data import get_all_skills, get_timeline, get_skill_by_slug, get_user_profile
+from ..db.data import get_all_skills, get_timeline, get_skill_by_slug, get_user_profile, get_core_principles
 skills_bp = Blueprint('skills', __name__)
 
 
@@ -8,11 +8,13 @@ def skills():
     all_skills = get_all_skills()
     journey = get_timeline('journey')
     user_profile = get_user_profile()
+    principles = get_core_principles()
     return render_template(
         'skills.html',
         skills=all_skills,
         dev_journey=journey,
-        user_profile=user_profile
+        user_profile=user_profile,
+        core_principles=principles
     )
 
 

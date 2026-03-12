@@ -13,113 +13,234 @@
     display: none;
   }
 
+  .skills-wrapper {
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background:
+      radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+      #050505;
+    padding-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skills-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .content-layer {
+    position: relative;
+    z-index: 1;
+  }
+
   .sleek-panel {
-    background: rgba(15, 15, 15, 0.6);
+    background: rgba(15, 15, 15, 0.4);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 24px;
-    padding: 2rem;
+    padding: 2.5rem;
     height: 100%;
-    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   .skill-badge {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.6);
-    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 18px;
     border-radius: 12px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
   }
 
   .skill-badge:hover {
-    background: white;
-    color: black;
-    border-color: white;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 
   .category-count {
-    font-size: 0.65rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2px 8px;
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 3px 10px;
     border-radius: 20px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .timeline-step {
+  .timeline-container {
     position: relative;
-    padding-left: 20px;
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    padding-left: 2rem;
   }
 
-  .step-dot {
+  .timeline-container::before {
+    content: '';
     position: absolute;
-    left: -5px;
-    top: 6px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 0 10px white;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05));
+    border-radius: 2px;
   }
 
-  .step-dot.future {
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 0.3rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
+  }
+
+  .timeline-dot.future {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     box-shadow: none;
   }
+
+  .reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .search-container input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
 </style>
-<div class="d-flex flex-column align-items-center"
-  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
-  <div class="container p-4 p-md-5" style="max-width: 1200px; padding-top: 7rem !important;">
+<div class="skills-wrapper d-flex flex-column align-items-center">
+  <div class="content-layer p-4 w-100" style="max-width: 1200px; padding-top: 8rem !important;">
     <div class="text-center mb-5 reveal-element">
-      <h6 class="text-uppercase text-secondary fw-bold mb-2"
-        style="letter-spacing: 4px; font-size: 0.7rem; opacity: 0.6;">Tech Stack & Growth</h6>
-      <h1 class="display-4 fw-bold text-white mb-4">Technical Proficiency</h1>
-      <div class="position-relative mx-auto" style="max-width: 500px;">
-        <i class="fas fa-search position-absolute"
-          style="left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
-        <input type="text" id="skill-search" class="w-100"
-          style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; padding: 12px 25px 12px 50px; color: white;"
-          placeholder="Search Logic">
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-microchip text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Tech Stack & Growth</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Technical <span
+          style="color: rgba(255,255,255,0.4);">Proficiency.</span></h1>
+      <div class="position-relative mx-auto search-container mt-4" style="max-width: 500px;">
+        <i class="fa-solid fa-magnifying-glass position-absolute"
+          style="left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4); z-index: 5; pointer-events: none;"></i>
+        <input type="text" id="skill-search" class="w-100 transition-all"
+          style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 14px 25px 14px 50px; color: white; backdrop-filter: blur(10px); position: relative; z-index: 1;"
+          placeholder="Search Technologies, Languages, or Tools">
       </div>
     </div>
-    <div class="row g-3">
-      {% set skill_categories = ['Languages', 'Backend & Database', 'Frontend & UI/UX', 'DevOps & Tools',
-      'Methodologies'] %}
+    {% set cat_icons = {
+    'Languages': 'fa-solid fa-code',
+    'Backend & Database': 'fa-solid fa-server',
+    'Frontend & UI/UX': 'fa-solid fa-layer-group',
+    'DevOps & Tools': 'fa-solid fa-terminal',
+    'Methodologies': 'fa-solid fa-diagram-project'
+    } %}
+    {% set skill_categories = ['Languages', 'Backend & Database', 'Frontend & UI/UX', 'DevOps & Tools', 'Methodologies']
+    %}
+    <div class="row g-4 mt-2 justify-content-center">
       {% for cat in skill_categories %}
-      <div class="col-lg-4 col-md-6 reveal-element">
+      <div class="col-lg-4 col-md-6 reveal-element" style="transition-delay: 0.{{ loop.index }}s;">
         <div class="sleek-panel category-box" data-category="{{ cat }}">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <span class="text-white fw-bold small">{{ cat }}</span>
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <div class="d-flex align-items-center">
+              <i class="{{ cat_icons[cat] }} me-2 text-white opacity-75"></i>
+              <h6 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">{{ cat
+                }}</h6>
+            </div>
             <span class="category-count">0</span>
           </div>
           <div class="d-flex flex-wrap gap-2">
             {% for skill in skills if skill.category == cat %}
             <a href="{{ url_for('skills.skill_detail', slug=skill.slug) }}" class="skill-badge"
               data-name="{{ skill.name | lower }}">
-              <i class="{{ skill.icon }}"></i> {{ skill.name }}
+              <i class="{{ skill.icon_class }} fs-6"></i> <span>{{ skill.name }}</span>
             </a>
             {% endfor %}
           </div>
         </div>
       </div>
       {% endfor %}
-      <div class="col-lg-4 col-md-6 reveal-element">
-        <div class="sleek-panel">
-          <span class="text-white fw-bold small">The Dev Journey</span>
-          <div class="mt-4">
+    </div>
+    <div class="row mt-5 g-4 reveal-element" style="transition-delay: 0.6s;">
+      <div class="col-lg-6">
+        <div class="sleek-panel p-4 p-md-5 h-100">
+          <div class="d-flex align-items-center mb-5 pb-3 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <i class="fa-solid fa-route me-3 text-white fs-4 opacity-75"></i>
+            <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">The Dev Journey</h5>
+          </div>
+          <div class="timeline-container mt-4">
             {% for step in dev_journey %}
-            <div class="timeline-step mb-3">
-              <div class="step-dot {% if step.is_future %}future{% endif %}"></div>
-              <h6 class="mb-0 small fw-bold text-white">{{ step.year }}: {{ step.title }}</h6>
-              <p class="small text-secondary opacity-75 mb-0" style="font-size: 0.7rem;">{{ step.description }}</p>
+            <div class="timeline-item">
+              <div class="timeline-dot {% if step.is_future %}future{% endif %}"></div>
+              <div class="mb-2">
+                <span class="badge text-white font-monospace"
+                  style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px;">{{
+                  step.year }}</span>
+              </div>
+              <h5 class="mb-2 text-white fw-bold mt-3">{{ step.title }}</h5>
+              <p class="text-secondary mb-0" style="font-size: 0.95rem; line-height: 1.7;">{{ step.description }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="sleek-panel p-4 p-md-5 h-100 d-flex flex-column">
+          <div class="d-flex align-items-center mb-5 pb-3 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <i class="fa-solid fa-cogs me-3 text-white fs-4 opacity-75"></i>
+            <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Core Principles</h5>
+          </div>
+          <div class="d-flex flex-column gap-4 mt-2 justify-content-center flex-grow-1">
+            {% for principle in core_principles %}
+            <div class="d-flex align-items-start transition-all">
+              <div class="d-flex align-items-center justify-content-center rounded mt-1 shadow-sm"
+                style="min-width: 50px; height: 50px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                <i class="{{ principle.icon_class }} text-white opacity-75 fs-5"></i>
+              </div>
+              <div class="ms-4">
+                <h6 class="text-white fw-bold mb-2" style="letter-spacing: 0.5px;">{{ principle.title }}</h6>
+                <p class="text-secondary mb-0" style="font-size: 0.9rem; line-height: 1.6;">{{ principle.description }}
+                </p>
+              </div>
             </div>
             {% endfor %}
           </div>
@@ -130,6 +251,16 @@
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-element').forEach((el) => {
+      observer.observe(el);
+    });
     const updateCounters = () => {
       document.querySelectorAll('.category-box').forEach(box => {
         box.querySelector('.category-count').innerText = box.querySelectorAll('.skill-badge:not(.d-none)').length;
@@ -137,7 +268,13 @@
     };
     document.getElementById('skill-search').addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase();
-      document.querySelectorAll('.skill-badge').forEach(b => b.classList.toggle('d-none', !b.getAttribute('data-name').includes(q)));
+      document.querySelectorAll('.skill-badge').forEach(b => {
+        if (b.getAttribute('data-name').includes(q)) {
+          b.classList.remove('d-none');
+        } else {
+          b.classList.add('d-none');
+        }
+      });
       updateCounters();
     });
     updateCounters();

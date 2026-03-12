@@ -9,7 +9,7 @@ from .database import SessionLocal, Base, engine
 from ..config.config import get_config, Config
 from .models import (
     User, APICache, Knowledge, BlogPost, Project, Skill,
-    TimelineEvent, Service, Certification, ContactMessage, ChatLog
+    TimelineEvent, Service, Certification, ContactMessage, ChatLog, Interest, CorePrinciple
 )
 logger = logging.getLogger(__name__)
 _JSON_CACHE: Optional[Dict[str, Any]] = None
@@ -87,6 +87,16 @@ def get_timeline(event_type: str) -> List[TimelineEvent]:
 def get_services() -> List[Service]:
     with SessionLocal() as db:
         return db.query(Service).all()
+
+
+def get_interests() -> List[Interest]:
+    with SessionLocal() as db:
+        return db.query(Interest).all()
+
+
+def get_core_principles() -> List[CorePrinciple]:
+    with SessionLocal() as db:
+        return db.query(CorePrinciple).all()
 
 
 def get_all_certifications() -> List[Certification]:
@@ -484,6 +494,22 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                     image_url=post.get('image_url'),
                     is_featured=post.get('is_featured', False),
                     created_at=datetime.now(timezone.utc)
+                ))
+        if 'interests' in data:
+            db.query(Interest).delete()
+            for int_item in data['interests']:
+                db.add(Interest(
+                    name=int_item['name'],
+                    description=int_item['description'],
+                    icon_class=int_item['icon_class']
+                ))
+        if 'core_principles' in data:
+            db.query(CorePrinciple).delete()
+            for cp in data['core_principles']:
+                db.add(CorePrinciple(
+                    title=cp['title'],
+                    description=cp['description'],
+                    icon_class=cp['icon_class']
                 ))
         if 'skills' in data:
             db.query(Skill).delete()

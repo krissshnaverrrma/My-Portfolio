@@ -76,6 +76,22 @@ class TimelineEvent(Base):
     is_future: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
+class Interest(Base):
+    __tablename__ = 'interests'
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(150))
+    description: Mapped[str] = mapped_column(Text)
+    icon_class: Mapped[str] = mapped_column(String(100))
+
+
+class CorePrinciple(Base):
+    __tablename__ = 'core_principles'
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    title: Mapped[str] = mapped_column(String(150))
+    description: Mapped[str] = mapped_column(Text)
+    icon_class: Mapped[str] = mapped_column(String(100))
+
+
 class ContactMessage(Base):
     __tablename__ = 'contact_messages'
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
