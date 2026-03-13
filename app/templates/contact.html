@@ -210,20 +210,19 @@
                               </h5>
                          </div>
                          <div class="d-flex flex-column gap-3 mt-2 flex-grow-1 justify-content-center">
-                              <a href="mailto:{{ profile.contact_email }}?subject=Phone%20Access%20Request"
-                                   class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-phone-alt"></i></div>
+                              <a href="tel:{{ profile.contact_phone }}" class="contact-link-item">
+                                   <div class="icon-box"><i class="fas fa-phone"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">Phone</h6>
-                                        <p class="text-warning mb-0" style="font-size: 0.8rem; opacity: 0.8;">Request
-                                             Access via Email</p>
+                                        <p class="text-warning mb-0" style="font-size: 0.8rem; opacity: 0.8;">Drop a
+                                             Call to ask </p>
                                    </div>
                               </a>
                               <a href="mailto:{{ profile.contact_email }}" class="contact-link-item">
                                    <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">Email</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Drop me a line
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Drop Me a line
                                              directly</p>
                                    </div>
                               </a>

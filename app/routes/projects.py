@@ -14,7 +14,7 @@ def projects():
     )
 
 
-@projects_bp.route('/projects/<slug>')
+@projects_bp.route('/project/<slug>')
 def project_detail(slug):
     projects_list = get_all_projects()
     project = next((p for p in projects_list if p.slug == slug), None)

@@ -18,6 +18,14 @@ class User(Base):
     github_url: Mapped[str | None] = mapped_column(String(200), nullable=True)
     linkedin_url: Mapped[str | None] = mapped_column(
         String(200), nullable=True)
+    instagram_url: Mapped[str | None] = mapped_column(
+        String(200), nullable=True)
+    facebook_url: Mapped[str | None] = mapped_column(
+        String(200), nullable=True)
+    telegram_url: Mapped[str | None] = mapped_column(
+        String(200), nullable=True)
+    whatsapp_url: Mapped[str | None] = mapped_column(
+        String(200), nullable=True)
     profile_image: Mapped[str | None] = mapped_column(
         String(500), nullable=True)
     profile_icon: Mapped[str | None] = mapped_column(

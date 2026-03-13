@@ -13,14 +13,36 @@
         display: none;
     }
 
-    .res-wrapper-full {
+    .resume-wrapper {
         min-height: 100vh;
         width: 100vw;
-        background: #000;
-        color: #fff;
+        margin: 0;
+        background:
+            radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+            #050505;
+        padding-bottom: 5rem;
+        position: relative;
+        overflow: hidden;
     }
 
-    .res-content {
+    .resume-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .content-layer {
+        position: relative;
+        z-index: 1;
         max-width: 1200px;
         margin: 0 auto;
         padding: 6rem 2rem 4rem;
@@ -31,7 +53,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
+        gap: 2.5rem;
         margin-bottom: 3.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding-bottom: 3rem;
@@ -39,62 +61,48 @@
     }
 
     .res-header-img {
-        width: 110px;
-        height: 110px;
+        width: 120px;
+        height: 120px;
         object-fit: cover;
-        border: 3px solid var(--primary-color);
-        box-shadow: 0 0 20px rgba(13, 110, 253, 0.2);
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
         transition: transform 0.3s ease;
+        border-radius: 50%;
     }
 
     .res-header-img:hover {
         transform: scale(1.05);
     }
 
-    .res-header-info h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.2rem;
-        letter-spacing: -0.5px;
-        line-height: 1;
+    @media (max-width: 992px) {
+        .res-header-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
     }
 
-    .res-header-info .lead {
-        font-size: 1.1rem;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 0.2rem;
-    }
-
-    .res-header-info .small-tag {
-        font-size: 0.85rem;
-        opacity: 0.7;
-    }
-
-    .res-grid {
-        display: flex;
-        gap: 4rem;
-    }
-
-    .res-sidebar {
-        width: 30%;
-        flex-shrink: 0;
-    }
-
-    .res-main {
-        width: 70%;
+    .sleek-panel {
+        background: rgba(15, 15, 15, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 2.5rem;
+        height: 100%;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .res-section-title {
-        color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.8);
         text-transform: uppercase;
         letter-spacing: 2px;
-        font-weight: 800;
-        font-size: 0.9rem;
+        font-weight: 700;
+        font-size: 0.85rem;
         margin-bottom: 1.5rem;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
     }
 
     .res-section-title::after {
@@ -105,223 +113,358 @@
     }
 
     .res-contact-link {
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.6);
         text-decoration: none;
         display: flex;
         align-items: center;
         gap: 15px;
-        margin-bottom: 1rem;
         font-size: 0.95rem;
         transition: 0.3s;
     }
 
-    .res-contact-link:hover {
-        color: var(--primary-color);
+    .res-contact-link.interactive:hover {
+        color: #fff;
         transform: translateX(5px);
     }
 
     .res-contact-link i {
         width: 20px;
         text-align: center;
-    }
-
-    .res-item {
-        margin-bottom: 2.5rem;
-        position: relative;
-    }
-
-    .res-item-title {
-        font-weight: 700;
-        font-size: 1.15rem;
-        color: #fff;
-        margin-bottom: 0.2rem;
-    }
-
-    .res-item-subtitle {
-        color: var(--primary-color);
-        font-size: 0.95rem;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-    }
-
-    .res-item-date {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.5);
-        font-style: italic;
-        margin-bottom: 0.8rem;
-    }
-
-    .res-list {
-        padding-left: 1rem;
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-    .res-list li {
-        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.4);
     }
 
     .skill-tag {
         display: inline-block;
         padding: 6px 14px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-        margin: 0 5px 8px 0;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        margin: 0 6px 8px 0;
         font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
     }
 
-    @media (max-width: 992px) {
-        .res-header-container {
-            flex-direction: column;
-            text-align: center;
-            gap: 1.5rem;
-        }
+    .skill-tag:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
 
-        .res-grid {
-            flex-direction: column;
-            gap: 3rem;
-        }
+    .timeline-container {
+        position: relative;
+        padding-left: 1.5rem;
+    }
 
-        .res-sidebar,
-        .res-main {
-            width: 100%;
-        }
+    .timeline-container::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05));
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: -1.5rem;
+        top: 0.4rem;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #fff;
+        transform: translateX(-3px);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .reveal-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .btn-sleek {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-sleek:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
     }
 </style>
-<div class="res-wrapper-full fade-in">
-    <div class="res-content">
-        <div class="res-header-container">
+<div class="resume-wrapper">
+    <div class="content-layer">
+        <div class="res-header-container reveal-element">
             <div class="res-header-img-wrapper">
-                <img src="{{ url_for('static', filename='assets/profile/profile.jpg') }}" alt="Krishna Verma"
-                    class="res-header-img rounded-circle">
+                <img src="{{ user_profile.profile_image }}" alt="{{ user_profile.name }}" class="res-header-img">
             </div>
             <div class="res-header-info">
-                <h6 class="text-uppercase text-primary fw-bold mb-1 small-tag" style="letter-spacing: 3px;">Curriculum
-                    Vitae</h6>
-                <h1 class="text-white">Krishna <span style="color:var(--primary-color)">Verma</span></h1>
-                <p class="lead">Computer Science Undergraduate | Full Stack Developer & AI Enthusiast</p>
-                <p class="text-secondary small-tag">Specializing in Scalable Systems and "Lazy Coder" Automation</p>
+                <h6 class="text-uppercase fw-bold mb-2"
+                    style="letter-spacing: 3px; color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Curriculum Vitae
+                </h6>
+                <h1 class="text-white mb-2" style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px;">{{
+                    user_profile.name }}</h1>
+                <p class="lead mb-2" style="font-size: 1.1rem; font-weight: 400; color: rgba(255, 255, 255, 0.8);">
+                    Computer Science Undergraduate | Full Stack Developer & AI Enthusiast</p>
+                <p class="text-secondary small mb-0" style="opacity: 0.8;">
+                    <i class="fas fa-map-marker-alt me-2 text-white"></i>{{ user_profile.location }}
+                </p>
             </div>
         </div>
-        <div class="res-grid">
-            <aside class="res-sidebar">
-                <div class="res-section-title"><i class="fas fa-address-card"></i> Contact</div>
-                <div class="mb-5">
-                    <a href="tel:+919258846075" class="res-contact-link">
-                        <i class="fas fa-phone text-primary"></i> +91 9258846075
-                    </a>
-                    <a href="mailto:krishnav24-cs@sanskar.org" class="res-contact-link">
-                        <i class="fas fa-envelope text-primary"></i> krishnav24-cs@sanskar.org
-                    </a>
-                    <a href="https://github.com/krissshnaverrrma" target="_blank" class="res-contact-link">
-                        <i class="fab fa-github text-primary"></i> github.com/krissshnaverrrma
-                    </a>
-                    <a href="https://linkedin.com/in/krishnav-cs" target="_blank" class="res-contact-link">
-                        <i class="fab fa-linkedin text-primary"></i> linkedin.com/in/krishnav-cs
-                    </a>
+        <div class="row g-4 mt-2">
+            <div class="col-lg-4 d-flex flex-column gap-4">
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.1s;">
+                    <div class="res-section-title"><i class="fas fa-address-card"></i> Contact Information</div>
+                    <div class="d-flex flex-column gap-3 mt-2">
+                        <a href="tel:{{ user_profile.contact_phone | replace(' ', '') }}"
+                            class="res-contact-link interactive">
+                            <i class="fas fa-phone"></i> {{ user_profile.contact_phone }}
+                        </a>
+                        <a href="mailto:{{ user_profile.contact_email }}" class="res-contact-link interactive">
+                            <i class="fas fa-envelope"></i> {{ user_profile.contact_email }}
+                        </a>
+                        <a href="https://github.com/{{ user_profile.github_username }}" target="_blank"
+                            class="res-contact-link interactive">
+                            <i class="fab fa-github"></i> github.com/{{ user_profile.github_username }}
+                        </a>
+                        <a href="{{ user_profile.linkedin_url }}" target="_blank" class="res-contact-link interactive">
+                            <i class="fab fa-linkedin"></i> linkedin.com/in/{{ user_profile.linkedin_username }}
+                        </a>
+                        <a href="{{ user_profile.instagram_url }}" target="_blank" class="res-contact-link interactive">
+                            <i class="fab fa-instagram"></i> {{ user_profile.instagram_url }}
+                        </a>
+                        <a href="{{ user_profile.facebook_url }}" target="_blank" class="res-contact-link interactive">
+                            <i class="fab fa-facebook"></i> {{ user_profile.facebook_url }}
+                        </a>
+                        <a href="{{ user_profile.whatsapp_url }}" target="_blank" class="res-contact-link interactive">
+                            <i class="fab fa-whatsapp"></i> {{ user_profile.whatsapp_url }}
+                        </a>
+                        <a href="{{ user_profile.telegram_url }}" target="_blank" class="res-contact-link interactive">
+                            <i class="fab fa-telegram"></i> {{ user_profile.telegram_url }}
+                        </a>
+                        <div class="res-contact-link">
+                            <i class="fas fa-map-marker-alt"></i> {{ user_profile.location }}
+                        </div>
+                    </div>
                 </div>
-                <div class="res-section-title"><i class="fas fa-code"></i> Skills</div>
-                <div class="mb-4">
-                    <div class="small fw-bold text-white mb-2">Languages</div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                    <div class="res-section-title"><i class="fas fa-code"></i>Technical Skills</div>
+                    {% set ns = namespace(categories=[]) %}
+                    {% for skill in skills %}
+                    {% if skill.category not in ns.categories %}
+                    {% set ns.categories = ns.categories + [skill.category] %}
+                    {% endif %}
+                    {% endfor %}
+                    {% for category in ns.categories %}
+                    <div class="mb-4">
+                        <div class="small fw-bold text-white mb-2 opacity-50 text-uppercase"
+                            style="letter-spacing: 1px;">{{ category }}</div>
+                        <div>
+                            {% for skill in skills %}
+                            {% if skill.category == category %}
+                            <span class="skill-tag"><i class="{{ skill.icon }} me-1"></i> {{ skill.name }}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                    <div class="res-section-title"><i class="fas fa-bullseye"></i> Core Principles</div>
+                    <div class="d-flex flex-column gap-3">
+                        {% for principle in core_principles[:3] %}
+                        <div>
+                            <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
+                                <i class="{{ principle.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
+                                principle.title }}
+                            </h6>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
+                                principle.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                    <div class="res-section-title"><i class="fas fa-heart"></i>My Interests</div>
                     <div>
-                        <span class="skill-tag">Python (Advanced)</span>
-                        <span class="skill-tag">C | C++ (Intermediate)</span>
-                        <span class="skill-tag">Java (Core)</span>
-                        <span class="skill-tag">SQL (Lite)</span>
+                        {% for interest in interests %}
+                        <span class="skill-tag"><i class="{{ interest.icon_class }} me-1"></i> {{ interest.name
+                            }}</span>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="mb-4">
-                    <div class="small fw-bold text-white mb-2">Frameworks</div>
-                    <div>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">Bootstrap</span>
+            </div>
+            <div class="col-lg-8 d-flex flex-column gap-4">
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.1s;">
+                    <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
+                    <p class="text-secondary mb-0" style="line-height: 1.8; font-size: 0.95rem;">
+                        {{ user_profile.about_text }}
+                    </p>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                    <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                    <div class="timeline-container">
+                        {% for item in academic_timeline %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h6 class="text-white fw-bold mb-1">{{ item.title }}</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-secondary small">{{ item.institution }}</span>
+                                <span class="badge border border-secondary text-secondary bg-transparent"
+                                    style="font-size: 0.65rem;">{{ item.year }}</span>
+                            </div>
+                            <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ item.description }}
+                            </p>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="mb-5">
-                    <div class="small fw-bold text-white mb-2">Tools</div>
-                    <div>
-                        <span class="skill-tag">Git/GitHub</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">Visual Studio Code</span>
-                        <span class="skill-tag">PostgreSQL</span>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                    <div class="res-section-title"><i class="fas fa-laptop-code"></i> Key Projects</div>
+                    <div class="timeline-container">
+                        {% for project in projects[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <h6 class="text-white fw-bold mb-0">
+                                    <a href="/project/{{ project.slug }}" class="text-decoration-none text-white"
+                                        style="transition: color 0.3s;"
+                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                        onmouseout="this.style.color='#fff'">
+                                        {{ project.title }}
+                                        <i class="fas fa-external-link-alt ms-1"
+                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                    </a>
+                                </h6>
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" class="small text-decoration-none"
+                                    style="color: rgba(255,255,255,0.4); transition: 0.3s;"
+                                    onmouseover="this.style.color='#fff'"
+                                    onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+                                    <i class="fab fa-github me-1"></i>View Repository
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ project.tech_stack | join(', ') }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ project.description | striptags }}
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="res-section-title"><i class="fas fa-user-check"></i> Soft Skills</div>
-                <div class="mb-5">
-                    <span class="skill-tag">Strategic Planning</span>
-                    <span class="skill-tag">Problem Solving</span>
-                    <span class="skill-tag">Efficient Workflow</span>
-                    <span class="skill-tag">Documentation</span>
-                </div>
-                <div class="res-section-title"><i class="fas fa-language"></i> Languages</div>
-                <div>
-                    <span class="skill-tag">English (Professional)</span>
-                    <span class="skill-tag">Hindi (Native)</span>
-                </div>
-            </aside>
-            <main class="res-main">
-                <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
-                <p class="text-secondary mb-5" style="line-height: 1.8; font-size: 1rem;">
-                    Passionate Computer Science undergraduate with a strong foundation in backend systems and
-                    interactive web applications.
-                    Adept at designing scalable database architectures and implementing responsive frontends using Flask
-                    and Generative AI.
-                </p>
-                <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
-                <div class="res-item">
-                    <div class="res-item-title">B.Tech in Computer Science</div>
-                    <div class="res-item-subtitle">Sanskar College of Engineering and Technology (SCET)</div>
-                    <div class="res-item-date">2024 - 2028 (Expected)</div>
-                    <ul class="res-list">
-                        <li>Focus on Data Structures, Algorithms, and Object-Oriented Programming.</li>
-                        <li>Active member of the Coding Club and Technical Society.</li>
-                    </ul>
-                </div>
-                <div class="res-item">
-                    <div class="res-item-title">Higher Secondary (PCM)</div>
-                    <div class="res-item-subtitle">Saraswati Bal Mandir Sr. Sec. School</div>
-                    <div class="res-item-date">Completed 2024</div>
-                </div>
-                <div class="res-section-title"><i class="fas fa-laptop-code"></i> Key Projects</div>
-                <div class="res-item">
-                    <div class="d-flex justify-content-between">
-                        <div class="res-item-title">AI-Integrated Personal Portfolio</div>
-                        <a href="https://github.com/krissshnaverrrma/My-Portfolio"
-                            class="small text-primary text-decoration-none"><i
-                                class="fab fa-github text-primary"></i>View Repository</a>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                    <div class="res-section-title"><i class="fas fa-pen-nib"></i> Key Articles</div>
+                    <div class="timeline-container">
+                        {% for blog in blog_posts[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h6 class="text-white fw-bold mb-1">
+                                <a href="/blog/{{ blog.slug }}" class="text-decoration-none text-white"
+                                    style="transition: color 0.3s;"
+                                    onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                    onmouseout="this.style.color='#fff'">
+                                    {{ blog.title }}
+                                    <i class="fas fa-external-link-alt ms-1"
+                                        style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                </a>
+                            </h6>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ blog.category }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ blog.summary | striptags }}
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="res-item-subtitle">Python, Flask, Gemini API, HTML/CSS</div>
-                    <ul class="res-list">
-                        <li>Designed a dynamic CMS-style portfolio with a custom blog engine.</li>
-                        <li>Integrated Google Gemini API to create a context-aware chatbot (Virtual Assistant).</li>
-                        <li>Implemented "Lazy Coder" automation for certificate generation and data rendering.</li>
-                    </ul>
                 </div>
-                <div class="res-item">
-                    <div class="d-flex justify-content-between">
-                        <div class="res-item-title">Live Weather Dashboard</div>
-                        <a href="https://github.com/krissshnaverrrma/Weather-APP"
-                            class="small text-primary text-decoration-none"><i
-                                class="fab fa-github text-primary"></i>View Repository</a>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
+                    <div class="res-section-title"><i class="fas fa-certificate"></i> Certifications</div>
+                    <div class="timeline-container">
+                        {% for cert in certifications[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <h6 class="text-white fw-bold mb-0">
+                                    {% if cert.link %}
+                                    <a href="{{ cert.link }}" target="_blank" class="text-decoration-none text-white"
+                                        style="transition: color 0.3s;"
+                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                        onmouseout="this.style.color='#fff'">
+                                        {{ cert.title }}
+                                        <i class="fas fa-external-link-alt ms-1"
+                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                    </a>
+                                    {% else %}
+                                    {{ cert.title }}
+                                    {% endif %}
+                                </h6>
+                                <span class="badge border border-secondary text-secondary bg-transparent"
+                                    style="font-size: 0.65rem;">{{ cert.date[-4:] }}</span>
+                            </div>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ cert.issuer }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ cert.description }}
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="res-item-subtitle">JavaScript, OpenWeatherMap API</div>
-                    <ul class="res-list">
-                        <li>Built a real-time weather tracking app with 5-day forecasting capabilities.</li>
-                        <li>Optimized API calls using asynchronous JS, reducing load times by 30%.</li>
-                    </ul>
+                    <div class="mt-5 text-end d-print-none">
+                        <a href="{{ url_for('resume.resume_detail') }}" target="_blank" class="btn-sleek">
+                            <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
+                        </a>
+                    </div>
                 </div>
-                <div class="mt-5 text-end d-print-none">
-                    <a href="{{ url_for('resume.resume_detail') }}" target="_blank"
-                        class="btn-glass px-4 py-3 text-decoration-none">
-                        <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
-                    </a>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-element').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(el);
+        });
+    });
+</script>
 {% endblock %}

@@ -419,6 +419,10 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 email=user_prof.get("contact_email"),
                 github_url=f"https://github.com/{user_prof.get('github_username')}",
                 linkedin_url=user_prof.get("linkedin_url"),
+                instagram_url=user_prof.get("instagram_url"),
+                facebook_url=user_prof.get("facebook_url"),
+                telegram_url=user_prof.get("telegram_url"),
+                whatsapp_url=user_prof.get("whatsapp_url"),
                 profile_image=user_prof.get("profile_image"),
                 profile_icon=user_prof.get("profile_icon"),
                 bot_image=user_prof.get("bot_image"),
@@ -432,6 +436,10 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
             user.email = user_prof.get("contact_email")
             user.profile_image = user_prof.get("profile_image")
             user.profile_icon = user_prof.get("profile_icon")
+            user.instagram_url = user_prof.get("instagram_url")
+            user.facebook_url = user_prof.get("facebook_url")
+            user.telegram_url = user_prof.get("telegram_url")
+            user.whatsapp_url = user_prof.get("whatsapp_url")
         db.commit()
         db.refresh(user)
         current_user_id = user.id
