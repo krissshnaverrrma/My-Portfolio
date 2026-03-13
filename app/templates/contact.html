@@ -75,6 +75,24 @@
           color: black;
      }
 
+     .bento-item {
+          background: rgba(15, 15, 15, 0.4);
+          backdrop-filter: blur(25px);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 24px;
+          padding: 1.5rem;
+          height: 100%;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+     }
+
+     .bento-item:hover {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateY(-5px);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+     }
+
      .form-floating-custom {
           position: relative;
           margin-bottom: 0;
@@ -186,18 +204,8 @@
 <div class="contact-wrapper d-flex flex-column align-items-center">
      <div class="container p-4" style="max-width: 1200px; padding-top: 8rem !important;">
           <div class="text-center mb-5 reveal-element">
-               <div class="d-inline-flex align-items-center gap-2 px-4 py-2 mb-4 rounded-pill"
-                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-                    <i class="far fa-clock text-secondary small"></i>
-                    <span class="text-secondary small" style="font-size: 0.8rem; letter-spacing: 0.5px;">Local
-                         Time:</span>
-                    <span id="local-time" class="text-white fw-bold font-monospace"
-                         style="font-size: 0.85rem; letter-spacing: 1px;">00:00 AM</span>
-                    <span class="badge rounded-circle p-1 ms-2"
-                         style="background: #28a745; box-shadow: 0 0 10px #28a745; width: 8px; height: 8px;"></span>
-               </div>
                <h1 class="display-3 fw-bolder text-white mb-2" style="letter-spacing: -1px;">Let's <span
-                         style="color: rgba(255,255,255,0.4);">Connect.</span></h1>
+                         style="color: rgba(255,255,255,0.4);">Connect</span></h1>
                <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">Reach out to
                     Collaborate, Ask a Question, or Simply say Hello. I'm always Open to discussing ideas.</p>
           </div>
@@ -231,7 +239,7 @@
                                    <div class="icon-box"><i class="fab fa-github-alt"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">GitHub</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore source codes
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore Source Codes
                                         </p>
                                    </div>
                               </a>
@@ -239,7 +247,7 @@
                                    <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional network
+                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional Network
                                         </p>
                                    </div>
                               </a>
@@ -293,7 +301,7 @@
                                         <textarea name="message" id="message" class="sleek-input h-100"
                                              style="min-height: 160px; resize: none;" placeholder=" "
                                              required></textarea>
-                                        <label for="message">Your Message...</label>
+                                        <label for="message">Your Message</label>
                                    </div>
                               </div>
                               <button type="submit"
@@ -305,13 +313,50 @@
                     </div>
                </div>
           </div>
+          <div class="row g-4 justify-content-center reveal-element mb-5"
+               style="max-width: 1000px; margin: 0 auto; padding-top: 1rem;">
+               <div class="col-md-4 col-sm-6">
+                    <div
+                         class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4">
+                         <i class="fas fa-map-marked-alt text-white opacity-75 mb-3" style="font-size: 2rem;"></i>
+                         <h6 class="text-white fw-bold mb-1">Base of Operations</h6>
+                         <span class="text-secondary small">Hapur, Uttar Pradesh, India</span>
+                    </div>
+               </div>
+               <div class="col-md-4 col-sm-6">
+                    <div class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4"
+                         style="background: rgba(40, 167, 69, 0.05); border-color: rgba(40, 167, 69, 0.15);">
+                         <div class="d-flex align-items-center gap-2 mb-3">
+                              <span class="badge rounded-circle p-1"
+                                   style="background: #28a745; box-shadow: 0 0 10px #28a745;"></span>
+                              <span class="text-success fw-bold text-uppercase"
+                                   style="letter-spacing: 1px;">Available</span>
+                         </div>
+                         <div class="text-secondary small mb-1" style="font-size: 0.75rem;">Time Based on Current
+                              Location</div>
+                         <div id="local-time" class="text-white fw-bold font-monospace"
+                              style="font-size: 1.2rem; letter-spacing: 1px;">00:00 AM</div>
+                    </div>
+               </div>
+               <div class="col-md-4 col-sm-6">
+                    <div
+                         class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4">
+                         <i class="far fa-clock text-info mb-3" style="font-size: 2rem;"></i>
+                         <h6 class="text-white fw-bold mb-1">Response Time</h6>
+                         <span class="text-secondary small">Usually within 2 Hours</span>
+                    </div>
+               </div>
+          </div>
      </div>
 </div>
 <script>
      document.addEventListener('DOMContentLoaded', () => {
           const updateTime = () => {
                const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-               document.getElementById('local-time').innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
+               const timeElement = document.getElementById('local-time');
+               if (timeElement) {
+                    timeElement.innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
+               }
           };
           setInterval(updateTime, 1000);
           updateTime();
