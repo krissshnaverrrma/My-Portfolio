@@ -28,29 +28,30 @@
         border: 2px solid transparent;
     }
 
-    .btn-pill-white {
-        background: #ffffff;
-        color: #000000;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-pill-white:hover {
+    .btn-pill-black {
         background: #000000;
         color: #ffffff;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        border-color: #000000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
-    .btn-pill-white i {
+    .btn-pill-black:hover {
+        background: #ffffff;
+        color: #000000;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        border-color: #ffffff;
+    }
+
+    .btn-pill-black i,
+    .btn-pill-black img {
         transition: transform 0.3s ease;
     }
 
-    .btn-pill-white:hover .fa-code-branch {
+    .btn-pill-black:hover .fa-code-branch {
         transform: translateX(3px) rotate(15deg);
     }
 
-    .btn-pill-white:hover .fa-user {
+    .btn-pill-black:hover .fa-user {
         transform: scale(1.1);
     }
 
@@ -131,10 +132,11 @@
                     </p>
                 </div>
                 <div class="d-flex gap-4 flex-wrap">
-                    <a href="{{ url_for('about.about') }}" class="btn-action btn-pill-white">
-                        <i class="fas fa-user me-2"></i> About Me
+                    <a href="{{ url_for('about.about') }}" class="btn-action btn-pill-black">
+                        <img src="{{ profile.profile_image }}" alt="Profile" class="me-2 rounded-circle shadow-sm"
+                            style="width: 20px; height: 20px; object-fit: cover;"> About Me
                     </a>
-                    <a href="{{ url_for('skills.skills') }}" class="btn-action btn-pill-white">
+                    <a href="{{ url_for('skills.skills') }}" class="btn-action btn-pill-black">
                         View Skills <i class="fas fa-code-branch ms-2"></i>
                     </a>
                 </div>
