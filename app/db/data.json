@@ -17,7 +17,11 @@
         "focus": "Building scalable backend systems, automating workflows, and optimizing algorithms.",
         "about_text": "I am Krishna Verma, a Computer Science undergraduate specializing in Backend Development and System Architecture. My journey began with the low-level logic of C++ and evolved into building scalable, high-performance web applications with Python & Flask. I bridge the gap between abstract algorithms and real-world utility, deeply focused on Game Logic and automated system optimization.",
         "bot_image": "/static/assets/assistant/assistant.png",
-        "user_image": "/static/assets/assistant/user.png"
+        "user_image": "/static/assets/assistant/user.png",
+        "home_title": "CS Student & Full Stack Developer",
+        "home_description": "I am a Computer Science Student at Sanskar College of Engineering and Technology. I'm passionate about building scalable backend systems and immersive digital experiences. Specializing in <strong>Python</strong> and <strong>Game Development</strong>, I bridge the gap between complex logic and clean design.",
+        "philosophy_title": "THE LAZY CODER PHILOSOPHY",
+        "philosophy_text": "\"If a Task needs to be done Twice, it should be Automated. My Focus is Cutting Redundancy to build Self-Sustaining Frontend and Backend Systems.\""
     },
     "ai_config": {
         "fallback_models": [

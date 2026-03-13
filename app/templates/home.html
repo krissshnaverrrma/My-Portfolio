@@ -107,28 +107,24 @@
                     </div>
                 </h6>
                 <h1 class="display-4 fw-bold mb-1 text-white">
-                    Hello, I'm <br> Krishna Verma
+                    Hello, I'm <br> {{ profile.name }}
                 </h1>
-                <h3 class="fw-light mb-4 text-light opacity-75">CS Student & Full Stack Developer</h3>
+                <h3 class="fw-light mb-4 text-light opacity-75">{{ profile.home_title }}</h3>
                 <p class="lead mb-4"
                     style="color: #d0d0d0; font-size: 1.15rem; line-height: 1.8; font-weight: 300; text-align: justify;">
-                    I am a Computer Science Student at Sanskar College of Engineering and Technology. I'm
-                    passionate about building scalable backend systems and immersive digital experiences.
-                    Specializing in <strong>Python</strong> and <strong>Game Development</strong>, I bridge the gap
-                    between complex logic and clean design.
+                    {{ profile.home_description | safe }}
                 </p>
                 <div class="mb-5 p-4 rounded"
                     style="background: rgba(255,255,255,0.03); border-left: 4px solid #ffffff; backdrop-filter: blur(10px);">
                     <div class="d-flex align-items-center mb-2">
                         <img src="{{ profile.bot_image }}" alt="AI Assistant" class="me-2 rounded-circle shadow-sm"
                             style="width: 24px; height: 24px; object-fit: cover;">
-                        <span class="fw-bold text-white" style="letter-spacing: 1px; font-size: 0.85rem;">THE LAZY
-                            CODER PHILOSOPHY</span>
+                        <span class="fw-bold text-white" style="letter-spacing: 1px; font-size: 0.85rem;">{{
+                            profile.philosophy_title }}</span>
                     </div>
                     <p class="mb-0 text-light opacity-75"
                         style="font-size: 1.05rem; font-style: italic; text-align: justify;">
-                        "If a Task needs to be done Twice, it should be Automated. My Focus is Cutting Redundancy
-                        to build Self-Sustaining Frontend and Backend Systems.
+                        {{ profile.philosophy_text }}
                     </p>
                 </div>
                 <div class="d-flex gap-4 flex-wrap">

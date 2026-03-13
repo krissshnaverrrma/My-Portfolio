@@ -426,7 +426,11 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 profile_image=user_prof.get("profile_image"),
                 profile_icon=user_prof.get("profile_icon"),
                 bot_image=user_prof.get("bot_image"),
-                user_image=user_prof.get("user_image")
+                user_image=user_prof.get("user_image"),
+                home_title=user_prof.get("home_title"),
+                home_description=user_prof.get("home_description"),
+                philosophy_title=user_prof.get("philosophy_title"),
+                philosophy_text=user_prof.get("philosophy_text")
             )
             db.add(user)
         else:
@@ -440,6 +444,10 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
             user.facebook_url = user_prof.get("facebook_url")
             user.telegram_url = user_prof.get("telegram_url")
             user.whatsapp_url = user_prof.get("whatsapp_url")
+            user.home_title = user_prof.get("home_title")
+            user.home_description = user_prof.get("home_description")
+            user.philosophy_title = user_prof.get("philosophy_title")
+            user.philosophy_text = user_prof.get("philosophy_text")
         db.commit()
         db.refresh(user)
         current_user_id = user.id

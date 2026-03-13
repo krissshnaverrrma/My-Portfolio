@@ -6,4 +6,4 @@ home_bp = Blueprint('home', __name__)
 @home_bp.route('/')
 def home():
     user_profile = get_user_profile()
-    return render_template('home.html', user_profile=user_profile)
+    return render_template('home.html', profile=user_profile)

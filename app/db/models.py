@@ -32,6 +32,11 @@ class User(Base):
         String(500), nullable=True)
     bot_image: Mapped[str | None] = mapped_column(String(500), nullable=True)
     user_image: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    home_title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    home_description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    philosophy_title: Mapped[str | None] = mapped_column(
+        String(255), nullable=True)
+    philosophy_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     projects: Mapped[list["Project"]] = relationship(
         back_populates="author", cascade="all, delete-orphan")
     blog_posts: Mapped[list["BlogPost"]] = relationship(
