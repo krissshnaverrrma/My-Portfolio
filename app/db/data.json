@@ -514,7 +514,7 @@
             "is_featured": false
         },
         {
-            "title": "Type Master: AI Meet Minimalism",
+            "title": "Type Master: AI Meets Minimalism",
             "slug": "type-master-ai",
             "category": "Full Stack / AI",
             "image_url": "/static/assets/blogs/type_master.jpg",
@@ -560,6 +560,39 @@
         }
     ],
     "certifications": [
+        {
+            "slug": "udemy-python-ethical-hacking",
+            "title": "Python for Ethical Hacking and Penetration Testing",
+            "issuer": "Udemy",
+            "date": "March 13, 2026",
+            "status": "Completed",
+            "description": "Comprehensive 17.5-hour training on Python for ethical hacking and penetration testing instructed by Neamatullah Ekhteyari.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-python-ethical-hacking.jpg",
+            "link": "https://www.udemy.com/certificate/UC-5e2ecdae-863f-48b8-871b-48ab46025839/"
+        },
+        {
+            "slug": "udemy-python-game-development",
+            "title": "Master Python Game Development: A Project-Based Journey",
+            "issuer": "Udemy",
+            "date": "March 13, 2026",
+            "status": "Completed",
+            "description": "A 3-hour project-based journey into Python game development instructed by S. Emadedin Hashemi.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-python-game-development.jpg",
+            "link": "https://www.udemy.com/certificate/UC-eb6b640e-165a-4aec-8875-1b8263b6472b/"
+        },
+        {
+            "slug": "udemy-web-developer-bootcamp",
+            "title": "The Complete Web Developer Bootcamp",
+            "issuer": "Udemy",
+            "date": "March 13, 2026",
+            "status": "Completed",
+            "description": "Comprehensive 4.5-hour web development bootcamp instructed by Meta Brains.",
+            "icon_class": "fas fa-certificate",
+            "image_url": "/static/assets/certificates/udemy-web-development-bootcamp.jpg",
+            "link": "https://www.udemy.com/certificate/UC-2b7c9ca1-3139-410a-88cd-0f2813722f98/"
+        },
         {
             "slug": "udemy-js-html-css-30-projects",
             "title": "Master JavaScript, HTML, and CSS with 30 Projects in 30 Days",

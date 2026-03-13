@@ -18,13 +18,17 @@
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 24px;
-    padding: 2rem;
+    padding: 1.5rem;
     height: 100%;
     transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .sleek-panel:hover {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
   }
 
   .search-wrapper {
@@ -39,8 +43,14 @@
     color: rgba(255, 255, 255, 0.6);
     padding: 8px 20px;
     border-radius: 50px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
   }
 
   .filter-btn.active {
@@ -53,21 +63,30 @@
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    aspect-ratio: 16/11;
-    background: rgba(0, 0, 0, 0.2);
+    aspect-ratio: 16/9;
+    background: rgba(0, 0, 0, 0.3);
+    margin-bottom: 1.5rem;
   }
 
   .img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.9;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    opacity: 0.85;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
   }
 
   .sleek-panel:hover .img-container img {
     transform: scale(1.05);
     opacity: 1;
+  }
+
+  .cert-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.6;
   }
 
   .reveal-element {
@@ -80,84 +99,141 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  #load-more-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+
+  #load-more-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
 </style>
 <div class="d-flex flex-column align-items-center"
-  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%); padding-bottom: 5rem;">
   <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1400px;">
-    <div class="text-center mb-4 reveal-element">
+    <div class="text-center mb-5 reveal-element">
       <h6 class="text-uppercase text-secondary fw-bold mb-2"
         style="letter-spacing: 4px; font-size: 0.7rem; opacity: 0.6;">Verified Expertise</h6>
-      <h1 class="display-4 fw-bold text-white mb-3">Certificates Archive</h1>
+      <h1 class="display-4 fw-bold text-white mb-4">Certificates Archive</h1>
       <div class="search-wrapper">
         <i class="fas fa-search"
           style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
         <input type="text" id="cert-search" class="w-100"
           style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; padding: 12px 25px 12px 50px; color: white;"
-          placeholder="Search Issuer or Skills">
+          placeholder="Search Courses, Skills, or Issuers">
       </div>
-      <div class="d-flex flex-wrap justify-content-center gap-2">
+      <div class="d-flex flex-wrap justify-content-center gap-2" id="filter-container">
         <button class="filter-btn active" data-filter="all">All Certificates</button>
-        <button class="filter-btn" data-filter="Udemy">Udemy</button>
-        <button class="filter-btn" data-filter="freeCodeCamp">freeCodeCamp</button>
-        <button class="filter-btn" data-filter="Let'sUpgrade">Let'sUpgrade</button>
       </div>
     </div>
-    <div class="row g-3" id="cert-grid">
+    <div class="row g-4" id="cert-grid">
       {% for cert in certifications %}
-      <div class="col-md-6 col-lg-4 cert-item reveal-element" data-issuer="{{ cert.issuer }}"
-        data-title="{{ cert.title | lower }}">
-        <div class="sleek-panel d-flex flex-column">
-          <div class="img-container mb-4">
+      <div class="col-md-6 col-lg-4 cert-item d-none reveal-element" data-issuer="{{ cert.issuer }}"
+        data-title="{{ cert.title | lower }}" data-index="{{ loop.index0 }}">
+        <div class="sleek-panel">
+          <div class="img-container">
             <img src="{{ cert.image_url }}" alt="{{ cert.title }}">
-            <span class="position-absolute top-0 end-0 m-3 badge bg-white text-black rounded-pill px-3"
-              style="font-size: 0.6rem;">{{ cert.status }}</span>
+            <span class="position-absolute top-0 end-0 m-3 badge bg-white text-black rounded-pill px-3 shadow-sm"
+              style="font-size: 0.65rem; font-weight: 700;">{{ cert.status }}</span>
           </div>
-          <div class="mb-2">
-            <h6 class="text-primary small fw-bold text-uppercase mb-1" style="letter-spacing: 1px;">{{ cert.issuer }}
+          <div class="mb-3 flex-grow-1">
+            <h6 class="text-primary small fw-bold text-uppercase mb-2" style="letter-spacing: 1px;">{{ cert.issuer }}
             </h6>
-            <h5 class="text-white fw-bold mb-2">{{ cert.title }}</h5>
-            <p class="text-secondary smaller font-monospace opacity-75 mb-3">{{ cert.date }}</p>
+            <h5 class="text-white fw-bold mb-2" style="font-size: 1.15rem; line-height: 1.4;">{{ cert.title }}</h5>
+            <p class="text-secondary smaller font-monospace opacity-75 mb-3"><i class="far fa-calendar-alt me-1"></i> {{
+              cert.date }}</p>
+            <p class="text-secondary small cert-description">{{ cert.description | safe }}</p>
           </div>
-          <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ cert.description | safe }}</p>
-          <div class="d-flex flex-column gap-2">
+          <div class="mt-auto pt-3 border-top border-secondary border-opacity-10">
             <a href="{{ url_for('certificate.certificate_detail', slug=cert.slug) }}"
               class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2">
-              View Certificates <i class="fas fa-arrow-right ms-2"></i>
+              View Details <i class="fas fa-arrow-right ms-2"></i>
             </a>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
+    <div class="text-center mt-5" id="load-more-container">
+      <button id="load-more-btn" class="reveal-element">Show More Certificates <i
+          class="fas fa-certificate ms-2"></i></button>
+    </div>
   </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const INITIAL_DISPLAY = 6;
+    let currentlyVisible = INITIAL_DISPLAY;
     const searchInput = document.getElementById('cert-search');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const certItems = document.querySelectorAll('.cert-item');
-    const filterCerts = () => {
-      const query = searchInput.value.toLowerCase();
-      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
-      certItems.forEach(item => {
-        const title = item.getAttribute('data-title');
-        const issuer = item.getAttribute('data-issuer').toLowerCase();
-        const matchesFilter = (activeFilter === 'all' || issuer.includes(activeFilter));
-        const matchesSearch = title.includes(query) || issuer.includes(query);
-        item.classList.toggle('d-none', !(matchesFilter && matchesSearch));
-      });
-    };
-    searchInput.addEventListener('input', filterCerts);
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        filterCerts();
-      });
+    const filterContainer = document.getElementById('filter-container');
+    const certItems = Array.from(document.querySelectorAll('.cert-item'));
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const uniqueIssuers = [...new Set(certItems.map(item => item.getAttribute('data-issuer')))];
+    uniqueIssuers.forEach(issuer => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.setAttribute('data-filter', issuer);
+      btn.textContent = issuer;
+      filterContainer.appendChild(btn);
     });
+    const updateDisplay = () => {
+      const query = searchInput.value.toLowerCase();
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+      const isSearchingOrFiltering = query !== '' || activeFilter !== 'all';
+      let matchCount = 0;
+      certItems.forEach((item) => {
+        const title = item.getAttribute('data-title');
+        const issuer = item.getAttribute('data-issuer');
+        const matchesFilter = (activeFilter === 'all' || issuer === activeFilter);
+        const matchesSearch = title.includes(query) || issuer.toLowerCase().includes(query);
+        if (matchesFilter && matchesSearch) {
+          matchCount++;
+          if (isSearchingOrFiltering || matchCount <= currentlyVisible) {
+            item.classList.remove('d-none');
+            setTimeout(() => item.classList.add('reveal-visible'), 50);
+          } else {
+            item.classList.add('d-none');
+            item.classList.remove('reveal-visible');
+          }
+        } else {
+          item.classList.add('d-none');
+          item.classList.remove('reveal-visible');
+        }
+      });
+      if (isSearchingOrFiltering || currentlyVisible >= matchCount) {
+        loadMoreContainer.style.display = 'none';
+      } else {
+        loadMoreContainer.style.display = 'block';
+      }
+    };
+    searchInput.addEventListener('input', updateDisplay);
+    filterContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('filter-btn')) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentlyVisible = INITIAL_DISPLAY;
+        updateDisplay();
+      }
+    });
+    loadMoreBtn.addEventListener('click', () => {
+      currentlyVisible += 6;
+      updateDisplay();
+    });
+    updateDisplay();
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+        if (entry.isIntersecting && !entry.target.classList.contains('d-none')) {
+          entry.target.classList.add('reveal-visible');
+        }
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
