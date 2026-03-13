@@ -7,7 +7,6 @@ from .config.config import get_config
 from .db.data import get_user_profile
 from .db.database import db_session
 from .routes import register_routes
-from .errors import errors_bp
 from .system.systems import limiter, format_date, markdown_filter, configure_logging, initialize_app_services
 flask.cli.show_server_banner = lambda *args: None
 logger = logging.getLogger(__name__)
@@ -22,7 +21,6 @@ def create_app() -> Flask:
     limiter.init_app(app)
     Swagger(app)
     register_routes(app)
-    app.register_blueprint(errors_bp)
     app.jinja_env.filters['markdown'] = markdown_filter
     app.jinja_env.filters['format_date'] = format_date
     initialize_app_services(app, is_cli_mode, is_quiet_mode)
