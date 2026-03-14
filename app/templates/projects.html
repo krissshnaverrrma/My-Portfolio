@@ -116,6 +116,25 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  #load-more-btn,
+  #show-less-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    margin: 0 5px;
+  }
+
+  #load-more-btn:hover,
+  #show-less-btn:hover {
+    background: white;
+    color: black;
+  }
 </style>
 <div class="d-flex flex-column align-items-center"
   style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
@@ -145,7 +164,7 @@
     <div class="row g-4" id="project-grid">
       {% for project in projects if project.is_featured %}
       <div class="col-12 project-item reveal-element" data-category="{{ project.category }}"
-        data-title="{{ project.title | lower }}">
+        data-title="{{ project.title | lower }}" data-featured="true">
         <div class="sleek-panel">
           <div class="row align-items-center h-100 flex-grow-1">
             <div class="col-lg-7">
@@ -180,7 +199,7 @@
       {% endfor %}
       {% for project in projects if not project.is_featured %}
       <div class="col-lg-4 col-md-6 project-item reveal-element" data-category="{{ project.category }}"
-        data-title="{{ project.title | lower }}">
+        data-title="{{ project.title | lower }}" data-featured="false">
         <div class="sleek-panel">
           <div class="img-container mb-4">
             <img src="{{ project.image_url }}" alt="{{ project.title }}">
@@ -206,36 +225,87 @@
       </div>
       {% endfor %}
     </div>
+    <div class="text-center mt-5" id="load-more-container">
+      <button id="load-more-btn" class="reveal-element">Show More Projects <i class="fas fa-code ms-2"></i></button>
+      <button id="show-less-btn" class="reveal-element" style="display: none;">Show Less Projects<i
+          class="fas fa-code ms-2" style="transform: rotate(180deg);"></i></button>
+    </div>
   </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const INITIAL_DISPLAY = 3;
+    let currentlyVisible = INITIAL_DISPLAY;
     const searchInput = document.getElementById('project-search');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectItems = document.querySelectorAll('.project-item');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const showLessBtn = document.getElementById('show-less-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
     const filterGallery = () => {
       const query = searchInput.value.toLowerCase();
       const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
+      const isSearchingOrFiltering = query !== '' || activeFilter !== 'all';
+      let regularMatchCount = 0;
       projectItems.forEach(item => {
         const category = item.getAttribute('data-category').toLowerCase();
         const title = item.getAttribute('data-title').toLowerCase();
+        const isFeatured = item.getAttribute('data-featured') === 'true';
         const matchesFilter = (activeFilter === 'all' || category.includes(activeFilter));
         const matchesSearch = title.includes(query);
         if (matchesFilter && matchesSearch) {
-          item.classList.remove('d-none');
+          if (isFeatured) {
+            item.classList.remove('d-none');
+          } else {
+            regularMatchCount++;
+            if (isSearchingOrFiltering || regularMatchCount <= currentlyVisible) {
+              item.classList.remove('d-none');
+            } else {
+              item.classList.add('d-none');
+            }
+          }
         } else {
           item.classList.add('d-none');
         }
       });
+      if (isSearchingOrFiltering) {
+        loadMoreContainer.style.display = 'none';
+      } else {
+        loadMoreContainer.style.display = 'block';
+        if (currentlyVisible >= regularMatchCount) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'inline-block';
+        }
+        if (currentlyVisible > INITIAL_DISPLAY) {
+          showLessBtn.style.display = 'inline-block';
+        } else {
+          showLessBtn.style.display = 'none';
+        }
+        if (currentlyVisible >= regularMatchCount && currentlyVisible <= INITIAL_DISPLAY) {
+          loadMoreContainer.style.display = 'none';
+        }
+      }
     };
     searchInput.addEventListener('input', filterGallery);
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        currentlyVisible = INITIAL_DISPLAY;
         filterGallery();
       });
     });
+    loadMoreBtn.addEventListener('click', () => {
+      currentlyVisible += 3;
+      filterGallery();
+    });
+    showLessBtn.addEventListener('click', () => {
+      currentlyVisible = INITIAL_DISPLAY;
+      filterGallery();
+      document.getElementById('project-grid').scrollIntoView({ behavior: 'smooth' });
+    });
+    filterGallery();
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('reveal-visible');

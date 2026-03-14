@@ -164,6 +164,25 @@
         opacity: 1;
         transform: translateY(0);
     }
+
+    #load-more-btn,
+    #show-less-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 12px 35px;
+        border-radius: 50px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+        margin: 0 5px;
+    }
+
+    #load-more-btn:hover,
+    #show-less-btn:hover {
+        background: white;
+        color: black;
+    }
 </style>
 <div class="d-flex flex-column align-items-center"
     style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
@@ -193,7 +212,7 @@
         <div class="row g-4" id="blog-grid">
             {% for post in posts if post.is_featured %}
             <div class="col-12 blog-item reveal-element" data-category="{{ post.category }}"
-                data-title="{{ post.title | lower }}">
+                data-title="{{ post.title | lower }}" data-featured="true">
                 <div class="sleek-panel">
                     <div class="row flex-grow-1 align-items-center h-100">
                         <div class="col-lg-7">
@@ -236,7 +255,7 @@
             {% endfor %}
             {% for post in posts if not post.is_featured %}
             <div class="col-lg-4 col-md-6 blog-item reveal-element" data-category="{{ post.category }}"
-                data-title="{{ post.title | lower }}">
+                data-title="{{ post.title | lower }}" data-featured="false">
                 <div class="sleek-panel">
                     {% if post.image_url %}
                     <div class="img-container mb-4">
@@ -267,36 +286,88 @@
             </div>
             {% endfor %}
         </div>
+        <div class="text-center mt-5" id="load-more-container">
+            <button id="load-more-btn" class="reveal-element">Show More Blogs <i
+                    class="fas fa-book-open ms-2"></i></button>
+            <button id="show-less-btn" class="reveal-element" style="display: none;">Show Less Blogs <i
+                    class="fas fa-book-open ms-2" style="transform: rotate(180deg);"></i></button>
+        </div>
     </div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const INITIAL_DISPLAY = 3;
+        let currentlyVisible = INITIAL_DISPLAY;
         const searchInput = document.getElementById('blog-search');
         const filterBtns = document.querySelectorAll('.filter-btn');
         const blogItems = document.querySelectorAll('.blog-item');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const showLessBtn = document.getElementById('show-less-btn');
+        const loadMoreContainer = document.getElementById('load-more-container');
         const filterBlog = () => {
             const query = searchInput.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
+            const isSearchingOrFiltering = query !== '' || activeFilter !== 'all';
+            let regularMatchCount = 0;
             blogItems.forEach(item => {
                 const title = item.getAttribute('data-title');
                 const category = item.getAttribute('data-category').toLowerCase();
+                const isFeatured = item.getAttribute('data-featured') === 'true';
                 const matchesSearch = title.includes(query);
                 const matchesFilter = activeFilter === 'all' || category.includes(activeFilter);
                 if (matchesSearch && matchesFilter) {
-                    item.classList.remove('d-none');
+                    if (isFeatured) {
+                        item.classList.remove('d-none');
+                    } else {
+                        regularMatchCount++;
+                        if (isSearchingOrFiltering || regularMatchCount <= currentlyVisible) {
+                            item.classList.remove('d-none');
+                        } else {
+                            item.classList.add('d-none');
+                        }
+                    }
                 } else {
                     item.classList.add('d-none');
                 }
             });
+            if (isSearchingOrFiltering) {
+                loadMoreContainer.style.display = 'none';
+            } else {
+                loadMoreContainer.style.display = 'block';
+                if (currentlyVisible >= regularMatchCount) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'inline-block';
+                }
+                if (currentlyVisible > INITIAL_DISPLAY) {
+                    showLessBtn.style.display = 'inline-block';
+                } else {
+                    showLessBtn.style.display = 'none';
+                }
+                if (currentlyVisible >= regularMatchCount && currentlyVisible <= INITIAL_DISPLAY) {
+                    loadMoreContainer.style.display = 'none';
+                }
+            }
         };
         searchInput.addEventListener('input', filterBlog);
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                currentlyVisible = INITIAL_DISPLAY;
                 filterBlog();
             });
         });
+        loadMoreBtn.addEventListener('click', () => {
+            currentlyVisible += 3;
+            filterBlog();
+        });
+        showLessBtn.addEventListener('click', () => {
+            currentlyVisible = INITIAL_DISPLAY;
+            filterBlog();
+            document.getElementById('blog-grid').scrollIntoView({ behavior: 'smooth' });
+        });
+        filterBlog();
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
