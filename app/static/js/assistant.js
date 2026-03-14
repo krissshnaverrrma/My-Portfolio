@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const botIcon = document.getElementById("bot-status-icon");
     const dot = document.getElementById("status-dot");
     if (label) {
-        label.innerText = "Connecting...";
+        label.innerText = "Connecting to the Google GEMINI API Key....";
         if (botIcon) botIcon.style.borderColor = "#666";
         if (dot) dot.className = "fas fa-circle";
     }
@@ -103,7 +103,7 @@ async function checkSystemStatus() {
             showTyping();
             setTimeout(() => {
                 hideTyping();
-                addMessage(`<b>Hello! I'm ${PROFILE_NAME}'s Virtual AI Assistant.</b><br>Ask Me about his <b>Projects</b>, <b>Skills</b>, <b>Blog-Posts</b>, <b>Certifications</b> or <b>Contact Info</b>!`, "bot");
+                addMessage(`<b>Hello! I'm ${PROFILE_NAME}'s Virtual AI Assistant.</b><br>Ask Me about his <b>Projects</b>, <b>Blog-Posts</b>,  <b>Certificates</b>, <b>Skills</b>, or <b>Contact Info</b>!`, "bot");
             }, 1000);
         }
     } catch (e) {
