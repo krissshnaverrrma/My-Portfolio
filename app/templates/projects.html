@@ -186,7 +186,7 @@
                 {% endfor %}
               </div>
               <div class="mt-auto">
-                <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+                <a href="{{ url_for('main.project_detail', slug=project.slug) }}"
                   class="btn btn-light rounded-pill fw-bold w-100 py-3 text-uppercase"
                   style="font-size: 0.8rem; letter-spacing: 1px;">
                   View Details <i class="fas fa-arrow-right ms-2"></i>
@@ -214,7 +214,7 @@
               {% endfor %}
             </div>
             <div class="mt-auto">
-              <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+              <a href="{{ url_for('main.project_detail', slug=project.slug) }}"
                 class="btn btn-outline-light rounded-pill fw-bold w-100 py-2 text-uppercase"
                 style="font-size: 0.75rem; letter-spacing: 1px;">
                 View Details <i class="fas fa-arrow-right ms-2"></i>

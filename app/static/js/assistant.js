@@ -133,12 +133,13 @@ function addMessage(text, sender, isTypingIndicator = false) {
     } else {
         const safeText = String(text || "");
         let formatted = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
         formatted = formatted.replace(
-            /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
+            /(?<!href=["'])(?<!src=["'])(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
             '<a href="$1" target="_blank" class="chat-link">$1</a>'
         );
         formatted = formatted.replace(
-            /(^|[^\/])(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
+            /(?<!href=["'])(?<!src=["'])(^|[^\/])(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
             '$1<a href="https://$2" target="_blank" class="chat-link">$2</a>'
         );
         bubble.innerHTML = formatted;
@@ -224,4 +225,30 @@ function toggleVoice() {
     };
 
     recognition.start();
+}
+
+function insertPrompt(text) {
+    let inputField = document.getElementById('user-input');
+    if (inputField.placeholder === "Initializing the Virtual AI Assistant") return;
+    inputField.value = text;
+    inputField.disabled = false;
+    document.getElementById('send-btn').disabled = false;
+    if (typeof handleSend === 'function') {
+        handleSend();
+    }
+}
+
+function refreshChat() {
+    location.reload();
+}
+
+function closeChat() {
+    window.location.href = "/";
+}
+
+function clearChat() {
+    document.getElementById('chat-body').innerHTML = '';
+    setTimeout(() => {
+        addMessage("Chat History Cleared. Try Asking from **Quick Actions**!", "bot");
+    }, 300);
 }

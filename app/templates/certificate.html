@@ -213,7 +213,7 @@
             <p class="text-secondary small mb-4 flex-grow-1 cert-description" style="line-height: 1.6;">{{
               cert.description | safe }}</p>
             <div class="mt-auto">
-              <a href="{{ url_for('certificate.certificate_detail', slug=cert.slug) }}" class="btn-card-action">
+              <a href="{{ url_for('main.certificate_detail', slug=cert.slug) }}" class="btn-card-action">
                 VIEW DETAILS <i class="fas fa-arrow-right"></i>
               </a>
             </div>

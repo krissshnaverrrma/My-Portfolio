@@ -54,8 +54,8 @@
 <body class="{% block body_class %}{% endblock %}">
      <nav class="navbar navbar-expand-lg fixed-top {% block nav_class %}{% endblock %}">
           <div class="container">
-               {% if request.endpoint != 'home.home' %}
-               <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home.home') }}">
+               {% if request.endpoint != 'main.home' %}
+               <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('main.home') }}">
                     <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" width="30" height="30"
                          class="rounded-circle">
                     <span>{{ profile.name }}</span>
@@ -67,35 +67,35 @@
                </button>
                <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                         {% if request.endpoint != 'home.home' %}
+                         {% if request.endpoint != 'main.home' %}
                          <li class="nav-item">
-                              <a class="nav-link" href="{{ url_for('home.home') }}">Home</a>
+                              <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
                          </li>
                          {% endif %}
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'about.about' %}active{% endif %}"
-                                   href="{{ url_for('about.about') }}">About</a></li>
+                                   href="{{ url_for('main.about') }}">About</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'skills.skills' %}active{% endif %}"
-                                   href="{{ url_for('skills.skills') }}">Skills</a></li>
+                                   href="{{ url_for('main.skills') }}">Skills</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'projects.projects' %}active{% endif %}"
-                                   href="{{ url_for('projects.projects') }}">Projects</a></li>
+                                   href="{{ url_for('main.projects') }}">Projects</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'blog.blogs' %}active{% endif %}"
-                                   href="{{ url_for('blog.blogs') }}">Blogs</a></li>
+                                   href="{{ url_for('main.blogs') }}">Blogs</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'certificate.certificates' %}active{% endif %}"
-                                   href="{{ url_for('certificate.certificates') }}">Certificates</a></li>
+                                   href="{{ url_for('main.certificates') }}">Certificates</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'resume.resume_page' %}active{% endif %}"
-                                   href="{{ url_for('resume.resume_page') }}">Resume</a></li>
+                                   href="{{ url_for('main.resume_page') }}">Resume</a></li>
                          <li class="nav-item"><a
                                    class="nav-link {% if request.endpoint == 'contact.contact' %}active{% endif %}"
-                                   href="{{ url_for('contact.contact') }}">Contact</a></li>
+                                   href="{{ url_for('main.contact') }}">Contact</a></li>
                          <li class="nav-item">
-                              <a class="nav-link assistant-link p-1 ms-2 {% if request.endpoint == 'assistant.assistant_page' %}active{% endif %}"
-                                   href="{{ url_for('assistant.assistant_page') }}" title="AI Assistant">
+                              <a class="nav-link assistant-link p-1 ms-2 {% if request.endpoint == 'main.assistant_page' %}active{% endif %}"
+                                   href="{{ url_for('main.assistant_page') }}" title="AI Assistant">
                                    <img src="{{ profile.bot_image }}" alt="AI"
                                         style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
                               </a>
@@ -110,7 +110,7 @@
      <div class="container-fluid p-0 main-content">
           {% block content %}{% endblock %}
      </div>
-     {% if request.endpoint != 'home.home' %}
+     {% if request.endpoint != 'main.home' %}
      <footer class="footer mt-auto py-3 glass-panel border-top border-white-10">
           <div class="container">
                <div class="row align-items-center g-2">

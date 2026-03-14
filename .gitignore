@@ -8,7 +8,6 @@ ENV/
 env/
 *.db
 *.sqlite3
-cache/
 build/
 dist/
 *.egg-info/

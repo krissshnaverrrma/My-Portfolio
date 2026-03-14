@@ -8,26 +8,20 @@ from typing import List, Optional, Dict, Any
 from .database import SessionLocal, Base, engine
 from ..config.config import get_config, Config
 from .models import (
-    User, APICache, Knowledge, BlogPost, Project, Skill,
-    TimelineEvent, Service, Certification, ContactMessage, ChatLog, Interest, CorePrinciple,
-    Stat, CorePhilosophy
+    User, APICache, Knowledge, Skill, Service, TimelineEvent, Interest,
+    Stat, CorePrinciple, CorePhilosophy, ContactMessage, ChatLog,
+    Project, BlogPost, Certification
 )
 logger = logging.getLogger(__name__)
 _JSON_CACHE: Optional[Dict[str, Any]] = None
-CHAT_LOG_FILE = os.path.join('cache', 'assistant_response.json')
-CONTACT_MESSAGES_FILE = os.path.join('cache', 'message_response.json')
-MODEL_CACHE_FILE = os.path.join('cache', 'model_response.json')
 MODEL_CACHE_KEY = 'gemini_valid_models'
-GITHUB_CACHE_FILE = os.path.join('cache', 'github_response.json')
 
 
-def _get_project_root_path(filename: str) -> str:
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    target_path = os.path.join(base_dir, filename)
-    target_dir = os.path.dirname(target_path)
-    if target_dir:
-        os.makedirs(target_dir, exist_ok=True)
-    return target_path
+def _get_project_root_path(relative_path: str) -> str:
+    """Returns the absolute path from the project root."""
+    root_dir = os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))))
+    return os.path.join(root_dir, relative_path)
 
 
 def load_json_data(filename: str = 'data.json') -> Dict[str, Any]:
@@ -52,171 +46,12 @@ def get_data_json() -> Dict[str, Any]:
     return load_json_data()
 
 
-def get_user_profile() -> Dict[str, Any]:
-    return load_json_data().get("user_profile", {})
-
-
 def get_ai_config() -> Dict[str, Any]:
     return load_json_data().get("ai_config", {})
 
 
-def get_stats() -> Dict[str, Any]:
-    return load_json_data().get("stats", {})
-
-
-def get_core_philosophy() -> List[Dict[str, Any]]:
-    return load_json_data().get("core_philosophy", [])
-
-
-def get_all_posts() -> List[BlogPost]:
-    with SessionLocal() as db:
-        return db.query(BlogPost).order_by(BlogPost.id.asc()).all()
-
-
-def get_all_projects() -> List[Project]:
-    with SessionLocal() as db:
-        return db.query(Project).order_by(Project.id.asc()).all()
-
-
-def get_all_certifications() -> List[Certification]:
-    with SessionLocal() as db:
-        return db.query(Certification).order_by(Certification.id.asc()).all()
-
-
-def get_all_skills() -> List[Skill]:
-    with SessionLocal() as db:
-        return db.query(Skill).order_by(Skill.id.asc()).all()
-
-
-def get_timeline(event_type: str) -> List[TimelineEvent]:
-    with SessionLocal() as db:
-        return db.query(TimelineEvent).filter_by(type=event_type).order_by(TimelineEvent.year.desc()).all()
-
-
-def get_services() -> List[Service]:
-    with SessionLocal() as db:
-        return db.query(Service).all()
-
-
-def get_interests() -> List[Interest]:
-    with SessionLocal() as db:
-        return db.query(Interest).all()
-
-
-def get_core_principles() -> List[CorePrinciple]:
-    with SessionLocal() as db:
-        return db.query(CorePrinciple).all()
-
-
-def get_all_knowledge() -> List[Knowledge]:
-    with SessionLocal() as db:
-        return db.query(Knowledge).order_by(Knowledge.id.asc()).all()
-
-
-def search_knowledge(user_query: str) -> List[Knowledge]:
-    if not user_query or len(user_query) < 3:
-        return []
-    search_term = f"%{user_query.lower()}%"
-    with SessionLocal() as db:
-        return db.query(Knowledge).filter(
-            (Knowledge.category.ilike(search_term)) |
-            (Knowledge.info.ilike(search_term))
-        ).all()
-
-
-def log_conversation(session_id: str, u: str, b: str) -> None:
-    timestamp = datetime.now(timezone.utc)
-    log_path = _get_project_root_path(CHAT_LOG_FILE)
-    entry = {
-        "session_id": session_id,
-        "user_query": u,
-        "bot_response": b,
-        "timestamp": timestamp.isoformat()
-    }
-    try:
-        data = []
-        if os.path.exists(log_path):
-            with open(log_path, 'r', encoding='utf-8') as f:
-                try:
-                    data = json.load(f)
-                except json.JSONDecodeError:
-                    data = []
-        data.append(entry)
-        with open(log_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4)
-    except Exception as e:
-        logger.error(f"❌ Error logging Chat to JSON: {e}")
-    with SessionLocal() as db:
-        try:
-            new_log = ChatLog(
-                session_id=session_id,
-                user_query=u,
-                bot_response=b,
-                timestamp=timestamp
-            )
-            db.add(new_log)
-            db.commit()
-        except Exception as e:
-            logger.error(f"❌ Error Logging Chat to Database: {e}")
-            db.rollback()
-
-
-def save_contact_message(name, email, subject, message) -> bool:
-    timestamp = datetime.now(timezone.utc)
-    log_path = _get_project_root_path(CONTACT_MESSAGES_FILE)
-    entry = {
-        "timestamp": timestamp.isoformat(),
-        "name": name,
-        "email": email,
-        "subject": subject,
-        "message": message
-    }
-    try:
-        data = []
-        if os.path.exists(log_path):
-            with open(log_path, 'r', encoding='utf-8') as f:
-                try:
-                    data = json.load(f)
-                except json.JSONDecodeError:
-                    data = []
-        data.append(entry)
-        with open(log_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4)
-    except Exception as e:
-        logger.error(f"❌ Error Saving Message to JSON: {e}")
-    with SessionLocal() as db:
-        try:
-            new_msg = ContactMessage(
-                name=name, email=email, subject=subject,
-                message=message, timestamp=timestamp
-            )
-            db.add(new_msg)
-            db.commit()
-            return True
-        except Exception as e:
-            logger.error(f"❌ Error Saving Message to DB: {e}")
-            db.rollback()
-            return False
-
-
-def get_chat_history(session_id: str, limit: int = 10) -> List[SimpleNamespace]:
-    with SessionLocal() as db:
-        try:
-            logs = db.query(ChatLog).filter(
-                ChatLog.session_id == session_id
-            ).order_by(ChatLog.timestamp.desc()).limit(limit).all()
-            history_objects = []
-            for log in logs:
-                history_objects.append(SimpleNamespace(
-                    session_id=log.session_id,
-                    user_query=log.user_query,
-                    bot_response=log.bot_response,
-                    timestamp=log.timestamp.isoformat() if log.timestamp else ""
-                ))
-            return history_objects[::-1]
-        except Exception as e:
-            logger.error(f"❌ Error Reading Chat History: {e}")
-            return []
+def get_user_profile() -> Dict[str, Any]:
+    return load_json_data().get("user_profile", {})
 
 
 def get_cached_ai_response(cache_key: str, expiry_hours: int = 24) -> Optional[str]:
@@ -249,7 +84,6 @@ def set_cached_ai_response(cache_key: str, response_text: str) -> None:
 
 
 def get_cached_valid_models(expiry_hours: int = 6) -> Optional[List[str]]:
-    db_models = None
     try:
         with SessionLocal() as db:
             cache_entry = db.query(APICache).filter_by(
@@ -259,36 +93,12 @@ def get_cached_valid_models(expiry_hours: int = 6) -> Optional[List[str]]:
                 if cache_time.tzinfo is None:
                     cache_time = cache_time.replace(tzinfo=timezone.utc)
                 if datetime.now(timezone.utc) - cache_time < timedelta(hours=expiry_hours):
-                    db_models = json.loads(cache_entry.data)
+                    return json.loads(cache_entry.data)
                 else:
                     db.delete(cache_entry)
                     db.commit()
     except Exception as e:
-        logger.warning(f"DB Cache Read Failed, Falling back to file: {e}")
-    if db_models:
-        try:
-            cache_path = _get_project_root_path(MODEL_CACHE_FILE)
-            if not os.path.exists(cache_path):
-                with open(cache_path, 'w') as f:
-                    json.dump({
-                        'timestamp': datetime.now(timezone.utc).isoformat(),
-                        'models': db_models
-                    }, f)
-        except Exception as e:
-            logger.warning(f"File Cache self-healing failed: {e}")
-        return db_models
-    try:
-        cache_path = _get_project_root_path(MODEL_CACHE_FILE)
-        if os.path.exists(cache_path):
-            with open(cache_path, 'r') as f:
-                cache_data = json.load(f)
-                cached_time = datetime.fromisoformat(cache_data['timestamp'])
-                if cached_time.tzinfo is None:
-                    cached_time = cached_time.replace(tzinfo=timezone.utc)
-                if datetime.now(timezone.utc) - cached_time < timedelta(hours=expiry_hours):
-                    return cache_data['models']
-    except Exception as e:
-        logger.warning(f"File Cache Read Failed: {e}")
+        logger.warning(f"DB Cache Read Failed: {e}")
     return None
 
 
@@ -311,19 +121,9 @@ def set_cached_valid_models(models: List[str]) -> None:
             db.commit()
     except Exception as e:
         logger.error(f"DB Cache Write Failed: {e}")
-    try:
-        cache_path = _get_project_root_path(MODEL_CACHE_FILE)
-        with open(cache_path, 'w') as f:
-            json.dump({
-                'timestamp': datetime.now(timezone.utc).isoformat(),
-                'models': models
-            }, f)
-    except Exception as e:
-        logger.error(f"File Cache Write Failed: {e}")
 
 
 def get_cached_github_data(cache_key: str, expiry_seconds: int = 3600) -> Optional[List[Dict[str, Any]]]:
-    db_data = None
     try:
         with SessionLocal() as db:
             cache_entry = db.query(APICache).filter_by(key=cache_key).first()
@@ -332,42 +132,12 @@ def get_cached_github_data(cache_key: str, expiry_seconds: int = 3600) -> Option
                 if cache_time.tzinfo is None:
                     cache_time = cache_time.replace(tzinfo=timezone.utc)
                 if (datetime.now(timezone.utc) - cache_time).total_seconds() < expiry_seconds:
-                    db_data = json.loads(cache_entry.data)
+                    return json.loads(cache_entry.data)
                 else:
                     db.delete(cache_entry)
                     db.commit()
     except Exception as e:
         logger.warning(f"DB GitHub Cache Read Failed: {e}")
-    if db_data:
-        try:
-            cache_path = _get_project_root_path(GITHUB_CACHE_FILE)
-            existing_cache = {}
-            if os.path.exists(cache_path):
-                with open(cache_path, 'r', encoding='utf-8') as f:
-                    existing_cache = json.load(f)
-            existing_cache[cache_key] = {
-                'timestamp': datetime.now(timezone.utc).isoformat(),
-                'data': db_data
-            }
-            with open(cache_path, 'w', encoding='utf-8') as f:
-                json.dump(existing_cache, f)
-        except Exception as e:
-            logger.warning(f"File GitHub Cache Self-Healing Failed: {e}")
-        return db_data
-    try:
-        cache_path = _get_project_root_path(GITHUB_CACHE_FILE)
-        if os.path.exists(cache_path):
-            with open(cache_path, 'r', encoding='utf-8') as f:
-                cache_data = json.load(f)
-            if cache_key in cache_data:
-                entry = cache_data[cache_key]
-                cached_time = datetime.fromisoformat(entry['timestamp'])
-                if cached_time.tzinfo is None:
-                    cached_time = cached_time.replace(tzinfo=timezone.utc)
-                if (datetime.now(timezone.utc) - cached_time).total_seconds() < expiry_seconds:
-                    return entry['data']
-    except Exception as e:
-        logger.warning(f"File GitHub Cache Read Failed: {e}")
     return None
 
 
@@ -389,20 +159,124 @@ def set_cached_github_data(cache_key: str, data: Any) -> None:
             db.commit()
     except Exception as e:
         logger.error(f"DB GitHub Cache Write Failed: {e}")
-    try:
-        cache_path = _get_project_root_path(GITHUB_CACHE_FILE)
-        existing_cache = {}
-        if os.path.exists(cache_path):
-            with open(cache_path, 'r', encoding='utf-8') as f:
-                existing_cache = json.load(f)
-        existing_cache[cache_key] = {
-            'timestamp': now_utc.isoformat(),
-            'data': data
-        }
-        with open(cache_path, 'w', encoding='utf-8') as f:
-            json.dump(existing_cache, f, indent=4)
-    except Exception as e:
-        logger.error(f"File GitHub Cache Write Failed: {e}")
+
+
+def get_all_knowledge() -> List[Knowledge]:
+    with SessionLocal() as db:
+        return db.query(Knowledge).order_by(Knowledge.id.asc()).all()
+
+
+def search_knowledge(user_query: str) -> List[Knowledge]:
+    if not user_query or len(user_query) < 3:
+        return []
+    search_term = f"%{user_query.lower()}%"
+    with SessionLocal() as db:
+        return db.query(Knowledge).filter(
+            (Knowledge.category.ilike(search_term)) |
+            (Knowledge.info.ilike(search_term))
+        ).all()
+
+
+def get_all_skills() -> List[Skill]:
+    with SessionLocal() as db:
+        return db.query(Skill).order_by(Skill.id.asc()).all()
+
+
+def get_services() -> List[Service]:
+    with SessionLocal() as db:
+        return db.query(Service).all()
+
+
+def get_timeline(event_type: str) -> List[TimelineEvent]:
+    with SessionLocal() as db:
+        return db.query(TimelineEvent).filter_by(type=event_type).order_by(TimelineEvent.year.desc()).all()
+
+
+def get_interests() -> List[Interest]:
+    with SessionLocal() as db:
+        return db.query(Interest).all()
+
+
+def get_stats() -> Dict[str, Any]:
+    return load_json_data().get("stats", {})
+
+
+def get_core_principles() -> List[CorePrinciple]:
+    with SessionLocal() as db:
+        return db.query(CorePrinciple).all()
+
+
+def get_core_philosophy() -> List[Dict[str, Any]]:
+    return load_json_data().get("core_philosophy", [])
+
+
+def save_contact_message(name, email, subject, message) -> bool:
+    timestamp = datetime.now(timezone.utc)
+    with SessionLocal() as db:
+        try:
+            new_msg = ContactMessage(
+                name=name, email=email, subject=subject,
+                message=message, timestamp=timestamp
+            )
+            db.add(new_msg)
+            db.commit()
+            return True
+        except Exception as e:
+            logger.error(f"❌ Error Saving Message to DB: {e}")
+            db.rollback()
+            return False
+
+
+def log_conversation(session_id: str, u: str, b: str) -> None:
+    timestamp = datetime.now(timezone.utc)
+    with SessionLocal() as db:
+        try:
+            new_log = ChatLog(
+                session_id=session_id,
+                user_query=u,
+                bot_response=b,
+                timestamp=timestamp
+            )
+            db.add(new_log)
+            db.commit()
+        except Exception as e:
+            logger.error(f"❌ Error Logging Chat to Database: {e}")
+            db.rollback()
+
+
+def get_chat_history(session_id: str, limit: int = 10) -> List[SimpleNamespace]:
+    with SessionLocal() as db:
+        try:
+            logs = db.query(ChatLog).filter(
+                ChatLog.session_id == session_id
+            ).order_by(ChatLog.timestamp.desc()).limit(limit).all()
+            history_objects = []
+            for log in logs:
+                history_objects.append(SimpleNamespace(
+                    session_id=log.session_id,
+                    user_query=log.user_query,
+                    bot_response=log.bot_response,
+                    timestamp=log.timestamp.isoformat() if log.timestamp else ""
+                ))
+            return history_objects[::-1]
+        except Exception as e:
+            logger.error(f"❌ Error Reading Chat History: {e}")
+            return []
+
+
+def get_all_projects() -> List[Project]:
+    with SessionLocal() as db:
+        return db.query(Project).order_by(Project.id.asc()).all()
+
+
+def get_all_posts() -> List[BlogPost]:
+    with SessionLocal() as db:
+        return db.query(BlogPost).order_by(BlogPost.id.asc()).all()
+
+
+def get_all_certifications() -> List[Certification]:
+    with SessionLocal() as db:
+        return db.query(Certification).order_by(Certification.id.asc()).all()
 
 
 def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
@@ -467,73 +341,52 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 new_k = Knowledge(category=cat, info=info)
                 db.add(new_k)
                 existing_knowledge[cat] = new_k
-        if 'projects' in data:
-            existing_projects = {p.slug: p for p in db.query(Project).all()}
-            for proj in data['projects']:
-                slug_val = proj.get(
-                    'slug', proj['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_projects:
-                    db.add(Project(
-                        user_id=current_user_id, title=proj['title'], slug=slug_val,
-                        category=proj.get('category', 'misc'), image_url=proj.get('image_url'),
-                        description=proj.get('description'), content=proj.get('content', ''),
-                        tech_stack=", ".join(proj.get('tech_stack', [])), github_url=proj.get('github_url'),
-                        demo_url=proj.get('demo_url'), is_featured=proj.get('is_featured', False),
-                        year=proj.get('year', '')
+        if 'skills' in data:
+            existing_skills = {s.name: s for s in db.query(Skill).all()}
+            for skill in data['skills']:
+                if skill['name'] not in existing_skills:
+                    db.add(Skill(
+                        category=skill['category'],
+                        name=skill['name'],
+                        icon_class=skill.get('icon', skill.get('icon_class'))
                     ))
+                k_category = f"skill_{skill['name'].lower().replace(' ', '_').replace('.', '_')}"
+                k_info = f"Skill: {skill['name']} ({skill['category']})."
+                if k_category in existing_knowledge:
+                    if existing_knowledge[k_category].info != k_info:
+                        existing_knowledge[k_category].info = k_info
                 else:
-                    ep = existing_projects[slug_val]
-                    ep.title = proj['title']
-                    ep.category = proj.get('category', 'misc')
-                    ep.image_url = proj.get('image_url')
-                    ep.description = proj.get('description')
-                    ep.content = proj.get('content', '')
-                    ep.tech_stack = ", ".join(proj.get('tech_stack', []))
-                    ep.github_url = proj.get('github_url')
-                    ep.demo_url = proj.get('demo_url')
-                    ep.is_featured = proj.get('is_featured', False)
-                    ep.year = proj.get('year', '')
-        if 'certifications' in data:
-            existing_certs = {c.slug: c for c in db.query(
-                Certification).all() if c.slug}
-            for cert in data['certifications']:
-                slug_val = cert.get(
-                    'slug', cert['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_certs:
-                    db.add(Certification(
-                        user_id=current_user_id,
-                        title=cert['title'],
-                        slug=slug_val,
-                        issuer=cert['issuer'],
-                        date=cert.get('date', ''),
-                        description=cert.get('description', ''),
-                        icon_class=cert.get(
-                            'icon_class', 'fas fa-certificate'),
-                        image_url=cert.get('image_url'),
-                        link=cert.get('link'),
-                        status=cert.get('status', 'Completed')
+                    new_k = Knowledge(category=k_category, info=k_info)
+                    db.add(new_k)
+                    existing_knowledge[k_category] = new_k
+        if 'services' in data:
+            existing_services = {s.title: s for s in db.query(Service).all()}
+            for svc in data['services']:
+                if svc['title'] not in existing_services:
+                    db.add(Service(
+                        title=svc['title'],
+                        description=svc['description'],
+                        icon_class=svc.get('icon', svc.get(
+                            'icon_class', 'fas fa-cog'))
                     ))
-        if 'blog_posts' in data:
-            existing_blogs = {b.slug: b for b in db.query(BlogPost).all()}
-            for post in data['blog_posts']:
-                slug_val = post.get(
-                    'slug', post['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_blogs:
-                    db.add(BlogPost(
-                        user_id=current_user_id, title=post['title'], slug=slug_val,
-                        category=post.get('category', 'Tech'), summary=post['summary'],
-                        content=post['content'], image_url=post.get(
-                            'image_url'),
-                        is_featured=post.get('is_featured', False), created_at=datetime.now(timezone.utc)
+        existing_timelines = {
+            (t.title, t.year): t for t in db.query(TimelineEvent).all()}
+        if 'academic_timeline' in data:
+            for item in data['academic_timeline']:
+                if (item['title'], item['year']) not in existing_timelines:
+                    db.add(TimelineEvent(
+                        type='academic', year=item['year'], title=item['title'],
+                        subtitle=item['institution'], description=item['description'],
+                        status_badge=item['status'], is_future=False
                     ))
-                else:
-                    eb = existing_blogs[slug_val]
-                    eb.title = post['title']
-                    eb.category = post.get('category', 'Tech')
-                    eb.summary = post['summary']
-                    eb.content = post['content']
-                    eb.image_url = post.get('image_url')
-                    eb.is_featured = post.get('is_featured', False)
+        if 'dev_journey' in data:
+            for item in data['dev_journey']:
+                if (item['title'], item['year']) not in existing_timelines:
+                    db.add(TimelineEvent(
+                        type='journey', year=item['year'], title=item['title'],
+                        subtitle="", description=item['description'],
+                        is_future=item.get('is_future', False)
+                    ))
         if 'interests' in data:
             existing_interests = {i.name: i for i in db.query(Interest).all()}
             for int_item in data['interests']:
@@ -582,51 +435,72 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 else:
                     existing_cph[cp['title']].description = cp['description']
                     existing_cph[cp['title']].icon_class = cp['icon_class']
-        if 'skills' in data:
-            existing_skills = {s.name: s for s in db.query(Skill).all()}
-            for skill in data['skills']:
-                if skill['name'] not in existing_skills:
-                    db.add(Skill(
-                        category=skill['category'],
-                        name=skill['name'],
-                        icon_class=skill.get('icon', skill.get('icon_class'))
+        if 'projects' in data:
+            existing_projects = {p.slug: p for p in db.query(Project).all()}
+            for proj in data['projects']:
+                slug_val = proj.get(
+                    'slug', proj['title'].lower().replace(' ', '-'))
+                if slug_val not in existing_projects:
+                    db.add(Project(
+                        user_id=current_user_id, title=proj['title'], slug=slug_val,
+                        category=proj.get('category', 'misc'), image_url=proj.get('image_url'),
+                        description=proj.get('description'), content=proj.get('content', ''),
+                        tech_stack=", ".join(proj.get('tech_stack', [])), github_url=proj.get('github_url'),
+                        demo_url=proj.get('demo_url'), is_featured=proj.get('is_featured', False),
+                        year=proj.get('year', '')
                     ))
-                k_category = f"skill_{skill['name'].lower().replace(' ', '_').replace('.', '_')}"
-                k_info = f"Skill: {skill['name']} ({skill['category']})."
-                if k_category in existing_knowledge:
-                    if existing_knowledge[k_category].info != k_info:
-                        existing_knowledge[k_category].info = k_info
                 else:
-                    new_k = Knowledge(category=k_category, info=k_info)
-                    db.add(new_k)
-                    existing_knowledge[k_category] = new_k
-        if 'services' in data:
-            existing_services = {s.title: s for s in db.query(Service).all()}
-            for svc in data['services']:
-                if svc['title'] not in existing_services:
-                    db.add(Service(
-                        title=svc['title'],
-                        description=svc['description'],
-                        icon_class=svc.get('icon', svc.get(
-                            'icon_class', 'fas fa-cog'))
+                    ep = existing_projects[slug_val]
+                    ep.title = proj['title']
+                    ep.category = proj.get('category', 'misc')
+                    ep.image_url = proj.get('image_url')
+                    ep.description = proj.get('description')
+                    ep.content = proj.get('content', '')
+                    ep.tech_stack = ", ".join(proj.get('tech_stack', []))
+                    ep.github_url = proj.get('github_url')
+                    ep.demo_url = proj.get('demo_url')
+                    ep.is_featured = proj.get('is_featured', False)
+                    ep.year = proj.get('year', '')
+        if 'blog_posts' in data:
+            existing_blogs = {b.slug: b for b in db.query(BlogPost).all()}
+            for post in data['blog_posts']:
+                slug_val = post.get(
+                    'slug', post['title'].lower().replace(' ', '-'))
+                if slug_val not in existing_blogs:
+                    db.add(BlogPost(
+                        user_id=current_user_id, title=post['title'], slug=slug_val,
+                        category=post.get('category', 'Tech'), summary=post['summary'],
+                        content=post['content'], image_url=post.get(
+                            'image_url'),
+                        is_featured=post.get('is_featured', False), created_at=datetime.now(timezone.utc)
                     ))
-        existing_timelines = {
-            (t.title, t.year): t for t in db.query(TimelineEvent).all()}
-        if 'academic_timeline' in data:
-            for item in data['academic_timeline']:
-                if (item['title'], item['year']) not in existing_timelines:
-                    db.add(TimelineEvent(
-                        type='academic', year=item['year'], title=item['title'],
-                        subtitle=item['institution'], description=item['description'],
-                        status_badge=item['status'], is_future=False
-                    ))
-        if 'dev_journey' in data:
-            for item in data['dev_journey']:
-                if (item['title'], item['year']) not in existing_timelines:
-                    db.add(TimelineEvent(
-                        type='journey', year=item['year'], title=item['title'],
-                        subtitle="", description=item['description'],
-                        is_future=item.get('is_future', False)
+                else:
+                    eb = existing_blogs[slug_val]
+                    eb.title = post['title']
+                    eb.category = post.get('category', 'Tech')
+                    eb.summary = post['summary']
+                    eb.content = post['content']
+                    eb.image_url = post.get('image_url')
+                    eb.is_featured = post.get('is_featured', False)
+        if 'certifications' in data:
+            existing_certs = {c.slug: c for c in db.query(
+                Certification).all() if c.slug}
+            for cert in data['certifications']:
+                slug_val = cert.get(
+                    'slug', cert['title'].lower().replace(' ', '-'))
+                if slug_val not in existing_certs:
+                    db.add(Certification(
+                        user_id=current_user_id,
+                        title=cert['title'],
+                        slug=slug_val,
+                        issuer=cert['issuer'],
+                        date=cert.get('date', ''),
+                        description=cert.get('description', ''),
+                        icon_class=cert.get(
+                            'icon_class', 'fas fa-certificate'),
+                        image_url=cert.get('image_url'),
+                        link=cert.get('link'),
+                        status=cert.get('status', 'Completed')
                     ))
         db.commit()
         if not Config.IS_RENDER:
