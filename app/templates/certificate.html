@@ -18,7 +18,7 @@
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 24px;
-    padding: 1.5rem;
+    padding: 2rem;
     height: 100%;
     transition: all 0.4s ease;
     display: flex;
@@ -26,9 +26,9 @@
   }
 
   .sleek-panel:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   .search-wrapper {
@@ -37,20 +37,31 @@
     position: relative;
   }
 
+  .cert-search {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    padding: 12px 25px 12px 50px;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .cert-search:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
   .filter-btn {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.6);
     padding: 8px 20px;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: 0.3s;
     cursor: pointer;
-  }
-
-  .filter-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
   }
 
   .filter-btn.active {
@@ -59,26 +70,65 @@
     font-weight: bold;
   }
 
+  .filter-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
   .img-container {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
     aspect-ratio: 16/9;
-    background: rgba(0, 0, 0, 0.3);
-    margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   .img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 0.8;
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
   }
 
   .sleek-panel:hover .img-container img {
     transform: scale(1.05);
     opacity: 1;
+  }
+
+  .tech-pill {
+    font-size: 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+  }
+
+  .btn-card-action {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    padding: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-card-action:hover {
+    background: #ffffff;
+    color: #000000;
   }
 
   .cert-description {
@@ -100,7 +150,8 @@
     transform: translateY(0);
   }
 
-  #load-more-btn {
+  #load-more-btn,
+  #show-less-btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
@@ -109,25 +160,31 @@
     font-weight: 600;
     letter-spacing: 1px;
     transition: all 0.3s;
+    margin: 0 5px;
   }
 
-  #load-more-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
+  #load-more-btn:hover,
+  #show-less-btn:hover {
+    background: white;
+    color: black;
   }
 </style>
 <div class="d-flex flex-column align-items-center"
-  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%); padding-bottom: 5rem;">
+  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
   <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1400px;">
     <div class="text-center mb-5 reveal-element">
-      <h6 class="text-uppercase text-secondary fw-bold mb-2"
-        style="letter-spacing: 4px; font-size: 0.7rem; opacity: 0.6;">Verified Expertise</h6>
-      <h1 class="display-4 fw-bold text-white mb-4">Certificates Archive</h1>
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-award text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Verified Expertise</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Certificates <span
+          style="color: rgba(255,255,255,0.4);">Archive</span></h1>
       <div class="search-wrapper">
         <i class="fas fa-search"
           style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
-        <input type="text" id="cert-search" class="w-100"
-          style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; padding: 12px 25px 12px 50px; color: white;"
-          placeholder="Search Courses, Skills, or Issuers">
+        <input type="text" id="cert-search" class="cert-search" placeholder="Search Courses, Skills, or Issuers">
       </div>
       <div class="d-flex flex-wrap justify-content-center gap-2" id="filter-container">
         <button class="filter-btn active" data-filter="all">All Certificates</button>
@@ -135,27 +192,31 @@
     </div>
     <div class="row g-4" id="cert-grid">
       {% for cert in certifications %}
-      <div class="col-md-6 col-lg-4 cert-item d-none reveal-element" data-issuer="{{ cert.issuer }}"
+      <div class="col-lg-4 col-md-6 cert-item d-none reveal-element" data-issuer="{{ cert.issuer }}"
         data-title="{{ cert.title | lower }}" data-index="{{ loop.index0 }}">
         <div class="sleek-panel">
-          <div class="img-container">
+          <div class="img-container mb-4">
             <img src="{{ cert.image_url }}" alt="{{ cert.title }}">
-            <span class="position-absolute top-0 end-0 m-3 badge bg-white text-black rounded-pill px-3 shadow-sm"
-              style="font-size: 0.65rem; font-weight: 700;">{{ cert.status }}</span>
+            <span class="position-absolute top-0 end-0 m-3 tech-pill shadow-sm"
+              style="background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1);">
+              <i class="fas fa-building me-1 opacity-75"></i> {{ cert.issuer }}
+            </span>
+            <span
+              class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3 py-1 shadow-sm"
+              style="font-size: 0.6rem; letter-spacing: 1px;">{{ cert.status | upper }}</span>
           </div>
-          <div class="mb-3 flex-grow-1">
-            <h6 class="text-primary small fw-bold text-uppercase mb-2" style="letter-spacing: 1px;">{{ cert.issuer }}
-            </h6>
-            <h5 class="text-white fw-bold mb-2" style="font-size: 1.15rem; line-height: 1.4;">{{ cert.title }}</h5>
-            <p class="text-secondary smaller font-monospace opacity-75 mb-3"><i class="far fa-calendar-alt me-1"></i> {{
-              cert.date }}</p>
-            <p class="text-secondary small cert-description">{{ cert.description | safe }}</p>
-          </div>
-          <div class="mt-auto pt-3 border-top border-secondary border-opacity-10">
-            <a href="{{ url_for('certificate.certificate_detail', slug=cert.slug) }}"
-              class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2">
-              View Details <i class="fas fa-arrow-right ms-2"></i>
-            </a>
+          <div class="d-flex flex-column flex-grow-1">
+            <div class="text-secondary d-flex align-items-center mb-3" style="font-size: 0.9rem;">
+              <i class="far fa-calendar-alt me-2"></i> {{ cert.date }}
+            </div>
+            <h4 class="text-white fw-bold mb-3 h5">{{ cert.title }}</h4>
+            <p class="text-secondary small mb-4 flex-grow-1 cert-description" style="line-height: 1.6;">{{
+              cert.description | safe }}</p>
+            <div class="mt-auto">
+              <a href="{{ url_for('certificate.certificate_detail', slug=cert.slug) }}" class="btn-card-action">
+                VIEW DETAILS <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -164,6 +225,8 @@
     <div class="text-center mt-5" id="load-more-container">
       <button id="load-more-btn" class="reveal-element">Show More Certificates <i
           class="fas fa-certificate ms-2"></i></button>
+      <button id="show-less-btn" class="reveal-element" style="display: none;">Show Less Certificates<i
+          class="fas fa-certificate ms-2" style="transform: rotate(180deg);"></i></button>
     </div>
   </div>
 </div>
@@ -175,6 +238,7 @@
     const filterContainer = document.getElementById('filter-container');
     const certItems = Array.from(document.querySelectorAll('.cert-item'));
     const loadMoreBtn = document.getElementById('load-more-btn');
+    const showLessBtn = document.getElementById('show-less-btn');
     const loadMoreContainer = document.getElementById('load-more-container');
     const uniqueIssuers = [...new Set(certItems.map(item => item.getAttribute('data-issuer')))];
     uniqueIssuers.forEach(issuer => {
@@ -209,10 +273,23 @@
           item.classList.remove('reveal-visible');
         }
       });
-      if (isSearchingOrFiltering || currentlyVisible >= matchCount) {
+      if (isSearchingOrFiltering) {
         loadMoreContainer.style.display = 'none';
       } else {
         loadMoreContainer.style.display = 'block';
+        if (currentlyVisible >= matchCount) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'inline-block';
+        }
+        if (currentlyVisible > INITIAL_DISPLAY) {
+          showLessBtn.style.display = 'inline-block';
+        } else {
+          showLessBtn.style.display = 'none';
+        }
+        if (currentlyVisible >= matchCount && currentlyVisible <= INITIAL_DISPLAY) {
+          loadMoreContainer.style.display = 'none';
+        }
       }
     };
     searchInput.addEventListener('input', updateDisplay);
@@ -227,6 +304,11 @@
     loadMoreBtn.addEventListener('click', () => {
       currentlyVisible += 6;
       updateDisplay();
+    });
+    showLessBtn.addEventListener('click', () => {
+      currentlyVisible = INITIAL_DISPLAY;
+      updateDisplay();
+      document.getElementById('cert-grid').scrollIntoView({ behavior: 'smooth' });
     });
     updateDisplay();
     const observer = new IntersectionObserver((entries) => {

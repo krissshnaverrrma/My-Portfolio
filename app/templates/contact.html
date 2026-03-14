@@ -204,6 +204,12 @@
 <div class="contact-wrapper d-flex flex-column align-items-center">
      <div class="container p-4" style="max-width: 1200px; padding-top: 8rem !important;">
           <div class="text-center mb-5 reveal-element">
+               <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                    <i class="fas fa-satellite-dish text-white me-2" style="opacity: 0.7; font-size: 0.8rem;"></i>
+                    <span class="text-uppercase text-white fw-bold"
+                         style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Communication Hub</span>
+               </div>
                <h1 class="display-3 fw-bolder text-white mb-2" style="letter-spacing: -1px;">Let's <span
                          style="color: rgba(255,255,255,0.4);">Connect</span></h1>
                <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">Reach out to
@@ -222,33 +228,29 @@
                                    <div class="icon-box"><i class="fas fa-phone"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">Phone</h6>
-                                        <p class="text-warning mb-0" style="font-size: 0.8rem; opacity: 0.8;">Drop a
-                                             Call to ask </p>
+                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Voice Call</p>
                                    </div>
                               </a>
                               <a href="mailto:{{ profile.contact_email }}" class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
+                                   <div class="icon-box"><i class="fas fa-envelope"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">Email</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Drop Me a line
-                                             directly</p>
+                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Direct Inbox</p>
                                    </div>
                               </a>
                               <a href="https://github.com/{{ profile.github_username }}" target="_blank"
                                    class="contact-link-item">
-                                   <div class="icon-box"><i class="fab fa-github-alt"></i></div>
+                                   <div class="icon-box"><i class="fab fa-github"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">GitHub</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Explore Source Codes
-                                        </p>
+                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Source Code</p>
                                    </div>
                               </a>
                               <a href="{{ profile.linkedin_url }}" target="_blank" class="contact-link-item">
                                    <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
                                    <div>
                                         <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.8rem;">Professional Network
-                                        </p>
+                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Professional</p>
                                    </div>
                               </a>
                          </div>

@@ -9,7 +9,8 @@ from .database import SessionLocal, Base, engine
 from ..config.config import get_config, Config
 from .models import (
     User, APICache, Knowledge, BlogPost, Project, Skill,
-    TimelineEvent, Service, Certification, ContactMessage, ChatLog, Interest, CorePrinciple
+    TimelineEvent, Service, Certification, ContactMessage, ChatLog, Interest, CorePrinciple,
+    Stat, CorePhilosophy
 )
 logger = logging.getLogger(__name__)
 _JSON_CACHE: Optional[Dict[str, Any]] = None
@@ -57,6 +58,14 @@ def get_user_profile() -> Dict[str, Any]:
 
 def get_ai_config() -> Dict[str, Any]:
     return load_json_data().get("ai_config", {})
+
+
+def get_stats() -> Dict[str, Any]:
+    return load_json_data().get("stats", {})
+
+
+def get_core_philosophy() -> List[Dict[str, Any]]:
+    return load_json_data().get("core_philosophy", [])
 
 
 def get_all_posts() -> List[BlogPost]:
@@ -539,6 +548,22 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                         description=int_item['description'],
                         icon_class=int_item['icon_class']
                     ))
+        if 'stats' in data:
+            stat_data = data['stats']
+            stat_record = db.query(Stat).first()
+            if not stat_record:
+                db.add(Stat(
+                    projects_completed=stat_data.get('projects_completed', 0),
+                    certifications=stat_data.get('certifications', 0),
+                    commits_made=stat_data.get('commits_made', 0),
+                    cups_of_coffee=stat_data.get('cups_of_coffee', 0)
+                ))
+            else:
+                stat_record.projects_completed = stat_data.get(
+                    'projects_completed', 0)
+                stat_record.certifications = stat_data.get('certifications', 0)
+                stat_record.commits_made = stat_data.get('commits_made', 0)
+                stat_record.cups_of_coffee = stat_data.get('cups_of_coffee', 0)
         if 'core_principles' in data:
             existing_cp = {
                 cp.title: cp for cp in db.query(CorePrinciple).all()}
@@ -549,6 +574,19 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                         description=cp['description'],
                         icon_class=cp['icon_class']
                     ))
+        if 'core_philosophy' in data:
+            existing_cph = {
+                cp.title: cp for cp in db.query(CorePhilosophy).all()}
+            for cp in data['core_philosophy']:
+                if cp['title'] not in existing_cph:
+                    db.add(CorePhilosophy(
+                        title=cp['title'],
+                        description=cp['description'],
+                        icon_class=cp['icon_class']
+                    ))
+                else:
+                    existing_cph[cp['title']].description = cp['description']
+                    existing_cph[cp['title']].icon_class = cp['icon_class']
         if 'skills' in data:
             existing_skills = {s.slug: s for s in db.query(Skill).all()}
             for skill in data['skills']:

@@ -21,10 +21,14 @@
     padding: 2rem;
     height: 100%;
     transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .sleek-panel:hover {
     border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   .search-wrapper {
@@ -43,6 +47,12 @@
     transition: all 0.3s ease;
   }
 
+  .project-search:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
   .filter-btn {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -59,11 +69,17 @@
     font-weight: bold;
   }
 
+  .filter-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
   .img-container {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
     aspect-ratio: 16/9;
+    width: 100%;
   }
 
   .img-container img {
@@ -71,7 +87,7 @@
     height: 100%;
     object-fit: cover;
     opacity: 0.8;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
   }
 
   .sleek-panel:hover .img-container img {
@@ -82,10 +98,12 @@
   .tech-pill {
     font-size: 0.65rem;
     background: rgba(255, 255, 255, 0.05);
-    padding: 4px 10px;
-    border-radius: 6px;
-    color: rgba(255, 255, 255, 0.7);
+    padding: 5px 12px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
     font-family: monospace;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
   }
 
   .reveal-element {
@@ -101,11 +119,16 @@
 </style>
 <div class="d-flex flex-column align-items-center"
   style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
-  <div class="container p-4 p-md-5" style="max-width: 1400px; padding-top: 7rem !important;">
-    <div class="text-center mb-4 reveal-element">
-      <h6 class="text-uppercase text-secondary fw-bold mb-2"
-        style="letter-spacing: 4px; font-size: 0.7rem; opacity: 0.6;">Innovation & Code</h6>
-      <h1 class="display-4 fw-bold text-white mb-3">Projects Archive</h1>
+  <div class="p-4 p-md-5 w-100" style="max-width: 1400px; padding-top: 7rem !important;">
+    <div class="text-center mb-5 reveal-element">
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-code text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Innovation & Code</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Projects <span
+          style="color: rgba(255,255,255,0.4);">Archive</span></h1>
       <div class="search-wrapper">
         <i class="fas fa-search"
           style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
@@ -119,31 +142,34 @@
         <button class="filter-btn" data-filter="game">Games</button>
       </div>
     </div>
-    <div class="row g-3" id="project-grid">
+    <div class="row g-4" id="project-grid">
       {% for project in projects if project.is_featured %}
-      <div class="col-lg-12 col-md-12 project-item reveal-element" data-category="{{ project.category }}"
+      <div class="col-12 project-item reveal-element" data-category="{{ project.category }}"
         data-title="{{ project.title | lower }}">
         <div class="sleek-panel">
-          <div class="row align-items-center">
+          <div class="row align-items-center h-100 flex-grow-1">
             <div class="col-lg-7">
-              <div class="img-container">
+              <div class="img-container mb-4 mb-lg-0">
                 <img src="{{ project.image_url }}" alt="{{ project.title }}">
               </div>
             </div>
-            <div class="col-lg-5 ps-lg-4 mt-4 mt-lg-0">
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <h4 class="text-white fw-bold mb-0 display-6">{{ project.title }}</h4>
-                <span class="badge bg-white text-black rounded-pill px-3" style="font-size: 0.6rem;">FEATURED</span>
+            <div class="col-lg-5 ps-lg-4 d-flex flex-column h-100 justify-content-center">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h2 class="text-white fw-bold mb-0 display-6" style="letter-spacing: -1px;">{{ project.title }}</h2>
+                <span class="badge bg-white text-black rounded-pill px-3 py-1 mt-2"
+                  style="font-size: 0.6rem; letter-spacing: 1px;">FEATURED</span>
               </div>
-              <p class="text-secondary small mb-4 lh-lg">{{ project.description | safe }}</p>
+              <p class="text-secondary mb-4" style="line-height: 1.7; font-size: 0.95rem;">{{ project.description | safe
+                }}</p>
               <div class="d-flex flex-wrap gap-2 mb-4">
                 {% for tech in project.tech_stack.split(', ') %}
                 <span class="tech-pill">{{ tech }}</span>
                 {% endfor %}
               </div>
-              <div class="d-flex flex-column gap-2">
+              <div class="mt-auto">
                 <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
-                  class="btn btn-sm btn-light rounded-pill fw-bold w-100 py-2">
+                  class="btn btn-light rounded-pill fw-bold w-100 py-3 text-uppercase"
+                  style="font-size: 0.8rem; letter-spacing: 1px;">
                   View Details <i class="fas fa-arrow-right ms-2"></i>
                 </a>
               </div>
@@ -156,28 +182,24 @@
       <div class="col-lg-4 col-md-6 project-item reveal-element" data-category="{{ project.category }}"
         data-title="{{ project.title | lower }}">
         <div class="sleek-panel">
-          <div class="row">
-            <div class="col-12">
-              <div class="img-container">
-                <img src="{{ project.image_url }}" alt="{{ project.title }}">
-              </div>
+          <div class="img-container mb-4">
+            <img src="{{ project.image_url }}" alt="{{ project.title }}">
+          </div>
+          <div class="d-flex flex-column flex-grow-1">
+            <h4 class="text-white fw-bold mb-3 h5">{{ project.title }}</h4>
+            <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ project.description | safe }}
+            </p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              {% for tech in project.tech_stack.split(', ') %}
+              <span class="tech-pill">{{ tech }}</span>
+              {% endfor %}
             </div>
-            <div class="col-12 mt-4">
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <h4 class="text-white fw-bold mb-0 h5">{{ project.title }}</h4>
-              </div>
-              <p class="text-secondary small mb-4 lh-lg">{{ project.description | safe }}</p>
-              <div class="d-flex flex-wrap gap-2 mb-4">
-                {% for tech in project.tech_stack.split(', ') %}
-                <span class="tech-pill">{{ tech }}</span>
-                {% endfor %}
-              </div>
-              <div class="d-flex flex-column gap-2">
-                <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
-                  class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2">
-                  View Details <i class="fas fa-arrow-right ms-2"></i>
-                </a>
-              </div>
+            <div class="mt-auto">
+              <a href="{{ url_for('projects.project_detail', slug=project.slug) }}"
+                class="btn btn-outline-light rounded-pill fw-bold w-100 py-2 text-uppercase"
+                style="font-size: 0.75rem; letter-spacing: 1px;">
+                View Details <i class="fas fa-arrow-right ms-2"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -193,13 +215,17 @@
     const projectItems = document.querySelectorAll('.project-item');
     const filterGallery = () => {
       const query = searchInput.value.toLowerCase();
-      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
       projectItems.forEach(item => {
-        const category = item.getAttribute('data-category');
-        const title = item.getAttribute('data-title');
+        const category = item.getAttribute('data-category').toLowerCase();
+        const title = item.getAttribute('data-title').toLowerCase();
         const matchesFilter = (activeFilter === 'all' || category.includes(activeFilter));
         const matchesSearch = title.includes(query);
-        item.classList.toggle('d-none', !(matchesFilter && matchesSearch));
+        if (matchesFilter && matchesSearch) {
+          item.classList.remove('d-none');
+        } else {
+          item.classList.add('d-none');
+        }
       });
     };
     searchInput.addEventListener('input', filterGallery);

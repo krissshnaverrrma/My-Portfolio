@@ -56,6 +56,11 @@
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
      }
 
+     .sleek-panel:hover {
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+     }
+
      .timeline-container {
           position: relative;
           padding-left: 2rem;
@@ -92,6 +97,12 @@
           box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.6);
      }
 
+     .timeline-dot.future {
+          background: transparent;
+          border: 2px solid rgba(255, 255, 255, 0.5);
+          box-shadow: none;
+     }
+
      .timeline-card {
           background: rgba(255, 255, 255, 0.02);
           border: 1px solid rgba(255, 255, 255, 0.03);
@@ -113,6 +124,12 @@
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          transition: transform 0.3s ease;
+     }
+
+     .service-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.04);
      }
 
      .service-icon-wrapper {
@@ -138,8 +155,22 @@
           opacity: 1;
           transform: translateY(0);
      }
-</style>
 
+     .stat-box {
+          text-align: center;
+          padding: 1rem;
+     }
+
+     .stat-number {
+          font-size: 3rem;
+          font-weight: 900;
+          background: linear-gradient(135deg, #fff, #888);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          line-height: 1;
+          margin-bottom: 0.5rem;
+     }
+</style>
 <div class="about-wrapper d-flex flex-column align-items-center">
      <div class="content-layer p-4 w-100" style="max-width: 1200px; padding-top: 8rem !important;">
           <div class="text-center mb-5 reveal-element">
@@ -150,14 +181,42 @@
                          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Identity & Vision</span>
                </div>
                <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Architecting <span
-                         style="color: rgba(255,255,255,0.4);">Ideas.</span></h1>
+                         style="color: rgba(255,255,255,0.4);">Ideas</span></h1>
                <p class="text-secondary mx-auto"
                     style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; font-weight: 300;">
                     {{ user_profile.about_text }}
                </p>
           </div>
-          <div class="row g-4 mt-4">
-               <div class="col-lg-5 d-flex flex-column reveal-element" style="transition-delay: 0.1s;">
+          <div class="row g-4 mt-2 mb-4 reveal-element">
+               <div class="col-12">
+                    <div class="sleek-panel py-4">
+                         <div class="d-flex justify-content-around flex-wrap gap-4">
+                              <div class="stat-box">
+                                   <div class="stat-number counter" data-target="{{ stats.projects_completed }}">0</div>
+                                   <div class="text-secondary small text-uppercase fw-bold"
+                                        style="letter-spacing: 1px;">Projects Completed</div>
+                              </div>
+                              <div class="stat-box">
+                                   <div class="stat-number counter" data-target="{{ stats.certifications }}">0</div>
+                                   <div class="text-secondary small text-uppercase fw-bold"
+                                        style="letter-spacing: 1px;">Certifications</div>
+                              </div>
+                              <div class="stat-box">
+                                   <div class="stat-number counter" data-target="{{ stats.commits_made }}">0</div>
+                                   <div class="text-secondary small text-uppercase fw-bold"
+                                        style="letter-spacing: 1px;">Commits Made</div>
+                              </div>
+                              <div class="stat-box">
+                                   <div class="stat-number counter" data-target="{{ stats.cups_of_coffee }}">0</div>
+                                   <div class="text-secondary small text-uppercase fw-bold"
+                                        style="letter-spacing: 1px;">Cups of Coffee</div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row g-4 mt-2">
+               <div class="col-lg-6 d-flex flex-column reveal-element" style="transition-delay: 0.1s;">
                     <div class="sleek-panel">
                          <div class="d-flex align-items-center mb-5 gap-3">
                               <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
@@ -176,8 +235,8 @@
                                    <div class="timeline-card mt-2">
                                         <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                                              <h6 class="text-white fw-bold mb-0 lh-base">{{ item.title }}</h6>
-                                             <span class="badge border border-success text-success bg-transparent"
-                                                  style="font-size: 0.65rem;">{{ item.status }}</span>
+                                             <span class="badge border border-dark text-dark bg-transparent"
+                                                  style="font-size: 0.65rem;">{{ item.status_badge }}</span>
                                         </div>
                                         <p class="text-white small mb-2 opacity-50 fw-semibold"><i
                                                   class="fas fa-university me-2"></i>{{ item.subtitle }}</p>
@@ -189,7 +248,33 @@
                          </div>
                     </div>
                </div>
-               <div class="col-lg-7 d-flex flex-column reveal-element" style="transition-delay: 0.2s;">
+               <div class="col-lg-6 d-flex flex-column reveal-element" style="transition-delay: 0.2s;">
+                    <div class="sleek-panel">
+                         <div class="d-flex align-items-center mb-5 gap-3">
+                              <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">The Dev
+                                   Journey</h5>
+                         </div>
+                         <div class="timeline-container">
+                              {% for step in dev_journey %}
+                              <div class="timeline-item">
+                                   <div class="timeline-dot {% if step.is_future %}future{% endif %}"></div>
+                                   <div class="mb-2">
+                                        <span class="badge text-white font-monospace"
+                                             style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px;">{{
+                                             step.year }}</span>
+                                   </div>
+                                   <h5 class="mb-2 text-white fw-bold mt-3">{{ step.title }}</h5>
+                                   <p class="text-secondary mb-0" style="font-size: 0.95rem; line-height: 1.7;">{{
+                                        step.description }}</p>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row g-4 mt-2 reveal-element" style="transition-delay: 0.25s;">
+               <div class="col-12">
                     <div class="sleek-panel">
                          <div class="d-flex align-items-center mb-5 gap-3">
                               <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
@@ -213,7 +298,7 @@
                     </div>
                </div>
           </div>
-          <div class="row g-4 mt-1 reveal-element" style="transition-delay: 0.3s;">
+          <div class="row g-4 mt-2 reveal-element" style="transition-delay: 0.3s;">
                <div class="col-12">
                     <div class="sleek-panel">
                          <div class="d-flex align-items-center mb-5 gap-3">
@@ -225,7 +310,7 @@
                               {% for interest in interests %}
                               <div class="col-md-6 col-lg-3">
                                    <div class="p-3 rounded d-flex align-items-center h-100"
-                                        style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                                        style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.3s;">
                                         <div class="me-3 text-white fs-4 d-flex align-items-center justify-content-center"
                                              style="min-width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
                                              <i class="{{ interest.icon_class }}"></i>
@@ -257,6 +342,33 @@
                el.style.transitionDelay = `${index * 0.1}s`;
                observer.observe(el);
           });
+          const counters = document.querySelectorAll('.counter');
+          let counted = false;
+          const counterObserver = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting && !counted) {
+                         counted = true;
+                         counters.forEach(counter => {
+                              const updateCount = () => {
+                                   const target = +counter.getAttribute('data-target');
+                                   const count = +counter.innerText;
+                                   const inc = target / 100;
+                                   if (count < target) {
+                                        counter.innerText = Math.ceil(count + inc);
+                                        setTimeout(updateCount, 20);
+                                   } else {
+                                        counter.innerText = target + (target > 1000 ? '+' : '');
+                                   }
+                              };
+                              updateCount();
+                         });
+                    }
+               });
+          }, { threshold: 0.5 });
+          const statsSection = document.querySelector('.stat-number');
+          if (statsSection) {
+               counterObserver.observe(document.querySelector('.stat-box').parentElement);
+          }
      });
 </script>
 {% endblock %}

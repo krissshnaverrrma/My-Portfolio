@@ -1,20 +1,18 @@
-from flask import Blueprint, render_template, abort
-from ..db.data import get_all_skills, get_timeline, get_skill_by_slug, get_user_profile, get_core_principles
+from flask import Blueprint, render_template
+from ..db.data import get_all_skills, get_skill_by_slug, get_core_principles, get_core_philosophy
 skills_bp = Blueprint('skills', __name__)
 
 
 @skills_bp.route('/skills')
 def skills():
-    all_skills = get_all_skills()
-    journey = get_timeline('journey')
-    user_profile = get_user_profile()
-    principles = get_core_principles()
+    skills_data = get_all_skills()
+    core_principles = get_core_principles()
+    core_philosophy = get_core_philosophy()
     return render_template(
         'skills.html',
-        skills=all_skills,
-        dev_journey=journey,
-        user_profile=user_profile,
-        core_principles=principles
+        skills=skills_data,
+        core_principles=core_principles,
+        core_philosophy=core_philosophy
     )
 
 

@@ -23,6 +23,12 @@
         "philosophy_title": "THE LAZY CODER PHILOSOPHY",
         "philosophy_text": "\"If a Task needs to be done Twice, it should be Automated. My Focus is Cutting Redundancy to build Self-Sustaining Frontend and Backend Systems.\""
     },
+    "stats": {
+        "projects_completed": 12,
+        "certifications": 12,
+        "commits_made": 1200,
+        "cups_of_coffee": 500
+    },
     "ai_config": {
         "fallback_models": [
             "gemini-1.5-flash",
@@ -168,6 +174,28 @@
             "icon_class": "fas fa-robot"
         }
     ],
+    "core_philosophy": [
+        {
+            "title": "Clean Architecture",
+            "description": "Writing code that is not just functional, but scalable, maintainable, and easy for other developers to understand.",
+            "icon_class": "fas fa-code"
+        },
+        {
+            "title": "Continuous Learning",
+            "description": "The tech landscape evolves rapidly. I dedicate time daily to learn new frameworks, tools, and best practices.",
+            "icon_class": "fas fa-lightbulb"
+        },
+        {
+            "title": "User-Centric Design",
+            "description": "Behind every line of code is a user. I focus on building intuitive and seamless experiences that solve real problems.",
+            "icon_class": "fas fa-users"
+        },
+        {
+            "title": "Automated Efficiency",
+            "description": "Embracing the 'Lazy Coder' mindset: if a task needs to be done twice, it gets automated to ensure long-term productivity.",
+            "icon_class": "fas fa-robot"
+        }
+    ],
     "skills": [
         {
             "category": "Languages",
@@ -205,6 +233,34 @@
             "description": "The ultimate tool for the 'Lazy Coder'. I write shell scripts to automate deployment, testing, and repetitive system tasks, letting the machine do the heavy lifting."
         },
         {
+            "category": "Frontend & UI/UX",
+            "name": "HTML5",
+            "slug": "html",
+            "icon": "fab fa-html5 text-danger",
+            "description": "The structural skeleton. I write semantic, accessible HTML to ensure applications are structured correctly for both users and search engine crawlers."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "CSS3",
+            "slug": "css",
+            "icon": "fab fa-css3-alt text-primary",
+            "description": "Beyond basic styling. I use modern CSS (Flexbox, Grid) to create responsive layouts that adapt to any device, preferring clean CSS variables over hacking frameworks."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Bootstrap",
+            "slug": "bootstrap",
+            "icon": "fab fa-bootstrap text-purple",
+            "description": "Rapid UI development. It allows me to prototype clean, consistent interfaces quickly, freeing up time to focus on complex backend logic."
+        },
+        {
+            "category": "Frontend & UI/UX",
+            "name": "Responsive Design",
+            "slug": "responsive-design",
+            "icon": "fas fa-mobile-alt text-light",
+            "description": "A non-negotiable standard. I ensure every application provides a seamless experience across 4K monitors, laptops, and mobile screens using fluid grids."
+        },
+        {
             "category": "Backend & Database",
             "name": "Flask",
             "slug": "flask",
@@ -240,34 +296,6 @@
             "description": "Bridging objects and tables. I use this ORM to write Pythonic database queries while maintaining the ability to drop down to raw SQL for performance optimization."
         },
         {
-            "category": "Frontend & UI/UX",
-            "name": "HTML5",
-            "slug": "html",
-            "icon": "fab fa-html5 text-danger",
-            "description": "The structural skeleton. I write semantic, accessible HTML to ensure applications are structured correctly for both users and search engine crawlers."
-        },
-        {
-            "category": "Frontend & UI/UX",
-            "name": "CSS3",
-            "slug": "css",
-            "icon": "fab fa-css3-alt text-primary",
-            "description": "Beyond basic styling. I use modern CSS (Flexbox, Grid) to create responsive layouts that adapt to any device, preferring clean CSS variables over hacking frameworks."
-        },
-        {
-            "category": "Frontend & UI/UX",
-            "name": "Bootstrap",
-            "slug": "bootstrap",
-            "icon": "fab fa-bootstrap text-purple",
-            "description": "Rapid UI development. It allows me to prototype clean, consistent interfaces quickly, freeing up time to focus on complex backend logic."
-        },
-        {
-            "category": "Frontend & UI/UX",
-            "name": "Responsive Design",
-            "slug": "responsive-design",
-            "icon": "fas fa-mobile-alt text-light",
-            "description": "A non-negotiable standard. I ensure every application provides a seamless experience across 4K monitors, laptops, and mobile screens using fluid grids."
-        },
-        {
             "category": "DevOps & Tools",
             "name": "Git",
             "slug": "git",
@@ -301,6 +329,27 @@
             "slug": "render-vercel",
             "icon": "fas fa-cloud-upload-alt text-primary",
             "description": "My deployment platforms. They allow me to automate the DevOps pipeline, pushing code to live environments instantly so I can focus on development."
+        },
+        {
+            "category": "AI & Automation",
+            "name": "Generative AI",
+            "slug": "generative-ai",
+            "icon": "fas fa-brain text-purple",
+            "description": "Integrating advanced LLMs (like Groq and Gemini) via API to build dynamic, self-generating content engines and smart applications."
+        },
+        {
+            "category": "AI & Automation",
+            "name": "Automation Scripts",
+            "slug": "automation-scripts",
+            "icon": "fas fa-robot text-success",
+            "description": "The heart of the 'Lazy Coder' philosophy. Writing automated Python and Shell scripts to handle repetitive system tasks and deployments."
+        },
+        {
+            "category": "AI & Automation",
+            "name": "Ethical Hacking",
+            "slug": "ethical-hacking",
+            "icon": "fas fa-user-secret text-danger",
+            "description": "Applying penetration testing concepts and Kali Linux to understand system vulnerabilities, ensuring backend architectures are secure."
         },
         {
             "category": "Methodologies",
@@ -438,7 +487,7 @@
             "is_featured": false
         },
         {
-            "title": "Dual Clock",
+            "title": "Dual Clock App",
             "slug": "dual-clock-python",
             "category": "python",
             "image_url": "/static/assets/projects/clock.jpeg",
@@ -500,7 +549,7 @@
     ],
     "blog_posts": [
         {
-            "title": "Fetching the Sky: Weather Dashboard",
+            "title": "Live Weather Dashboard",
             "slug": "weather-dashboard-api",
             "category": "Web / API",
             "image_url": "/static/assets/blogs/weather_app.jpg",
@@ -509,7 +558,7 @@
             "is_featured": true
         },
         {
-            "title": "Quote Studio: AI Meets Minimalism",
+            "title": "Quote Studio AI",
             "slug": "quote-studio-ai",
             "category": "Full Stack / AI",
             "image_url": "/static/assets/blogs/quoto_studio.jpg",
@@ -518,7 +567,7 @@
             "is_featured": false
         },
         {
-            "title": "Type Master: AI Meets Minimalism",
+            "title": "Type Master AI",
             "slug": "type-master-ai",
             "category": "Full Stack / AI",
             "image_url": "/static/assets/blogs/type_master.jpg",
@@ -527,7 +576,7 @@
             "is_featured": false
         },
         {
-            "title": "Mastering Time: Digital Clock App",
+            "title": "Digital Clock App",
             "slug": "digital-clock-app",
             "category": "Utility / GUI",
             "image_url": "/static/assets/blogs/clock.jpeg",
@@ -536,7 +585,7 @@
             "is_featured": false
         },
         {
-            "title": "Physics in a Loop: 2D Table Tennis",
+            "title": "2D Table Tennis",
             "slug": "table-tennis-2d",
             "category": "Game Dev",
             "image_url": "/static/assets/blogs/table_tennis.jpeg",
@@ -545,21 +594,21 @@
             "is_featured": false
         },
         {
-            "title": "Automating Academics: The Grading System",
-            "slug": "grading-system-c",
-            "category": "C / System",
-            "image_url": "/static/assets/blogs/grading_system.jpg",
-            "summary": "My first foray into data persistence. A C-based tool to automate GPA calculations and student record management using low-level file handling.",
-            "content": "<p class='lead text-light'>Why calculate grades manually when a loop can do it for you? This project was born out of a refusal to do repetitive math.</p><h3 class='text-white mt-4'>The Architecture</h3><p>Built entirely in C, this system uses <code>structs</code> to define student data and effectively manages memory to store records. The biggest challenge wasn't the math—it was the <strong>file handling</strong>. Implementing <code>fwrite</code> and <code>fread</code> operations allowed me to create a persistent database without actually using SQL.</p><h3 class='text-white mt-4'>Key Takeaway</h3><p>It taught me that data is just bytes. Whether it's a text file or a complex database, the principle remains the same: structure your data correctly, and retrieval becomes instant.</p>",
-            "is_featured": false
-        },
-        {
-            "title": "Console UX: Modular Quiz Engine",
+            "title": "Console Quiz System",
             "slug": "modular-quiz-game",
             "category": "C++ / Logic",
             "image_url": "/static/assets/blogs/quize_game.jpg",
             "summary": "A C++ console application that separates game logic from data. It demonstrates control flow, input validation, and the illusion of choice.",
             "content": "<p class='lead text-light'>A console window doesn't have to be boring. This project focuses on the user experience within a text-based environment.</p><h3 class='text-white mt-4'>Modular Design</h3><p>Spaghetti code is the enemy. I designed this quiz engine to be modular. The 'Question Bank' is separated from the 'Scoring Logic'. This means adding a new question doesn't require rewriting the main loop.</p><h3 class='text-white mt-4'>The Logic</h3><p>Using complex <code>switch-case</code> structures and input validation loops, the system ensures the game never crashes, even if the user tries to break it. It's a lesson in defensive programming.</p>",
+            "is_featured": false
+        },
+        {
+            "title": "Student Grading System",
+            "slug": "grading-system-c",
+            "category": "C / System",
+            "image_url": "/static/assets/blogs/grading_system.jpg",
+            "summary": "My first foray into data persistence. A C-based tool to automate GPA calculations and student record management using low-level file handling.",
+            "content": "<p class='lead text-light'>Why calculate grades manually when a loop can do it for you? This project was born out of a refusal to do repetitive math.</p><h3 class='text-white mt-4'>The Architecture</h3><p>Built entirely in C, this system uses <code>structs</code> to define student data and effectively manages memory to store records. The biggest challenge wasn't the math—it was the <strong>file handling</strong>. Implementing <code>fwrite</code> and <code>fread</code> operations allowed me to create a persistent database without actually using SQL.</p><h3 class='text-white mt-4'>Key Takeaway</h3><p>It taught me that data is just bytes. Whether it's a text file or a complex database, the principle remains the same: structure your data correctly, and retrieval becomes instant.</p>",
             "is_featured": false
         }
     ],

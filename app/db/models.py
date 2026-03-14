@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import String, Text, Boolean, ForeignKey, DateTime
+from sqlalchemy import String, Text, Boolean, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from .database import Base
@@ -97,8 +97,25 @@ class Interest(Base):
     icon_class: Mapped[str] = mapped_column(String(100))
 
 
+class Stat(Base):
+    __tablename__ = 'stats'
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    projects_completed: Mapped[int] = mapped_column(Integer, default=0)
+    certifications: Mapped[int] = mapped_column(Integer, default=0)
+    commits_made: Mapped[int] = mapped_column(Integer, default=0)
+    cups_of_coffee: Mapped[int] = mapped_column(Integer, default=0)
+
+
 class CorePrinciple(Base):
     __tablename__ = 'core_principles'
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    title: Mapped[str] = mapped_column(String(150))
+    description: Mapped[str] = mapped_column(Text)
+    icon_class: Mapped[str] = mapped_column(String(100))
+
+
+class CorePhilosophy(Base):
+    __tablename__ = 'core_philosophies'
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     title: Mapped[str] = mapped_column(String(150))
     description: Mapped[str] = mapped_column(Text)

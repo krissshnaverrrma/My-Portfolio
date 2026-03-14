@@ -21,10 +21,14 @@
         padding: 2rem;
         height: 100%;
         transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
     }
 
     .sleek-panel:hover {
         border-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .search-wrapper {
@@ -43,6 +47,12 @@
         transition: all 0.3s ease;
     }
 
+    .blog-search:focus {
+        border-color: rgba(255, 255, 255, 0.3);
+        outline: none;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
     .filter-btn {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -59,11 +69,17 @@
         font-weight: bold;
     }
 
+    .filter-btn:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
     .img-container {
         border-radius: 16px;
         overflow: hidden;
         position: relative;
         aspect-ratio: 16/9;
+        width: 100%;
     }
 
     .img-container img {
@@ -77,6 +93,65 @@
     .sleek-panel:hover .img-container img {
         transform: scale(1.05);
         opacity: 1;
+    }
+
+    .tech-pill {
+        font-size: 0.65rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 14px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.8);
+        font-family: monospace;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .btn-card-solid {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        border-radius: 50px;
+        padding: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-card-solid:hover {
+        background: transparent;
+        color: #ffffff;
+    }
+
+    .btn-card-action {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50px;
+        padding: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-card-action:hover {
+        background: #ffffff;
+        color: #000000;
     }
 
     .reveal-element {
@@ -93,10 +168,15 @@
 <div class="d-flex flex-column align-items-center"
     style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
     <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1400px;">
-        <div class="text-center mb-4 reveal-element">
-            <h6 class="text-uppercase text-secondary fw-bold mb-2"
-                style="letter-spacing: 4px; font-size: 0.7rem; opacity: 0.6;">Thoughts & Documentation</h6>
-            <h1 class="display-4 fw-bold text-white mb-3">Blogs Archive</h1>
+        <div class="text-center mb-5 reveal-element">
+            <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-pen-nib text-white me-2" style="opacity: 0.7;"></i>
+                <span class="text-uppercase text-white fw-bold"
+                    style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Thoughts & Documentation</span>
+            </div>
+            <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Blogs <span
+                    style="color: rgba(255,255,255,0.4);">Archive</span></h1>
             <div class="search-wrapper">
                 <i class="fas fa-search"
                     style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
@@ -110,41 +190,45 @@
                 <button class="filter-btn" data-filter="Web">Web Tech</button>
             </div>
         </div>
-        <div class="row g-3" id="blog-grid">
+        <div class="row g-4" id="blog-grid">
             {% for post in posts if post.is_featured %}
-            <div class="col-lg-12 col-md-12 blog-item reveal-element" data-category="{{ post.category }}"
+            <div class="col-12 blog-item reveal-element" data-category="{{ post.category }}"
                 data-title="{{ post.title | lower }}">
-                <div class="sleek-panel d-flex flex-column h-100">
-                    <div class="row flex-grow-1 align-items-center">
+                <div class="sleek-panel">
+                    <div class="row flex-grow-1 align-items-center h-100">
                         <div class="col-lg-7">
                             {% if post.image_url %}
-                            <div class="img-container">
+                            <div class="img-container mb-4 mb-lg-0">
                                 <img src="{{ post.image_url }}" alt="{{ post.title }}">
                                 <span
-                                    class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3"
-                                    style="font-size: 0.6rem;">{{ post.category }}</span>
+                                    class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3 py-2"
+                                    style="font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;">{{ post.category
+                                    | upper }}</span>
                             </div>
                             {% endif %}
                         </div>
-                        <div class="col-lg-5 ps-lg-4 mt-4 mt-lg-0 d-flex flex-column flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <small class="text-secondary" style="font-size: 0.7rem;"><i
-                                        class="far fa-calendar-alt me-2"></i>{{ post.created_at.strftime('%b %d, %Y')
-                                    }}</small>
-                                <small class="text-secondary" style="font-size: 0.7rem;"><i
-                                        class="far fa-clock me-2"></i>4 min read</small>
+                        <div class="col-lg-5 ps-lg-4 d-flex flex-column h-100 justify-content-center">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="text-secondary d-flex align-items-center" style="font-size: 0.9rem;">
+                                    <i class="far fa-calendar-alt me-2"></i> {{ post.created_at.strftime('%b %d, %Y') }}
+                                </div>
+                                <span class="badge bg-white text-black rounded-pill px-3 py-1"
+                                    style="font-size: 0.6rem; letter-spacing: 1px;">FEATURED</span>
                             </div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h4 class="text-white fw-bold mb-0 display-6">{{ post.title }}</h4>
-                                <span class="badge bg-white text-black rounded-pill px-3 ms-2 mt-2"
-                                    style="font-size: 0.6rem;">FEATURED</span>
+                            <h2 class="text-white fw-bold mb-3 display-6" style="letter-spacing: -1px;">{{ post.title }}
+                            </h2>
+                            <p class="text-secondary mb-4 flex-grow-1" style="line-height: 1.7; font-size: 0.95rem;">{{
+                                post.summary | safe }}</p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="tech-pill">{{ post.category }}</span>
+                                <span class="tech-pill">Article</span>
+                                <span class="tech-pill"><i class="far fa-clock me-1"></i> 4m read</span>
                             </div>
-                            <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ post.summary |
-                                safe }}</p>
-                            <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}"
-                                class="btn btn-sm btn-light rounded-pill fw-bold w-100 py-2 mt-auto">
-                                Read Article <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
+                            <div class="mt-auto">
+                                <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}" class="btn-card-solid">
+                                    READ ARTICLE <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,34 +237,29 @@
             {% for post in posts if not post.is_featured %}
             <div class="col-lg-4 col-md-6 blog-item reveal-element" data-category="{{ post.category }}"
                 data-title="{{ post.title | lower }}">
-                <div class="sleek-panel d-flex flex-column h-100">
-                    <div class="row flex-grow-1">
-                        <div class="col-12">
-                            {% if post.image_url %}
-                            <div class="img-container">
-                                <img src="{{ post.image_url }}" alt="{{ post.title }}">
-                                <span
-                                    class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3"
-                                    style="font-size: 0.6rem;">{{ post.category }}</span>
-                            </div>
-                            {% endif %}
+                <div class="sleek-panel">
+                    {% if post.image_url %}
+                    <div class="img-container mb-4">
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}">
+                        <span
+                            class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3 py-1"
+                            style="font-size: 0.6rem; letter-spacing: 1px;">{{ post.category | upper }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex flex-column flex-grow-1">
+                        <div class="text-secondary d-flex align-items-center mb-3" style="font-size: 0.9rem;">
+                            <i class="far fa-calendar-alt me-2"></i> {{ post.created_at.strftime('%b %d, %Y') }}
                         </div>
-                        <div class="col-12 mt-4 d-flex flex-column flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <small class="text-secondary" style="font-size: 0.7rem;"><i
-                                        class="far fa-calendar-alt me-2"></i>{{ post.created_at.strftime('%b %d, %Y')
-                                    }}</small>
-                                <small class="text-secondary" style="font-size: 0.7rem;"><i
-                                        class="far fa-clock me-2"></i>4 min read</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h4 class="text-white fw-bold mb-0 h5">{{ post.title }}</h4>
-                            </div>
-                            <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ post.summary |
-                                safe }}</p>
-                            <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}"
-                                class="btn btn-sm btn-outline-light rounded-pill fw-bold w-100 py-2 mt-auto">
-                                Read Article <i class="fas fa-arrow-right ms-2"></i>
+                        <h4 class="text-white fw-bold mb-3 h5">{{ post.title }}</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ post.summary |
+                            safe }}</p>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="tech-pill">{{ post.category }}</span>
+                            <span class="tech-pill"><i class="far fa-clock me-1"></i> 4m read</span>
+                        </div>
+                        <div class="mt-auto">
+                            <a href="{{ url_for('blog.blog_detail', slug=post.slug) }}" class="btn-card-action">
+                                READ ARTICLE <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -203,7 +282,11 @@
                 const category = item.getAttribute('data-category').toLowerCase();
                 const matchesSearch = title.includes(query);
                 const matchesFilter = activeFilter === 'all' || category.includes(activeFilter);
-                item.classList.toggle('d-none', !(matchesSearch && matchesFilter));
+                if (matchesSearch && matchesFilter) {
+                    item.classList.remove('d-none');
+                } else {
+                    item.classList.add('d-none');
+                }
             });
         };
         searchInput.addEventListener('input', filterBlog);

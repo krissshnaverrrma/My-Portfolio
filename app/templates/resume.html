@@ -88,7 +88,6 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 24px;
         padding: 2.5rem;
-        height: 100%;
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
@@ -198,259 +197,296 @@
         transform: translateY(0);
     }
 
-    .btn-sleek {
-        display: inline-flex;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    .btn-print-center {
+        background: rgba(255, 255, 255, 0.05);
         color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 10px 24px;
         border-radius: 50px;
         text-decoration: none;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 1px;
         transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        text-transform: uppercase;
+        width: auto;
     }
 
-    .btn-sleek:hover {
-        background: rgba(255, 255, 255, 0.1);
+    .btn-print-center:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
         transform: translateY(-2px);
+        color: #fff;
     }
 </style>
 <div class="resume-wrapper">
     <div class="content-layer">
-        <div class="res-header-container reveal-element">
-            <div class="res-header-img-wrapper">
-                <img src="{{ user_profile.profile_image }}" alt="{{ user_profile.name }}" class="res-header-img">
-            </div>
-            <div class="res-header-info">
-                <h6 class="text-uppercase fw-bold mb-2"
-                    style="letter-spacing: 3px; color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Curriculum Vitae
-                </h6>
-                <h1 class="text-white mb-2" style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px;">{{
-                    user_profile.name }}</h1>
-                <p class="lead mb-2" style="font-size: 1.1rem; font-weight: 400; color: rgba(255, 255, 255, 0.8);">
-                    Computer Science Undergraduate | Full Stack Developer & AI Enthusiast</p>
-                <p class="text-secondary small mb-0" style="opacity: 0.8;">
-                    <i class="fas fa-map-marker-alt me-2 text-white"></i>{{ user_profile.location }}
-                </p>
+        <div class="text-center mb-5 reveal-element">
+            <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-file-alt text-white me-2" style="opacity: 0.7;"></i>
+                <span class="text-uppercase text-white fw-bold"
+                    style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Curriculum Vitae</span>
             </div>
         </div>
-        <div class="row g-4 mt-2">
-            <div class="col-lg-4 d-flex flex-column gap-4">
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.1s;">
-                    <div class="res-section-title"><i class="fas fa-address-card"></i> Contact Information</div>
-                    <div class="d-flex flex-column gap-3 mt-2">
-                        <a href="tel:{{ user_profile.contact_phone | replace(' ', '') }}"
-                            class="res-contact-link interactive">
-                            <i class="fas fa-phone"></i> {{ user_profile.contact_phone }}
-                        </a>
-                        <a href="mailto:{{ user_profile.contact_email }}" class="res-contact-link interactive">
-                            <i class="fas fa-envelope"></i> {{ user_profile.contact_email }}
-                        </a>
-                        <a href="https://github.com/{{ user_profile.github_username }}" target="_blank"
-                            class="res-contact-link interactive">
-                            <i class="fab fa-github"></i> github.com/{{ user_profile.github_username }}
-                        </a>
-                        <a href="{{ user_profile.linkedin_url }}" target="_blank" class="res-contact-link interactive">
-                            <i class="fab fa-linkedin"></i> linkedin.com/in/{{ user_profile.linkedin_username }}
-                        </a>
-                        <a href="{{ user_profile.whatsapp_url }}" target="_blank" class="res-contact-link interactive">
-                            <i class="fab fa-whatsapp"></i> {{ user_profile.whatsapp_url }}
-                        </a>
-                        <a href="{{ user_profile.telegram_url }}" target="_blank" class="res-contact-link interactive">
-                            <i class="fab fa-telegram"></i> {{ user_profile.telegram_url }}
-                        </a>
-                        <a href="{{ user_profile.instagram_url }}" target="_blank" class="res-contact-link interactive">
-                            <i class="fab fa-instagram"></i> {{ user_profile.instagram_url }}
-                        </a>
-                        <a href="{{ user_profile.facebook_url }}" target="_blank" class="res-contact-link interactive">
-                            <i class="fab fa-facebook"></i> {{ user_profile.facebook_url }}
-                        </a>
-                        <div class="res-contact-link">
-                            <i class="fas fa-map-marker-alt"></i> {{ user_profile.location }}
-                        </div>
-                    </div>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
-                    <div class="res-section-title"><i class="fas fa-code"></i>Technical Skills</div>
-                    {% set ns = namespace(categories=[]) %}
-                    {% for skill in skills %}
-                    {% if skill.category not in ns.categories %}
-                    {% set ns.categories = ns.categories + [skill.category] %}
-                    {% endif %}
-                    {% endfor %}
-                    {% for category in ns.categories %}
-                    <div class="mb-4">
-                        <div class="small fw-bold text-white mb-2 opacity-50 text-uppercase"
-                            style="letter-spacing: 1px;">{{ category }}</div>
-                        <div>
-                            {% for skill in skills %}
-                            {% if skill.category == category %}
-                            <span class="skill-tag"><i class="{{ skill.icon }} me-1"></i> {{ skill.name }}</span>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
-                    <div class="res-section-title"><i class="fas fa-bullseye"></i> Core Principles</div>
-                    <div class="d-flex flex-column gap-3">
-                        {% for principle in core_principles[:3] %}
-                        <div>
-                            <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
-                                <i class="{{ principle.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
-                                principle.title }}
-                            </h6>
-                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
-                                principle.description }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
-                    <div class="res-section-title"><i class="fas fa-heart"></i>My Interests</div>
-                    <div>
-                        {% for interest in interests %}
-                        <span class="skill-tag"><i class="{{ interest.icon_class }} me-1"></i> {{ interest.name
-                            }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
+        <div class="sleek-panel reveal-element mb-4" style="transition-delay: 0.1s; padding: 2rem; position: relative;">
+            <div class="d-print-none" style="position: absolute; top: 1.5rem; right: 1.5rem;">
+                <a href="{{ url_for('resume.resume_detail') }}" target="_blank" class="btn-print-center"
+                    style="font-size: 0.75rem; padding: 8px 16px;">
+                    <i class="fas fa-file-pdf me-2"></i> Download PDF RESUME VERSION
+                </a>
             </div>
-            <div class="col-lg-8 d-flex flex-column gap-4">
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.1s;">
-                    <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
-                    <p class="text-secondary mb-0" style="line-height: 1.8; font-size: 0.95rem;">
-                        {{ user_profile.about_text }}
+            <div class="res-header-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                <div class="res-header-img-wrapper">
+                    <img src="{{ user_profile.profile_image }}" alt="{{ user_profile.name }}" class="res-header-img">
+                </div>
+                <div class="res-header-info">
+                    <h1 class="text-white mb-2" style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px;">
+                        {{ user_profile.name }}
+                    </h1>
+                    <p class="lead mb-3" style="font-size: 1.1rem; font-weight: 400; color: rgba(255, 255, 255, 0.8);">
+                        Computer Science Undergraduate | Full Stack Developer & AI Enthusiast
                     </p>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
-                    <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
-                    <div class="timeline-container">
-                        {% for item in academic_timeline %}
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <h6 class="text-white fw-bold mb-1">{{ item.title }}</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="text-secondary small">{{ item.institution }}</span>
-                                <span class="badge border border-secondary text-secondary bg-transparent"
-                                    style="font-size: 0.65rem;">{{ item.year }}</span>
-                            </div>
-                            <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
-                                {{ item.description }}
-                            </p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
-                    <div class="res-section-title"><i class="fas fa-laptop-code"></i>Key Projects</div>
-                    <div class="timeline-container">
-                        {% for project in projects[:3] %}
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <h6 class="text-white fw-bold mb-0">
-                                    <a href="/project/{{ project.slug }}" class="text-decoration-none text-white"
-                                        style="transition: color 0.3s;"
-                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
-                                        onmouseout="this.style.color='#fff'">
-                                        {{ project.title }}
-                                        <i class="fas fa-external-link-alt ms-1"
-                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
-                                    </a>
-                                </h6>
-                                {% if project.github_url %}
-                                <a href="{{ project.github_url }}" target="_blank" class="small text-decoration-none"
-                                    style="color: rgba(255,255,255,0.4); transition: 0.3s;"
-                                    onmouseover="this.style.color='#fff'"
-                                    onmouseout="this.style.color='rgba(255,255,255,0.4)'">
-                                    <i class="fab fa-github me-1"></i>View Repository
-                                </a>
-                                {% endif %}
-                            </div>
-                            <div class="text-secondary small mb-2"
-                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
-                                {{ project.tech_stack | join(', ') }}
-                            </div>
-                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
-                                {{ project.description | striptags }}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
-                    <div class="res-section-title"><i class="fas fa-pen-nib"></i>Key Blog Posts</div>
-                    <div class="timeline-container">
-                        {% for blog in blog_posts[:3] %}
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <h6 class="text-white fw-bold mb-1">
-                                <a href="/blog/{{ blog.slug }}" class="text-decoration-none text-white"
-                                    style="transition: color 0.3s;"
-                                    onmouseover="this.style.color='rgba(255,255,255,0.7)'"
-                                    onmouseout="this.style.color='#fff'">
-                                    {{ blog.title }}
-                                    <i class="fas fa-external-link-alt ms-1"
-                                        style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
-                                </a>
-                            </h6>
-                            <div class="text-secondary small mb-2"
-                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
-                                {{ blog.category }}
-                            </div>
-                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
-                                {{ blog.summary | striptags }}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
-                    <div class="res-section-title"><i class="fas fa-certificate"></i>Key Certificates</div>
-                    <div class="timeline-container">
-                        {% for cert in certifications[:3] %}
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <h6 class="text-white fw-bold mb-0">
-                                    {% if cert.link %}
-                                    <a href="{{ cert.link }}" target="_blank" class="text-decoration-none text-white"
-                                        style="transition: color 0.3s;"
-                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
-                                        onmouseout="this.style.color='#fff'">
-                                        {{ cert.title }}
-                                        <i class="fas fa-external-link-alt ms-1"
-                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
-                                    </a>
-                                    {% else %}
-                                    {{ cert.title }}
-                                    {% endif %}
-                                </h6>
-                                <span class="badge border border-secondary text-secondary bg-transparent"
-                                    style="font-size: 0.65rem;">{{ cert.date[-4:] }}</span>
-                            </div>
-                            <div class="text-secondary small mb-2"
-                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
-                                {{ cert.issuer }}
-                            </div>
-                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
-                                {{ cert.description }}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="mt-5 text-end d-print-none">
-                        <a href="{{ url_for('resume.resume_detail') }}" target="_blank" class="btn-sleek">
-                            <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
-                        </a>
+                    <div class="mt-2">
+                        <span class="skill-tag"
+                            style="margin: 0; padding: 5px 14px; display: inline-flex; align-items: center; background: rgba(255, 255, 255, 0.05);">
+                            <i class="fas fa-map-marker-alt me-2" style="color: #fff; font-size: 0.8rem;"></i>
+                            {{ user_profile.location }}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row g-4 mt-2">
+        <div class="col-lg-4 d-flex flex-column gap-4">
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                <div class="res-section-title"><i class="fas fa-address-card"></i> Contact Information</div>
+                <div class="d-flex flex-column gap-3 mt-2">
+                    <a href="tel:{{ user_profile.contact_phone | replace(' ', '') }}"
+                        class="res-contact-link interactive">
+                        <i class="fas fa-phone"></i> {{ user_profile.contact_phone }}
+                    </a>
+                    <a href="mailto:{{ user_profile.contact_email }}" class="res-contact-link interactive">
+                        <i class="fas fa-envelope"></i> {{ user_profile.contact_email }}
+                    </a>
+                    <a href="https://github.com/{{ user_profile.github_username }}" target="_blank"
+                        class="res-contact-link interactive">
+                        <i class="fab fa-github"></i> github.com/{{ user_profile.github_username }}
+                    </a>
+                    <a href="{{ user_profile.linkedin_url }}" target="_blank" class="res-contact-link interactive">
+                        <i class="fab fa-linkedin"></i> linkedin.com/in/{{ user_profile.linkedin_username }}
+                    </a>
+                    <a href="{{ user_profile.whatsapp_url }}" target="_blank" class="res-contact-link interactive">
+                        <i class="fab fa-whatsapp"></i> {{ user_profile.whatsapp_url }}
+                    </a>
+                    <a href="{{ user_profile.telegram_url }}" target="_blank" class="res-contact-link interactive">
+                        <i class="fab fa-telegram"></i> {{ user_profile.telegram_url }}
+                    </a>
+                    <a href="{{ user_profile.instagram_url }}" target="_blank" class="res-contact-link interactive">
+                        <i class="fab fa-instagram"></i> {{ user_profile.instagram_url }}
+                    </a>
+                    <a href="{{ user_profile.facebook_url }}" target="_blank" class="res-contact-link interactive">
+                        <i class="fab fa-facebook"></i> {{ user_profile.facebook_url }}
+                    </a>
+                    <div class="res-contact-link">
+                        <i class="fas fa-map-marker-alt"></i> {{ user_profile.location }}
+                    </div>
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                <div class="res-section-title"><i class="fas fa-code"></i>Technical Skills</div>
+                {% set ns = namespace(categories=[]) %}
+                {% for skill in skills %}
+                {% if skill.category not in ns.categories %}
+                {% set ns.categories = ns.categories + [skill.category] %}
+                {% endif %}
+                {% endfor %}
+                {% for category in ns.categories %}
+                <div class="mb-4">
+                    <div class="small fw-bold text-white mb-2 opacity-50 text-uppercase" style="letter-spacing: 1px;">{{
+                        category }}</div>
+                    <div>
+                        {% for skill in skills %}
+                        {% if skill.category == category %}
+                        <span class="skill-tag"><i class="{{ skill.icon }} me-1"></i> {{ skill.name }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                <div class="res-section-title"><i class="fas fa-bullseye"></i> Core Principles</div>
+                <div class="d-flex flex-column gap-3">
+                    {% for principle in core_principles[:3] %}
+                    <div>
+                        <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
+                            <i class="{{ principle.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
+                            principle.title }}
+                        </h6>
+                        <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
+                            principle.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
+                <div class="res-section-title"><i class="fas fa-brain"></i> Core Philosophy</div>
+                <div class="d-flex flex-column gap-3">
+                    {% for philosophy in core_philosophy[:3] %}
+                    <div>
+                        <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
+                            <i class="{{ philosophy.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
+                            philosophy.title }}
+                        </h6>
+                        <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
+                            philosophy.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 d-flex flex-column gap-4">
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
+                <p class="text-secondary mb-0" style="line-height: 1.8; font-size: 0.95rem;">
+                    {{ user_profile.about_text }}
+                </p>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                <div class="timeline-container">
+                    {% for item in academic_timeline %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h6 class="text-white fw-bold mb-1">{{ item.title }}</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary small">{{ item.institution }}</span>
+                            <span class="badge border border-secondary text-secondary bg-transparent"
+                                style="font-size: 0.65rem;">{{ item.year }}</span>
+                        </div>
+                        <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            {{ item.description }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                <div class="res-section-title"><i class="fas fa-laptop-code"></i>Key Projects</div>
+                <div class="timeline-container">
+                    {% for project in projects[:3] %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <h6 class="text-white fw-bold mb-0">
+                                <a href="/project/{{ project.slug }}" class="text-decoration-none text-white"
+                                    style="transition: color 0.3s;"
+                                    onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                    onmouseout="this.style.color='#fff'">
+                                    {{ project.title }}
+                                    <i class="fas fa-external-link-alt ms-1"
+                                        style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                </a>
+                            </h6>
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="small text-decoration-none"
+                                style="color: rgba(255,255,255,0.4); transition: 0.3s;"
+                                onmouseover="this.style.color='#fff'"
+                                onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+                                <i class="fab fa-github me-1"></i>View Repository
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="text-secondary small mb-2"
+                            style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                            {{ project.tech_stack | join(', ') }}
+                        </div>
+                        <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            {{ project.description | striptags }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
+                <div class="res-section-title"><i class="fas fa-pen-nib"></i>Key Blog Posts</div>
+                <div class="timeline-container">
+                    {% for blog in blog_posts[:3] %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h6 class="text-white fw-bold mb-1">
+                            <a href="/blog/{{ blog.slug }}" class="text-decoration-none text-white"
+                                style="transition: color 0.3s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                onmouseout="this.style.color='#fff'">
+                                {{ blog.title }}
+                                <i class="fas fa-external-link-alt ms-1"
+                                    style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                            </a>
+                        </h6>
+                        <div class="text-secondary small mb-2"
+                            style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                            {{ blog.category }}
+                        </div>
+                        <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            {{ blog.summary | striptags }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.6s;">
+                <div class="res-section-title"><i class="fas fa-certificate"></i>Key Certificates</div>
+                <div class="timeline-container">
+                    {% for cert in certifications[:3] %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <h6 class="text-white fw-bold mb-0">
+                                {% if cert.link %}
+                                <a href="{{ cert.link }}" target="_blank" class="text-decoration-none text-white"
+                                    style="transition: color 0.3s;"
+                                    onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                    onmouseout="this.style.color='#fff'">
+                                    {{ cert.title }}
+                                    <i class="fas fa-external-link-alt ms-1"
+                                        style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                </a>
+                                {% else %}
+                                {{ cert.title }}
+                                {% endif %}
+                            </h6>
+                            <span class="badge border border-secondary text-secondary bg-transparent"
+                                style="font-size: 0.65rem;">{{ cert.date[-4:] }}</span>
+                        </div>
+                        <div class="text-secondary small mb-2"
+                            style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                            {{ cert.issuer }}
+                        </div>
+                        <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            {{ cert.description }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sleek-panel reveal-element" style="transition-delay: 0.7s;">
+                <div class="res-section-title"><i class="fas fa-heart"></i>My Interests</div>
+                <div class="d-flex flex-wrap">
+                    {% for interest in interests %}
+                    <span class="skill-tag"><i class="{{ interest.icon_class }} me-1"></i> {{ interest.name
+                        }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
