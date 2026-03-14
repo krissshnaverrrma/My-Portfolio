@@ -88,11 +88,6 @@ def get_all_skills() -> List[Skill]:
         return db.query(Skill).order_by(Skill.id.asc()).all()
 
 
-def get_skill_by_slug(slug: str) -> Optional[Skill]:
-    with SessionLocal() as db:
-        return db.query(Skill).filter(Skill.slug == slug).first()
-
-
 def get_timeline(event_type: str) -> List[TimelineEvent]:
     with SessionLocal() as db:
         return db.query(TimelineEvent).filter_by(type=event_type).order_by(TimelineEvent.year.desc()).all()
@@ -588,22 +583,16 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                     existing_cph[cp['title']].description = cp['description']
                     existing_cph[cp['title']].icon_class = cp['icon_class']
         if 'skills' in data:
-            existing_skills = {s.slug: s for s in db.query(Skill).all()}
+            existing_skills = {s.name: s for s in db.query(Skill).all()}
             for skill in data['skills']:
-                slug_val = skill.get('slug', skill['name'].lower().replace(
-                    ' ', '-').replace('.', '-').replace('/', '').replace('#', 'sharp'))
-                if slug_val not in existing_skills:
-                    desc_val = skill.get(
-                        'description', f"{skill['name']} is a key technology in my {skill['category']} stack.")
+                if skill['name'] not in existing_skills:
                     db.add(Skill(
                         category=skill['category'],
                         name=skill['name'],
-                        slug=slug_val,
-                        description=desc_val,
                         icon_class=skill.get('icon', skill.get('icon_class'))
                     ))
-                k_category = f"skill_{slug_val}"
-                k_info = f"Skill: {skill['name']} ({skill['category']}). Details: {skill.get('description', '')}"
+                k_category = f"skill_{skill['name'].lower().replace(' ', '_').replace('.', '_')}"
+                k_info = f"Skill: {skill['name']} ({skill['category']})."
                 if k_category in existing_knowledge:
                     if existing_knowledge[k_category].info != k_info:
                         existing_knowledge[k_category].info = k_info

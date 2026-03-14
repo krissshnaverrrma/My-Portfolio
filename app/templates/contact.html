@@ -41,25 +41,18 @@
           display: flex;
           align-items: center;
           gap: 1.5rem;
-          padding: 1.25rem;
-          border-radius: 16px;
+          padding: 0.8rem 1.25rem;
+          border-radius: 50px;
           background: rgba(255, 255, 255, 0.02);
           text-decoration: none;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           border: 1px solid rgba(255, 255, 255, 0.03);
-     }
-
-     .contact-link-item:hover {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.15);
-          transform: translateX(8px);
-          box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
+          color: white;
      }
 
      .icon-box {
           width: 50px;
           height: 50px;
-          border-radius: 14px;
+          border-radius: 50%;
           background: rgba(255, 255, 255, 0.05);
           display: flex;
           align-items: center;
@@ -67,12 +60,7 @@
           font-size: 1.2rem;
           color: white;
           border: 1px solid rgba(255, 255, 255, 0.05);
-          transition: all 0.4s ease;
-     }
-
-     .contact-link-item:hover .icon-box {
-          background: white;
-          color: black;
+          flex-shrink: 0;
      }
 
      .bento-item {
@@ -103,7 +91,7 @@
           background: rgba(0, 0, 0, 0.3);
           border: 1px solid rgba(255, 255, 255, 0.08);
           color: white;
-          padding: 1.5rem 1.25rem 0.75rem;
+          padding: 1.5rem 1.25rem 0.75rem 3.25rem;
           border-radius: 16px;
           width: 100%;
           transition: all 0.3s ease;
@@ -113,7 +101,7 @@
      .form-floating-custom label {
           position: absolute;
           top: 50%;
-          left: 1.25rem;
+          left: 3.25rem;
           transform: translateY(-50%);
           color: rgba(255, 255, 255, 0.4);
           pointer-events: none;
@@ -142,6 +130,27 @@
           font-weight: 600;
           letter-spacing: 1px;
           text-transform: uppercase;
+     }
+
+     .input-icon {
+          position: absolute;
+          left: 1.25rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 1rem;
+     }
+
+     .form-floating-custom textarea~.input-icon {
+          top: 1.5rem;
+          transform: translateY(-50%);
+     }
+
+     .sleek-input:focus~.input-icon,
+     .sleek-input:not(:placeholder-shown)~.input-icon {
+          color: white;
      }
 
      .btn-premium {
@@ -281,6 +290,7 @@
                                              <input type="text" name="name" id="name" class="sleek-input"
                                                   placeholder=" " required>
                                              <label for="name">Your Name</label>
+                                             <i class="fas fa-user input-icon"></i>
                                         </div>
                                    </div>
                                    <div class="col-md-6">
@@ -288,6 +298,7 @@
                                              <input type="email" name="email" id="email" class="sleek-input"
                                                   placeholder=" " required>
                                              <label for="email">Your Email</label>
+                                             <i class="fas fa-envelope input-icon"></i>
                                         </div>
                                    </div>
                               </div>
@@ -296,6 +307,7 @@
                                         <input type="text" name="subject" id="subject" class="sleek-input"
                                              placeholder=" ">
                                         <label for="subject">Subject Matter</label>
+                                        <i class="fas fa-tag input-icon"></i>
                                    </div>
                               </div>
                               <div class="flex-grow-1">
@@ -304,6 +316,7 @@
                                              style="min-height: 160px; resize: none;" placeholder=" "
                                              required></textarea>
                                         <label for="message">Your Message</label>
+                                        <i class="fas fa-comment-dots input-icon"></i>
                                    </div>
                               </div>
                               <button type="submit"

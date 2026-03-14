@@ -13,26 +13,9 @@
         display: none;
     }
 
-    #progress-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: transparent;
-        z-index: 9999;
-    }
-
-    #progress-bar {
-        height: 100%;
-        background: var(--primary-color);
-        width: 0%;
-        box-shadow: 0 0 10px var(--primary-color);
-    }
-
     .project-content {
         color: rgba(255, 255, 255, 0.85);
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         line-height: 1.9;
     }
 
@@ -40,8 +23,9 @@
     .project-content h3 {
         color: white;
         margin-top: 2.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
         font-weight: 700;
+        letter-spacing: -0.5px;
     }
 
     .project-content p {
@@ -49,133 +33,166 @@
     }
 
     .project-content blockquote {
-        border-left: 4px solid var(--primary-color);
-        padding: 1rem 2rem;
+        border-left: 4px solid var(--primary-color, #ffffff);
+        padding: 1.5rem 2rem;
         background: rgba(255, 255, 255, 0.03);
         font-style: italic;
-        border-radius: 0 12px 12px 0;
+        border-radius: 0 16px 16px 0;
     }
 
-    .project-content ul {
-        margin-bottom: 1.5rem;
-        padding-left: 1.5rem;
+    .sleek-panel {
+        background: rgba(15, 15, 15, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 24px;
+        padding: 2.5rem;
+        transition: all 0.4s ease;
     }
 
-    .project-content li {
-        margin-bottom: 0.5rem;
+    .sleek-panel:hover {
+        border-color: rgba(255, 255, 255, 0.1);
     }
 
-    .author-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 2rem;
-    }
-
-    .tech-pill-large {
+    .tech-pill {
+        font-size: 0.8rem;
         background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 8px 16px;
-        border-radius: 50px;
-        color: var(--primary-color);
-        font-size: 0.9rem;
-        font-weight: 600;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-family: monospace;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         display: inline-block;
         margin-right: 8px;
         margin-bottom: 8px;
     }
+
+    .btn-action {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn-action:hover {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .btn-solid {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn-solid:hover {
+        background: transparent;
+        color: #ffffff;
+    }
 </style>
-<div id="progress-container">
-    <div id="progress-bar"></div>
-</div>
 <div class="d-flex flex-column align-items-center"
-    style="min-height: 100vh; width: 100vw; margin: 0; background-color: #050505;">
+    style="min-height: 100vh; width: 100vw; margin: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
     <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1000px;">
         <div class="mb-5">
-            <a href="{{ url_for('projects.projects') }}" class="btn-glass px-4 py-2 small">
-                <i class="fas fa-arrow-left me-2"></i> Back to Projects Archive
+            <a href="{{ url_for('projects.projects') }}" class="btn-action">
+                <i class="fas fa-arrow-left me-2"></i> Back to Projects
             </a>
         </div>
         <header class="mb-5">
-            <div class="d-flex gap-2 mb-3">
-                <span class="badge bg-primary text-black">{{ project.category }}</span>
-                {% if project.year %}
-                <span class="text-secondary small">{{ project.year }}</span>
-                {% endif %}
+            <div class="d-flex gap-3 align-items-center mb-4">
+                <span class="tech-pill" style="background: rgba(255,255,255,0.1);">{{ project.category | upper }}</span>
+                <span class="text-secondary small" style="font-family: monospace;">
+                    <i class="far fa-clock me-1"></i> 5 min read
+                </span>
             </div>
-            <h1 class="display-3 fw-bold text-white mb-4">{{ project.title }}</h1>
-            <div class="d-flex align-items-center gap-4 text-secondary mb-4">
-                <div class="d-flex align-items-center gap-2">
-                    <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" class="rounded-circle"
-                        style="width: 35px; height: 35px; border: 1px solid var(--primary-color);">
-                    <span class="small fw-bold text-white">{{ profile.name }}</span>
+            <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">{{ project.title }}</h1>
+            <div class="d-flex align-items-center gap-3 mb-5">
+                <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" class="rounded-circle"
+                    style="width: 45px; height: 45px; border: 2px solid rgba(255,255,255,0.1);">
+                <div>
+                    <div class="small fw-bold text-white" style="letter-spacing: 0.5px;">{{ profile.name }}</div>
+                    <div class="small text-secondary" style="font-size: 0.75rem;">Developer</div>
                 </div>
             </div>
             <div class="mb-4">
                 {% set tech_list = project.tech_stack.split(',') %}
                 {% for tech in tech_list %}
-                <span class="tech-pill-large">{{ tech.strip() }}</span>
+                <span class="tech-pill">{{ tech.strip() }}</span>
                 {% endfor %}
             </div>
-            <div class="d-flex gap-3">
+            <div class="d-flex flex-wrap gap-3 mt-4">
                 {% if project.github_url %}
-                <a href="{{ project.github_url }}" target="_blank" class="btn-glass px-4 py-2">
-                    <i class="fab fa-github me-2"></i> View Code
+                <a href="{{ project.github_url }}" target="_blank" class="btn-action">
+                    <i class="fab fa-github me-2 fs-6"></i> Source Code
                 </a>
                 {% endif %}
                 {% if project.demo_url %}
-                <a href="{{ project.demo_url }}" target="_blank" class="btn-glass px-4 py-2">
-                    <i class="fas fa-external-link-alt me-2"></i> Live Demo
+                <a href="{{ project.demo_url }}" target="_blank" class="btn-solid">
+                    LIVE DEMO <i class="fas fa-external-link-alt ms-2"></i>
                 </a>
                 {% endif %}
             </div>
         </header>
         {% if project.image_url %}
-        <div class="mb-5 rounded-4 overflow-hidden border border-secondary">
-            <img src="{{ project.image_url }}" alt="{{ project.title }}" class="w-100"
-                style="max-height: 500px; object-fit: cover;">
+        <div class="mb-5 sleek-panel p-2 p-md-3">
+            <div class="rounded-4 overflow-hidden" style="border-radius: 16px;">
+                <img src="{{ project.image_url }}" alt="{{ project.title }}" class="w-100"
+                    style="max-height: 500px; object-fit: cover;">
+            </div>
         </div>
         {% endif %}
         <article class="project-content mb-5">
             {% if project.content %}
             {{ project.content | safe }}
             {% else %}
-            <p class="lead">{{ project.description }}</p>
-            <div class="alert alert-dark mt-5 border border-secondary">
-                <i class="fas fa-info-circle me-2 text-primary"></i>
-                Detailed case study for this project is coming soon.
-                Check out the source code on GitHub for implementation details.
+            <p class="lead" style="color: rgba(255,255,255,0.7);">{{ project.description }}</p>
+            <div class="sleek-panel mt-5 p-4 d-flex align-items-center">
+                <i class="fas fa-info-circle fs-3 me-3 text-white" style="opacity: 0.5;"></i>
+                <span style="color: rgba(255,255,255,0.8);">Detailed case study for this project is coming soon.
+                    Check out the source code on GitHub for implementation details.</span>
             </div>
             {% endif %}
         </article>
-        <div class="author-card d-flex flex-column flex-md-row align-items-center gap-4 mt-5">
-            <img src="{{ url_for('static', filename='assets/profile/profile.jpg') }}" class="rounded-circle"
-                style="width: 100px; height: 100px; border: 2px solid var(--primary-color);">
+        <div class="sleek-panel d-flex flex-column flex-md-row align-items-center gap-4 mt-5">
+            <img src="{{ profile.profile_image }}" class="rounded-circle"
+                style="width: 100px; height: 100px; border: 2px solid rgba(255,255,255,0.2);">
             <div>
-                <h5 class="text-white fw-bold mb-2">Developed by Krishna Verma</h5>
-                <p class="text-secondary small mb-3">A Computer Science Undergraduate with a "Lazy Coder"
-                    Mentality—Automating the Repetitive to Focus on the Innovative.</p>
+                <h5 class="text-white fw-bold mb-2">Developed by {{ profile.name }}</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.6;">{{ profile.bio or 'A Computer Science
+                    Undergraduate with a "Lazy Coder" Mentality—Automating the Repetitive to Focus on the Innovative.'
+                    }}</p>
                 <div class="d-flex gap-3">
-                    <a href="https://github.com/{{ profile.github_username }}" class="text-white"><i
-                            class="fab fa-github fs-5"></i></a>
-                    <a href="{{ profile.linkedin_url }}" class="text-primary"><i class="fab fa-linkedin fs-5"></i></a>
+                    <a href="https://github.com/{{ profile.github_username }}" class="text-white"
+                        style="opacity: 0.7;"><i class="fab fa-github fs-4"></i></a>
+                    <a href="{{ profile.linkedin_url }}" class="text-white" style="opacity: 0.7;"><i
+                            class="fab fa-linkedin fs-4"></i></a>
                 </div>
             </div>
         </div>
-        <div class="mt-5 pt-5 border-top border-secondary text-center">
-            <h4 class="text-white fw-bold mb-4">Interested in this Tech Stack?</h4>
-            <a href="{{ url_for('contact.contact') }}" class="btn-glass px-5 py-3">
-                Let's Discuss <i class="fas fa-comment-dots ms-2"></i>
+        <div class="mt-5 pt-5 text-center">
+            <h4 class="text-white fw-bold mb-4">Want to Read My Latest Thoughts?</h4>
+            <a href="{{ url_for('blog.blogs') }}" class="btn-solid">
+                Explore My Blogs <i class="fas fa-pen-nib ms-2"></i>
             </a>
         </div>
     </div>
 </div>
-<script>
-    window.onscroll = function () {
-        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        let scrolled = (winScroll / height) * 100;
-        document.getElementById("progress-bar").style.width = scrolled + "%";
-    };
-</script>
 {% endblock %}

@@ -1,6 +1,6 @@
 import os
 import logging
-from .config.config import get_config
+from ..config.config import get_config
 logger = logging.getLogger(__name__)
 
 

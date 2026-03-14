@@ -64,8 +64,6 @@ class Skill(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     category: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
-    slug: Mapped[str] = mapped_column(String(150), unique=True, index=True)
-    description: Mapped[str] = mapped_column(Text)
     icon_class: Mapped[str] = mapped_column(String(100))
 
 

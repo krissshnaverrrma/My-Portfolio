@@ -200,184 +200,132 @@
         {
             "category": "Languages",
             "name": "Python",
-            "slug": "python",
-            "icon": "fab fa-python text-warning",
-            "description": "The core of my automation arsenal. I use Python for everything from rapid scripting to building complex, scalable backend systems with Flask. Its readability allows me to focus on logic over syntax."
+            "icon": "fab fa-python text-warning"
         },
         {
             "category": "Languages",
             "name": "C/C++",
-            "slug": "c-cpp",
-            "icon": "fas fa-code text-primary",
-            "description": "Where it all began. I utilize C++ for competitive programming and low-level memory management, ensuring my high-level architecture is grounded in performance efficiency."
+            "icon": "fas fa-code text-primary"
         },
         {
             "category": "Languages",
             "name": "JavaScript",
-            "slug": "javascript",
-            "icon": "fab fa-js text-warning",
-            "description": "Essential for interactive frontends. I leverage ES6+ features to handle asynchronous API calls and create dynamic user interfaces without over-relying on heavy frameworks."
+            "icon": "fab fa-js text-warning"
         },
         {
             "category": "Languages",
             "name": "Java",
-            "slug": "java",
-            "icon": "fab fa-java text-danger",
-            "description": "My gateway to strict OOP principles. I use Java to understand enterprise-level architecture and design patterns, applying its strong typing discipline across my other work."
+            "icon": "fab fa-java text-danger"
         },
         {
             "category": "Languages",
             "name": "Bash/Shell",
-            "slug": "bash-shell",
-            "icon": "fas fa-terminal text-light",
-            "description": "The ultimate tool for the 'Lazy Coder'. I write shell scripts to automate deployment, testing, and repetitive system tasks, letting the machine do the heavy lifting."
+            "icon": "fas fa-terminal text-light"
         },
         {
             "category": "Frontend & UI/UX",
             "name": "HTML5",
-            "slug": "html",
-            "icon": "fab fa-html5 text-danger",
-            "description": "The structural skeleton. I write semantic, accessible HTML to ensure applications are structured correctly for both users and search engine crawlers."
+            "icon": "fab fa-html5 text-danger"
         },
         {
             "category": "Frontend & UI/UX",
             "name": "CSS3",
-            "slug": "css",
-            "icon": "fab fa-css3-alt text-primary",
-            "description": "Beyond basic styling. I use modern CSS (Flexbox, Grid) to create responsive layouts that adapt to any device, preferring clean CSS variables over hacking frameworks."
+            "icon": "fab fa-css3-alt text-primary"
         },
         {
             "category": "Frontend & UI/UX",
             "name": "Bootstrap",
-            "slug": "bootstrap",
-            "icon": "fab fa-bootstrap text-purple",
-            "description": "Rapid UI development. It allows me to prototype clean, consistent interfaces quickly, freeing up time to focus on complex backend logic."
+            "icon": "fab fa-bootstrap text-purple"
         },
         {
             "category": "Frontend & UI/UX",
             "name": "Responsive Design",
-            "slug": "responsive-design",
-            "icon": "fas fa-mobile-alt text-light",
-            "description": "A non-negotiable standard. I ensure every application provides a seamless experience across 4K monitors, laptops, and mobile screens using fluid grids."
+            "icon": "fas fa-mobile-alt text-light"
         },
         {
             "category": "Backend & Database",
             "name": "Flask",
-            "slug": "flask",
-            "icon": "fas fa-flask text-white",
-            "description": "My preferred micro-framework. It provides the flexibility to structure applications modularly, allowing me to build lightweight, high-performance APIs using Blueprints."
+            "icon": "fas fa-flask text-white"
         },
         {
             "category": "Backend & Database",
             "name": "Django",
-            "slug": "django",
-            "icon": "fab fa-python text-warning",
-            "description": "For 'batteries-included' solutions. I leverage Django's robust ORM and security features to rapid-prototype complex applications where speed-to-market is paramount."
+            "icon": "fab fa-python text-warning"
         },
         {
             "category": "Backend & Database",
             "name": "REST APIs",
-            "slug": "rest-apis",
-            "icon": "fas fa-server text-success",
-            "description": "The language of the web. I design clean, stateless, and documented APIs that ensure seamless, efficient communication between client and server architectures."
+            "icon": "fas fa-server text-success"
         },
         {
             "category": "Backend & Database",
             "name": "PostgreSQL",
-            "slug": "postgresql",
-            "icon": "fas fa-database text-info",
-            "description": "My relational database of choice. I rely on its ACID compliance and advanced JSON capabilities to maintain strict data integrity in complex backend systems."
+            "icon": "fas fa-database text-info"
         },
         {
             "category": "Backend & Database",
             "name": "SQLAlchemy",
-            "slug": "sqlalchemy",
-            "icon": "fas fa-layer-group text-light",
-            "description": "Bridging objects and tables. I use this ORM to write Pythonic database queries while maintaining the ability to drop down to raw SQL for performance optimization."
+            "icon": "fas fa-layer-group text-light"
         },
         {
             "category": "DevOps & Tools",
             "name": "Git",
-            "slug": "git",
-            "icon": "fab fa-git-alt text-danger",
-            "description": "My safety net. I use Git for version control to maintain a clean history of my development process, enabling fearless experimentation."
+            "icon": "fab fa-git-alt text-danger"
         },
         {
             "category": "DevOps & Tools",
             "name": "GitHub",
-            "slug": "github",
-            "icon": "fab fa-github text-white",
-            "description": "My collaboration hub. It handles CI/CD pipelines, hosts my open-source contributions, and serves as the central repository for my professional portfolio."
+            "icon": "fab fa-github text-white"
         },
         {
             "category": "DevOps & Tools",
             "name": "VS Code",
-            "slug": "vs-code",
-            "icon": "fas fa-terminal text-info",
-            "description": "My IDE of choice. Customized with extensions for Python and C++ to minimize friction and maximize coding velocity."
+            "icon": "fas fa-terminal text-info"
         },
         {
             "category": "DevOps & Tools",
             "name": "Linux",
-            "slug": "linux",
-            "icon": "fab fa-linux text-warning",
-            "description": "My native environment. I prefer the terminal over GUIs, using Linux to mirror production environments and ensure deployment compatibility."
+            "icon": "fab fa-linux text-warning"
         },
         {
             "category": "DevOps & Tools",
             "name": "Render/Vercel",
-            "slug": "render-vercel",
-            "icon": "fas fa-cloud-upload-alt text-primary",
-            "description": "My deployment platforms. They allow me to automate the DevOps pipeline, pushing code to live environments instantly so I can focus on development."
+            "icon": "fas fa-cloud-upload-alt text-primary"
         },
         {
             "category": "AI & Automation",
             "name": "Generative AI",
-            "slug": "generative-ai",
-            "icon": "fas fa-brain text-purple",
-            "description": "Integrating advanced LLMs (like Groq and Gemini) via API to build dynamic, self-generating content engines and smart applications."
+            "icon": "fas fa-brain text-purple"
         },
         {
             "category": "AI & Automation",
             "name": "Automation Scripts",
-            "slug": "automation-scripts",
-            "icon": "fas fa-robot text-success",
-            "description": "The heart of the 'Lazy Coder' philosophy. Writing automated Python and Shell scripts to handle repetitive system tasks and deployments."
+            "icon": "fas fa-robot text-success"
         },
         {
             "category": "AI & Automation",
             "name": "Ethical Hacking",
-            "slug": "ethical-hacking",
-            "icon": "fas fa-user-secret text-danger",
-            "description": "Applying penetration testing concepts and Kali Linux to understand system vulnerabilities, ensuring backend architectures are secure."
+            "icon": "fas fa-user-secret text-danger"
         },
         {
             "category": "Methodologies",
             "name": "Git Flow",
-            "slug": "git-flow",
-            "icon": "fas fa-code-branch text-warning",
-            "description": "Structured collaboration. I use feature branches and pull requests to ensure that the main production branch remains stable at all times."
+            "icon": "fas fa-code-branch text-warning"
         },
         {
             "category": "Methodologies",
             "name": "Debugging",
-            "slug": "debugging",
-            "icon": "fas fa-bug text-danger",
-            "description": "Digital detective work. I treat bugs as learning opportunities, using them to deepen my understanding of the system and harden code against future errors."
+            "icon": "fas fa-bug text-danger"
         },
         {
             "category": "Methodologies",
             "name": "Unit Testing",
-            "slug": "unit-testing",
-            "icon": "fas fa-check-circle text-success",
-            "description": "Proof of stability. I write tests to ensure my 'lazy' automations don't break during refactoring, guaranteeing long-term system reliability."
+            "icon": "fas fa-check-circle text-success"
         },
         {
             "category": "Methodologies",
             "name": "OOP Design",
-            "slug": "oop-design",
-            "icon": "fas fa-project-diagram text-info",
-            "description": "The software blueprint. I design classes and interfaces that enforce modularity, making code reusable, maintainable, and scalable."
+            "icon": "fas fa-project-diagram text-info"
         }
     ],
     "services": [

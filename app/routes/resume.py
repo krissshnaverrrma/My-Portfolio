@@ -17,7 +17,7 @@ def resume_page():
     return render_template('resume.html', **data)
 
 
-@resume_bp.route('/resume/details')
+@resume_bp.route('/resume_print')
 def resume_detail():
     data = load_portfolio_data()
     return render_template('resume_detail.html', **data)
