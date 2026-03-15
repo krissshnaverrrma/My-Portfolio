@@ -457,13 +457,22 @@
                                    Message</h5>
                          </div>
                          {% if success %}
-                         <div class="alert custom-alert p-3 mb-4 rounded-3 d-flex align-items-center" role="alert">
+                         <div class="alert custom-alert p-3 mb-4 rounded-3 d-flex align-items-center position-relative"
+                              role="alert">
                               <i class="fas fa-check-circle fa-lg me-3"></i>
-                              <div>
+                              <div class="flex-grow-1">
                                    <strong class="d-block mb-1">Message Transmitted!</strong>
                                    <span class="small opacity-75">I have Received your Message and will get back to you
                                         Shortly.</span>
                               </div>
+                              <a href="{{ url_for('main.contact') }}"
+                                   class="d-flex align-items-center justify-content-center flex-shrink-0"
+                                   style="width: 35px; height: 35px; border-radius: 50%; background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.3); color: #28a745; text-decoration: none; transition: all 0.3s ease;"
+                                   onmouseover="this.style.background='rgba(40, 167, 69, 0.8)'; this.style.color='#fff'; this.style.transform='rotate(90deg)';"
+                                   onmouseout="this.style.background='rgba(40, 167, 69, 0.15)'; this.style.color='#28a745'; this.style.transform='rotate(0deg)';"
+                                   title="Dismiss">
+                                   <i class="fas fa-times"></i>
+                              </a>
                          </div>
                          {% endif %}
                          <form action="{{ url_for('main.contact') }}" method="POST"

@@ -47,8 +47,15 @@ class User(Base):
         back_populates="author", cascade="all, delete-orphan")
 
 
-class APICache(Base):
-    __tablename__ = 'api_cache'
+class GeminiCache(Base):
+    __tablename__ = 'gemini_cache'
+    key: Mapped[str] = mapped_column(String(255), primary_key=True, index=True)
+    data: Mapped[str] = mapped_column(Text)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+
+
+class GitHubCache(Base):
+    __tablename__ = 'github_cache'
     key: Mapped[str] = mapped_column(String(255), primary_key=True, index=True)
     data: Mapped[str] = mapped_column(Text)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=func.now())

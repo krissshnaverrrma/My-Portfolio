@@ -1,24 +1,24 @@
 import os
 import json
 import logging
-from sqlalchemy import inspect, text
+from sqlalchemy import inspect, text, func
 from types import SimpleNamespace
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict, Any
 from .database import SessionLocal, Base, engine
 from ..config.config import get_config, Config
 from .models import (
-    User, APICache, Knowledge, Skill, Service, TimelineEvent, Interest,
-    Stat, CorePrinciple, CorePhilosophy, ContactMessage, ChatLog,
-    Project, BlogPost, Certification
+    User, GeminiCache, GitHubCache, Knowledge, Skill, Service,
+    TimelineEvent, Interest, Stat, CorePrinciple, CorePhilosophy,
+    ContactMessage, ChatLog, Project, BlogPost, Certification
 )
+
 logger = logging.getLogger(__name__)
 _JSON_CACHE: Optional[Dict[str, Any]] = None
 MODEL_CACHE_KEY = 'gemini_valid_models'
 
 
 def _get_project_root_path(relative_path: str) -> str:
-    """Returns the absolute path from the project root."""
     root_dir = os.path.dirname(os.path.dirname(
         os.path.dirname(os.path.abspath(__file__))))
     return os.path.join(root_dir, relative_path)
@@ -42,26 +42,22 @@ def load_json_data(filename: str = 'data.json') -> Dict[str, Any]:
         return {}
 
 
-def get_data_json() -> Dict[str, Any]:
-    return load_json_data()
+def get_data_json() -> Dict[str, Any]: return load_json_data()
+def get_ai_config() -> Dict[str,
+                            Any]: return load_json_data().get("ai_config", {})
 
 
-def get_ai_config() -> Dict[str, Any]:
-    return load_json_data().get("ai_config", {})
-
-
-def get_user_profile() -> Dict[str, Any]:
-    return load_json_data().get("user_profile", {})
+def get_user_profile(
+) -> Dict[str, Any]: return load_json_data().get("user_profile", {})
 
 
 def get_cached_ai_response(cache_key: str, expiry_hours: int = 24) -> Optional[str]:
     with SessionLocal() as db:
-        cache_entry = db.query(APICache).filter_by(key=cache_key).first()
+        cache_entry = db.query(GeminiCache).filter_by(key=cache_key).first()
         if cache_entry and cache_entry.timestamp:
             current_time = datetime.now(timezone.utc)
-            entry_time = cache_entry.timestamp
-            if entry_time.tzinfo is None:
-                entry_time = entry_time.replace(tzinfo=timezone.utc)
+            entry_time = cache_entry.timestamp.replace(
+                tzinfo=timezone.utc) if cache_entry.timestamp.tzinfo is None else cache_entry.timestamp
             if current_time - entry_time < timedelta(hours=expiry_hours):
                 return str(cache_entry.data)
         return None
@@ -70,33 +66,26 @@ def get_cached_ai_response(cache_key: str, expiry_hours: int = 24) -> Optional[s
 def set_cached_ai_response(cache_key: str, response_text: str) -> None:
     with SessionLocal() as db:
         try:
-            cache_entry = db.query(APICache).filter_by(key=cache_key).first()
-            now_utc = datetime.now(timezone.utc)
+            cache_entry = db.query(GeminiCache).filter_by(
+                key=cache_key).first()
             if cache_entry:
                 cache_entry.data = response_text
-                cache_entry.timestamp = now_utc
+                cache_entry.timestamp = func.now()
             else:
-                db.add(APICache(key=cache_key, data=response_text, timestamp=now_utc))
+                db.add(GeminiCache(key=cache_key, data=response_text))
             db.commit()
         except Exception as e:
-            logger.error(f"❌ Error Saving to AI Cache: {e}")
+            logger.error(f"❌ Gemini Cache Save Failed - {e}")
             db.rollback()
 
 
 def get_cached_valid_models(expiry_hours: int = 6) -> Optional[List[str]]:
     try:
         with SessionLocal() as db:
-            cache_entry = db.query(APICache).filter_by(
+            cache_entry = db.query(GeminiCache).filter_by(
                 key=MODEL_CACHE_KEY).first()
             if cache_entry:
-                cache_time = cache_entry.timestamp
-                if cache_time.tzinfo is None:
-                    cache_time = cache_time.replace(tzinfo=timezone.utc)
-                if datetime.now(timezone.utc) - cache_time < timedelta(hours=expiry_hours):
-                    return json.loads(cache_entry.data)
-                else:
-                    db.delete(cache_entry)
-                    db.commit()
+                return json.loads(cache_entry.data)
     except Exception as e:
         logger.warning(f"DB Cache Read Failed: {e}")
     return None
@@ -105,19 +94,15 @@ def get_cached_valid_models(expiry_hours: int = 6) -> Optional[List[str]]:
 def set_cached_valid_models(models: List[str]) -> None:
     try:
         with SessionLocal() as db:
-            cache_entry = db.query(APICache).filter_by(
+            cache_entry = db.query(GeminiCache).filter_by(
                 key=MODEL_CACHE_KEY).first()
             now_utc = datetime.now(timezone.utc)
             if cache_entry:
                 cache_entry.data = json.dumps(models)
                 cache_entry.timestamp = now_utc
             else:
-                new_cache = APICache(
-                    key=MODEL_CACHE_KEY,
-                    data=json.dumps(models),
-                    timestamp=now_utc
-                )
-                db.add(new_cache)
+                db.add(GeminiCache(key=MODEL_CACHE_KEY,
+                       data=json.dumps(models), timestamp=now_utc))
             db.commit()
     except Exception as e:
         logger.error(f"DB Cache Write Failed: {e}")
@@ -126,11 +111,11 @@ def set_cached_valid_models(models: List[str]) -> None:
 def get_cached_github_data(cache_key: str, expiry_seconds: int = 3600) -> Optional[List[Dict[str, Any]]]:
     try:
         with SessionLocal() as db:
-            cache_entry = db.query(APICache).filter_by(key=cache_key).first()
+            cache_entry = db.query(GitHubCache).filter_by(
+                key=cache_key).first()
             if cache_entry:
-                cache_time = cache_entry.timestamp
-                if cache_time.tzinfo is None:
-                    cache_time = cache_time.replace(tzinfo=timezone.utc)
+                cache_time = cache_entry.timestamp.replace(
+                    tzinfo=timezone.utc) if cache_entry.timestamp.tzinfo is None else cache_entry.timestamp
                 if (datetime.now(timezone.utc) - cache_time).total_seconds() < expiry_seconds:
                     return json.loads(cache_entry.data)
                 else:
@@ -142,23 +127,19 @@ def get_cached_github_data(cache_key: str, expiry_seconds: int = 3600) -> Option
 
 
 def set_cached_github_data(cache_key: str, data: Any) -> None:
-    now_utc = datetime.now(timezone.utc)
     try:
         with SessionLocal() as db:
-            cache_entry = db.query(APICache).filter_by(key=cache_key).first()
+            cache_entry = db.query(GitHubCache).filter_by(
+                key=cache_key).first()
             if cache_entry:
                 cache_entry.data = json.dumps(data)
-                cache_entry.timestamp = now_utc
+                cache_entry.timestamp = func.now()
             else:
-                new_cache = APICache(
-                    key=cache_key,
-                    data=json.dumps(data),
-                    timestamp=now_utc
-                )
-                db.add(new_cache)
+                db.add(GitHubCache(key=cache_key, data=json.dumps(data)))
             db.commit()
     except Exception as e:
-        logger.error(f"DB GitHub Cache Write Failed: {e}")
+        logger.error(f"❌ GitHub Cache Write Failed - {e}")
+        db.rollback()
 
 
 def get_all_knowledge() -> List[Knowledge]:
@@ -169,12 +150,9 @@ def get_all_knowledge() -> List[Knowledge]:
 def search_knowledge(user_query: str) -> List[Knowledge]:
     if not user_query or len(user_query) < 3:
         return []
-    search_term = f"%{user_query.lower()}%"
+    term = f"%{user_query.lower()}%"
     with SessionLocal() as db:
-        return db.query(Knowledge).filter(
-            (Knowledge.category.ilike(search_term)) |
-            (Knowledge.info.ilike(search_term))
-        ).all()
+        return db.query(Knowledge).filter((Knowledge.category.ilike(term)) | (Knowledge.info.ilike(term))).all()
 
 
 def get_all_skills() -> List[Skill]:
@@ -197,68 +175,80 @@ def get_interests() -> List[Interest]:
         return db.query(Interest).all()
 
 
-def get_stats() -> Dict[str, Any]:
-    return load_json_data().get("stats", {})
+def get_stats() -> Dict[str, Any]: return load_json_data().get("stats", {})
 
 
-def get_core_principles() -> List[CorePrinciple]:
-    with SessionLocal() as db:
-        return db.query(CorePrinciple).all()
+def get_core_principles(
+) -> List[CorePrinciple]: return load_json_data().get("core_principles", [])
 
 
-def get_core_philosophy() -> List[Dict[str, Any]]:
-    return load_json_data().get("core_philosophy", [])
+def get_core_philosophy(
+) -> List[Dict[str, Any]]: return load_json_data().get("core_philosophy", [])
 
 
 def save_contact_message(name, email, subject, message) -> bool:
-    timestamp = datetime.now(timezone.utc)
     with SessionLocal() as db:
         try:
-            new_msg = ContactMessage(
-                name=name, email=email, subject=subject,
-                message=message, timestamp=timestamp
-            )
-            db.add(new_msg)
+            existing_msg = db.query(ContactMessage).filter_by(
+                name=name,
+                email=email,
+                subject=subject if subject else "No Subject",
+                message=message
+            ).first()
+            if existing_msg:
+                logger.info(
+                    f"⏭️ Duplicate Message Skipped From {name} ({email})")
+                return True
+            db.add(ContactMessage(
+                name=name,
+                email=email,
+                subject=subject if subject else "No Subject",
+                message=message
+            ))
             db.commit()
+            logger.info(
+                f"📬 New Message Saved for {name} ({email}) | Subject: {subject}")
             return True
         except Exception as e:
-            logger.error(f"❌ Error Saving Message to DB: {e}")
+            logger.error(f"❌ Contact Message Save Failed - {e}")
             db.rollback()
             return False
 
 
 def log_conversation(session_id: str, u: str, b: str) -> None:
-    timestamp = datetime.now(timezone.utc)
+    if not u or not b:
+        return
     with SessionLocal() as db:
         try:
-            new_log = ChatLog(
-                session_id=session_id,
+            short_sid = str(session_id)[:8] if session_id else "default"
+            short_query = u if len(u) <= 50 else u[:47] + "..."
+            existing_log = db.query(ChatLog).filter_by(
                 user_query=u,
-                bot_response=b,
-                timestamp=timestamp
-            )
-            db.add(new_log)
+                bot_response=b
+            ).first()
+            if existing_log:
+                logger.info(
+                    f"⏭️ Duplicate Query Skipped : Query: '{short_query}'")
+                return
+            db.add(ChatLog(
+                session_id=session_id or "default",
+                user_query=u,
+                bot_response=b
+            ))
             db.commit()
+            logger.info(
+                f"💬 New Unique Chat Saved : Session: {short_sid} | Query: '{short_query}'")
         except Exception as e:
-            logger.error(f"❌ Error Logging Chat to Database: {e}")
+            logger.error(f"❌ Chat Log Save Failed - {e}")
             db.rollback()
 
 
 def get_chat_history(session_id: str, limit: int = 10) -> List[SimpleNamespace]:
     with SessionLocal() as db:
         try:
-            logs = db.query(ChatLog).filter(
-                ChatLog.session_id == session_id
-            ).order_by(ChatLog.timestamp.desc()).limit(limit).all()
-            history_objects = []
-            for log in logs:
-                history_objects.append(SimpleNamespace(
-                    session_id=log.session_id,
-                    user_query=log.user_query,
-                    bot_response=log.bot_response,
-                    timestamp=log.timestamp.isoformat() if log.timestamp else ""
-                ))
-            return history_objects[::-1]
+            logs = db.query(ChatLog).filter(ChatLog.session_id == session_id).order_by(
+                ChatLog.timestamp.desc()).limit(limit).all()
+            return [SimpleNamespace(session_id=log.session_id, user_query=log.user_query, bot_response=log.bot_response, timestamp=log.timestamp.isoformat() if log.timestamp else "") for log in logs][::-1]
         except Exception as e:
             logger.error(f"❌ Error Reading Chat History: {e}")
             return []
@@ -287,28 +277,16 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
         user = db.query(User).filter_by(
             email=user_prof.get("contact_email")).first()
         user_data = {
-            "title": user_prof.get("home_title", "Developer"),
-            "name": user_prof.get("name"),
-            "location": user_prof.get("location"),
-            "philosophy": user_prof.get("philosophy"),
-            "focus": user_prof.get("focus"),
-            "phone": user_prof.get("contact_phone"),
-            "email": user_prof.get("contact_email"),
-            "github_url": f"https://github.com/{user_prof.get('github_username')}",
-            "linkedin_url": user_prof.get("linkedin_url"),
-            "instagram_url": user_prof.get("instagram_url"),
-            "facebook_url": user_prof.get("facebook_url"),
-            "telegram_url": user_prof.get("telegram_url"),
-            "whatsapp_url": user_prof.get("whatsapp_url"),
-            "profile_image": user_prof.get("profile_image"),
-            "profile_icon": user_prof.get("profile_icon"),
-            "bot_image": user_prof.get("bot_image"),
-            "user_image": user_prof.get("user_image"),
-            "home_title": user_prof.get("home_title"),
-            "home_description": user_prof.get("home_description"),
-            "skills_description": user_prof.get("skills_description"),
-            "contact_text": user_prof.get("contact_text"),
-            "philosophy_title": user_prof.get("philosophy_title"),
+            "title": user_prof.get("home_title", "Developer"), "name": user_prof.get("name"), "location": user_prof.get("location"),
+            "philosophy": user_prof.get("philosophy"), "focus": user_prof.get("focus"), "phone": user_prof.get("contact_phone"),
+            "email": user_prof.get("contact_email"), "github_url": f"https://github.com/{user_prof.get('github_username')}",
+            "linkedin_url": user_prof.get("linkedin_url"), "instagram_url": user_prof.get("instagram_url"),
+            "facebook_url": user_prof.get("facebook_url"), "telegram_url": user_prof.get("telegram_url"),
+            "whatsapp_url": user_prof.get("whatsapp_url"), "profile_image": user_prof.get("profile_image"),
+            "profile_icon": user_prof.get("profile_icon"), "bot_image": user_prof.get("bot_image"),
+            "user_image": user_prof.get("user_image"), "home_title": user_prof.get("home_title"),
+            "home_description": user_prof.get("home_description"), "skills_description": user_prof.get("skills_description"),
+            "contact_text": user_prof.get("contact_text"), "philosophy_title": user_prof.get("philosophy_title"),
             "philosophy_text": user_prof.get("philosophy_text")
         }
         if not user:
@@ -320,6 +298,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
         db.commit()
         db.refresh(user)
         current_user_id = user.id
+
         existing_knowledge = {k.category: k for k in db.query(Knowledge).all()}
         for entry in data.get("knowledge_base", []):
             cat, info = entry['category'], entry['info']
@@ -327,6 +306,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 existing_knowledge[cat].info = info
             else:
                 db.add(Knowledge(category=cat, info=info))
+
         if 'skills' in data:
             existing_skills = {s.name: s for s in db.query(Skill).all()}
             for skill in data['skills']:
@@ -337,6 +317,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 else:
                     db.add(
                         Skill(category=skill['category'], name=skill['name'], icon_class=icon))
+
         if 'services' in data:
             existing_services = {s.title: s for s in db.query(Service).all()}
             for svc in data['services']:
@@ -347,6 +328,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 else:
                     db.add(
                         Service(title=svc['title'], description=svc['description'], icon_class=icon))
+
         existing_timelines = {
             (t.title, t.year): t for t in db.query(TimelineEvent).all()}
         for item in data.get('academic_timeline', []):
@@ -357,12 +339,9 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 et.description = item.get('description', "")
                 et.status_badge = item.get('status', "")
             else:
-                db.add(TimelineEvent(
-                    type='academic', year=item['year'], title=item['title'],
-                    subtitle=item.get('institution', ""),
-                    description=item.get('description', ""),
-                    status_badge=item.get('status', ""), is_future=False
-                ))
+                db.add(TimelineEvent(type='academic', year=item['year'], title=item['title'], subtitle=item.get(
+                    'institution', ""), description=item.get('description', ""), status_badge=item.get('status', ""), is_future=False))
+
         for item in data.get('dev_journey', []):
             key = (item['title'], item['year'])
             if key in existing_timelines:
@@ -372,13 +351,9 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 et.subtitle = et.subtitle or ""
                 et.status_badge = et.status_badge or ""
             else:
-                db.add(TimelineEvent(
-                    type='journey', year=item['year'], title=item['title'],
-                    subtitle="",
-                    description=item.get('description', ""),
-                    status_badge="",
-                    is_future=item.get('is_future', False)
-                ))
+                db.add(TimelineEvent(type='journey', year=item['year'], title=item['title'], subtitle="", description=item.get(
+                    'description', ""), status_badge="", is_future=item.get('is_future', False)))
+
         if 'interests' in data:
             existing_interests = {i.name: i for i in db.query(Interest).all()}
             for item in data['interests']:
@@ -388,6 +363,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 else:
                     db.add(Interest(
                         name=item['name'], description=item['description'], icon_class=item['icon_class']))
+
         if 'stats' in data:
             s_data = data['stats']
             stat_rec = db.query(Stat).first()
@@ -398,6 +374,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
             stat_rec.certifications = s_data.get('certifications', 0)
             stat_rec.commits_made = s_data.get('commits_made', 0)
             stat_rec.cups_of_coffee = s_data.get('cups_of_coffee', 0)
+
         for section, model in [('core_principles', CorePrinciple), ('core_philosophy', CorePhilosophy)]:
             if section in data:
                 existing_items = {i.title: i for i in db.query(model).all()}
@@ -408,6 +385,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                     else:
                         db.add(model(
                             title=item['title'], description=item['description'], icon_class=item['icon_class']))
+
         if 'projects' in data:
             existing_projects = {p.slug: p for p in db.query(Project).all()}
             for proj in data['projects']:
@@ -425,6 +403,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                         setattr(existing_projects[slug], k, v)
                 else:
                     db.add(Project(slug=slug, **proj_fields))
+
         if 'blog_posts' in data:
             existing_blogs = {b.slug: b for b in db.query(BlogPost).all()}
             for post in data['blog_posts']:
@@ -440,6 +419,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                         setattr(existing_blogs[slug], k, v)
                 else:
                     db.add(BlogPost(slug=slug, **blog_fields))
+
         if 'certifications' in data:
             existing_certs = {c.slug: c for c in db.query(
                 Certification).all() if c.slug}
@@ -457,6 +437,7 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                         setattr(existing_certs[slug], k, v)
                 else:
                     db.add(Certification(slug=slug, **cert_fields))
+
         db.commit()
         logger.info(f"✅ Database Initialized - {provider_name}")
     except Exception as e:
@@ -471,7 +452,11 @@ def auto_migrate_db():
     existing_tables = inspector.get_table_names()
     expected_tables = Base.metadata.tables.keys()
     tables_to_recreate = set()
+    protected_tables = ['chat_logs', 'contact_messages',
+                        'gemini_cache', 'github_cache']
     for table_name in expected_tables:
+        if table_name in protected_tables and table_name in existing_tables:
+            continue
         if table_name not in existing_tables:
             tables_to_recreate.add(table_name)
         else:
@@ -487,41 +472,25 @@ def auto_migrate_db():
     while added_new:
         added_new = False
         for table_name in expected_tables:
-            if table_name not in tables_to_recreate:
+            if table_name not in tables_to_recreate and table_name not in protected_tables:
                 table_obj = Base.metadata.tables[table_name]
                 for fk in table_obj.foreign_keys:
                     if fk.column.table.name in tables_to_recreate:
                         tables_to_recreate.add(table_name)
                         added_new = True
-    preserved_data = {
-        'chat_logs': [],
-        'contact_messages': []
-    }
-    try:
-        with engine.connect() as conn:
-            for table in ['chat_logs', 'contact_messages']:
-                if table in tables_to_recreate and table in existing_tables:
-                    result = conn.execute(text(f"SELECT * FROM {table}"))
-                    preserved_data[table] = [
-                        dict(row._mapping) for row in result]
-    except Exception as e:
-        logger.error(f"Error Backing Up Targeted Tables: {e}")
     tables_to_drop = [Base.metadata.tables[t]
                       for t in tables_to_recreate if t in existing_tables]
-    Base.metadata.drop_all(bind=engine, tables=tables_to_drop)
-    tables_to_create = [Base.metadata.tables[t] for t in tables_to_recreate]
-    Base.metadata.create_all(bind=engine, tables=tables_to_create)
-    with SessionLocal() as db:
+    if tables_to_drop:
         try:
-            if preserved_data['chat_logs']:
-                db.bulk_insert_mappings(ChatLog, preserved_data['chat_logs'])
-            if preserved_data['contact_messages']:
-                db.bulk_insert_mappings(
-                    ContactMessage, preserved_data['contact_messages'])
-            db.commit()
+            Base.metadata.drop_all(bind=engine, tables=tables_to_drop)
         except Exception as e:
-            db.rollback()
-            logger.error(f"Error Restoring Targeted Table Data: {e}")
+            logger.error(f"⚠️ Error Dropping Outdated Tables: {e}")
+    tables_to_create = [Base.metadata.tables[t] for t in tables_to_recreate]
+    if tables_to_create:
+        try:
+            Base.metadata.create_all(bind=engine, tables=tables_to_create)
+        except Exception as e:
+            logger.error(f"⚠️ Error creating new tables: {e}")
 
 
 def init_db() -> None:

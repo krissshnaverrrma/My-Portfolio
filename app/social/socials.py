@@ -67,6 +67,8 @@ class GitHubPortfolio:
         if Config.GITHUB_TOKEN:
             self.headers["Authorization"] = f"token {Config.GITHUB_TOKEN}"
         self.cache_duration = 3600
+        if self.username:
+            self.get_projects()
 
     def get_profile(self):
         default_avatar = f"https://github.com/{self.username}.png"
@@ -79,7 +81,7 @@ class GitHubPortfolio:
             "api_status": "Authenticated" if Config.GITHUB_TOKEN else "Standard"
         }
 
-    def get_projects(self, limit=6, sort_by="stars"):
+    def get_projects(self, limit=12, sort_by="stars"):
         cache_key = f"github_repos_{self.username}_{sort_by}"
         cached_data = get_cached_github_data(
             cache_key, expiry_seconds=self.cache_duration)

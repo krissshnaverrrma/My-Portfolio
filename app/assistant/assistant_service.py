@@ -28,27 +28,11 @@ class AssistantService:
         self.quick_responses = load_quick_responses()
         self._CONTEXT_EXPIRY_HOURS = 1
 
-    def get_masked_key(self):
-        key = getattr(Config, 'GEMINI_API_KEY', None)
-        if key and len(key) > 8:
-            return f"{key[:4]}.."
-        return "None/Missing"
-
-    def check_health(self):
-        try:
-            res, mode = self.get_response(HEALTH_CHECK_QUERY, silent=True)
-            is_healthy = any(w in res.lower()
-                             for w in ["assistant", "virtual", "krishna"])
-            return is_healthy, mode
-        except Exception as e:
-            logger.error(f"❌ Assistant Diagnostic Failed - {e}")
-            return False, "offline"
-
     def get_response(self, user_input, session_id="default", silent=False):
         clean_input = user_input.strip().lower().replace("?", "").replace(".", "")
         recent_history = get_chat_history(session_id, limit=1)
         is_duplicate = False
-        if recent_history and recent_history[-1].user_query.strip().lower() == user_input.strip().lower():
+        if recent_history and recent_history[0].user_query.strip().lower() == clean_input:
             is_duplicate = True
         if clean_input in self.quick_responses:
             reply = self.quick_responses[clean_input]
@@ -57,19 +41,20 @@ class AssistantService:
             if not is_duplicate:
                 log_conversation(session_id, user_input, reply)
             return reply, "cached_mode"
-        instructions = self._build_instructions()
         combined_prompt = f"ai_reply_{session_id}_{clean_input}"
         cache_key = hashlib.sha256(combined_prompt.encode()).hexdigest()
         cached_reply = get_cached_ai_response(cache_key)
         if cached_reply:
-            log_assistant_response(logger, "cached_mode")
+            if not silent:
+                log_assistant_response(logger, "cached_mode")
             if not is_duplicate:
                 log_conversation(session_id, user_input, cached_reply)
             return cached_reply, "cached_mode"
         if not self.is_online:
             return self._fallback_search(user_input)
-        idx = 0
+        instructions = self._build_instructions()
         history = self._format_history(session_id)
+        idx = 0
         backoff_time = 0.3
         while idx < len(self.model_stack):
             model_name = self.model_stack[idx]
@@ -89,7 +74,8 @@ class AssistantService:
                 set_cached_ai_response(cache_key, reply)
                 if not is_duplicate:
                     log_conversation(session_id, user_input, reply)
-                log_assistant_response(logger, "online", model_name)
+                if not silent:
+                    log_assistant_response(logger, "online", model_name)
                 return reply, "online"
             except Exception as e:
                 next_idx = idx + 1
