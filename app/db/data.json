@@ -20,8 +20,10 @@
         "user_image": "/static/assets/assistant/user.png",
         "home_title": "CS Student & Full Stack Developer",
         "home_description": "I am a Computer Science Student at Sanskar College of Engineering and Technology. I'm passionate about building scalable backend systems and immersive digital experiences. Specializing in <strong>Python</strong> and <strong>Game Development</strong>, I bridge the gap between complex logic and clean design.",
+        "skills_description": "The Technical Arsenal which I used to Architect Solutions and Occasionally turn Large Amounts of Coffee into Functional Code. From Low-Level Memory Management to High-Level Backend Architecture, This Stack Represents My Continuous Evolution in Building Scalable, Efficient, and Production-Ready Systems.",
         "philosophy_title": "THE LAZY CODER PHILOSOPHY",
-        "philosophy_text": "\"If a Task needs to be done Twice, it should be Automated. My Focus is Cutting Redundancy to build Self-Sustaining Frontend and Backend Systems.\""
+        "philosophy_text": "\"If a Task needs to be done Twice, it should be Automated. My Focus is Cutting Redundancy to build Self-Sustaining Frontend and Backend Systems.\"",
+        "contact_text": "Reach out to Collaborate, Ask a Question, or Simply say Hello. I'm Always Open to Discussing Ideas, Exploring New Ventures, or Fiercely Debating Tabs Versus Spaces. Whatever brings you here, I'd love to hear from you."
     },
     "stats": {
         "projects_completed": 12,
@@ -417,6 +419,7 @@
                 "Web"
             ],
             "github_url": "https://github.com/krissshnaverrrma/Qoute-Studio-AI",
+            "demo_url": "https://qoute-studio-ai.vercel.app/",
             "is_featured": false
         },
         {
@@ -432,6 +435,7 @@
                 "Web Audio API"
             ],
             "github_url": "https://github.com/krissshnaverrrma/Type-Master",
+            "demo_url": "https://typing-master-project.vercel.app/",
             "is_featured": false
         },
         {

@@ -34,6 +34,8 @@ class User(Base):
     user_image: Mapped[str | None] = mapped_column(String(500), nullable=True)
     home_title: Mapped[str | None] = mapped_column(String(255), nullable=True)
     home_description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    skills_description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    contact_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     philosophy_title: Mapped[str | None] = mapped_column(
         String(255), nullable=True)
     philosophy_text: Mapped[str | None] = mapped_column(Text, nullable=True)

@@ -86,24 +86,6 @@
           flex-shrink: 0;
      }
 
-     .bento-item {
-          background: rgba(15, 15, 15, 0.4);
-          backdrop-filter: blur(25px);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 24px;
-          padding: 1.5rem;
-          height: 100%;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-     }
-
-     .bento-item:hover {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.15);
-          transform: translateY(-5px);
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-     }
-
      .form-floating-custom {
           position: relative;
           margin-bottom: 0;
@@ -232,6 +214,151 @@
           color: #28a745;
           backdrop-filter: blur(10px);
      }
+
+     .copy-btn {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          color: rgba(255, 255, 255, 0.4);
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+     }
+
+     .copy-btn:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
+     }
+
+     .copy-btn.copied {
+          background: rgba(40, 167, 69, 0.15);
+          color: #28a745;
+          border-color: rgba(40, 167, 69, 0.3);
+          transform: translateY(0);
+     }
+
+     .status-text {
+          transition: color 0.3s ease;
+     }
+
+     .custom-select-wrapper {
+          position: relative;
+          user-select: none;
+     }
+
+     .custom-select-trigger {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding: 1.5rem 1.25rem 0.75rem 3.25rem;
+          min-height: calc(3.5rem + 2px);
+     }
+
+     .custom-select-text {
+          color: white;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+          font-size: 0.95rem;
+          margin-top: 8px;
+     }
+
+     .custom-select-wrapper.has-value .custom-select-text {
+          opacity: 1;
+     }
+
+     .select-arrow {
+          position: absolute;
+          right: 1.25rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.3s ease;
+     }
+
+     .custom-select-wrapper.open .select-arrow {
+          transform: translateY(-50%) rotate(180deg);
+          color: white;
+     }
+
+     .custom-select-label {
+          position: absolute;
+          top: 50%;
+          left: 3.25rem;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 0.95rem;
+     }
+
+     .custom-select-wrapper.open .custom-select-label,
+     .custom-select-wrapper.has-value .custom-select-label {
+          top: 0.8rem;
+          font-size: 0.7rem;
+          color: white;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+     }
+
+     .custom-select-wrapper.open .custom-select-trigger {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.4);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+     }
+
+     .custom-select-wrapper.open .input-icon {
+          color: white;
+     }
+
+     .custom-options {
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 0;
+          right: 0;
+          background: rgba(15, 15, 15, 0.95);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: all 0.3s ease;
+          z-index: 100;
+          overflow: hidden;
+     }
+
+     .custom-select-wrapper.open .custom-options {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+     }
+
+     .custom-option {
+          padding: 1rem 1.25rem;
+          color: rgba(255, 255, 255, 0.7);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+     }
+
+     .custom-option:last-child {
+          border-bottom: none;
+     }
+
+     .custom-option:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+          padding-left: 1.5rem;
+     }
 </style>
 <div class="contact-wrapper d-flex flex-column align-items-center">
      <div class="container content-layer p-4" style="max-width: 1200px; padding-top: 8rem !important;">
@@ -240,12 +367,12 @@
                     style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
                     <i class="fas fa-satellite-dish text-white me-2" style="opacity: 0.7; font-size: 0.8rem;"></i>
                     <span class="text-uppercase text-white fw-bold"
-                         style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Communication Hub</span>
+                         style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Get in Touch</span>
                </div>
                <h1 class="display-3 fw-bolder text-white mb-2" style="letter-spacing: -1px;">Let's <span
                          style="color: rgba(255,255,255,0.4);">Connect</span></h1>
-               <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">Reach out to
-                    Collaborate, Ask a Question, or Simply say Hello. I'm always Open to discussing ideas.</p>
+               <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">{{
+                    profile.contact_text }}</p>
           </div>
           <div class="row g-5 align-items-stretch reveal-element mb-5">
                <div class="col-lg-5">
@@ -256,35 +383,69 @@
                               </h5>
                          </div>
                          <div class="d-flex flex-column gap-3 mt-2 flex-grow-1 justify-content-center">
-                              <a href="tel:{{ profile.contact_phone }}" class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-phone"></i></div>
-                                   <div>
-                                        <h6 class="text-white fw-bold mb-1">Phone</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Voice Call</p>
-                                   </div>
-                              </a>
-                              <a href="mailto:{{ profile.contact_email }}" class="contact-link-item">
-                                   <div class="icon-box"><i class="fas fa-envelope"></i></div>
-                                   <div>
-                                        <h6 class="text-white fw-bold mb-1">Email</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Direct Inbox</p>
-                                   </div>
-                              </a>
-                              <a href="https://github.com/{{ profile.github_username }}" target="_blank"
-                                   class="contact-link-item">
-                                   <div class="icon-box"><i class="fab fa-github"></i></div>
-                                   <div>
-                                        <h6 class="text-white fw-bold mb-1">GitHub</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Source Code</p>
-                                   </div>
-                              </a>
-                              <a href="{{ profile.linkedin_url }}" target="_blank" class="contact-link-item">
-                                   <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
-                                   <div>
-                                        <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
-                                        <p class="text-secondary mb-0" style="font-size: 0.75rem;">Professional</p>
-                                   </div>
-                              </a>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="tel:{{ profile.contact_phone }}" class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fas fa-phone"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">Phone</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Voice Call</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.contact_phone }}" data-message="Copied Phone!"
+                                        aria-label="Copy Phone Number">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="mailto:{{ profile.contact_email }}"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">Email</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Direct Inbox</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.contact_email }}" data-message="Copied Email!"
+                                        aria-label="Copy Email Address">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="https://github.com/{{ profile.github_username }}" target="_blank"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fab fa-github"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">GitHub</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Source Code</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="https://github.com/{{ profile.github_username }}"
+                                        data-message="Copied GitHub URL!" aria-label="Copy GitHub URL">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="{{ profile.linkedin_url }}" target="_blank"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Professional</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.linkedin_url }}" data-message="Copied LinkedIn URL!"
+                                        aria-label="Copy LinkedIn URL">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
                          </div>
                     </div>
                </div>
@@ -326,11 +487,29 @@
                                    </div>
                               </div>
                               <div>
-                                   <div class="form-floating-custom">
-                                        <input type="text" name="subject" id="subject" class="sleek-input"
-                                             placeholder=" ">
-                                        <label for="subject">Subject Matter</label>
+                                   <div class="form-floating-custom custom-select-wrapper" id="subject-wrapper">
+                                        <input type="hidden" name="subject" id="subject" required>
+                                        <div class="sleek-input custom-select-trigger" tabindex="0">
+                                             <span class="custom-select-text"></span>
+                                        </div>
+                                        <label class="custom-select-label">Subject</label>
                                         <i class="fas fa-tag input-icon"></i>
+                                        <i class="fas fa-angle-down select-arrow"></i>
+                                        <div class="custom-options">
+                                             <div class="custom-option" data-value="About Project Inquiry">About
+                                                  Project Inquiry</div>
+                                             <div class="custom-option" data-value="About
+                                                  Bog Posts Inquiry">About
+                                                  Bog Posts Inquiry</div>
+                                             <div class="custom-option" data-value="About Certificated Inquiry">
+                                                  About Certificated Inquiry</div>
+                                             <div class="custom-option" data-value="Collaboration Idea">Collaboration
+                                                  Idea</div>
+                                             <div class="custom-option" data-value="Fiercely Debating Tabs vs. Spaces">
+                                                  Fiercely Debating Tabs vs. Spaces</div>
+                                             <div class="custom-option" data-value="Just Saying Hello">Just Saying Hello
+                                             </div>
+                                        </div>
                                    </div>
                               </div>
                               <div class="flex-grow-1">
@@ -351,53 +530,10 @@
                     </div>
                </div>
           </div>
-          <div class="row g-4 justify-content-center reveal-element mb-5"
-               style="max-width: 1000px; margin: 0 auto; padding-top: 1rem;">
-               <div class="col-md-4 col-sm-6">
-                    <div
-                         class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4">
-                         <i class="fas fa-map-marked-alt text-white opacity-75 mb-3" style="font-size: 2rem;"></i>
-                         <h6 class="text-white fw-bold mb-1">Base of Operations</h6>
-                         <span class="text-secondary small">Hapur, Uttar Pradesh, India</span>
-                    </div>
-               </div>
-               <div class="col-md-4 col-sm-6">
-                    <div class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4"
-                         style="background: rgba(40, 167, 69, 0.05); border-color: rgba(40, 167, 69, 0.15);">
-                         <div class="d-flex align-items-center gap-2 mb-3">
-                              <span class="badge rounded-circle p-1"
-                                   style="background: #28a745; box-shadow: 0 0 10px #28a745;"></span>
-                              <span class="text-success fw-bold text-uppercase"
-                                   style="letter-spacing: 1px;">Available</span>
-                         </div>
-                         <div class="text-secondary small mb-1" style="font-size: 0.75rem;">Time Based on Current
-                              Location</div>
-                         <div id="local-time" class="text-white fw-bold font-monospace"
-                              style="font-size: 1.2rem; letter-spacing: 1px;">00:00 AM</div>
-                    </div>
-               </div>
-               <div class="col-md-4 col-sm-6">
-                    <div
-                         class="bento-item d-flex flex-column align-items-center justify-content-center text-center p-4">
-                         <i class="far fa-clock text-info mb-3" style="font-size: 2rem;"></i>
-                         <h6 class="text-white fw-bold mb-1">Response Time</h6>
-                         <span class="text-secondary small">Usually within 2 Hours</span>
-                    </div>
-               </div>
-          </div>
      </div>
 </div>
 <script>
      document.addEventListener('DOMContentLoaded', () => {
-          const updateTime = () => {
-               const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-               const timeElement = document.getElementById('local-time');
-               if (timeElement) {
-                    timeElement.innerText = new Intl.DateTimeFormat('en-US', options).format(new Date());
-               }
-          };
-          setInterval(updateTime, 1000);
-          updateTime();
           const observer = new IntersectionObserver((entries) => {
                entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -408,6 +544,64 @@
           document.querySelectorAll('.reveal-element').forEach((el, i) => {
                el.style.transitionDelay = `${i * 0.1}s`;
                observer.observe(el);
+          });
+          const copyButtons = document.querySelectorAll('.copy-btn');
+          copyButtons.forEach(button => {
+               button.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const textToCopy = button.getAttribute('data-copy');
+                    const flashMessage = button.getAttribute('data-message');
+                    if (!textToCopy) return;
+                    const wrapper = button.closest('.copy-wrapper');
+                    const statusTextElement = wrapper.querySelector('.status-text');
+                    const originalText = statusTextElement.innerText;
+                    try {
+                         await navigator.clipboard.writeText(textToCopy);
+                         const icon = button.querySelector('i');
+                         button.classList.add('copied');
+                         icon.classList.remove('fa-copy');
+                         icon.classList.add('fa-check');
+                         statusTextElement.innerText = flashMessage;
+                         statusTextElement.classList.remove('text-secondary');
+                         statusTextElement.style.color = '#28a745';
+                         statusTextElement.style.fontWeight = 'bold';
+                         setTimeout(() => {
+                              button.classList.remove('copied');
+                              icon.classList.remove('fa-check');
+                              icon.classList.add('fa-copy');
+                              statusTextElement.innerText = originalText;
+                              statusTextElement.classList.add('text-secondary');
+                              statusTextElement.style.color = '';
+                              statusTextElement.style.fontWeight = '';
+                         }, 2000);
+                    } catch (err) {
+                         console.error('Failed to copy text: ', err);
+                    }
+               });
+          });
+          const selectWrapper = document.getElementById('subject-wrapper');
+          const selectTrigger = selectWrapper.querySelector('.custom-select-trigger');
+          const selectText = selectWrapper.querySelector('.custom-select-text');
+          const hiddenInput = document.getElementById('subject');
+          const optionsList = selectWrapper.querySelectorAll('.custom-option');
+          selectTrigger.addEventListener('click', (e) => {
+               selectWrapper.classList.toggle('open');
+               e.stopPropagation();
+          });
+          optionsList.forEach(option => {
+               option.addEventListener('click', (e) => {
+                    const value = option.getAttribute('data-value');
+                    selectText.innerText = value;
+                    hiddenInput.value = value;
+                    selectWrapper.classList.remove('open');
+                    selectWrapper.classList.add('has-value');
+                    e.stopPropagation();
+               });
+          });
+          document.addEventListener('click', (e) => {
+               if (!selectWrapper.contains(e.target)) {
+                    selectWrapper.classList.remove('open');
+               }
           });
      });
 </script>

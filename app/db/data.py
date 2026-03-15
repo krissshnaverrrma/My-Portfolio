@@ -307,6 +307,8 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                 user_image=user_prof.get("user_image"),
                 home_title=user_prof.get("home_title"),
                 home_description=user_prof.get("home_description"),
+                skills_description=user_prof.get("skills_description"),
+                contact_text=user_prof.get("contact_text"),
                 philosophy_title=user_prof.get("philosophy_title"),
                 philosophy_text=user_prof.get("philosophy_text")
             )
@@ -324,6 +326,8 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
             user.whatsapp_url = user_prof.get("whatsapp_url")
             user.home_title = user_prof.get("home_title")
             user.home_description = user_prof.get("home_description")
+            skills_description = user_prof.get("skills_description")
+            contact_text = user_prof.get("contact_text")
             user.philosophy_title = user_prof.get("philosophy_title")
             user.philosophy_text = user_prof.get("philosophy_text")
         db.commit()

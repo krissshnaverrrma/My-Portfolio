@@ -56,9 +56,11 @@ def about():
 
 @main_bp.route('/skills')
 def skills():
+    user_profile = get_user_profile()
     return render_template(
         'skills.html',
         skills=get_all_skills(),
+        skills_description=user_profile.get('skills_description', ''),
         core_principles=get_core_principles(),
         core_philosophy=get_core_philosophy()
     )
@@ -100,6 +102,7 @@ def contact():
             is_saved = save_contact_message(name, email, subject, message)
             if is_saved:
                 success = True
+    user_profile = get_user_profile()
     return render_template('contact.html', success=success)
 
 

@@ -11,15 +11,9 @@ def init_socials():
     try:
         services = SocialServices()
         if not Config.IS_RENDER:
-            contact_methods = []
             if services.contact:
-                if services.contact.email:
-                    contact_methods.append("EMail")
-                if services.contact.phone:
-                    contact_methods.append("Phone")
-            if contact_methods:
-                method_str = " & ".join(contact_methods)
-                logger.info(f"✅ Social INFO Initialized via {method_str}")
+                logger.info(
+                    "✅ Social Info Initialized via Required Contacts INFO")
             else:
                 logger.info("✅ Social Services Initialized Successfully")
         return services

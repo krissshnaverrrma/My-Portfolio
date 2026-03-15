@@ -97,12 +97,6 @@
     transform: translateY(0);
   }
 
-  .search-container input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-  }
-
   .philosophy-icon {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -125,15 +119,14 @@
         <span class="text-uppercase text-white fw-bold"
           style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Tech Stack & Growth</span>
       </div>
-      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Technical <span
+      <h1 class="display-3 fw-bolder text-white mb-3" style="letter-spacing: -1px;">Technical <span
           style="color: rgba(255,255,255,0.4);">Proficiency</span></h1>
-      <div class="position-relative mx-auto search-container mt-4" style="max-width: 500px;">
-        <i class="fa-solid fa-magnifying-glass position-absolute"
-          style="left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4); z-index: 5; pointer-events: none;"></i>
-        <input type="text" id="skill-search" class="w-100 transition-all"
-          style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 14px 25px 14px 50px; color: white; backdrop-filter: blur(10px); position: relative; z-index: 1;"
-          placeholder="Search Technologies, Languages, or Tools">
-      </div>
+      {% if skills_description %}
+      <p class="mx-auto mt-4"
+        style="max-width: 750px; color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.7;">
+        {{ skills_description }}
+      </p>
+      {% endif %}
     </div>
     {% set cat_icons = {
     'Languages': 'fa-solid fa-code',
@@ -225,20 +218,9 @@
     });
     const updateCounters = () => {
       document.querySelectorAll('.category-box').forEach(box => {
-        box.querySelector('.category-count').innerText = box.querySelectorAll('.skill-badge:not(.d-none)').length;
+        box.querySelector('.category-count').innerText = box.querySelectorAll('.skill-badge').length;
       });
     };
-    document.getElementById('skill-search').addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase();
-      document.querySelectorAll('.skill-badge').forEach(b => {
-        if (b.getAttribute('data-name').includes(q)) {
-          b.classList.remove('d-none');
-        } else {
-          b.classList.add('d-none');
-        }
-      });
-      updateCounters();
-    });
     updateCounters();
   });
 </script>
