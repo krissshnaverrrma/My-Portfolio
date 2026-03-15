@@ -7,7 +7,8 @@ from ..db.data import (
     log_conversation, search_knowledge, get_ai_config,
     get_chat_history, get_all_knowledge, get_user_profile,
     get_cached_ai_response, set_cached_ai_response,
-    get_all_posts, get_all_projects, get_all_certifications
+    get_all_posts, get_all_projects, get_all_certifications,
+    get_all_skills, get_services, get_timeline, get_stats
 )
 from ..social.socials import GitHubPortfolio, LinkedInPortfolio
 from .assistant_logic import (
@@ -40,16 +41,21 @@ class AssistantService:
                              for w in ["assistant", "virtual", "krishna"])
             return is_healthy, mode
         except Exception as e:
-            logger.error(f"❌ Assistant Diagnostic Failed: {e}")
+            logger.error(f"❌ Assistant Diagnostic Failed - {e}")
             return False, "offline"
 
     def get_response(self, user_input, session_id="default", silent=False):
         clean_input = user_input.strip().lower().replace("?", "").replace(".", "")
+        recent_history = get_chat_history(session_id, limit=1)
+        is_duplicate = False
+        if recent_history and recent_history[-1].user_query.strip().lower() == user_input.strip().lower():
+            is_duplicate = True
         if clean_input in self.quick_responses:
             reply = self.quick_responses[clean_input]
             if not silent:
                 log_assistant_response(logger, "cached_mode", "Quick Response")
-            log_conversation(session_id, user_input, reply)
+            if not is_duplicate:
+                log_conversation(session_id, user_input, reply)
             return reply, "cached_mode"
         instructions = self._build_instructions()
         combined_prompt = f"ai_reply_{session_id}_{clean_input}"
@@ -57,7 +63,8 @@ class AssistantService:
         cached_reply = get_cached_ai_response(cache_key)
         if cached_reply:
             log_assistant_response(logger, "cached_mode")
-            log_conversation(session_id, user_input, cached_reply)
+            if not is_duplicate:
+                log_conversation(session_id, user_input, cached_reply)
             return cached_reply, "cached_mode"
         if not self.is_online:
             return self._fallback_search(user_input)
@@ -80,18 +87,19 @@ class AssistantService:
                 if not reply:
                     raise ValueError("Empty Response")
                 set_cached_ai_response(cache_key, reply)
-                log_conversation(session_id, user_input, reply)
+                if not is_duplicate:
+                    log_conversation(session_id, user_input, reply)
                 log_assistant_response(logger, "online", model_name)
                 return reply, "online"
             except Exception as e:
                 next_idx = idx + 1
                 if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
                     logger.warning(
-                        f"🔄 {model_name} Busy (Rate Limit Exceed) Switching in {backoff_time}s")
+                        f"🔄 {model_name} Busy (Rate Limit Exceeded) - Switching in {backoff_time}s")
                     time.sleep(backoff_time)
                     backoff_time *= 2
                 else:
-                    logger.warning(f"⚠️ {model_name} Failed: {str(e)[:50]}")
+                    logger.warning(f"⚠️ {model_name} Failed - {str(e)[:50]}")
                 if next_idx >= len(self.model_stack):
                     break
                 idx = next_idx
@@ -111,13 +119,27 @@ class AssistantService:
                 repo_text = "\n".join(
                     [f"- {r['name']}: {r['description']}" for r in repos])
         except Exception as e:
-            logger.warning(f"GitHub context failed: {e}")
+            logger.warning(f"⚠️ GitHub Context Failed - {e}")
         try:
             knowledge = get_all_knowledge()
             user = get_user_profile()
             posts = get_all_posts()
             projects = get_all_projects()
             certs = get_all_certifications()
+            skills = get_all_skills()
+            services = get_services()
+            academic_timeline = get_timeline('academic')
+            journey_timeline = get_timeline('journey')
+            stats = get_stats()
+            user_info = f"Name: {user.get('name', 'Krishna')} | Title: {user.get('title', 'Developer')} | Location: {user.get('location', 'Hapur')}\nPhilosophy/Bio: {user.get('philosophy', 'A passionate developer.')}"
+            stats_text = f"Projects: {stats.get('projects_completed', 0)} | Certifications: {stats.get('certifications', 0)} | Commits: {stats.get('commits_made', 0)}"
+            skills_text = ", ".join(
+                [s.name for s in skills]) if skills else "Skills not listed."
+            services_text = "\n".join(
+                [f"- {s.title}: {s.description}" for s in services]) if services else "No services listed."
+            timeline_text = "[ACADEMIC]\n" + "\n".join([f"- {t.year}: {t.title} at {t.subtitle}" for t in academic_timeline]) + \
+                "\n\n[DEVELOPER JOURNEY]\n" + "\n".join(
+                    [f"- {t.year}: {t.title} - {t.description}" for t in journey_timeline])
             db_text = "\n".join(
                 [f"[{k.category}]: {k.info}" for k in knowledge])
             blog_text = "\n".join(
@@ -127,17 +149,22 @@ class AssistantService:
             cert_text = "\n".join(
                 [f"- {c.title} by {c.issuer} ({c.status})" for c in certs]) if certs else "No Certifications Listed."
             context_string = (
-                f"GITHUB PROJECTS:\n{repo_text}\n\n"
-                f"PORTFOLIO PROJECTS:\n{project_text}\n\n"
-                f"CERTIFICATIONS:\n{cert_text}\n\n"
-                f"BLOG POSTS:\n{blog_text}\n\n"
-                f"KNOWLEDGE BASE:\n{db_text}\n\n"
-                f"CONTACT: {user.get('email', 'N/A')}"
+                f"--- USER PROFILE & BIO ---\n{user_info}\n\n"
+                f"--- PORTFOLIO STATS ---\n{stats_text}\n\n"
+                f"--- TECHNICAL SKILLS ---\n{skills_text}\n\n"
+                f"--- SERVICES OFFERED ---\n{services_text}\n\n"
+                f"--- EXPERIENCE & EDUCATION ---\n{timeline_text}\n\n"
+                f"--- GITHUB PROJECTS ---\n{repo_text}\n\n"
+                f"--- PORTFOLIO PROJECTS ---\n{project_text}\n\n"
+                f"--- CERTIFICATIONS ---\n{cert_text}\n\n"
+                f"--- BLOG POSTS ---\n{blog_text}\n\n"
+                f"--- EXTRA KNOWLEDGE BASE ---\n{db_text}\n\n"
+                f"CONTACT EMAIL: {user.get('contact_email', user.get('email', 'N/A'))}"
             )
             set_cached_ai_response(context_cache_key, context_string)
             return context_string
         except Exception as e:
-            logger.error(f"Critical Context Build Error: {e}")
+            logger.error(f"❌ Critical Context Build Error - {e}")
             return "Professional Backend Developer Context."
 
     def _build_instructions(self):

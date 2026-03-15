@@ -508,9 +508,9 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
                     ))
         db.commit()
         if not Config.IS_RENDER:
-            logger.info(f"✅ Database Initialized via {provider_name}")
+            logger.info(f"✅ Database Initialized - {provider_name}")
     except Exception as e:
-        logger.error(f"Database Seeding Error: {e}")
+        logger.error(f"❌ Database Initialization Failed - {e}")
         db.rollback()
     finally:
         db.close()
@@ -576,10 +576,10 @@ def auto_migrate_db():
 
 def init_db() -> None:
     if Config.IS_RENDER:
-        provider = "Internal Database Engine"
+        provider = "Internal Database"
     elif not Config.USE_SQLITE_LOCALLY:
-        provider = "External Database Engine"
+        provider = "External Database"
     else:
-        provider = "SQL Database Engine"
+        provider = "SQL Database"
     auto_migrate_db()
     seed_initial_data(provider)

@@ -70,13 +70,13 @@ def initialize_app_services(app: Flask, is_cli_mode: bool, is_quiet_mode: bool) 
                 for lib in ['app.assistant.assistant', 'app.social.socials', 'app.db.data', 'app.db.data_seed']:
                     logging.getLogger(lib).setLevel(logging.WARNING)
             try:
-                logger.info("✅ Initializing All the Systems")
+                logger.info("✅ Initializing the Systems")
                 if app.debug and not Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
                 app.socials = init_socials()
                 if not is_quiet_mode:
-                    logger.info("✅ All the Systems Initialized Successfully")
+                    logger.info("✅ Systems Initialized Successfully")
             except Exception as e:
                 if not is_quiet_mode:
                     logger.warning(f"⚠️ Initialization Warning: {e}")

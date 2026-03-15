@@ -12,10 +12,10 @@ def init_assistant():
         assistant = AssistantService()
         if assistant and assistant.is_online:
             tier = getattr(Config, 'GEMINI_MODEL', 'Auto')
-            logger.info(f"✅ AI Assistant Initialized via {tier}")
+            logger.info(f"✅ AI Assistant Initialized - {tier}")
         else:
-            logger.warning("⚠️ AI Assistant Initialized in OFFLINE Mode.")
+            logger.warning("⚠️ AI Assistant Initialized - OFFLINE Mode")
         return assistant
     except Exception as e:
-        logger.exception(f"❌ Failed to Initialize Virtual AI Assistant: {e}")
+        logger.exception(f"❌ AI Assistant Initialization Failed - {e}")
         return None

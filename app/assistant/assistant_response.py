@@ -53,23 +53,26 @@ class AssistantStatus(str, Enum):
 
 
 _STYLES = {
-    AssistantStatus.ONLINE:   {"color": "\033[92m", "icon": "🤖", "label": "ONLINE"},
-    AssistantStatus.CACHED:   {"color": "\033[93m", "icon": "🚀", "label": "CACHE"},
-    AssistantStatus.DATABASE: {"color": "\033[38;5;214m", "icon": "📂", "label": "DATABASE"},
+    AssistantStatus.ONLINE:   {"color": "\033[92m", "icon": "🤖", "label": "Online Mode"},
+    AssistantStatus.CACHED:   {"color": "\033[93m", "icon": "🚀", "label": "Cache Mode"},
+    AssistantStatus.DATABASE: {"color": "\033[38;5;214m", "icon": "📂", "label": "Database Mode"},
     AssistantStatus.OFFLINE:  {
-        "color": "\033[91m", "icon": "⚠️", "label": "OFFLINE"}
+        "color": "\033[91m", "icon": "⚠️", "label": "Offline Mode"}
 }
 _RESET = "\033[0m"
 
 
-def log_assistant_response(logger: logging.Logger, status: str, detail: str = None) -> None:
-    """Logs the AI Assistant status with a clean, color-coded console output."""
+def log_assistant_response(logger: logging.Logger, status: str, detail: str | None = None) -> None:
     try:
         safe_status = AssistantStatus(status)
     except ValueError:
+        logger.warning(
+            f"Invalid Assistant Status '{status}' Received. Defaulting to OFFLINE.")
         safe_status = AssistantStatus.OFFLINE
-    style = _STYLES[safe_status]
-    detail_str = f" :: {detail}" if detail else ""
-    logger.info(
-        f"{style['color']}{style['icon']} [{style['label']}] AI Assistant Response Initialized on Engine{detail_str}{_RESET}"
-    )
+    style = _STYLES.get(safe_status, _STYLES[AssistantStatus.OFFLINE])
+    color = style.get("color", "")
+    icon = style.get("icon", "⚠️")
+    label = style.get("label", "UNKNOWN")
+    base_msg = f"{icon} AI Assistant Response Initialized on {label}"
+    full_msg = f"{base_msg} - {detail}" if detail else base_msg
+    logger.info(f"{color}{full_msg}{_RESET}")

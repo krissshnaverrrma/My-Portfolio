@@ -11,14 +11,11 @@ def init_socials():
     try:
         services = SocialServices()
         if not Config.IS_RENDER:
-            if services.contact:
-                logger.info(
-                    "✅ Social Info Initialized via Required Contacts INFO")
-            else:
-                logger.info("✅ Social Services Initialized Successfully")
+            detail = "Contacts Linked" if services.contact else "Standard Mode"
+            logger.info(f"✅ Social Services Initialized - {detail}")
         return services
     except Exception as e:
-        logger.error(f"❌ Failed to Initialize Social Services: {e}")
+        logger.error(f"❌ Social Services Initialization Failed - {e}")
         return None
 
 
