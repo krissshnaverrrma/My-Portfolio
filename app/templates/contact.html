@@ -496,20 +496,28 @@
                                         <i class="fas fa-tag input-icon"></i>
                                         <i class="fas fa-angle-down select-arrow"></i>
                                         <div class="custom-options">
-                                             <div class="custom-option" data-value="About Project Inquiry">About
-                                                  Project Inquiry</div>
-                                             <div class="custom-option" data-value="About
-                                                  Bog Posts Inquiry">About
-                                                  Bog Posts Inquiry</div>
-                                             <div class="custom-option" data-value="About Certificated Inquiry">
-                                                  About Certificated Inquiry</div>
+                                             <div class="custom-option" data-value="About Project Inquiry">About Project
+                                                  Inquiry</div>
+                                             <div class="custom-option" data-value="About Blog Posts Inquiry">About Blog
+                                                  Posts Inquiry</div>
+                                             <div class="custom-option" data-value="About Certificated Inquiry">About
+                                                  Certificated Inquiry</div>
                                              <div class="custom-option" data-value="Collaboration Idea">Collaboration
                                                   Idea</div>
                                              <div class="custom-option" data-value="Fiercely Debating Tabs vs. Spaces">
                                                   Fiercely Debating Tabs vs. Spaces</div>
                                              <div class="custom-option" data-value="Just Saying Hello">Just Saying Hello
                                              </div>
+                                             <div class="custom-option" data-value="Custom">Custom Subject</div>
                                         </div>
+                                   </div>
+                              </div>
+                              <div id="custom-subject-container" style="display: none;">
+                                   <div class="form-floating-custom">
+                                        <input type="text" id="custom-subject-input" class="sleek-input"
+                                             placeholder=" ">
+                                        <label for="custom-subject-input">Your Custom Subject</label>
+                                        <i class="fas fa-pen input-icon"></i>
                                    </div>
                               </div>
                               <div class="flex-grow-1">
@@ -584,6 +592,8 @@
           const selectText = selectWrapper.querySelector('.custom-select-text');
           const hiddenInput = document.getElementById('subject');
           const optionsList = selectWrapper.querySelectorAll('.custom-option');
+          const customSubjectContainer = document.getElementById('custom-subject-container');
+          const customSubjectInput = document.getElementById('custom-subject-input');
           selectTrigger.addEventListener('click', (e) => {
                selectWrapper.classList.toggle('open');
                e.stopPropagation();
@@ -591,12 +601,24 @@
           optionsList.forEach(option => {
                option.addEventListener('click', (e) => {
                     const value = option.getAttribute('data-value');
-                    selectText.innerText = value;
-                    hiddenInput.value = value;
+                    if (value === 'Custom') {
+                         selectText.innerText = "Other / Custom Subject";
+                         customSubjectContainer.style.display = 'block';
+                         customSubjectInput.setAttribute('required', 'required');
+                         hiddenInput.value = customSubjectInput.value;
+                    } else {
+                         selectText.innerText = value;
+                         customSubjectContainer.style.display = 'none';
+                         customSubjectInput.removeAttribute('required');
+                         hiddenInput.value = value;
+                    }
                     selectWrapper.classList.remove('open');
                     selectWrapper.classList.add('has-value');
                     e.stopPropagation();
                });
+          });
+          customSubjectInput.addEventListener('input', (e) => {
+               hiddenInput.value = e.target.value;
           });
           document.addEventListener('click', (e) => {
                if (!selectWrapper.contains(e.target)) {
