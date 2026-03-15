@@ -25,14 +25,15 @@ def get_secret_key(env_type: str) -> str:
 
 
 class Config:
+    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+    CONTACT_PHONE = os.getenv("CONTACT_PHONE")
     CONTACT_EMAIL = os.getenv("CONTACT_EMAIL")
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    GEMINI_MODEL = os.getenv("GEMINI_MODEL")
     GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
     GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
     LINKEDIN_USER = os.getenv("LINKEDIN_USER")
-    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME')
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    GEMINI_MODEL = os.getenv("GEMINI_MODEL")
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
     IS_RENDER = str(os.getenv("RENDER", "False")).lower() == "true"
     USE_SQLITE_LOCALLY = str(

@@ -266,29 +266,39 @@
     .print-controls {
         display: flex;
         justify-content: center;
+        gap: 20px;
         width: 100%;
         margin-top: 30px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        z-index: 10;
     }
 
-    .btn-print {
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         background-color: #000000;
         color: #ffffff;
-        border: 2px solid #ffffff;
+        border: none;
         padding: 12px 30px;
         font-size: 1rem;
         font-weight: bold;
         border-radius: 50px;
         cursor: pointer;
+        text-decoration: none;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         text-transform: uppercase;
         font-family: 'Segoe UI', Arial, sans-serif;
     }
 
-    .btn-print:hover {
-        background-color: #ffffff;
-        color: #000000;
+    .btn-action:hover {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        text-decoration: none;
     }
 
     @media print {
@@ -536,8 +546,11 @@
             </div>
         </div>
         <div class="print-controls">
-            <button class="btn-print" onclick="window.print()">
-                <i class="fas fa-print me-2"></i> Download / Print Resume
+            <a href="/" class="btn-action">
+                <i class="fas fa-arrow-left"></i> Return to Portfolio
+            </a>
+            <button class="btn-action" onclick="window.print()">
+                <i class="fas fa-print"></i> Download or Print Resume
             </button>
         </div>
     </div>

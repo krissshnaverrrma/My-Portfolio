@@ -7,36 +7,64 @@ from ..db.data import get_data_json, get_cached_github_data, set_cached_github_d
 logger = logging.getLogger(__name__)
 
 
-def init_github():
+def init_socials():
     try:
-        gh = GitHubPortfolio()
-        if gh.username:
-            if not Config.IS_RENDER:
-                if Config.GITHUB_TOKEN:
-                    logger.info(
-                        f"✅ GitHub Service Initialized on Authenticated Mode for User: {gh.username}")
-                else:
-                    logger.warning(
-                        f"⚠️ GitHub Service Initialized in Unauthenticated Mode for User: {gh.username}")
-            return gh
-        return None
+        services = SocialServices()
+        if not Config.IS_RENDER:
+            contact_methods = []
+            if services.contact:
+                if services.contact.email:
+                    contact_methods.append("EMail")
+                if services.contact.phone:
+                    contact_methods.append("Phone")
+            if contact_methods:
+                method_str = " & ".join(contact_methods)
+                logger.info(f"✅ Social INFO Initialized via {method_str}")
+            else:
+                logger.info("✅ Social Services Initialized Successfully")
+        return services
     except Exception as e:
-        logger.error(f"❌ Failed to Initialize GitHub Service: {e}")
+        logger.error(f"❌ Failed to Initialize Social Services: {e}")
         return None
 
 
-def init_linkedin():
-    try:
-        li = LinkedInPortfolio()
-        if li.username:
-            if not Config.IS_RENDER:
-                logger.info(
-                    f"✅ LinkedIn Service Initialized for User: {li.username}")
-            return li
-        return None
-    except Exception as e:
-        logger.error(f"❌ Failed to Initialize LinkedIn Service: {e}")
-        return None
+class SocialServices:
+    def __init__(self):
+        self.github = None
+        self.linkedin = None
+        self.contact = None
+        try:
+            temp_gh = GitHubPortfolio()
+            if temp_gh.username:
+                self.github = temp_gh
+        except Exception as e:
+            logger.error(f"❌ Failed to Load GitHub: {e}")
+        try:
+            temp_li = LinkedInPortfolio()
+            if temp_li.username:
+                self.linkedin = temp_li
+        except Exception as e:
+            logger.error(f"❌ Failed to Load LinkedIn: {e}")
+        try:
+            temp_contact = ContactInfo()
+            if temp_contact.email or temp_contact.phone:
+                self.contact = temp_contact
+        except Exception as e:
+            logger.error(f"❌ Failed to Load Contact Info: {e}")
+
+
+class ContactInfo:
+    def __init__(self):
+        self.email = Config.CONTACT_EMAIL
+        self.phone = Config.CONTACT_PHONE
+        self.data = get_data_json()
+        self.profile = self.data.get("contact_profile", {})
+
+    def get_profile(self):
+        return {
+            "email": self.email or self.profile.get("email", "No email provided"),
+            "phone": self.phone or self.profile.get("phone", "No phone provided")
+        }
 
 
 class GitHubPortfolio:

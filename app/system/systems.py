@@ -8,7 +8,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from ..config.config import get_config, Config
 from ..db.data import init_db
-from ..social.socials import init_github, init_linkedin
+from ..social.socials import init_socials
 from ..assistant.assistant import init_assistant
 logger = logging.getLogger(__name__)
 limiter = Limiter(
@@ -74,17 +74,14 @@ def initialize_app_services(app: Flask, is_cli_mode: bool, is_quiet_mode: bool) 
                 if app.debug and not Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
-                app.gh = init_github()
-                app.li = init_linkedin()
+                app.socials = init_socials()
                 if not is_quiet_mode:
                     logger.info("✅ All the Systems Initialized Successfully")
             except Exception as e:
                 if not is_quiet_mode:
                     logger.warning(f"⚠️ Initialization Warning: {e}")
                 app.assistant = getattr(app, 'assistant', None)
-                app.gh = getattr(app, 'gh', None)
-                app.li = getattr(app, 'li', None)
+                app.socials = getattr(app, 'socials', None)
         else:
             app.assistant = None
-            app.gh = None
-            app.li = None
+            app.socials = None
