@@ -55,10 +55,10 @@
      <nav class="navbar navbar-expand-lg fixed-top {% block nav_class %}{% endblock %}">
           <div class="container">
                {% if request.endpoint != 'main.home' %}
-               <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('main.home') }}">
+               <a class="navbar-brand d-flex align-items-center gap-3" href="{{ url_for('main.home') }}">
                     <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" width="30" height="30"
                          class="rounded-circle">
-                    <span>{{ profile.name }}</span>
+                    <span class="ms-1">{{ profile.name }}</span>
                </a>
                {% endif %}
                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
