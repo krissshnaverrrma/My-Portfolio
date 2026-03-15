@@ -219,10 +219,6 @@
                             {% if post.image_url %}
                             <div class="img-container mb-4 mb-lg-0">
                                 <img src="{{ post.image_url }}" alt="{{ post.title }}">
-                                <span
-                                    class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3 py-2"
-                                    style="font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;">{{ post.category
-                                    | upper }}</span>
                             </div>
                             {% endif %}
                         </div>
@@ -260,9 +256,6 @@
                     {% if post.image_url %}
                     <div class="img-container mb-4">
                         <img src="{{ post.image_url }}" alt="{{ post.title }}">
-                        <span
-                            class="position-absolute bottom-0 start-0 m-3 badge bg-white text-black rounded-pill px-3 py-1"
-                            style="font-size: 0.6rem; letter-spacing: 1px;">{{ post.category | upper }}</span>
                     </div>
                     {% endif %}
                     <div class="d-flex flex-column flex-grow-1">

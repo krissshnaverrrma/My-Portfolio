@@ -235,7 +235,7 @@
         </div>
         <div class="sleek-panel reveal-element mb-4" style="transition-delay: 0.1s; padding: 2rem; position: relative;">
             <div class="d-print-none" style="position: absolute; top: 1.5rem; right: 1.5rem;">
-                <a href="{{ url_for('main.resume_detail') }}"class="btn-print-center"
+                <a href="{{ url_for('main.resume_detail') }}" class="btn-print-center"
                     style="font-size: 0.75rem; padding: 8px 16px;">
                     <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
                 </a>
@@ -269,29 +269,29 @@
                 <div class="d-flex flex-column gap-3 mt-2">
                     <a href="tel:{{ user_profile.contact_phone | replace(' ', '') }}"
                         class="res-contact-link interactive">
-                        <i class="fas fa-phone"></i> {{ user_profile.contact_phone }}
+                        <i class="fas fa-phone"></i> Contact Phone
                     </a>
                     <a href="mailto:{{ user_profile.contact_email }}" class="res-contact-link interactive">
-                        <i class="fas fa-envelope"></i> {{ user_profile.contact_email }}
+                        <i class="fas fa-envelope"></i> Contact Email
                     </a>
                     <a href="https://github.com/{{ user_profile.github_username }}" target="_blank"
                         class="res-contact-link interactive">
-                        <i class="fab fa-github"></i> github.com/{{ user_profile.github_username }}
+                        <i class="fab fa-github"></i> Github
                     </a>
                     <a href="{{ user_profile.linkedin_url }}" target="_blank" class="res-contact-link interactive">
-                        <i class="fab fa-linkedin"></i> linkedin.com/in/{{ user_profile.linkedin_username }}
+                        <i class="fab fa-linkedin"></i> Linkedin
                     </a>
                     <a href="{{ user_profile.whatsapp_url }}" target="_blank" class="res-contact-link interactive">
-                        <i class="fab fa-whatsapp"></i> {{ user_profile.whatsapp_url }}
+                        <i class="fab fa-whatsapp"></i> WhastsApp
                     </a>
                     <a href="{{ user_profile.telegram_url }}" target="_blank" class="res-contact-link interactive">
-                        <i class="fab fa-telegram"></i> {{ user_profile.telegram_url }}
+                        <i class="fab fa-telegram"></i> Telegram
                     </a>
                     <a href="{{ user_profile.instagram_url }}" target="_blank" class="res-contact-link interactive">
-                        <i class="fab fa-instagram"></i> {{ user_profile.instagram_url }}
+                        <i class="fab fa-instagram"></i> Instagram
                     </a>
                     <a href="{{ user_profile.facebook_url }}" target="_blank" class="res-contact-link interactive">
-                        <i class="fab fa-facebook"></i> {{ user_profile.facebook_url }}
+                        <i class="fab fa-facebook"></i> Facebook
                     </a>
                     <div class="res-contact-link">
                         <i class="fas fa-map-marker-alt"></i> {{ user_profile.location }}
