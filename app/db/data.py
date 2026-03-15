@@ -494,22 +494,11 @@ def auto_migrate_db():
 
 
 def init_db() -> None:
-    # 1. THE NUCLEAR WIPE (Remove this block after one successful run!)
-    with engine.connect() as conn:
-        logger.warning("☢️ STARTING ONE-TIME DATABASE WIPE...")
-        # Get all table names manually since we want to kill ghosts too
-        inspector = inspect(engine)
-        for table in inspector.get_table_names():
-            conn.execute(text(f'DROP TABLE "{table}" CASCADE;'))
-        conn.commit()
-        logger.info("✅ ALL TABLES DROPPED SUCCESSFULLY.")
-
-    # 2. RECREATE & RE-SEED
-    # This will now create everything from scratch based on your current models
-    Base.metadata.create_all(bind=engine)
-
-    # Identify provider for logs
-    provider = "Internal" if Config.IS_RENDER else "External"
+    if Config.IS_RENDER:
+        provider = "Internal Database"
+    elif not Config.USE_SQLITE_LOCALLY:
+        provider = "External Database"
+    else:
+        provider = "SQL Database"
+    auto_migrate_db()
     seed_initial_data(provider)
-
-    logger.info(f"🚀 DATABASE RE-INITIALIZED WITH FRESH DATA.")
