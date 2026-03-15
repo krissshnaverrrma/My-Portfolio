@@ -286,229 +286,179 @@ def seed_initial_data(provider_name: str = "Unknown Provider") -> None:
         user_prof = data.get("user_profile", {})
         user = db.query(User).filter_by(
             email=user_prof.get("contact_email")).first()
+        user_data = {
+            "title": user_prof.get("home_title", "Developer"),
+            "name": user_prof.get("name"),
+            "location": user_prof.get("location"),
+            "philosophy": user_prof.get("philosophy"),
+            "focus": user_prof.get("focus"),
+            "phone": user_prof.get("contact_phone"),
+            "email": user_prof.get("contact_email"),
+            "github_url": f"https://github.com/{user_prof.get('github_username')}",
+            "linkedin_url": user_prof.get("linkedin_url"),
+            "instagram_url": user_prof.get("instagram_url"),
+            "facebook_url": user_prof.get("facebook_url"),
+            "telegram_url": user_prof.get("telegram_url"),
+            "whatsapp_url": user_prof.get("whatsapp_url"),
+            "profile_image": user_prof.get("profile_image"),
+            "profile_icon": user_prof.get("profile_icon"),
+            "bot_image": user_prof.get("bot_image"),
+            "user_image": user_prof.get("user_image"),
+            "home_title": user_prof.get("home_title"),
+            "home_description": user_prof.get("home_description"),
+            "skills_description": user_prof.get("skills_description"),
+            "contact_text": user_prof.get("contact_text"),
+            "philosophy_title": user_prof.get("philosophy_title"),
+            "philosophy_text": user_prof.get("philosophy_text")
+        }
         if not user:
-            user = User(
-                title="Developer",
-                name=user_prof.get("name"),
-                location=user_prof.get("location"),
-                philosophy=user_prof.get("philosophy"),
-                focus=user_prof.get("focus"),
-                phone=user_prof.get("contact_phone"),
-                email=user_prof.get("contact_email"),
-                github_url=f"https://github.com/{user_prof.get('github_username')}",
-                linkedin_url=user_prof.get("linkedin_url"),
-                instagram_url=user_prof.get("instagram_url"),
-                facebook_url=user_prof.get("facebook_url"),
-                telegram_url=user_prof.get("telegram_url"),
-                whatsapp_url=user_prof.get("whatsapp_url"),
-                profile_image=user_prof.get("profile_image"),
-                profile_icon=user_prof.get("profile_icon"),
-                bot_image=user_prof.get("bot_image"),
-                user_image=user_prof.get("user_image"),
-                home_title=user_prof.get("home_title"),
-                home_description=user_prof.get("home_description"),
-                skills_description=user_prof.get("skills_description"),
-                contact_text=user_prof.get("contact_text"),
-                philosophy_title=user_prof.get("philosophy_title"),
-                philosophy_text=user_prof.get("philosophy_text")
-            )
+            user = User(**user_data)
             db.add(user)
         else:
-            user.philosophy = user_prof.get("philosophy")
-            user.focus = user_prof.get("focus")
-            user.phone = user_prof.get("contact_phone")
-            user.email = user_prof.get("contact_email")
-            user.profile_image = user_prof.get("profile_image")
-            user.profile_icon = user_prof.get("profile_icon")
-            user.instagram_url = user_prof.get("instagram_url")
-            user.facebook_url = user_prof.get("facebook_url")
-            user.telegram_url = user_prof.get("telegram_url")
-            user.whatsapp_url = user_prof.get("whatsapp_url")
-            user.home_title = user_prof.get("home_title")
-            user.home_description = user_prof.get("home_description")
-            skills_description = user_prof.get("skills_description")
-            contact_text = user_prof.get("contact_text")
-            user.philosophy_title = user_prof.get("philosophy_title")
-            user.philosophy_text = user_prof.get("philosophy_text")
+            for key, value in user_data.items():
+                setattr(user, key, value)
         db.commit()
         db.refresh(user)
         current_user_id = user.id
         existing_knowledge = {k.category: k for k in db.query(Knowledge).all()}
-        knowledge_list = data.get("knowledge_base", [])
-        for entry in knowledge_list:
-            cat = entry['category']
-            info = entry['info']
+        for entry in data.get("knowledge_base", []):
+            cat, info = entry['category'], entry['info']
             if cat in existing_knowledge:
-                if existing_knowledge[cat].info != info:
-                    existing_knowledge[cat].info = info
+                existing_knowledge[cat].info = info
             else:
-                new_k = Knowledge(category=cat, info=info)
-                db.add(new_k)
-                existing_knowledge[cat] = new_k
+                db.add(Knowledge(category=cat, info=info))
         if 'skills' in data:
             existing_skills = {s.name: s for s in db.query(Skill).all()}
             for skill in data['skills']:
-                if skill['name'] not in existing_skills:
-                    db.add(Skill(
-                        category=skill['category'],
-                        name=skill['name'],
-                        icon_class=skill.get('icon', skill.get('icon_class'))
-                    ))
-                k_category = f"skill_{skill['name'].lower().replace(' ', '_').replace('.', '_')}"
-                k_info = f"Skill: {skill['name']} ({skill['category']})."
-                if k_category in existing_knowledge:
-                    if existing_knowledge[k_category].info != k_info:
-                        existing_knowledge[k_category].info = k_info
+                icon = skill.get('icon', skill.get('icon_class'))
+                if skill['name'] in existing_skills:
+                    es = existing_skills[skill['name']]
+                    es.category, es.icon_class = skill['category'], icon
                 else:
-                    new_k = Knowledge(category=k_category, info=k_info)
-                    db.add(new_k)
-                    existing_knowledge[k_category] = new_k
+                    db.add(
+                        Skill(category=skill['category'], name=skill['name'], icon_class=icon))
         if 'services' in data:
             existing_services = {s.title: s for s in db.query(Service).all()}
             for svc in data['services']:
-                if svc['title'] not in existing_services:
-                    db.add(Service(
-                        title=svc['title'],
-                        description=svc['description'],
-                        icon_class=svc.get('icon', svc.get(
-                            'icon_class', 'fas fa-cog'))
-                    ))
+                icon = svc.get('icon', svc.get('icon_class', 'fas fa-cog'))
+                if svc['title'] in existing_services:
+                    es = existing_services[svc['title']]
+                    es.description, es.icon_class = svc['description'], icon
+                else:
+                    db.add(
+                        Service(title=svc['title'], description=svc['description'], icon_class=icon))
         existing_timelines = {
             (t.title, t.year): t for t in db.query(TimelineEvent).all()}
-        if 'academic_timeline' in data:
-            for item in data['academic_timeline']:
-                if (item['title'], item['year']) not in existing_timelines:
-                    db.add(TimelineEvent(
-                        type='academic', year=item['year'], title=item['title'],
-                        subtitle=item['institution'], description=item['description'],
-                        status_badge=item['status'], is_future=False
-                    ))
-        if 'dev_journey' in data:
-            for item in data['dev_journey']:
-                if (item['title'], item['year']) not in existing_timelines:
-                    db.add(TimelineEvent(
-                        type='journey', year=item['year'], title=item['title'],
-                        subtitle="", description=item['description'],
-                        is_future=item.get('is_future', False)
-                    ))
+        for item in data.get('academic_timeline', []):
+            key = (item['title'], item['year'])
+            if key in existing_timelines:
+                et = existing_timelines[key]
+                et.subtitle = item.get('institution', "")
+                et.description = item.get('description', "")
+                et.status_badge = item.get('status', "")
+            else:
+                db.add(TimelineEvent(
+                    type='academic', year=item['year'], title=item['title'],
+                    subtitle=item.get('institution', ""),
+                    description=item.get('description', ""),
+                    status_badge=item.get('status', ""), is_future=False
+                ))
+        for item in data.get('dev_journey', []):
+            key = (item['title'], item['year'])
+            if key in existing_timelines:
+                et = existing_timelines[key]
+                et.description = item.get('description', "")
+                et.is_future = item.get('is_future', False)
+                et.subtitle = et.subtitle or ""
+                et.status_badge = et.status_badge or ""
+            else:
+                db.add(TimelineEvent(
+                    type='journey', year=item['year'], title=item['title'],
+                    subtitle="",
+                    description=item.get('description', ""),
+                    status_badge="",
+                    is_future=item.get('is_future', False)
+                ))
         if 'interests' in data:
             existing_interests = {i.name: i for i in db.query(Interest).all()}
-            for int_item in data['interests']:
-                if int_item['name'] not in existing_interests:
-                    db.add(Interest(
-                        name=int_item['name'],
-                        description=int_item['description'],
-                        icon_class=int_item['icon_class']
-                    ))
-        if 'stats' in data:
-            stat_data = data['stats']
-            stat_record = db.query(Stat).first()
-            if not stat_record:
-                db.add(Stat(
-                    projects_completed=stat_data.get('projects_completed', 0),
-                    certifications=stat_data.get('certifications', 0),
-                    commits_made=stat_data.get('commits_made', 0),
-                    cups_of_coffee=stat_data.get('cups_of_coffee', 0)
-                ))
-            else:
-                stat_record.projects_completed = stat_data.get(
-                    'projects_completed', 0)
-                stat_record.certifications = stat_data.get('certifications', 0)
-                stat_record.commits_made = stat_data.get('commits_made', 0)
-                stat_record.cups_of_coffee = stat_data.get('cups_of_coffee', 0)
-        if 'core_principles' in data:
-            existing_cp = {
-                cp.title: cp for cp in db.query(CorePrinciple).all()}
-            for cp in data['core_principles']:
-                if cp['title'] not in existing_cp:
-                    db.add(CorePrinciple(
-                        title=cp['title'],
-                        description=cp['description'],
-                        icon_class=cp['icon_class']
-                    ))
-        if 'core_philosophy' in data:
-            existing_cph = {
-                cp.title: cp for cp in db.query(CorePhilosophy).all()}
-            for cp in data['core_philosophy']:
-                if cp['title'] not in existing_cph:
-                    db.add(CorePhilosophy(
-                        title=cp['title'],
-                        description=cp['description'],
-                        icon_class=cp['icon_class']
-                    ))
+            for item in data['interests']:
+                if item['name'] in existing_interests:
+                    ei = existing_interests[item['name']]
+                    ei.description, ei.icon_class = item['description'], item['icon_class']
                 else:
-                    existing_cph[cp['title']].description = cp['description']
-                    existing_cph[cp['title']].icon_class = cp['icon_class']
+                    db.add(Interest(
+                        name=item['name'], description=item['description'], icon_class=item['icon_class']))
+        if 'stats' in data:
+            s_data = data['stats']
+            stat_rec = db.query(Stat).first()
+            if not stat_rec:
+                stat_rec = Stat()
+                db.add(stat_rec)
+            stat_rec.projects_completed = s_data.get('projects_completed', 0)
+            stat_rec.certifications = s_data.get('certifications', 0)
+            stat_rec.commits_made = s_data.get('commits_made', 0)
+            stat_rec.cups_of_coffee = s_data.get('cups_of_coffee', 0)
+        for section, model in [('core_principles', CorePrinciple), ('core_philosophy', CorePhilosophy)]:
+            if section in data:
+                existing_items = {i.title: i for i in db.query(model).all()}
+                for item in data[section]:
+                    if item['title'] in existing_items:
+                        ei = existing_items[item['title']]
+                        ei.description, ei.icon_class = item['description'], item['icon_class']
+                    else:
+                        db.add(model(
+                            title=item['title'], description=item['description'], icon_class=item['icon_class']))
         if 'projects' in data:
             existing_projects = {p.slug: p for p in db.query(Project).all()}
             for proj in data['projects']:
-                slug_val = proj.get(
+                slug = proj.get(
                     'slug', proj['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_projects:
-                    db.add(Project(
-                        user_id=current_user_id, title=proj['title'], slug=slug_val,
-                        category=proj.get('category', 'misc'), image_url=proj.get('image_url'),
-                        description=proj.get('description'), content=proj.get('content', ''),
-                        tech_stack=", ".join(proj.get('tech_stack', [])), github_url=proj.get('github_url'),
-                        demo_url=proj.get('demo_url'), is_featured=proj.get('is_featured', False),
-                        year=proj.get('year', '')
-                    ))
+                proj_fields = {
+                    "user_id": current_user_id, "title": proj['title'], "category": proj.get('category', 'misc'),
+                    "image_url": proj.get('image_url'), "description": proj.get('description'),
+                    "content": proj.get('content', ''), "tech_stack": ", ".join(proj.get('tech_stack', [])),
+                    "github_url": proj.get('github_url'), "demo_url": proj.get('demo_url'),
+                    "is_featured": proj.get('is_featured', False), "year": proj.get('year', '')
+                }
+                if slug in existing_projects:
+                    for k, v in proj_fields.items():
+                        setattr(existing_projects[slug], k, v)
                 else:
-                    ep = existing_projects[slug_val]
-                    ep.title = proj['title']
-                    ep.category = proj.get('category', 'misc')
-                    ep.image_url = proj.get('image_url')
-                    ep.description = proj.get('description')
-                    ep.content = proj.get('content', '')
-                    ep.tech_stack = ", ".join(proj.get('tech_stack', []))
-                    ep.github_url = proj.get('github_url')
-                    ep.demo_url = proj.get('demo_url')
-                    ep.is_featured = proj.get('is_featured', False)
-                    ep.year = proj.get('year', '')
+                    db.add(Project(slug=slug, **proj_fields))
         if 'blog_posts' in data:
             existing_blogs = {b.slug: b for b in db.query(BlogPost).all()}
             for post in data['blog_posts']:
-                slug_val = post.get(
+                slug = post.get(
                     'slug', post['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_blogs:
-                    db.add(BlogPost(
-                        user_id=current_user_id, title=post['title'], slug=slug_val,
-                        category=post.get('category', 'Tech'), summary=post['summary'],
-                        content=post['content'], image_url=post.get(
-                            'image_url'),
-                        is_featured=post.get('is_featured', False), created_at=datetime.now(timezone.utc)
-                    ))
+                blog_fields = {
+                    "user_id": current_user_id, "title": post['title'], "category": post.get('category', 'Tech'),
+                    "summary": post['summary'], "content": post['content'], "image_url": post.get('image_url'),
+                    "is_featured": post.get('is_featured', False)
+                }
+                if slug in existing_blogs:
+                    for k, v in blog_fields.items():
+                        setattr(existing_blogs[slug], k, v)
                 else:
-                    eb = existing_blogs[slug_val]
-                    eb.title = post['title']
-                    eb.category = post.get('category', 'Tech')
-                    eb.summary = post['summary']
-                    eb.content = post['content']
-                    eb.image_url = post.get('image_url')
-                    eb.is_featured = post.get('is_featured', False)
+                    db.add(BlogPost(slug=slug, **blog_fields))
         if 'certifications' in data:
             existing_certs = {c.slug: c for c in db.query(
                 Certification).all() if c.slug}
             for cert in data['certifications']:
-                slug_val = cert.get(
+                slug = cert.get(
                     'slug', cert['title'].lower().replace(' ', '-'))
-                if slug_val not in existing_certs:
-                    db.add(Certification(
-                        user_id=current_user_id,
-                        title=cert['title'],
-                        slug=slug_val,
-                        issuer=cert['issuer'],
-                        date=cert.get('date', ''),
-                        description=cert.get('description', ''),
-                        icon_class=cert.get(
-                            'icon_class', 'fas fa-certificate'),
-                        image_url=cert.get('image_url'),
-                        link=cert.get('link'),
-                        status=cert.get('status', 'Completed')
-                    ))
+                cert_fields = {
+                    "user_id": current_user_id, "title": cert['title'], "issuer": cert['issuer'],
+                    "date": cert.get('date', ''), "description": cert.get('description', ''),
+                    "icon_class": cert.get('icon_class', 'fas fa-certificate'),
+                    "image_url": cert.get('image_url'), "link": cert.get('link'), "status": cert.get('status', 'Completed')
+                }
+                if slug in existing_certs:
+                    for k, v in cert_fields.items():
+                        setattr(existing_certs[slug], k, v)
+                else:
+                    db.add(Certification(slug=slug, **cert_fields))
         db.commit()
-        if not Config.IS_RENDER:
-            logger.info(f"✅ Database Initialized - {provider_name}")
+        logger.info(f"✅ Database Initialized - {provider_name}")
     except Exception as e:
         logger.error(f"❌ Database Initialization Failed - {e}")
         db.rollback()

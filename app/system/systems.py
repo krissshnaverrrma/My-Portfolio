@@ -25,10 +25,9 @@ def configure_logging():
         "FLASK_CLI_MODE") == "true" or "cli.py" in sys.argv[0]
     quiet_commands = ["test", "hub"]
     is_quiet_mode = any(cmd in sys.argv for cmd in quiet_commands)
-    if is_quiet_mode or Config.IS_RENDER:
+    if is_quiet_mode:
         os.environ["FLASK_TESTING"] = "true"
-        logging.disable(
-            logging.WARNING if Config.IS_RENDER else logging.CRITICAL)
+        logging.disable(logging.CRITICAL)
         os.environ["WERKZEUG_RUN_MAIN"] = "true"
         logging.getLogger("werkzeug").setLevel(logging.ERROR)
         logging.getLogger("flask").setLevel(logging.ERROR)
@@ -66,20 +65,17 @@ def initialize_app_services(app: Flask, is_cli_mode: bool, is_quiet_mode: bool) 
         is_reloader_process = os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
         should_init = is_cli_mode or Config.IS_RENDER or is_reloader_process or not app.debug
         if should_init:
-            if os.environ.get("FLASK_RUN_FROM_CLI") == "true":
-                for lib in ['app.assistant.assistant', 'app.social.socials', 'app.db.data', 'app.db.data_seed']:
-                    logging.getLogger(lib).setLevel(logging.WARNING)
             try:
                 logger.info("✅ Initializing the Systems")
-                if app.debug and not Config.IS_RENDER:
+                if app.debug or Config.IS_RENDER:
                     init_db()
                 app.assistant = init_assistant()
                 app.socials = init_socials()
                 if not is_quiet_mode:
-                    logger.info("✅ Systems Initialized Successfully")
+                    logger.info("✅ System Initialized Successfully")
             except Exception as e:
                 if not is_quiet_mode:
-                    logger.warning(f"⚠️ Initialization Warning: {e}")
+                    logger.warning(f"⚠️ System Initialization Warning - {e}")
                 app.assistant = getattr(app, 'assistant', None)
                 app.socials = getattr(app, 'socials', None)
         else:

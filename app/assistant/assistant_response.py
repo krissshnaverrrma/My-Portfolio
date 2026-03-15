@@ -14,7 +14,6 @@ class AFCRewriter(logging.Filter):
                 count = msg.split(":")[-1].strip().replace(".", "")
             except Exception:
                 count = "N/A"
-            if not Config.IS_RENDER:
                 logger.info(
                     f"✅ AI Assistant AFC Function Calling Enabled (Max Parallel Calls: {count})"
                 )

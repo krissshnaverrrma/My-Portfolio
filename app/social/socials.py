@@ -10,9 +10,8 @@ logger = logging.getLogger(__name__)
 def init_socials():
     try:
         services = SocialServices()
-        if not Config.IS_RENDER:
-            detail = "Contacts Linked" if services.contact else "Standard Mode"
-            logger.info(f"✅ Social Services Initialized - {detail}")
+        detail = "Contacts Linked" if services.contact else "Standard Mode"
+        logger.info(f"✅ Social Services Initialized - {detail}")
         return services
     except Exception as e:
         logger.error(f"❌ Social Services Initialization Failed - {e}")
