@@ -25,9 +25,10 @@ def configure_logging():
         "FLASK_CLI_MODE") == "true" or "cli.py" in sys.argv[0]
     quiet_commands = ["test", "hub"]
     is_quiet_mode = any(cmd in sys.argv for cmd in quiet_commands)
-    if is_quiet_mode:
+    if is_quiet_mode or Config.IS_RENDER:
         os.environ["FLASK_TESTING"] = "true"
-        logging.disable(logging.CRITICAL)
+        logging.disable(
+            logging.WARNING if Config.IS_RENDER else logging.CRITICAL)
         os.environ["WERKZEUG_RUN_MAIN"] = "true"
         logging.getLogger("werkzeug").setLevel(logging.ERROR)
         logging.getLogger("flask").setLevel(logging.ERROR)
