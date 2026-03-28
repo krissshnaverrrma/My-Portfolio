@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .sleek-panel {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 24px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sleek-panel:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .search-wrapper {
+    max-width: 500px;
+    margin: 0 auto 2rem auto;
+    position: relative;
+  }
+
+  .project-search {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    padding: 12px 25px 12px 50px;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .project-search:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+  }
+
+  .filter-btn.active {
+    background: white;
+    color: black;
+    font-weight: bold;
+  }
+
+  .filter-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  .img-container {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/9;
+    width: 100%;
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
+  }
+
+  .sleek-panel:hover .img-container img {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .tech-pill {
+    font-size: 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 12px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+  }
+
+  .reveal-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #load-more-btn,
+  #show-less-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    margin: 0 5px;
+  }
+
+  #load-more-btn:hover,
+  #show-less-btn:hover {
+    background: white;
+    color: black;
+  }
+</style>
+<div class="d-flex flex-column align-items-center"
+  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+  <div class="p-4 p-md-5 w-100" style="max-width: 1400px; padding-top: 7rem !important;">
+    <div class="text-center mb-5 reveal-element">
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-code text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Innovation & Code</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Projects <span
+          style="color: rgba(255,255,255,0.4);">Archive</span></h1>
+      <div class="search-wrapper">
+        <i class="fas fa-search"
+          style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
+        <input type="text" id="project-search" class="project-search" placeholder="Search Tech or Title">
+      </div>
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Dev</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+        <button class="filter-btn" data-filter="cpp">C | C++</button>
+        <button class="filter-btn" data-filter="game">Games</button>
+      </div>
+    </div>
+    <div class="row g-4" id="project-grid">
+      {% for project in projects if project.is_featured %}
+      <div class="col-12 project-item reveal-element" data-category="{{ project.category }}"
+        data-title="{{ project.title | lower }}" data-featured="true">
+        <div class="sleek-panel">
+          <div class="row align-items-center h-100 flex-grow-1">
+            <div class="col-lg-7">
+              <div class="img-container mb-4 mb-lg-0">
+                <img src="{{ project.image_url }}" alt="{{ project.title }}">
+              </div>
+            </div>
+            <div class="col-lg-5 ps-lg-4 d-flex flex-column h-100 justify-content-center">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h2 class="text-white fw-bold mb-0 display-6" style="letter-spacing: -1px;">{{ project.title }}</h2>
+                <span class="badge bg-white text-black rounded-pill px-3 py-1 mt-2"
+                  style="font-size: 0.6rem; letter-spacing: 1px;">FEATURED</span>
+              </div>
+              <p class="text-secondary mb-4" style="line-height: 1.7; font-size: 0.95rem;">{{ project.description | safe
+                }}</p>
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                {% for tech in project.tech_stack %}
+                <span class="tech-pill">{{ tech }}</span>
+                {% endfor %}
+              </div>
+              <div class="mt-auto">
+                <a href="{{ url_for('main.project_detail', slug=project.slug) }}"
+                  class="btn btn-light rounded-pill fw-bold w-100 py-3 text-uppercase"
+                  style="font-size: 0.8rem; letter-spacing: 1px;">
+                  View Details <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% for project in projects if not project.is_featured %}
+      <div class="col-lg-4 col-md-6 project-item reveal-element" data-category="{{ project.category }}"
+        data-title="{{ project.title | lower }}" data-featured="false">
+        <div class="sleek-panel">
+          <div class="img-container mb-4">
+            <img src="{{ project.image_url }}" alt="{{ project.title }}">
+          </div>
+          <div class="d-flex flex-column flex-grow-1">
+            <h4 class="text-white fw-bold mb-3 h5">{{ project.title }}</h4>
+            <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">{{ project.description | safe }}
+            </p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              {% for tech in project.tech_stack %}
+              <span class="tech-pill">{{ tech }}</span>
+              {% endfor %}
+            </div>
+            <div class="mt-auto">
+              <a href="{{ url_for('main.project_detail', slug=project.slug) }}"
+                class="btn btn-outline-light rounded-pill fw-bold w-100 py-2 text-uppercase"
+                style="font-size: 0.75rem; letter-spacing: 1px;">
+                View Details <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5" id="load-more-container">
+      <button id="load-more-btn" class="reveal-element">Show More Projects <i class="fas fa-code ms-2"></i></button>
+      <button id="show-less-btn" class="reveal-element" style="display: none;">Show Less Projects<i
+          class="fas fa-code ms-2" style="transform: rotate(180deg);"></i></button>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const INITIAL_DISPLAY = 3;
+    let currentlyVisible = INITIAL_DISPLAY;
+    const searchInput = document.getElementById('project-search');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const showLessBtn = document.getElementById('show-less-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const filterGallery = () => {
+      const query = searchInput.value.toLowerCase();
+      const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter').toLowerCase();
+      const isSearchingOrFiltering = query !== '' || activeFilter !== 'all';
+      let regularMatchCount = 0;
+      projectItems.forEach(item => {
+        const category = item.getAttribute('data-category').toLowerCase();
+        const title = item.getAttribute('data-title').toLowerCase();
+        const isFeatured = item.getAttribute('data-featured') === 'true';
+        const matchesFilter = (activeFilter === 'all' || category.includes(activeFilter));
+        const matchesSearch = title.includes(query);
+        if (matchesFilter && matchesSearch) {
+          if (isFeatured) {
+            item.classList.remove('d-none');
+          } else {
+            regularMatchCount++;
+            if (isSearchingOrFiltering || regularMatchCount <= currentlyVisible) {
+              item.classList.remove('d-none');
+            } else {
+              item.classList.add('d-none');
+            }
+          }
+        } else {
+          item.classList.add('d-none');
+        }
+      });
+      if (isSearchingOrFiltering) {
+        loadMoreContainer.style.display = 'none';
+      } else {
+        loadMoreContainer.style.display = 'block';
+        if (currentlyVisible >= regularMatchCount) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'inline-block';
+        }
+        if (currentlyVisible > INITIAL_DISPLAY) {
+          showLessBtn.style.display = 'inline-block';
+        } else {
+          showLessBtn.style.display = 'none';
+        }
+        if (currentlyVisible >= regularMatchCount && currentlyVisible <= INITIAL_DISPLAY) {
+          loadMoreContainer.style.display = 'none';
+        }
+      }
+    };
+    searchInput.addEventListener('input', filterGallery);
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentlyVisible = INITIAL_DISPLAY;
+        filterGallery();
+      });
+    });
+    loadMoreBtn.addEventListener('click', () => {
+      currentlyVisible += 3;
+      filterGallery();
+    });
+    showLessBtn.addEventListener('click', () => {
+      currentlyVisible = INITIAL_DISPLAY;
+      filterGallery();
+      document.getElementById('project-grid').scrollIntoView({ behavior: 'smooth' });
+    });
+    filterGallery();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}

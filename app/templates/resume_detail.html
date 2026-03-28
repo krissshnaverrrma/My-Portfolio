@@ -1,0 +1,558 @@
+{% extends "base.html" %}
+{% block title %}Resume-Print{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .resume-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 40px 20px;
+        background:
+            radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+            #050505;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .resume-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .content-layer {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .a4-page {
+        width: 210mm;
+        height: 297mm;
+        background-color: #ffffff;
+        color: #000000;
+        padding: 12mm 16mm;
+        box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+        font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+        line-height: 1.35;
+        overflow: hidden;
+    }
+
+    .res-doc-header {
+        text-align: center;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 10px;
+    }
+
+    .res-doc-header h1 {
+        font-size: 2.2rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .res-doc-contact {
+        font-size: 0.95rem;
+        color: #000;
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .res-doc-contact a,
+    .cert-grid a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .res-doc-contact a {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .res-doc-contact a:hover,
+    .cert-grid a:hover {
+        text-decoration: underline;
+    }
+
+    .print-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: bold;
+        font-size: 0.85rem;
+        color: #000 !important;
+        text-decoration: none;
+        margin-top: 2px;
+    }
+
+    .print-link:hover {
+        text-decoration: underline;
+    }
+
+    .res-doc-section {
+        margin-bottom: 14px;
+    }
+
+    .res-doc-title {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        color: #000;
+        border-bottom: 1px solid #000;
+        margin-bottom: 8px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+    }
+
+    .edu-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+    }
+
+    .edu-left strong {
+        display: block;
+        font-size: 1rem;
+        color: #000;
+    }
+
+    .edu-left span {
+        font-size: 0.95rem;
+        color: #000;
+        font-style: italic;
+    }
+
+    .edu-right {
+        text-align: right;
+        font-size: 0.95rem;
+        color: #000;
+    }
+
+    .res-doc-skills {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .res-doc-skills li {
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+        color: #000;
+    }
+
+    .res-doc-skills strong {
+        color: #000;
+        display: inline-block;
+        width: 140px;
+    }
+
+    .proj-block {
+        margin-bottom: 10px;
+    }
+
+    .proj-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 4px;
+    }
+
+    .proj-title-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .proj-title-group h3 {
+        margin: 0;
+        font-size: 1rem;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .proj-title-group span {
+        font-size: 0.9rem;
+        color: #333;
+        font-style: italic;
+        margin-top: 2px;
+    }
+
+    .proj-bullets {
+        margin: 4px 0 0 0;
+        padding-left: 18px;
+        font-size: 0.95rem;
+        color: #000;
+    }
+
+    .proj-bullets li {
+        margin-bottom: 3px;
+    }
+
+    .blog-desc {
+        font-size: 0.95rem;
+        margin: 3px 0 0 0;
+        color: #000;
+    }
+
+    .cert-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .cert-grid li {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .cert-info {
+        display: flex;
+        flex-direction: column;
+        padding-right: 15px;
+    }
+
+    .cert-info strong {
+        font-size: 0.95rem;
+        color: #000;
+    }
+
+    .cert-info span {
+        font-size: 0.9rem;
+        color: #333;
+        font-style: italic;
+        margin-top: 2px;
+    }
+
+    .print-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        z-index: 10;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        text-transform: uppercase;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .btn-action:hover {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        text-decoration: none;
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        header,
+        footer,
+        nav,
+        aside,
+        .navbar,
+        .res-sidebar,
+        .print-controls,
+        body>div[style="height: 80px;"] {
+            display: none !important;
+        }
+
+        html,
+        body,
+        .resume-wrapper,
+        .content-layer {
+            background: #ffffff !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            position: static !important;
+            overflow: visible !important;
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .resume-wrapper::before {
+            display: none !important;
+        }
+
+        .a4-page {
+            box-shadow: none !important;
+            border: none !important;
+            width: 100% !important;
+            height: auto !important;
+            margin: 0 !important;
+            padding: 12mm 16mm !important;
+            position: static !important;
+        }
+
+        .a4-page,
+        .a4-page * {
+            color: #000000 !important;
+            background: transparent !important;
+            text-shadow: none !important;
+        }
+
+        a[href]:after {
+            content: none !important;
+        }
+    }
+</style>
+<div class="resume-wrapper fade-in">
+    <div class="content-layer">
+        <div class="a4-page">
+            <div class="res-doc-header">
+                <h1>Krishna Verma</h1>
+                <div class="res-doc-contact">
+                    <a href="tel:+919258846075"><i class="fas fa-phone-alt"></i> +91 9258846075</a> |
+                    <a href="mailto:krishnav24-cs@sanskar.org"><i class="fas fa-envelope"></i>
+                        krishnav24-cs@sanskar.org</a> |
+                    <a href="https://github.com/krissshnaverrrma" target="_blank"><i class="fab fa-github"></i>
+                        GitHub</a> |
+                    <a href="https://linkedin.com/in/krishnav-cs" target="_blank"><i class="fab fa-linkedin"></i>
+                        Linkedin</a>
+                </div>
+            </div>
+            <div class="res-doc-section">
+                <div class="res-doc-title">Education</div>
+                <div class="edu-row">
+                    <div class="edu-left">
+                        <strong>Sanskar College of Engineering and Technology (SCET)</strong>
+                        <span>B.Tech in Computer Science</span>
+                    </div>
+                    <div class="edu-right">
+                        <div>2024 - Present</div>
+                    </div>
+                </div>
+                <div class="edu-row">
+                    <div class="edu-left">
+                        <strong>JMS World School & Saraswati Bal Mandir</strong>
+                        <span>Higher Secondary (XII & X) - PCM</span>
+                    </div>
+                    <div class="edu-right">
+                        <div>2022 - 2024</div>
+                    </div>
+                </div>
+            </div>
+            <div class="res-doc-section">
+                <div class="res-doc-title">Technical Skills</div>
+                <ul class="res-doc-skills">
+                    <li><strong>Languages:</strong> Python, C/C++, JavaScript, Java, Bash/Shell</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3, Bootstrap, Responsive Design</li>
+                    <li><strong>Backend & DB:</strong> Flask, Django, REST APIs, PostgreSQL, SQLAlchemy</li>
+                    <li><strong>DevOps & Tools:</strong> Git, GitHub, Linux, VS Code, Render/Vercel</li>
+                    <li><strong>AI & Methods:</strong> Generative AI Integration, Automation Scripts, OOP Design</li>
+                </ul>
+            </div>
+            <div class="res-doc-section">
+                <div class="res-doc-title">Projects</div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Live Weather Dashboard</h3>
+                            <span>JavaScript, OpenWeather API, CSS3</span>
+                        </div>
+                        <a href="https://github.com/krissshnaverrrma/Weather-APP" target="_blank" class="print-link">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                    <ul class="proj-bullets">
+                        <li>Engineered a real-time weather tracking application handling asynchronous data streams via
+                            OpenWeatherMap API.</li>
+                        <li>Implemented native Geolocation API for automatic user location detection and localized
+                            forecasting.</li>
+                    </ul>
+                </div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Quote Studio AI</h3>
+                            <span>Flask, Generative AI, Web</span>
+                        </div>
+                        <a href="https://github.com/krissshnaverrrma/Qoute-Studio-AI" target="_blank"
+                            class="print-link">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                    <ul class="proj-bullets">
+                        <li>Developed a modern quote generator leveraging Generative AI to create dynamic, mood-based
+                            content.</li>
+                        <li>Engineered a Python backend to securely proxy AI model requests and implemented instant
+                            image export capabilities.</li>
+                    </ul>
+                </div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Type Master AI</h3>
+                            <span>Django, Groq AI, Web Audio API</span>
+                        </div>
+                        <a href="https://github.com/krissshnaverrrma/Type-Master" target="_blank" class="print-link">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                    <ul class="proj-bullets">
+                        <li>Built a high-performance typing master application emphasizing backend architecture and
+                            minimal latency.</li>
+                        <li>Integrated Groq Cloud AI (llama-3.3-70b-versatile) to dynamically generate unique,
+                            philosophical typing prompts.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="res-doc-section">
+                <div class="res-doc-title">Blog Posts</div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Live Weather Dashboard: Bridging the Global Grid</h3>
+                            <span>Web / API</span>
+                        </div>
+                        <a href="/blog/weather-dashboard-api" class="print-link">
+                            <i class="fas fa-book-open"></i> Read Article
+                        </a>
+                    </div>
+                    <p class="blog-desc">
+                        A breakdown of extracting and mapping massive JSON responses from weather providers to dynamic
+                        DOM elements.
+                    </p>
+                </div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Quote Studio AI: The Ultimate Automation</h3>
+                            <span>Full Stack / AI</span>
+                        </div>
+                        <a href="/blog/quote-studio-ai" class="print-link">
+                            <i class="fas fa-book-open"></i> Read Article
+                        </a>
+                    </div>
+                    <p class="blog-desc">
+                        Exploring the integration of robust backend architecture with Generative AI APIs to create a
+                        self-sustaining content engine.
+                    </p>
+                </div>
+                <div class="proj-block">
+                    <div class="proj-head">
+                        <div class="proj-title-group">
+                            <h3>Type Master AI: Zero-Latency Experiences</h3>
+                            <span>Full Stack / AI</span>
+                        </div>
+                        <a href="/blog/type-master-ai" class="print-link">
+                            <i class="fas fa-book-open"></i> Read Article
+                        </a>
+                    </div>
+                    <p class="blog-desc">
+                        Exploring the intersection of AI text generation and low-level browser audio APIs to create a
+                        zero-latency typing experience.
+                    </p>
+                </div>
+            </div>
+            <div class="res-doc-section">
+                <div class="res-doc-title">Certificates</div>
+                <ul class="cert-grid">
+                    <li>
+                        <div class="cert-info">
+                            <strong>Python for Ethical Hacking and Penetration Testing – Udemy</strong>
+                            <span>Issued: Mar 2026</span>
+                        </div>
+                        <a href="https://www.udemy.com/certificate/UC-5e2ecdae-863f-48b8-871b-48ab46025839/"
+                            target="_blank" class="print-link">
+                            <i class="fas fa-award"></i> View Credential
+                        </a>
+                    </li>
+                    <li>
+                        <div class="cert-info">
+                            <strong>Master Python Game Development: A Project-Based Journey – Udemy</strong>
+                            <span>Issued: Mar 2026</span>
+                        </div>
+                        <a href="https://www.udemy.com/certificate/UC-eb6b640e-165a-4aec-8875-1b8263b6472b/"
+                            target="_blank" class="print-link">
+                            <i class="fas fa-award"></i> View Credential
+                        </a>
+                    </li>
+                    <li>
+                        <div class="cert-info">
+                            <strong>The Complete Web Developer Bootcamp – Udemy</strong>
+                            <span>Issued: Mar 2026</span>
+                        </div>
+                        <a href="https://www.udemy.com/certificate/UC-2b7c9ca1-3139-410a-88cd-0f2813722f98/"
+                            target="_blank" class="print-link">
+                            <i class="fas fa-award"></i> View Credential
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="print-controls">
+            <a href="/" class="btn-action">
+                <i class="fas fa-arrow-left"></i> Return to Portfolio
+            </a>
+            <button class="btn-action" onclick="window.print()">
+                <i class="fas fa-print"></i> Download or Print Resume
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

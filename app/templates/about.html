@@ -1,0 +1,430 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .about-wrapper {
+          min-height: 100vh;
+          width: 100vw;
+          margin: 0;
+          background:
+               radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+               radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+               #050505;
+          padding-bottom: 5rem;
+          position: relative;
+          overflow: hidden;
+     }
+
+     .about-wrapper::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+               linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+          background-size: 50px 50px;
+          z-index: 0;
+          pointer-events: none;
+     }
+
+     .content-layer {
+          position: relative;
+          z-index: 1;
+     }
+
+     .sleek-panel {
+          background: rgba(15, 15, 15, 0.6);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 24px;
+          padding: 2.5rem;
+          height: 100%;
+          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          will-change: transform, box-shadow;
+     }
+
+     .sleek-panel:hover {
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+          transform: translateY(-3px);
+     }
+
+     .timeline-container {
+          position: relative;
+          padding-left: 2rem;
+     }
+
+     .timeline-container::before {
+          content: '';
+          position: absolute;
+          left: 4px;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+          border-radius: 2px;
+     }
+
+     .timeline-item {
+          position: relative;
+          padding-bottom: 3rem;
+     }
+
+     .timeline-item:last-child {
+          padding-bottom: 0;
+     }
+
+     .timeline-dot {
+          position: absolute;
+          left: -2rem;
+          top: 0.3rem;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #fff;
+          box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.6);
+     }
+
+     .timeline-dot.future {
+          background: transparent;
+          border: 2px solid rgba(255, 255, 255, 0.5);
+          box-shadow: none;
+     }
+
+     .timeline-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.03);
+          border-radius: 16px;
+          padding: 1.5rem;
+     }
+
+     .services-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 1.5rem;
+     }
+
+     .service-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          transition: transform 0.3s ease, background 0.3s ease;
+          will-change: transform;
+     }
+
+     .service-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.04);
+     }
+
+     .service-icon-wrapper {
+          width: 45px;
+          height: 45px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.25rem;
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: opacity, transform;
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+
+     .stat-box {
+          text-align: center;
+          padding: 1rem;
+     }
+
+     .philosophy-panel {
+          background: rgba(255, 255, 255, 0.03);
+          border-left: 10px solid #ffffff;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          padding: 1.5rem;
+          border-radius: 8px;
+          max-width: 1000px;
+          margin: 2rem auto 0 auto;
+          text-align: left;
+     }
+</style>
+<div class="about-wrapper d-flex flex-column align-items-center">
+     <div class="content-layer p-4 w-100" style="max-width: 1200px; padding-top: 8rem !important;">
+          <div class="text-center mb-5 reveal-element">
+               <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                    <i class="fas fa-fingerprint text-white me-2" style="opacity: 0.7;"></i>
+                    <span class="text-uppercase text-white fw-bold"
+                         style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Identity & Vision</span>
+               </div>
+               <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Architecting <span
+                         style="color: rgba(255,255,255,0.4);">Ideas</span></h1>
+               <p class="text-secondary mx-auto mb-4"
+                    style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; font-weight: 300;">
+                    {{ user_profile.about_text }}
+               </p>
+               <div class="philosophy-panel reveal-element">
+                    <div class="d-flex align-items-center mb-2">
+                         <img src="{{ user_profile.bot_image }}" alt="AI Assistant"
+                              class="me-2 rounded-circle shadow-sm"
+                              style="width: 24px; height: 24px; object-fit: cover;">
+                         <span class="fw-bold text-white" style="letter-spacing: 1px; font-size: 0.85rem;">{{
+                              user_profile.philosophy_title }}</span>
+                    </div>
+                    <p class="mb-0 text-light opacity-75"
+                         style="font-size: 1.05rem; font-style: italic; text-align: justify;">
+                         {{ user_profile.philosophy_text }}
+                    </p>
+               </div>
+          </div>
+          <div class="col-12 reveal-element mantra-section">
+               <div class="sleek-panel">
+                    <div class="d-flex align-items-center mb-5 gap-3">
+                         <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                         <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">The Mantras and
+                              Visions</h5>
+                    </div>
+                    <div class="row g-4">
+                         <div class="col-md-6 col-lg-3">
+                              <div class="timeline-card h-100 border-0" style="background: rgba(255,255,255,0.03);">
+                                   <h2 class="text-white fw-bold mb-1 counter display-5"
+                                        data-target="{{ stats.projects_completed | default(0) }}">0</h2>
+                                   <p class="text-secondary mb-3 text-uppercase fw-bold"
+                                        style="letter-spacing: 1px; font-size: 0.75rem;">Projects</p>
+                                   <div class="pt-2 border-top border-secondary border-opacity-25">
+                                        <span class="badge text-white bg-transparent p-0"
+                                             style="font-size: 0.65rem; opacity: 0.5; letter-spacing: 2px;">DELIVERED</span>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="col-md-6 col-lg-3">
+                              <div class="timeline-card h-100 border-0" style="background: rgba(255,255,255,0.03);">
+                                   <h2 class="text-white fw-bold mb-1 counter display-5"
+                                        data-target="{{ stats.blog_posts | default(0) }}">0</h2>
+                                   <p class="text-secondary mb-3 text-uppercase fw-bold"
+                                        style="letter-spacing: 1px; font-size: 0.75rem;">Blog Posts</p>
+                                   <div class="pt-2 border-top border-secondary border-opacity-25">
+                                        <span class="badge text-white bg-transparent p-0"
+                                             style="font-size: 0.65rem; opacity: 0.5; letter-spacing: 2px;">Enhanced</span>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="col-md-6 col-lg-3">
+                              <div class="timeline-card h-100 border-0" style="background: rgba(255,255,255,0.03);">
+                                   <h2 class="text-white fw-bold mb-1 counter display-5"
+                                        data-target="{{ stats.certifications | default(0) }}">0</h2>
+                                   <p class="text-secondary mb-3 text-uppercase fw-bold"
+                                        style="letter-spacing: 1px; font-size: 0.75rem;">Certifications</p>
+                                   <div class="pt-2 border-top border-secondary border-opacity-25">
+                                        <span class="badge text-white bg-transparent p-0"
+                                             style="font-size: 0.65rem; opacity: 0.5; letter-spacing: 2px;">VERIFIED</span>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="col-md-6 col-lg-3">
+                              <div class="timeline-card h-100 border-0" style="background: rgba(255,255,255,0.03);">
+                                   <h2 class="text-white fw-bold mb-1 counter display-5"
+                                        data-target="{{ stats.cups_of_coffee | default(0) }}">0</h2>
+                                   <p class="text-secondary mb-3 text-uppercase fw-bold"
+                                        style="letter-spacing: 1px; font-size: 0.75rem;">Cups of Coffee</p>
+                                   <div class="pt-2 border-top border-secondary border-opacity-25">
+                                        <span class="badge text-white bg-transparent p-0"
+                                             style="font-size: 0.65rem; opacity: 0.5; letter-spacing: 2px;">CONSUMED</span>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row g-4 mt-2">
+               <div class="col-lg-6 d-flex flex-column reveal-element" style="transition-delay: 0.05s;">
+                    <div class="sleek-panel">
+                         <div class="d-flex align-items-center mb-5 gap-3">
+                              <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">Academic
+                                   Path</h5>
+                         </div>
+                         <div class="timeline-container">
+                              {% for item in academic_timeline %}
+                              <div class="timeline-item">
+                                   <div class="timeline-dot"></div>
+                                   <div class="mb-2">
+                                        <span class="badge text-white font-monospace"
+                                             style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);">{{
+                                             item.year }}</span>
+                                   </div>
+                                   <div class="timeline-card mt-2">
+                                        <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                                             <h6 class="text-white fw-bold mb-0 lh-base">{{ item.title }}</h6>
+                                             <span class="badge border border-light text-white bg-transparent opacity-50"
+                                                  style="font-size: 0.65rem;">{{ item.status_badge }}</span>
+                                        </div>
+                                        <p class="text-white small mb-2 opacity-50 fw-semibold"><i
+                                                  class="fas fa-university me-2"></i>{{ item.subtitle }}</p>
+                                        <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">{{
+                                             item.description }}</p>
+                                   </div>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+               <div class="col-lg-6 d-flex flex-column reveal-element" style="transition-delay: 0.1s;">
+                    <div class="sleek-panel">
+                         <div class="d-flex align-items-center mb-5 gap-3">
+                              <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">The Dev
+                                   Journey</h5>
+                         </div>
+                         <div class="timeline-container">
+                              {% for step in dev_journey %}
+                              <div class="timeline-item">
+                                   <div class="timeline-dot {% if step.is_future %}future{% endif %}"></div>
+                                   <div class="mb-2">
+                                        <span class="badge text-white font-monospace"
+                                             style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px;">{{
+                                             step.year }}</span>
+                                   </div>
+                                   <h5 class="mb-2 text-white fw-bold mt-3">{{ step.title }}</h5>
+                                   <p class="text-secondary mb-0" style="font-size: 0.95rem; line-height: 1.7;">{{
+                                        step.description }}</p>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row g-4 mt-2 reveal-element" style="transition-delay: 0.15s;">
+               <div class="col-12">
+                    <div class="sleek-panel">
+                         <div class="d-flex align-items-center mb-5 gap-3">
+                              <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">Current
+                                   Focus</h5>
+                         </div>
+                         <div class="services-grid">
+                              {% for service in services %}
+                              <div class="service-card">
+                                   <div class="service-icon-wrapper">
+                                        <i class="{{ service.icon_class }}"></i>
+                                   </div>
+                                   <div>
+                                        <h6 class="text-white fw-bold mb-2">{{ service.title }}</h6>
+                                        <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">{{
+                                             service.description }}</p>
+                                   </div>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row g-4 mt-2 reveal-element" style="transition-delay: 0.2s;">
+               <div class="col-12">
+                    <div class="sleek-panel">
+                         <div class="d-flex align-items-center mb-5 gap-3">
+                              <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="fw-bold text-white mb-0 text-uppercase" style="letter-spacing: 1px;">Interests
+                                   & Hobbies</h5>
+                         </div>
+                         <div class="row g-4">
+                              {% for interest in interests %}
+                              <div class="col-md-6 col-lg-3">
+                                   <div class="p-3 rounded d-flex align-items-center h-100"
+                                        style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.3s;">
+                                        <div class="me-3 text-white fs-4 d-flex align-items-center justify-content-center"
+                                             style="min-width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                             <i class="{{ interest.icon_class }}"></i>
+                                        </div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">{{ interest.name }}</h6>
+                                             <p class="text-secondary mb-0" style="font-size: 0.85rem;">{{
+                                                  interest.description }}</p>
+                                        </div>
+                                   </div>
+                              </div>
+                              {% endfor %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+               document.querySelectorAll('.reveal-element').forEach(el => el.classList.add('reveal-visible'));
+          }, 300);
+          const observer = new IntersectionObserver((entries, obs) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                         entry.target.classList.add('reveal-visible');
+                         obs.unobserve(entry.target);
+                    }
+               });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.reveal-element').forEach((el, index) => {
+               el.style.transitionDelay = `${index * 0.05}s`;
+               observer.observe(el);
+          });
+          const counters = document.querySelectorAll('.counter');
+          let counted = false;
+          const counterObserver = new IntersectionObserver((entries, obs) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting && !counted) {
+                         counted = true;
+                         counters.forEach(counter => {
+                              const updateCount = () => {
+                                   const target = +counter.getAttribute('data-target') || 0;
+                                   const count = +counter.innerText;
+                                   const inc = Math.max(1, target / 50);
+                                   if (count < target) {
+                                        counter.innerText = Math.ceil(count + inc);
+                                        requestAnimationFrame(updateCount);
+                                   } else {
+                                        counter.innerText = target + (target > 1000 ? '+' : '');
+                                   }
+                              };
+                              updateCount();
+                         });
+                         obs.disconnect();
+                    }
+               });
+          }, { threshold: 0.2 });
+          const statsContainer = document.querySelector('.mantra-section');
+          if (statsContainer) {
+               counterObserver.observe(statsContainer);
+          }
+     });
+</script>
+{% endblock %}

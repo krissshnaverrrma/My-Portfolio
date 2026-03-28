@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Virtual AI Assistant{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assistant.css') }}">
+<div class="res-wrapper-full fade-in">
+    <div class="res-content">
+        <div class="res-grid">
+            <aside class="res-sidebar">
+                <div class="sidebar-label"><i class="fas fa-info-circle"></i> System Context</div>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.8rem;">
+                    Status Indicated by Icon Border:
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #333; padding: 6px 4px; border-radius: 50px; background-color: #111; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #ccc; box-sizing: border-box;">
+                        <span style="color:#2ecc71; font-size: 0.8rem;">●</span> Online Mode
+                    </div>
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #333; padding: 6px 4px; border-radius: 50px; background-color: #111; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #ccc; box-sizing: border-box;">
+                        <span style="color:#f1c40f; font-size: 0.8rem;">●</span> Cache Mode
+                    </div>
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #333; padding: 6px 4px; border-radius: 50px; background-color: #111; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #ccc; box-sizing: border-box;">
+                        <span style="color:#e67e22; font-size: 0.8rem;">●</span> Database Mode
+                    </div>
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #333; padding: 6px 4px; border-radius: 50px; background-color: #111; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #ccc; box-sizing: border-box;">
+                        <span style="color:#ff4d4d; font-size: 0.8rem;">●</span> Offline Mode
+                    </div>
+                </div>
+                <div class="sidebar-label"><i class="fas fa-bolt"></i> Quick Actions</div>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 2rem;">
+                    <div class="quick-link" onclick="insertPrompt('Who are you?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <img src="{{ profile.bot_image }}"
+                            style="height: 18px; width: 18px; border-radius: 50%; object-fit: cover;" alt="Assistant">
+                        <span>Who are You?</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('Tell me about {{ profile.name }}.')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <img src="{{ profile.profile_image }}"
+                            style="height: 18px; width: 18px; border-radius: 50%; object-fit: cover;" alt="Profile">
+                        <span>About {{ profile.name }}</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('Where does he study?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-graduation-cap" style="width: 18px; text-align: center;"></i>
+                        <span>Education</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What are his Top Technical Skills?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-code" style="width: 18px; text-align: center;"></i> <span>Top Skills</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What is his tech stack?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-layer-group" style="width: 18px; text-align: center;"></i> <span>Tech
+                            Stack</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('Does he have experience with Python?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fab fa-python" style="width: 18px; text-align: center;"></i> <span>Python
+                            Knowledge</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What is his experience?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-briefcase" style="width: 18px; text-align: center;"></i>
+                        <span>Experience</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What services does he offer?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-cogs" style="width: 18px; text-align: center;"></i> <span>Services</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What are his hobbies?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-chess" style="width: 18px; text-align: center;"></i> <span>Hobbies</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('Tell me about his Projects.')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-globe" style="width: 18px; text-align: center;"></i> <span>Projects</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('Show Me his Blog Posts.')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-blog" style="width: 18px; text-align: center;"></i> <span>Blog Posts</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What Certifications has he earned?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-certificate" style="width: 18px; text-align: center;"></i>
+                        <span>Certificates</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('What are his stats?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-chart-bar" style="width: 18px; text-align: center;"></i> <span>Stats</span>
+                    </div>
+                    <div class="quick-link" onclick="insertPrompt('How can I Contact him?')"
+                        style="display: flex; align-items: center; gap: 12px; border: 1px solid #333; padding: 12px 16px; border-radius: 12px; background-color: #111; font-size: 0.85rem; color: #ccc; cursor: pointer; transition: background-color 0.2s ease;">
+                        <i class="fas fa-envelope" style="width: 18px; text-align: center;"></i> <span>Contact
+                            Info</span>
+                    </div>
+                </div>
+            </aside>
+            <main class="res-main">
+                <div class="chat-interface-wrapper">
+                    <div class="steady-panel" id="chat-window" data-bot-image="{{ profile.bot_image }}"
+                        data-user-image="{{ profile.user_image }}" data-profile-name="{{ profile.name }}">
+                        <div class="steady-header" style="border-bottom: 1px solid #333; padding: 12px 20px;">
+                            <div class="steady-header-left" style="display: flex; align-items: center; gap: 12px;">
+                                <div class="bot-icon-wrapper">
+                                    <img src="{{ profile.bot_image }}" alt="Assistant">
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <div class="steady-title"
+                                        style="display: inline-flex; align-items: center; border: 1px solid #333; padding: 6px 16px; border-radius: 50px; background-color: #111; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #fff;">
+                                        {{ profile.name }}'s Virtual AI Assistant
+                                    </div>
+                                    <div class="steady-status"
+                                        style="display: inline-flex; align-items: center; gap: 6px; border: 1px solid #333; padding: 4px 12px; border-radius: 50px; background-color: #111; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #ccc;">
+                                        <i class="fas fa-circle" id="status-dot"
+                                            style="font-size: 0.55rem; color: #888;"></i>
+                                        <span id="status-label">Initializing...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="steady-header-controls">
+                                <button class="header-btn" onclick="clearChat()" title="Clear Chat"
+                                    style="background: transparent; border: none; color: #888; cursor: pointer;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="header-btn" onclick="refreshChat()" title="Restart Session"
+                                    style="background: transparent; border: none; color: #888; cursor: pointer;">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button class="header-btn btn-close-red" onclick="closeChat()" title="Exit to Home"
+                                    style="background: transparent; border: none; color: #ff4d4d; cursor: pointer;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chat-body" id="chat-body"></div>
+                        <div class="chat-input-area" style="padding: 12px 20px; border-top: 1px solid #222;">
+                            <div class="input-capsule">
+                                <input type="text" id="user-input" placeholder="Initializing..." disabled
+                                    autocomplete="off">
+                                <div class="input-actions">
+                                    <button id="mic-btn" onclick="toggleVoice()" disabled><i
+                                            class="fas fa-microphone"></i></button>
+                                    <button id="send-btn" onclick="handleSend()" disabled><i
+                                            class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                            <div
+                                style="text-align: center; margin-top: 8px; font-size: 0.7rem; color: #666; letter-spacing: 0.5px; padding-bottom: 2px;">
+                                <i class="fas fa-user-shield" style="margin-right: 4px;"></i> Powered by <b>Google
+                                    Gemini</b> AI. Conversations are Logged. Do Not Share Sensitive INFO!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/assistant.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .blog-content {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1.15rem;
+        line-height: 1.9;
+    }
+
+    .blog-content h2,
+    .blog-content h3 {
+        color: white;
+        margin-top: 2.5rem;
+        margin-bottom: 1.2rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .blog-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-content blockquote {
+        border-left: 4px solid var(--primary-color, #ffffff);
+        padding: 1.5rem 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        font-style: italic;
+        border-radius: 0 16px 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.02);
+        border-right: 1px solid rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .sleek-panel {
+        background: rgba(15, 15, 15, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 24px;
+        padding: 2.5rem;
+        transition: all 0.4s ease;
+    }
+
+    .sleek-panel:hover {
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .tech-pill {
+        font-size: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 14px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-family: monospace;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        text-transform: uppercase;
+    }
+
+    .btn-action {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn-action:hover {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .btn-solid {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn-solid:hover {
+        background: transparent;
+        color: #ffffff;
+    }
+</style>
+<div class="d-flex flex-column align-items-center"
+    style="min-height: 100vh; width: 100vw; margin: 0; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+    <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1000px;">
+        <div class="mb-5">
+            <a href="{{ url_for('main.blogs') }}" class="btn-action">
+                <i class="fas fa-arrow-left me-2"></i> Back to Blog Posts
+            </a>
+        </div>
+        <header class="mb-5">
+            <div class="d-flex gap-3 align-items-center mb-4">
+                <span class="tech-pill">{{ post.category }}</span>
+                <span class="text-secondary" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                    <i class="far fa-clock me-1"></i> 5 min read
+                </span>
+            </div>
+            <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">{{ post.title }}</h1>
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-4 text-secondary">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" class="rounded-circle"
+                        style="width: 45px; height: 45px; border: 2px solid rgba(255,255,255,0.1);">
+                    <div>
+                        <div class="small fw-bold text-white" style="letter-spacing: 0.5px;">{{ profile.name }}</div>
+                        <div class="small text-secondary">Author</div>
+                    </div>
+                </div>
+                <div class="small" style="font-family: monospace;">
+                    <i class="far fa-calendar-alt me-2"></i> {{ post.date | default(post.created_at) | default('Recent')
+                    }}
+                </div>
+            </div>
+        </header>
+        {% if post.image_url %}
+        <div class="mb-5 sleek-panel p-2 p-md-3">
+            <div class="rounded-4 overflow-hidden" style="border-radius: 16px;">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="w-100"
+                    style="max-height: 500px; object-fit: cover;">
+            </div>
+        </div>
+        {% endif %}
+        <article class="blog-content mb-5">
+            {{ post.content | markdown | safe }}
+        </article>
+        <div class="sleek-panel d-flex flex-column flex-md-row align-items-center gap-4 mt-5">
+            <img src="{{ profile.profile_image }}" class="rounded-circle"
+                style="width: 100px; height: 100px; border: 2px solid rgba(255,255,255,0.2);">
+            <div>
+                <h5 class="text-white fw-bold mb-2">Written by {{ profile.name }}</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.6;">A Computer Science Undergraduate with a
+                    "Lazy Coder"
+                    Mentality—Automating the Repetitive to Focus on the Innovative.</p>
+                <div class="d-flex gap-3">
+                    <a href="https://github.com/{{ profile.github_username }}" class="text-white"
+                        style="transition: 0.3s; opacity: 0.7;" onmouseover="this.style.opacity=1"
+                        onmouseout="this.style.opacity=0.7">
+                        <i class="fab fa-github fs-4"></i>
+                    </a>
+                    <a href="{{ profile.linkedin_url }}" class="text-white" style="transition: 0.3s; opacity: 0.7;"
+                        onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+                        <i class="fab fa-linkedin fs-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5 pt-5 text-center">
+            <h4 class="text-white fw-bold mb-4">Want to See the Repositories in Action?</h4>
+            <a href="{{ url_for('main.projects') }}" class="btn-solid">
+                Explore My Projects <i class="fas fa-rocket ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

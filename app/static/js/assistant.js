@@ -1,0 +1,270 @@
+let BOT_IMG_PATH = "/static/assets/assistant/assistant.png";
+let USER_IMG_PATH = "/static/assets/assistant/user.png";
+let PROFILE_NAME = "Krishna Verma";
+let isProcessing = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const chatWindow = document.getElementById("chat-window");
+    if (chatWindow) {
+        BOT_IMG_PATH = chatWindow.dataset.botImage || BOT_IMG_PATH;
+        USER_IMG_PATH = chatWindow.dataset.userImage || USER_IMG_PATH;
+        PROFILE_NAME = chatWindow.dataset.profileName || PROFILE_NAME;
+    }
+
+    const label = document.getElementById("status-label");
+    const botIcon = document.getElementById("bot-status-icon");
+    const dot = document.getElementById("status-dot");
+    if (label) {
+        label.innerText = "Connecting to the Google GEMINI API Key";
+        if (botIcon) botIcon.style.borderColor = "#666";
+        if (dot) dot.className = "fas fa-circle";
+    }
+    setTimeout(() => {
+        checkSystemStatus();
+    }, 1500);
+    const inputField = document.getElementById("user-input");
+    if (inputField) {
+        inputField.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !isProcessing) {
+                handleSend();
+            }
+        });
+    }
+});
+
+function updateBotUI(status) {
+    const input = document.getElementById("user-input");
+    const label = document.getElementById("status-label");
+    const dot = document.getElementById("status-dot");
+    const sendBtn = document.getElementById("send-btn");
+    const micBtn = document.getElementById("mic-btn");
+    const botIcon = document.getElementById("bot-status-icon");
+    if (!input || !label) return;
+    const baseDotClass = "fas fa-circle ";
+    if (status === "cached_mode") {
+        input.disabled = false;
+        input.placeholder = "Responding via Cache Mode";
+        label.innerText = "Cached Mode";
+        label.className = "text-info-cache";
+        if (dot) dot.className = baseDotClass + "text-info-cache";
+        if (botIcon) {
+            botIcon.style.borderColor = "#f1c40f";
+            botIcon.style.boxShadow = "0 0 20px rgba(241, 196, 15, 0.4)";
+        }
+        if (sendBtn) sendBtn.disabled = false;
+        if (micBtn) micBtn.disabled = false;
+    } else if (status && status.includes("online")) {
+        input.disabled = false;
+        input.placeholder = `Ask Me about ${PROFILE_NAME}`;
+        label.innerText = "Online";
+        label.className = "text-success";
+        if (dot) dot.className = baseDotClass + "text-success";
+        if (botIcon) {
+            botIcon.style.borderColor = "#2ecc71";
+            botIcon.style.boxShadow = "0 0 20px rgba(46, 204, 113, 0.4)";
+        }
+        if (sendBtn) sendBtn.disabled = false;
+        if (micBtn) micBtn.disabled = false;
+    } else if (status === "database_mode" || status === "database") {
+        input.disabled = false;
+        input.placeholder = "Responding via Database Mode";
+        label.innerText = "Database Mode";
+        label.className = "text-warning";
+        if (dot) dot.className = baseDotClass + "text-warning";
+        if (botIcon) {
+            botIcon.style.borderColor = "#e67e22";
+            botIcon.style.boxShadow = "0 0 20px rgba(230, 126, 34, 0.4)";
+        }
+        if (sendBtn) sendBtn.disabled = false;
+        if (micBtn) micBtn.disabled = false;
+    } else if (status === "refused") {
+        input.disabled = true;
+        input.placeholder = "Chat has been Locked";
+        label.innerText = "Refused";
+        label.className = "text-white";
+        if (dot) dot.className = baseDotClass + "text-white";
+        if (botIcon) {
+            botIcon.style.borderColor = "#ffffff";
+            botIcon.style.boxShadow = "0 0 20px rgba(255, 255, 255, 0.4)";
+        }
+        if (sendBtn) sendBtn.disabled = true;
+        if (micBtn) micBtn.disabled = true;
+    } else {
+        input.disabled = true;
+        input.placeholder = "⚠️ System Offline";
+        label.innerText = "Offline";
+        label.className = "text-danger";
+        if (dot) dot.className = baseDotClass + "text-danger";
+        if (botIcon) {
+            botIcon.style.borderColor = "#ff4d4d";
+            botIcon.style.boxShadow = "0 0 20px rgba(255, 77, 77, 0.4)";
+        }
+        if (sendBtn) sendBtn.disabled = true;
+        if (micBtn) micBtn.disabled = true;
+    }
+}
+
+async function checkSystemStatus() {
+    try {
+        const res = await fetch("/get_status");
+        if (!res.ok) throw new Error(`Status Error: ${res.status}`);
+        const data = await res.json();
+        updateBotUI(data.status);
+        const body = document.getElementById("chat-body");
+        if (body && body.children.length === 0) {
+            showTyping();
+            setTimeout(() => {
+                hideTyping();
+                addMessage(`<b>Hello! I'm ${PROFILE_NAME}'s Virtual AI Assistant.</b><br>Ask Me about  **${PROFILE_NAME}**, his <b>Projects</b>, <b>Blog-Posts</b>,  <b>Certificates</b>, <b>Skills</b>, or <b>Contact Info</b>!`, "bot");
+            }, 1000);
+        }
+    } catch (e) {
+        updateBotUI("offline");
+        const body = document.getElementById("chat-body");
+        if (body && body.children.length === 0) {
+            addMessage("System is Currently Offline.", "bot");
+        }
+    }
+}
+
+function addMessage(text, sender, isTypingIndicator = false) {
+    const body = document.getElementById("chat-body");
+    if (!body) return;
+    const container = document.createElement("div");
+    container.className = `message-container ${sender}-container`;
+    if (isTypingIndicator) container.id = "typing-container";
+    const avatar = document.createElement("img");
+    avatar.src = sender === "bot" ? BOT_IMG_PATH : USER_IMG_PATH;
+    avatar.className = "chat-avatar";
+    avatar.alt = sender;
+
+    const bubble = document.createElement("div");
+    bubble.className = sender === "bot" ? "bot-message" : "user-message";
+    if (isTypingIndicator) {
+        bubble.innerHTML = `<span class="typing-text">Typing<span class="typing-dots"><span></span><span></span><span></span></span></span>`;
+    } else {
+        const safeText = String(text || "");
+        let formatted = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
+        formatted = formatted.replace(
+            /(?<!href=["'])(?<!src=["'])(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
+            '<a href="$1" target="_blank" class="chat-link">$1</a>'
+        );
+        formatted = formatted.replace(
+            /(?<!href=["'])(?<!src=["'])(^|[^\/])(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim,
+            '$1<a href="https://$2" target="_blank" class="chat-link">$2</a>'
+        );
+        bubble.innerHTML = formatted;
+    }
+    container.appendChild(avatar);
+    container.appendChild(bubble);
+    body.appendChild(container);
+    body.scrollTop = body.scrollHeight;
+}
+
+function showTyping() {
+    if (!document.getElementById("typing-container")) addMessage("", "bot", true);
+}
+
+function hideTyping() {
+    const typing = document.getElementById("typing-container");
+    if (typing) typing.remove();
+}
+
+function calculateTypingDelay(text) {
+    const safeText = text || "";
+    const base = 1000;
+    const perChar = 30;
+    const max = 4000;
+    return Math.min(Math.max(safeText.length * perChar, base), max);
+}
+
+async function handleSend() {
+    const input = document.getElementById("user-input");
+    const text = input.value.trim();
+    if (!text || isProcessing) return;
+    addMessage(text, "user");
+    input.value = "";
+    isProcessing = true;
+    showTyping();
+    try {
+        const response = await fetch("/get_response", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text }),
+        });
+        if (!response.ok) throw new Error("Offline");
+        const data = await response.json();
+        let finalResponse = data.response;
+        if (data.status === "refused") {
+            finalResponse = "**My Apologize!!**\nPlease Try Asking about **Krishna Verma**\nI've Strictly Instructed to Showcase his **Data** and **Info**!\nI don't Know Anything about the **General Query**!!";
+        }
+        const delay = calculateTypingDelay(finalResponse);
+        setTimeout(() => {
+            hideTyping();
+            addMessage(finalResponse, "bot");
+            updateBotUI(data.status);
+            isProcessing = false;
+            document.getElementById("user-input").focus();
+        }, delay);
+    } catch (e) {
+        hideTyping();
+        addMessage("⚠️ System Offline.", "bot");
+        updateBotUI("offline");
+        isProcessing = false;
+        document.getElementById("user-input").focus();
+    }
+}
+
+function toggleVoice() {
+    const micBtn = document.getElementById("mic-btn");
+    const input = document.getElementById("user-input");
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("Speech Recognition not Supported in this Browser.");
+        return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.onstart = () => {
+        micBtn.classList.add("mic-active");
+        input.placeholder = "Listening...";
+    };
+    recognition.onend = () => {
+        micBtn.classList.remove("mic-active");
+        input.placeholder = "Processing...";
+    };
+
+    recognition.onresult = (e) => {
+        input.value = e.results[0][0].transcript;
+        handleSend();
+    };
+
+    recognition.start();
+}
+
+function insertPrompt(text) {
+    let inputField = document.getElementById('user-input');
+    if (inputField.placeholder === "Initializing the Virtual AI Assistant") return;
+    inputField.value = text;
+    inputField.disabled = false;
+    document.getElementById('send-btn').disabled = false;
+    if (typeof handleSend === 'function') {
+        handleSend();
+    }
+}
+
+function refreshChat() {
+    location.reload();
+}
+
+function closeChat() {
+    window.location.href = "/";
+}
+
+function clearChat() {
+    document.getElementById('chat-body').innerHTML = '';
+    setTimeout(() => {
+        addMessage("Chat History Cleared. Try Asking from **Quick Actions**!", "bot");
+    }, 300);
+}

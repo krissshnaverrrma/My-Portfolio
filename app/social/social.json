@@ -1,0 +1,102 @@
+{
+    "contact": {
+        "email": "krishnav24-cs@sanskar.org",
+        "phone": "+91 9258846075"
+    },
+    "linkedin": {
+        "username": "krishnav-cs"
+    },
+    "github": {
+        "username": "krissshnaverrrma",
+        "projects": [
+            {
+                "name": "Dual-Clock",
+                "description": "Dual-Clock is a lightweight, Java-based desktop application that displays time in two distinct formats simultaneously. Built using Java Swing , it features a modern Dark Mode interface with a precise Digital display and a smoothly animated Analog face.",
+                "language": "Java",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Dual-Clock",
+                "updated_at": "Dec 18, 2025"
+            },
+            {
+                "name": "krissshnaverrrma",
+                "description": "No description provided.",
+                "language": "Code",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/krissshnaverrrma",
+                "updated_at": "Feb 14, 2026"
+            },
+            {
+                "name": "Qoute-Studio-AI",
+                "description": "The Immersive Quote Studio is a full-stack web application developed using Python Flask and Vanilla JavaScript to provide users with a premium content creation experience. It transforms a simple API data retrieval process into an interactive digital studio.",
+                "language": "HTML",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Qoute-Studio-AI",
+                "updated_at": "Nov 28, 2025"
+            },
+            {
+                "name": "Quize-Game",
+                "description": "An educational C++ project demonstrating Object-Oriented Programming (OOP) principles, file handling (fstream), and modular development using separate header and source files.",
+                "language": "C++",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Quize-Game",
+                "updated_at": "Dec 27, 2025"
+            },
+            {
+                "name": "Scientific-Calculator",
+                "description": "A high-end, modular Scientific Calculator built in Java. This suite integrates mathematical, physical, and financial tools with a professional \"Casio-style\" interface.",
+                "language": "Java",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Scientific-Calculator",
+                "updated_at": "Dec 17, 2025"
+            },
+            {
+                "name": "Simple-Calculator",
+                "description": "This project is a command-line utility implemented in C that functions as a fully interactive scientific calculator. It is designed to demonstrate proficiency in modular C programming, multi-file compilation management (using Makefile), basic data structures, and the utilization of the standard C math library (<math.h>).",
+                "language": "C",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Simple-Calculator",
+                "updated_at": "Dec 27, 2025"
+            },
+            {
+                "name": "Snake-Game",
+                "description": "A classic Snake Game implemented in C++ using the CMake build system. This project is optimized for console execution on Windows using the MinGW (GCC/G++) toolchain.",
+                "language": "C++",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Snake-Game",
+                "updated_at": "Dec 15, 2025"
+            },
+            {
+                "name": "Student-Grading--System",
+                "description": "This project is a console-based utility implemented in C designed for managing and tracking student academic records, grades, and overall performance. It serves as an excellent demonstration of intermediate C programming concepts, specifically focusing on data organization and persistent storage.",
+                "language": "C",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Student-Grading--System",
+                "updated_at": "Dec 15, 2025"
+            },
+            {
+                "name": "Table-Tennis",
+                "description": "A lightweight, pseudo-3D Table Tennis game built with Java Swing. No external engines or libraries required.",
+                "language": "Java",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Table-Tennis",
+                "updated_at": "Dec 17, 2025"
+            },
+            {
+                "name": "Type-Master",
+                "description": "Type-Master is a high-performance, minimalist typing master built with Django and powered by Groq Cloud AI. It features a \"Perspective\" layout inspired by modern editorial design, providing philosophical tech quotes for a focused typing experience.",
+                "language": "Python",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Type-Master",
+                "updated_at": "Feb 19, 2026"
+            },
+            {
+                "name": "Weather-APP",
+                "description": "A high-performance, single-screen weather station designed for efficiency and aesthetics. Unlike standard weather widgets, Weather Pro aggregates critical environmental data\u2014including Air Quality (AQI), humidity, and wind speed\u2014into a unified \"Glassmorphism\" interface that fits perfectly on standard screens without scrolling.",
+                "language": "CSS",
+                "stars": 0,
+                "url": "https://github.com/krissshnaverrrma/Weather-APP",
+                "updated_at": "Nov 26, 2025"
+            }
+        ]
+    }
+}

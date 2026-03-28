@@ -1,0 +1,620 @@
+{% extends 'base.html' %}
+{% block title %}Resume{% endblock %}
+{% block content %}
+<style>
+    .container,
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body>div[style="height: 80px;"] {
+        display: none;
+    }
+
+    .resume-wrapper {
+        min-height: 100vh;
+        width: 100vw;
+        margin: 0;
+        background:
+            radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+            #050505;
+        padding-bottom: 5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .resume-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .content-layer {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+    }
+
+    .res-header-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        margin-bottom: 3.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 3rem;
+        text-align: left;
+    }
+
+    .res-header-img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        transition: transform 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .res-header-img:hover {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 992px) {
+        .res-header-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+    }
+
+    .sleek-panel {
+        background: rgba(15, 15, 15, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 2.5rem;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .res-section-title {
+        color: rgba(255, 255, 255, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .res-section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .res-contact-link {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.95rem;
+        transition: 0.3s;
+    }
+
+    .res-contact-link.interactive:hover {
+        color: #fff;
+        transform: translateX(5px);
+    }
+
+    .res-contact-link i {
+        width: 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .copy-icon {
+        color: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        padding: 5px;
+    }
+
+    .copy-icon:hover {
+        color: #fff;
+        transform: scale(1.15);
+    }
+
+    .copy-success {
+        color: #4CAF50 !important;
+        transform: scale(1.1);
+    }
+
+    .custom-toast {
+        position: fixed;
+        background: rgba(20, 20, 20, 0.95);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 10px);
+        transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .custom-toast.show {
+        opacity: 1;
+        transform: translate(-50%, -15px);
+    }
+
+    .skill-tag {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        margin: 0 6px 8px 0;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .timeline-container {
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    .timeline-container::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05));
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: -1.5rem;
+        top: 0.4rem;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #fff;
+        transform: translateX(-3px);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .reveal-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .btn-print-center {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 10px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        text-transform: uppercase;
+        width: auto;
+    }
+
+    .btn-print-center:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        color: #fff;
+    }
+</style>
+<div class="resume-wrapper">
+    <div class="content-layer">
+        <div class="text-center mb-5 reveal-element">
+            <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-file-alt text-white me-2" style="opacity: 0.7;"></i>
+                <span class="text-uppercase text-white fw-bold"
+                    style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Curriculum Vitae</span>
+            </div>
+        </div>
+        <div class="sleek-panel reveal-element mb-4" style="transition-delay: 0.1s; padding: 2rem; position: relative;">
+            <div class="d-print-none" style="position: absolute; top: 1.5rem; right: 1.5rem;">
+                <a href="{{ url_for('main.resume_detail') }}" class="btn-print-center"
+                    style="font-size: 0.75rem; padding: 8px 16px;">
+                    <i class="fas fa-file-pdf me-2"></i> Prepare Printable Resume
+                </a>
+            </div>
+            <div class="res-header-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                <div class="res-header-img-wrapper">
+                    <img src="{{ user_profile.profile_image }}" alt="{{ user_profile.name }}" class="res-header-img">
+                </div>
+                <div class="res-header-info">
+                    <h1 class="text-white mb-2" style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px;">
+                        {{ user_profile.name }}
+                    </h1>
+                    <p class="lead mb-3" style="font-size: 1.1rem; font-weight: 400; color: rgba(255, 255, 255, 0.8);">
+                        Computer Science Undergraduate | Full Stack Developer & AI Enthusiast
+                    </p>
+                    <div class="mt-2">
+                        <span class="skill-tag"
+                            style="margin: 0; padding: 5px 14px; display: inline-flex; align-items: center; background: rgba(255, 255, 255, 0.05);">
+                            <i class="fas fa-map-marker-alt me-2" style="color: #fff; font-size: 0.8rem;"></i>
+                            {{ user_profile.location }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 mt-2">
+            <div class="col-lg-4 d-flex flex-column gap-4">
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                    <div class="res-section-title"><i class="fas fa-address-card"></i> Contact Information</div>
+                    <div class="d-flex flex-column gap-3 mt-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="tel:{{ user_profile.contact_phone | replace(' ', '') }}"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fas fa-phone"></i> Contact Phone
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.contact_phone }}"
+                                title="Copy Phone"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="mailto:{{ user_profile.contact_email }}" class="res-contact-link interactive mb-0">
+                                <i class="fas fa-envelope"></i> Contact Email
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.contact_email }}"
+                                title="Copy Email"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="https://github.com/{{ user_profile.github_username }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-github"></i> Github
+                            </a>
+                            <i class="far fa-copy copy-icon"
+                                data-copy="https://github.com/{{ user_profile.github_username }}"
+                                title="Copy Github URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="{{ user_profile.linkedin_url }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-linkedin"></i> Linkedin
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.linkedin_url }}"
+                                title="Copy LinkedIn URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="{{ user_profile.whatsapp_url }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.whatsapp_url }}"
+                                title="Copy WhatsApp URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="{{ user_profile.telegram_url }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.telegram_url }}"
+                                title="Copy Telegram URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="{{ user_profile.instagram_url }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.instagram_url }}"
+                                title="Copy Instagram URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a href="{{ user_profile.facebook_url }}" target="_blank"
+                                class="res-contact-link interactive mb-0">
+                                <i class="fab fa-facebook"></i> Facebook
+                            </a>
+                            <i class="far fa-copy copy-icon" data-copy="{{ user_profile.facebook_url }}"
+                                title="Copy Facebook URL"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="res-contact-link mb-0">
+                                <i class="fas fa-map-marker-alt"></i> {{ user_profile.location }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                    <div class="res-section-title"><i class="fas fa-code"></i>Technical Skills</div>
+                    {% set ns = namespace(categories=[]) %}
+                    {% for skill in skills %}
+                    {% if skill.category not in ns.categories %}
+                    {% set ns.categories = ns.categories + [skill.category] %}
+                    {% endif %}
+                    {% endfor %}
+                    {% for category in ns.categories %}
+                    <div class="mb-4">
+                        <div class="small fw-bold text-white mb-2 opacity-50 text-uppercase"
+                            style="letter-spacing: 1px;">{{ category }}</div>
+                        <div>
+                            {% for skill in skills %}
+                            {% if skill.category == category %}
+                            <span class="skill-tag"><i class="{{ skill.icon }} me-1"></i> {{ skill.name }}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                    <div class="res-section-title"><i class="fas fa-bullseye"></i> Core Principles</div>
+                    <div class="d-flex flex-column gap-3">
+                        {% for principle in core_principles[:3] %}
+                        <div>
+                            <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
+                                <i class="{{ principle.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
+                                principle.title }}
+                            </h6>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
+                                principle.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
+                    <div class="res-section-title"><i class="fas fa-brain"></i> Core Philosophy</div>
+                    <div class="d-flex flex-column gap-3">
+                        {% for philosophy in core_philosophy[:3] %}
+                        <div>
+                            <h6 class="text-white fw-bold mb-1" style="font-size: 0.9rem;">
+                                <i class="{{ philosophy.icon_class }} me-2" style="color: rgba(255,255,255,0.6);"></i>{{
+                                philosophy.title }}
+                            </h6>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.5;">{{
+                                philosophy.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 d-flex flex-column gap-4">
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.2s;">
+                    <div class="res-section-title"><i class="fas fa-user-tie"></i> Professional Summary</div>
+                    <p class="text-secondary mb-0" style="line-height: 1.8; font-size: 0.95rem;">
+                        {{ user_profile.about_text }}
+                    </p>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.3s;">
+                    <div class="res-section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                    <div class="timeline-container">
+                        {% for item in academic_timeline %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h6 class="text-white fw-bold mb-1">{{ item.title }}</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-secondary small">{{ item.institution }}</span>
+                                <span class="badge border border-secondary text-secondary bg-transparent"
+                                    style="font-size: 0.65rem;">{{ item.year }}</span>
+                            </div>
+                            <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ item.description }}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.4s;">
+                    <div class="res-section-title"><i class="fas fa-laptop-code"></i>Key Projects</div>
+                    <div class="timeline-container">
+                        {% for project in projects[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <h6 class="text-white fw-bold mb-0">
+                                    <a href="/project/{{ project.slug }}" class="text-decoration-none text-white"
+                                        style="transition: color 0.3s;"
+                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                        onmouseout="this.style.color='#fff'">
+                                        {{ project.title }}
+                                        <i class="fas fa-external-link-alt ms-1"
+                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                    </a>
+                                </h6>
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" class="small text-decoration-none"
+                                    style="color: rgba(255,255,255,0.4); transition: 0.3s;"
+                                    onmouseover="this.style.color='#fff'"
+                                    onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+                                    <i class="fab fa-github me-1"></i>View Repository
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ project.tech_stack | join(', ') }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ project.description | striptags }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.5s;">
+                    <div class="res-section-title"><i class="fas fa-pen-nib"></i>Key Blog Posts</div>
+                    <div class="timeline-container">
+                        {% for blog in blog_posts[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h6 class="text-white fw-bold mb-1">
+                                <a href="/blog/{{ blog.slug }}" class="text-decoration-none text-white"
+                                    style="transition: color 0.3s;"
+                                    onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                    onmouseout="this.style.color='#fff'">
+                                    {{ blog.title }}
+                                    <i class="fas fa-external-link-alt ms-1"
+                                        style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                </a>
+                            </h6>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ blog.category }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ blog.summary | striptags }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.6s;">
+                    <div class="res-section-title"><i class="fas fa-certificate"></i>Key Certificates</div>
+                    <div class="timeline-container">
+                        {% for cert in certifications[:3] %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <h6 class="text-white fw-bold mb-0">
+                                    {% if cert.link %}
+                                    <a href="{{ cert.link }}" target="_blank" class="text-decoration-none text-white"
+                                        style="transition: color 0.3s;"
+                                        onmouseover="this.style.color='rgba(255,255,255,0.7)'"
+                                        onmouseout="this.style.color='#fff'">
+                                        {{ cert.title }}
+                                        <i class="fas fa-external-link-alt ms-1"
+                                            style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
+                                    </a>
+                                    {% else %}
+                                    {{ cert.title }}
+                                    {% endif %}
+                                </h6>
+                                <span class="badge border border-secondary text-secondary bg-transparent"
+                                    style="font-size: 0.65rem;">{{ cert.date[-4:] }}</span>
+                            </div>
+                            <div class="text-secondary small mb-2"
+                                style="font-style: italic; color: rgba(255, 255, 255, 0.7) !important;">
+                                {{ cert.issuer }}
+                            </div>
+                            <div class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                                {{ cert.description }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sleek-panel reveal-element" style="transition-delay: 0.7s;">
+                    <div class="res-section-title"><i class="fas fa-heart"></i>My Interests</div>
+                    <div class="d-flex flex-wrap">
+                        {% for interest in interests %}
+                        <span class="skill-tag"><i class="{{ interest.icon_class }} me-1"></i> {{ interest.name
+                            }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="copy-toast" class="custom-toast">
+    <i class="fas fa-check-circle" style="color: #4CAF50; margin-right: 6px;"></i>
+    <span>Copied!</span>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-element').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(el);
+        });
+    });
+    const toast = document.getElementById('copy-toast');
+    let toastTimeout;
+    document.querySelectorAll('.copy-icon').forEach(icon => {
+        icon.addEventListener('click', async function () {
+            const textToCopy = this.getAttribute('data-copy');
+            if (!textToCopy) return;
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                const originalClass = this.className;
+                this.className = 'fas fa-check copy-icon copy-success';
+                setTimeout(() => {
+                    this.className = originalClass;
+                }, 2000);
+                const rect = this.getBoundingClientRect();
+                toast.style.left = `${rect.left + (rect.width / 2)}px`;
+                toast.style.top = `${rect.top - 15}px`;
+                toast.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to Copy Text: ', err);
+            }
+        });
+    });
+</script>
+{% endblock %}

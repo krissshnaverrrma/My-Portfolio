@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% block title %}Certificates{% endblock %}
+{% block content %}
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .sleek-panel {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 24px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sleek-panel:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .search-wrapper {
+    max-width: 500px;
+    margin: 0 auto 2rem auto;
+    position: relative;
+  }
+
+  .cert-search {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    padding: 12px 25px 12px 50px;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .cert-search:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .filter-btn.active {
+    background: white;
+    color: black;
+    font-weight: bold;
+  }
+
+  .filter-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  .img-container {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/9;
+    width: 100%;
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
+  }
+
+  .sleek-panel:hover .img-container img {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .tech-pill {
+    font-size: 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-card-action {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    padding: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-card-action:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .cert-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.6;
+  }
+
+  .reveal-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #load-more-btn,
+  #show-less-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    margin: 0 5px;
+  }
+
+  #load-more-btn:hover,
+  #show-less-btn:hover {
+    background: white;
+    color: black;
+  }
+</style>
+<div class="d-flex flex-column align-items-center"
+  style="min-height: 100vh; width: 100vw; background: radial-gradient(circle at 50% 0%, #111 0%, #000 100%);">
+  <div class="p-4 p-md-5 w-100" style="padding-top: 7rem !important; max-width: 1400px;">
+    <div class="text-center mb-5 reveal-element">
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-award text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Verified Expertise</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-4" style="letter-spacing: -1px;">Certificates <span
+          style="color: rgba(255,255,255,0.4);">Archive</span></h1>
+      <div class="search-wrapper">
+        <i class="fas fa-search"
+          style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
+        <input type="text" id="cert-search" class="cert-search" placeholder="Search Courses, Skills, or Issuers">
+      </div>
+      <div class="d-flex flex-wrap justify-content-center gap-2" id="filter-container">
+        <button class="filter-btn active" data-filter="all">All Certificates</button>
+      </div>
+    </div>
+    <div class="row g-4" id="cert-grid">
+      {% for cert in certifications %}
+      <div class="col-lg-4 col-md-6 cert-item d-none reveal-element" data-issuer="{{ cert.issuer }}"
+        data-title="{{ cert.title | lower }}" data-index="{{ loop.index0 }}">
+        <div class="sleek-panel">
+          <div class="img-container mb-4">
+            <img src="{{ cert.image_url }}" alt="{{ cert.title }}">
+          </div>
+          <div class="d-flex flex-column flex-grow-1">
+            <div class="text-secondary d-flex align-items-center mb-3" style="font-size: 0.9rem;">
+              <i class="far fa-calendar-alt me-2"></i> {{ cert.date }}
+            </div>
+            <h4 class="text-white fw-bold mb-3 h5">{{ cert.title }}</h4>
+            <p class="text-secondary small mb-4 flex-grow-1 cert-description" style="line-height: 1.6;">{{
+              cert.description | safe }}</p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              <span class="tech-pill">
+                <i class="fas fa-certificate me-2 text-warning opacity-75"></i> {{ cert.issuer }}
+              </span>
+              <span class="badge bg-white text-black rounded-pill px-3 py-1 d-flex align-items-center shadow-sm"
+                style="font-size: 0.65rem; letter-spacing: 1px;">
+                {{ cert.status | upper }}
+              </span>
+            </div>
+            <div class="mt-auto">
+              <a href="{{ url_for('main.certificate_detail', slug=cert.slug) }}" class="btn-card-action">
+                VIEW DETAILS <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5" id="load-more-container">
+      <button id="load-more-btn" class="reveal-element">Show More Certificates <i
+          class="fas fa-certificate ms-2"></i></button>
+      <button id="show-less-btn" class="reveal-element" style="display: none;">Show Less Certificates<i
+          class="fas fa-certificate ms-2" style="transform: rotate(180deg);"></i></button>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const INITIAL_DISPLAY = 6;
+    let currentlyVisible = INITIAL_DISPLAY;
+    const searchInput = document.getElementById('cert-search');
+    const filterContainer = document.getElementById('filter-container');
+    const certItems = Array.from(document.querySelectorAll('.cert-item'));
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const showLessBtn = document.getElementById('show-less-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const uniqueIssuers = [...new Set(certItems.map(item => item.getAttribute('data-issuer')))];
+    uniqueIssuers.forEach(issuer => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.setAttribute('data-filter', issuer);
+      btn.textContent = issuer;
+      filterContainer.appendChild(btn);
+    });
+    const updateDisplay = () => {
+      const query = searchInput.value.toLowerCase();
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+      const isSearchingOrFiltering = query !== '' || activeFilter !== 'all';
+      let matchCount = 0;
+      certItems.forEach((item) => {
+        const title = item.getAttribute('data-title');
+        const issuer = item.getAttribute('data-issuer');
+        const matchesFilter = (activeFilter === 'all' || issuer === activeFilter);
+        const matchesSearch = title.includes(query) || issuer.toLowerCase().includes(query);
+        if (matchesFilter && matchesSearch) {
+          matchCount++;
+          if (isSearchingOrFiltering || matchCount <= currentlyVisible) {
+            item.classList.remove('d-none');
+            setTimeout(() => item.classList.add('reveal-visible'), 50);
+          } else {
+            item.classList.add('d-none');
+            item.classList.remove('reveal-visible');
+          }
+        } else {
+          item.classList.add('d-none');
+          item.classList.remove('reveal-visible');
+        }
+      });
+      if (isSearchingOrFiltering) {
+        loadMoreContainer.style.display = 'none';
+      } else {
+        loadMoreContainer.style.display = 'block';
+        if (currentlyVisible >= matchCount) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = 'inline-block';
+        }
+        if (currentlyVisible > INITIAL_DISPLAY) {
+          showLessBtn.style.display = 'inline-block';
+        } else {
+          showLessBtn.style.display = 'none';
+        }
+        if (currentlyVisible >= matchCount && currentlyVisible <= INITIAL_DISPLAY) {
+          loadMoreContainer.style.display = 'none';
+        }
+      }
+    };
+    searchInput.addEventListener('input', updateDisplay);
+    filterContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('filter-btn')) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentlyVisible = INITIAL_DISPLAY;
+        updateDisplay();
+      }
+    });
+    loadMoreBtn.addEventListener('click', () => {
+      currentlyVisible += 6;
+      updateDisplay();
+    });
+    showLessBtn.addEventListener('click', () => {
+      currentlyVisible = INITIAL_DISPLAY;
+      updateDisplay();
+      document.getElementById('cert-grid').scrollIntoView({ behavior: 'smooth' });
+    });
+    updateDisplay();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('d-none')) {
+          entry.target.classList.add('reveal-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}

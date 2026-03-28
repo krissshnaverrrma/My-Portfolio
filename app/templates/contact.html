@@ -1,0 +1,639 @@
+{% extends 'base.html' %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<style>
+     .container,
+     .container-fluid {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+     }
+
+     body>div[style="height: 80px;"] {
+          display: none;
+     }
+
+     .contact-wrapper {
+          min-height: 100vh;
+          width: 100vw;
+          margin: 0;
+          background:
+               radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+               radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+               #050505;
+          position: relative;
+          padding-bottom: 4rem;
+          overflow: hidden;
+     }
+
+     .contact-wrapper::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+               linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+          background-size: 50px 50px;
+          z-index: 0;
+          pointer-events: none;
+     }
+
+     .content-layer {
+          position: relative;
+          z-index: 1;
+     }
+
+     .sleek-panel {
+          background: rgba(15, 15, 15, 0.4);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 24px;
+          padding: 3rem;
+          height: 100%;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          transition: border-color 0.4s ease, transform 0.4s ease;
+     }
+
+     .sleek-panel:hover {
+          border-color: rgba(255, 255, 255, 0.12);
+     }
+
+     .contact-link-item {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          padding: 0.8rem 1.25rem;
+          border-radius: 50px;
+          background: rgba(255, 255, 255, 0.02);
+          text-decoration: none;
+          border: 1px solid rgba(255, 255, 255, 0.03);
+          color: white;
+     }
+
+     .icon-box {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.05);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          flex-shrink: 0;
+     }
+
+     .form-floating-custom {
+          position: relative;
+          margin-bottom: 0;
+          height: 100%;
+     }
+
+     .sleek-input {
+          background: rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          color: white;
+          padding: 1.5rem 1.25rem 0.75rem 3.25rem;
+          border-radius: 16px;
+          width: 100%;
+          transition: all 0.3s ease;
+          font-size: 0.95rem;
+     }
+
+     .form-floating-custom label {
+          position: absolute;
+          top: 50%;
+          left: 3.25rem;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 0.95rem;
+     }
+
+     .form-floating-custom textarea+label {
+          top: 1.5rem;
+          transform: translateY(-50%);
+     }
+
+     .sleek-input:focus,
+     .sleek-input:not(:placeholder-shown) {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.4);
+          outline: none;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+     }
+
+     .sleek-input:focus+label,
+     .sleek-input:not(:placeholder-shown)+label {
+          top: 0.8rem;
+          font-size: 0.7rem;
+          color: white;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+     }
+
+     .input-icon {
+          position: absolute;
+          left: 1.25rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 1rem;
+     }
+
+     .form-floating-custom textarea~.input-icon {
+          top: 1.5rem;
+          transform: translateY(-50%);
+     }
+
+     .sleek-input:focus~.input-icon,
+     .sleek-input:not(:placeholder-shown)~.input-icon {
+          color: white;
+     }
+
+     .btn-premium {
+          background: white;
+          color: black;
+          border: none;
+          border-radius: 16px;
+          padding: 1.2rem 2rem;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          transition: all 0.3s ease;
+          width: 100%;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+     }
+
+     .btn-premium::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+          transition: left 0.5s ease;
+          z-index: -1;
+     }
+
+     .btn-premium:hover {
+          background: #e0e0e0;
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+     }
+
+     .btn-premium:hover::before {
+          left: 100%;
+     }
+
+     .reveal-element {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+     }
+
+     .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+     }
+
+     .custom-alert {
+          background: rgba(40, 167, 69, 0.1);
+          border: 1px solid rgba(40, 167, 69, 0.3);
+          color: #28a745;
+          backdrop-filter: blur(10px);
+     }
+
+     .copy-btn {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          color: rgba(255, 255, 255, 0.4);
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+     }
+
+     .copy-btn:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
+     }
+
+     .copy-btn.copied {
+          background: rgba(40, 167, 69, 0.15);
+          color: #28a745;
+          border-color: rgba(40, 167, 69, 0.3);
+          transform: translateY(0);
+     }
+
+     .status-text {
+          transition: color 0.3s ease;
+     }
+
+     .custom-select-wrapper {
+          position: relative;
+          user-select: none;
+     }
+
+     .custom-select-trigger {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding: 1.5rem 1.25rem 0.75rem 3.25rem;
+          min-height: calc(3.5rem + 2px);
+     }
+
+     .custom-select-text {
+          color: white;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+          font-size: 0.95rem;
+          margin-top: 8px;
+     }
+
+     .custom-select-wrapper.has-value .custom-select-text {
+          opacity: 1;
+     }
+
+     .select-arrow {
+          position: absolute;
+          right: 1.25rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.3s ease;
+     }
+
+     .custom-select-wrapper.open .select-arrow {
+          transform: translateY(-50%) rotate(180deg);
+          color: white;
+     }
+
+     .custom-select-label {
+          position: absolute;
+          top: 50%;
+          left: 3.25rem;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+          transition: all 0.2s ease-out;
+          font-size: 0.95rem;
+     }
+
+     .custom-select-wrapper.open .custom-select-label,
+     .custom-select-wrapper.has-value .custom-select-label {
+          top: 0.8rem;
+          font-size: 0.7rem;
+          color: white;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+     }
+
+     .custom-select-wrapper.open .custom-select-trigger {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.4);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+     }
+
+     .custom-select-wrapper.open .input-icon {
+          color: white;
+     }
+
+     .custom-options {
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 0;
+          right: 0;
+          background: rgba(15, 15, 15, 0.95);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: all 0.3s ease;
+          z-index: 100;
+          overflow: hidden;
+     }
+
+     .custom-select-wrapper.open .custom-options {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+     }
+
+     .custom-option {
+          padding: 1rem 1.25rem;
+          color: rgba(255, 255, 255, 0.7);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+     }
+
+     .custom-option:last-child {
+          border-bottom: none;
+     }
+
+     .custom-option:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+          padding-left: 1.5rem;
+     }
+</style>
+<div class="contact-wrapper d-flex flex-column align-items-center">
+     <div class="container content-layer p-4" style="max-width: 1200px; padding-top: 8rem !important;">
+          <div class="text-center mb-5 reveal-element">
+               <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                    <i class="fas fa-satellite-dish text-white me-2" style="opacity: 0.7; font-size: 0.8rem;"></i>
+                    <span class="text-uppercase text-white fw-bold"
+                         style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Get in Touch</span>
+               </div>
+               <h1 class="display-3 fw-bolder text-white mb-2" style="letter-spacing: -1px;">Let's <span
+                         style="color: rgba(255,255,255,0.4);">Connect</span></h1>
+               <p class="text-secondary mt-3 mx-auto" style="max-width: 600px; font-weight: 300;">{{
+                    profile.contact_text }}</p>
+          </div>
+          <div class="row g-5 align-items-stretch reveal-element mb-5">
+               <div class="col-lg-5">
+                    <div class="sleek-panel d-flex flex-column h-100">
+                         <div class="d-flex align-items-center mb-4 gap-3">
+                              <div style="width: 30px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Channels
+                              </h5>
+                         </div>
+                         <div class="d-flex flex-column gap-3 mt-2 flex-grow-1 justify-content-center">
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="tel:{{ profile.contact_phone }}" class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fas fa-phone"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">Phone</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Voice Call</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.contact_phone }}" data-message="Copied Phone!"
+                                        aria-label="Copy Phone Number">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="mailto:{{ profile.contact_email }}"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">Email</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Direct Inbox</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.contact_email }}" data-message="Copied Email!"
+                                        aria-label="Copy Email Address">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="https://github.com/{{ profile.github_username }}" target="_blank"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fab fa-github"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">GitHub</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Source Code</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="https://github.com/{{ profile.github_username }}"
+                                        data-message="Copied GitHub URL!" aria-label="Copy GitHub URL">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                              <div class="d-flex align-items-center gap-2 copy-wrapper">
+                                   <a href="{{ profile.linkedin_url }}" target="_blank"
+                                        class="contact-link-item flex-grow-1 m-0">
+                                        <div class="icon-box"><i class="fab fa-linkedin-in"></i></div>
+                                        <div>
+                                             <h6 class="text-white fw-bold mb-1">LinkedIn</h6>
+                                             <p class="text-secondary mb-0 status-text" style="font-size: 0.75rem;">
+                                                  Professional</p>
+                                        </div>
+                                   </a>
+                                   <button type="button" class="copy-btn flex-shrink-0"
+                                        data-copy="{{ profile.linkedin_url }}" data-message="Copied LinkedIn URL!"
+                                        aria-label="Copy LinkedIn URL">
+                                        <i class="fas fa-copy"></i>
+                                   </button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-lg-7">
+                    <div class="sleek-panel d-flex flex-column">
+                         <div class="d-flex align-items-center mb-4 gap-3">
+                              <div style="width: 30px; height: 1px; background: rgba(255,255,255,0.3);"></div>
+                              <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Send a
+                                   Message</h5>
+                         </div>
+                         {% if success %}
+                         <div class="alert custom-alert p-3 mb-4 rounded-3 d-flex align-items-center position-relative"
+                              role="alert">
+                              <i class="fas fa-check-circle fa-lg me-3"></i>
+                              <div class="flex-grow-1">
+                                   <strong class="d-block mb-1">Message Transmitted!</strong>
+                                   <span class="small opacity-75">I have Received your Message and will get back to you
+                                        Shortly.</span>
+                              </div>
+                              <a href="{{ url_for('main.contact') }}"
+                                   class="d-flex align-items-center justify-content-center flex-shrink-0"
+                                   style="width: 35px; height: 35px; border-radius: 50%; background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.3); color: #28a745; text-decoration: none; transition: all 0.3s ease;"
+                                   onmouseover="this.style.background='rgba(40, 167, 69, 0.8)'; this.style.color='#fff'; this.style.transform='rotate(90deg)';"
+                                   onmouseout="this.style.background='rgba(40, 167, 69, 0.15)'; this.style.color='#28a745'; this.style.transform='rotate(0deg)';"
+                                   title="Dismiss">
+                                   <i class="fas fa-times"></i>
+                              </a>
+                         </div>
+                         {% endif %}
+                         <form action="{{ url_for('main.contact') }}" method="POST"
+                              class="d-flex flex-column flex-grow-1 gap-4">
+                              <div class="row g-4">
+                                   <div class="col-md-6">
+                                        <div class="form-floating-custom">
+                                             <input type="text" name="name" id="name" class="sleek-input"
+                                                  placeholder=" " required>
+                                             <label for="name">Your Name</label>
+                                             <i class="fas fa-user input-icon"></i>
+                                        </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                        <div class="form-floating-custom">
+                                             <input type="email" name="email" id="email" class="sleek-input"
+                                                  placeholder=" " required>
+                                             <label for="email">Your Email</label>
+                                             <i class="fas fa-envelope input-icon"></i>
+                                        </div>
+                                   </div>
+                              </div>
+                              <div>
+                                   <div class="form-floating-custom custom-select-wrapper" id="subject-wrapper">
+                                        <input type="hidden" name="subject" id="subject" required>
+                                        <div class="sleek-input custom-select-trigger" tabindex="0">
+                                             <span class="custom-select-text"></span>
+                                        </div>
+                                        <label class="custom-select-label">Subject</label>
+                                        <i class="fas fa-tag input-icon"></i>
+                                        <i class="fas fa-angle-down select-arrow"></i>
+                                        <div class="custom-options">
+                                             <div class="custom-option" data-value="About Project Inquiry">About Project
+                                                  Inquiries</div>
+                                             <div class="custom-option" data-value="About Blog Posts Inquiry">About Blog
+                                                  Posts Inquiries</div>
+                                             <div class="custom-option" data-value="About Certificated Inquiry">About
+                                                  Certificates Inquiries</div>
+                                             <div class="custom-option" data-value="Collaboration Idea">Collaboration
+                                                  Idea</div>
+                                             <div class="custom-option" data-value="Fiercely Debating Tabs vs. Spaces">
+                                                  Fiercely Debating Tabs vs. Spaces</div>
+                                             <div class="custom-option" data-value="Just Saying Hello">Just Saying Hello
+                                             </div>
+                                             <div class="custom-option" data-value="Custom">Custom Subject</div>
+                                        </div>
+                                   </div>
+                              </div>
+                              <div id="custom-subject-container" style="display: none;">
+                                   <div class="form-floating-custom">
+                                        <input type="text" id="custom-subject-input" class="sleek-input"
+                                             placeholder=" ">
+                                        <label for="custom-subject-input">Your Custom Subject</label>
+                                        <i class="fas fa-pen input-icon"></i>
+                                   </div>
+                              </div>
+                              <div class="flex-grow-1">
+                                   <div class="form-floating-custom h-100">
+                                        <textarea name="message" id="message" class="sleek-input h-100"
+                                             style="min-height: 160px; resize: none;" placeholder=" "
+                                             required></textarea>
+                                        <label for="message">Your Message</label>
+                                        <i class="fas fa-comment-dots input-icon"></i>
+                                   </div>
+                              </div>
+                              <button type="submit"
+                                   class="btn-premium mt-3 d-flex align-items-center justify-content-center gap-2">
+                                   <span>Initialize Transmission</span>
+                                   <i class="fas fa-paper-plane"></i>
+                              </button>
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+          const observer = new IntersectionObserver((entries) => {
+               entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                         entry.target.classList.add('reveal-visible');
+                    }
+               });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.reveal-element').forEach((el, i) => {
+               el.style.transitionDelay = `${i * 0.1}s`;
+               observer.observe(el);
+          });
+          const copyButtons = document.querySelectorAll('.copy-btn');
+          copyButtons.forEach(button => {
+               button.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const textToCopy = button.getAttribute('data-copy');
+                    const flashMessage = button.getAttribute('data-message');
+                    if (!textToCopy) return;
+                    const wrapper = button.closest('.copy-wrapper');
+                    const statusTextElement = wrapper.querySelector('.status-text');
+                    const originalText = statusTextElement.innerText;
+                    try {
+                         await navigator.clipboard.writeText(textToCopy);
+                         const icon = button.querySelector('i');
+                         button.classList.add('copied');
+                         icon.classList.remove('fa-copy');
+                         icon.classList.add('fa-check');
+                         statusTextElement.innerText = flashMessage;
+                         statusTextElement.classList.remove('text-secondary');
+                         statusTextElement.style.color = '#28a745';
+                         statusTextElement.style.fontWeight = 'bold';
+                         setTimeout(() => {
+                              button.classList.remove('copied');
+                              icon.classList.remove('fa-check');
+                              icon.classList.add('fa-copy');
+                              statusTextElement.innerText = originalText;
+                              statusTextElement.classList.add('text-secondary');
+                              statusTextElement.style.color = '';
+                              statusTextElement.style.fontWeight = '';
+                         }, 2000);
+                    } catch (err) {
+                         console.error('Failed to copy text: ', err);
+                    }
+               });
+          });
+          const selectWrapper = document.getElementById('subject-wrapper');
+          const selectTrigger = selectWrapper.querySelector('.custom-select-trigger');
+          const selectText = selectWrapper.querySelector('.custom-select-text');
+          const hiddenInput = document.getElementById('subject');
+          const optionsList = selectWrapper.querySelectorAll('.custom-option');
+          const customSubjectContainer = document.getElementById('custom-subject-container');
+          const customSubjectInput = document.getElementById('custom-subject-input');
+          selectTrigger.addEventListener('click', (e) => {
+               selectWrapper.classList.toggle('open');
+               e.stopPropagation();
+          });
+          optionsList.forEach(option => {
+               option.addEventListener('click', (e) => {
+                    const value = option.getAttribute('data-value');
+                    if (value === 'Custom') {
+                         selectText.innerText = "Other / Custom Subject";
+                         customSubjectContainer.style.display = 'block';
+                         customSubjectInput.setAttribute('required', 'required');
+                         hiddenInput.value = customSubjectInput.value;
+                    } else {
+                         selectText.innerText = value;
+                         customSubjectContainer.style.display = 'none';
+                         customSubjectInput.removeAttribute('required');
+                         hiddenInput.value = value;
+                    }
+                    selectWrapper.classList.remove('open');
+                    selectWrapper.classList.add('has-value');
+                    e.stopPropagation();
+               });
+          });
+          customSubjectInput.addEventListener('input', (e) => {
+               hiddenInput.value = e.target.value;
+          });
+          document.addEventListener('click', (e) => {
+               if (!selectWrapper.contains(e.target)) {
+                    selectWrapper.classList.remove('open');
+               }
+          });
+     });
+</script>
+{% endblock %}

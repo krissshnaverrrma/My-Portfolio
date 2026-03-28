@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% block title %}Skills{% endblock %}
+{% block content %}
+<style>
+  .container,
+  .container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body>div[style="height: 80px;"] {
+    display: none;
+  }
+
+  .skills-wrapper {
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background:
+      radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+      #050505;
+    padding-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skills-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .content-layer {
+    position: relative;
+    z-index: 1;
+  }
+
+  .sleek-panel {
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 2.5rem;
+    height: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    will-change: transform, box-shadow;
+  }
+
+  .sleek-panel:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    transform: translateY(-3px);
+  }
+
+  .skill-badge {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: default;
+  }
+
+  .skill-badge i {
+    transition: transform 0.3s ease;
+  }
+
+  .skill-badge:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .skill-badge:hover i {
+    transform: scale(1.15);
+  }
+
+  .category-count {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .philosophy-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .philosophy-card {
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .philosophy-card:hover .philosophy-icon {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px) scale(1.05);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+  }
+</style>
+<div class="skills-wrapper d-flex flex-column align-items-center">
+  <div class="content-layer p-4 w-100" style="max-width: 1200px; padding-top: 8rem !important;">
+    <div class="text-center mb-5 reveal-element">
+      <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 mb-3 rounded-pill"
+        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+        <i class="fas fa-microchip text-white me-2" style="opacity: 0.7;"></i>
+        <span class="text-uppercase text-white fw-bold"
+          style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.8;">Tech Stack & Growth</span>
+      </div>
+      <h1 class="display-3 fw-bolder text-white mb-3" style="letter-spacing: -1px;">Technical <span
+          style="color: rgba(255,255,255,0.4);">Proficiency</span></h1>
+      {% if user_profile.skills_description %}
+      <p class="mx-auto mt-4"
+        style="max-width: 750px; color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.7;">
+        {{ user_profile.skills_description }}
+      </p>
+      {% endif %}
+    </div>
+    {% set cat_icons = {
+    'Languages': 'fa-solid fa-code',
+    'Backend & Database': 'fa-solid fa-server',
+    'Frontend & UI/UX': 'fa-solid fa-layer-group',
+    'DevOps & Tools': 'fa-solid fa-terminal',
+    'Methodologies': 'fa-solid fa-diagram-project',
+    'AI & Automation': 'fa-solid fa-brain'
+    } %}
+    {% set skill_categories = ['Languages', 'Frontend & UI/UX', 'Backend & Database', 'DevOps & Tools', 'Methodologies',
+    'AI & Automation'] %}
+    <div class="row g-4 mt-2 justify-content-center">
+      {% for cat in skill_categories %}
+      <div class="col-lg-4 col-md-6 reveal-element" style="transition-delay: 0.{{ loop.index }}s;">
+        <div class="sleek-panel category-box" data-category="{{ cat }}">
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <div class="d-flex align-items-center">
+              <i class="{{ cat_icons[cat] }} me-2 text-white opacity-75"></i>
+              <h6 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">{{ cat
+                }}</h6>
+            </div>
+            <span class="category-count">0</span>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for skill in skills if skill.category == cat %}
+            <div class="skill-badge" data-name="{{ skill.name | lower }}">
+              <i class="{{ skill.icon }} fs-6"></i> <span>{{ skill.name }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row mt-5 g-4 reveal-element" style="transition-delay: 0.6s;">
+      <div class="col-lg-6">
+        <div class="sleek-panel p-4 p-md-5 h-100 d-flex flex-column">
+          <div class="d-flex align-items-center mb-5 pb-3 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <i class="fa-solid fa-lightbulb me-3 text-white fs-4 opacity-75"></i>
+            <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Core Philosophy</h5>
+          </div>
+          <div class="row g-4 mt-2 justify-content-center text-center flex-grow-1">
+            {% for philosophy in core_philosophy %}
+            <div class="col-md-6 mb-3 philosophy-card">
+              <i class="{{ philosophy.icon_class }} philosophy-icon"></i>
+              <h6 class="text-white fw-bold mb-2" style="letter-spacing: 0.5px;">{{ philosophy.title }}</h6>
+              <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">{{ philosophy.description }}
+              </p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="sleek-panel p-4 p-md-5 h-100 d-flex flex-column">
+          <div class="d-flex align-items-center mb-5 pb-3 border-bottom"
+            style="border-color: rgba(255,255,255,0.05) !important;">
+            <i class="fa-solid fa-cogs me-3 text-white fs-4 opacity-75"></i>
+            <h5 class="text-white fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">Core Principles</h5>
+          </div>
+          <div class="row g-4 mt-2 justify-content-center text-center flex-grow-1">
+            {% for principle in core_principles %}
+            <div class="col-md-6 mb-3 philosophy-card">
+              <i class="{{ principle.icon_class }} philosophy-icon"></i>
+              <h6 class="text-white fw-bold mb-2" style="letter-spacing: 0.5px;">{{ principle.title }}</h6>
+              <p class="text-secondary mb-0" style="font-size: 0.85rem; line-height: 1.6;">{{ principle.description }}
+              </p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-element').forEach((el) => {
+      observer.observe(el);
+    });
+    const updateCounters = () => {
+      document.querySelectorAll('.category-box').forEach(box => {
+        box.querySelector('.category-count').innerText = box.querySelectorAll('.skill-badge').length;
+      });
+    };
+    updateCounters();
+  });
+</script>
+{% endblock %}
