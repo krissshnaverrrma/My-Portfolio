@@ -1,8 +1,7 @@
 import logging
 from flask import Flask
-from ..config.config import get_config
+from ..config import Config, get_config
 from ..essential import is_main_process
-from ..config import Config
 from ..assistant import init_assistant
 from ..db import init_db
 from ..social import init_socials

@@ -1,7 +1,7 @@
 import logging
 from typing import Dict
-from ..config.config import Config
-from ..utils.utils import load_json_file
+from ..config import Config
+from ..utils import load_json_file
 
 logger = logging.getLogger(__name__)
 

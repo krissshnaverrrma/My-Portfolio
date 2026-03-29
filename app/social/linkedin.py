@@ -1,8 +1,8 @@
 import logging
 from typing import Dict, List, Any
-from ..config.config import Config
-from ..db.data import load_json_data
-from ..utils.utils import load_json_file
+from ..config import Config
+from ..db import load_json_data
+from ..utils import load_json_file
 
 logger = logging.getLogger(__name__)
 

@@ -5,6 +5,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def get_bool_env(env_var, default="False"):
+    return str(os.getenv(env_var, default)).lower() in ("true", "1", "yes", "t")
+
+
 def format_postgres_url(url: str) -> str:
     if url and url.startswith("postgres://"):
         return url.replace("postgres://", "postgresql://", 1)

@@ -2,9 +2,9 @@ import logging
 import requests
 from datetime import datetime
 from typing import Dict, List, Any
-from ..config.config import Config
-from ..db.data import get_cached_github_data, set_cached_github_data, CacheKeys
-from ..utils.utils import load_json_file
+from ..config import Config
+from ..db import get_cached_github_data, set_cached_github_data, CacheKeys
+from ..utils import load_json_file
 
 logger = logging.getLogger(__name__)
 

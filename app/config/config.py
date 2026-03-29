@@ -1,13 +1,9 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from ..utils import format_postgres_url, get_secret_key
+from ..utils import format_postgres_url, get_secret_key, get_bool_env
 
 load_dotenv()
-
-
-def get_bool_env(env_var, default="False"):
-    return str(os.getenv(env_var, default)).lower() in ("true", "1", "yes", "t")
 
 
 class Config:
