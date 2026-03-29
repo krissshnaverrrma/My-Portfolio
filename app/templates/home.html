@@ -17,30 +17,35 @@
         min-height: 100vh;
         width: 100vw;
         margin: 0;
-        background-color: #0b0c10;
+        background:
+            radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+            #050505;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
         overflow: hidden;
-        padding: 40px 20px;
+        padding: 80px 20px 40px;
     }
 
     .home-wrapper::before {
         content: '';
         position: absolute;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-        top: 20%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: 0;
         pointer-events: none;
     }
 
     .hero-container {
-        max-width: 900px;
+        max-width: 1000px;
         width: 100%;
         text-align: center;
         z-index: 10;
@@ -49,88 +54,145 @@
         align-items: center;
     }
 
-    .hero-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .hero-image {
-        width: clamp(100px, 15vw, 160px);
-        height: clamp(100px, 15vw, 160px);
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
     .cyber-title {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-size: clamp(3.5rem, 8vw, 6rem);
         font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -2px;
+        line-height: 1;
+        letter-spacing: -3px;
         color: #ffffff;
         text-transform: uppercase;
-        margin: 0;
-        text-align: left;
+        margin: 0 0 1rem 0;
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .title-highlight {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .sleek-panel {
+        background: rgba(15, 15, 15, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        max-width: 800px;
+        width: 100%;
+        margin-top: 1rem;
+        transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .sleek-panel:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-5px);
     }
 
     .cyber-subtitle {
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: 2rem;
-        font-weight: 300;
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
         letter-spacing: 2px;
         text-transform: uppercase;
     }
 
     .cyber-desc {
-        font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.7);
         line-height: 1.8;
-        max-width: 700px;
-        margin-bottom: 3rem;
+        margin-bottom: 2.5rem;
+        font-weight: 300;
     }
 
     .button-wrapper {
         display: flex;
         justify-content: center;
         gap: 20px;
+        flex-wrap: wrap;
     }
 
-    .btn-about {
+    .btn-profile {
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        padding: 14px 38px;
-        background: #2d2e32;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-profile:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.4);
+        color: #ffffff;
+    }
+
+    .btn-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-action {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 50px;
-        color: #ffffff;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-transform: uppercase;
+        padding: 1rem 2.5rem;
+        font-weight: 700;
         letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
         text-decoration: none;
-        transition: background 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .btn-about:hover {
-        background: #3d3e42;
+    .btn-action:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: #ffffff;
         color: #ffffff;
     }
 
-    .btn-about i {
-        font-size: 0.8rem;
+    .tech-pill {
+        font-size: 0.75rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 8px 18px;
+        border-radius: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: monospace;
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .tech-pill:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
     }
 
     .reveal-element {
         opacity: 0;
-        transform: translateY(20px);
-        animation: revealUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform: translateY(30px);
+        animation: revealUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     @keyframes revealUp {
@@ -141,41 +203,54 @@
     }
 
     @media (max-width: 768px) {
-        .hero-header {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .cyber-title {
-            text-align: center;
-        }
-
         .home-wrapper {
             padding-top: 100px;
-            justify-content: flex-start;
+        }
+
+        .sleek-panel {
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+        }
+
+        .button-wrapper {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn-profile,
+        .btn-action {
+            width: 100%;
+            justify-content: center;
         }
     }
 </style>
-
 <div class="home-wrapper">
     <div class="hero-container">
-        <div class="hero-header reveal-element" style="animation-delay: 0.1s;">
-            <img src="{{ profile.profile_image }}" alt="{{ profile.name }}" class="hero-image">
-            <h6 class="cyber-title">
-                HELLO, I'M <br> {{ profile.name }}
-            </h6>
-        </div>
-        <div class="cyber-subtitle reveal-element" style="animation-delay: 0.3s;">
-            <h5> {{ profile.home_title | default("CS Student & Full Stack Developer") }} </h5>
-        </div>
-        <p class="cyber-desc reveal-element" style="animation-delay: 0.4s;">
-            {{ profile.home_description | striptags | default("I am a Computer Science Student. I'm passionate about
-            building scalable backend systems and immersive digital experiences.") }}
-        </p>
-        <div class="button-wrapper reveal-element" style="animation-delay: 0.5s;">
-            <a href="{{ url_for('main.about') }}" class="btn-about">
-                Read About Me <i class="fas fa-arrow-right"></i>
-            </a>
+        <h1 class="cyber-title reveal-element" style="animation-delay: 0.1s;">
+            HELLO, I'M <br>
+            <span class="title-highlight">{{ profile.name }}</span>
+        </h1>
+        <div class="sleek-panel reveal-element" style="animation-delay: 0.3s;">
+            <div class="cyber-subtitle">
+                {{ profile.home_title | default("CS Student & Full Stack Developer") }}
+            </div>
+            <p class="cyber-desc">
+                {{ profile.home_description | striptags | default("As a Computer Science student and an aspiring Full
+                Stack Developer, I'm dedicated to designing and building scalable backend systems and crafting seamless,
+                immersive digital experiences. My core focus lies in Python and its powerful ecosystem, complemented by
+                a deep understanding of database management, API design, and cloud integration. I'm actively seeking
+                challenging roles where I can apply my skills to real-world problems and grow within a dynamic
+                development team. Check out my skills and project portfolio to learn more.") }}
+            </p>
+            <div class="button-wrapper">
+                <a href="{{ url_for('main.about') }}" class="btn-profile">
+                    <img src="{{profile.profile_image}}" class="btn-img" alt="Profile">
+                    Read About Me <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="{{ url_for('main.skills') }}" class="btn-action">
+                    <i class="fas fa-code"></i> View Skills
+                </a>
+            </div>
         </div>
     </div>
 </div>
